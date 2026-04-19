@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Review Guide — IT344 & IT334</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1916;
+    --card: #201e1a;
+    --border: #2e2b25;
+    --gold: #d4a843;
+    --gold-dim: #8a6b28;
+    --cream: #e8dfc8;
+    --muted: #7a7060;
+    --red: #c0392b;
+    --green: #27ae60;
+    --blue: #2980b9;
+    --critical: #e74c3c;
+    --text: #ccc3b0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  header {
+    background: linear-gradient(135deg, #1a1510 0%, #0f0e0c 60%);
+    border-bottom: 1px solid var(--gold-dim);
+    padding: 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
+  header p {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+  }
+  .subject-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    padding: 0 2rem;
+    gap: 0.5rem;
+    overflow-x: auto;
+  }
+  .subject-tab {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .subject-tab:hover { color: var(--cream); }
+  .subject-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* Section headings */
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 1.5rem 0 0.6rem;
+  }
+  p { margin-bottom: 0.8rem; }
+
+  /* Cards */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .card-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .highlight-box {
+    border-left: 3px solid var(--gold);
+    background: #1e1c18;
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    font-style: italic;
+    color: var(--cream);
+  }
+  .warn-box {
+    border-left: 3px solid var(--critical);
+    background: #1e1210;
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    color: #e8c0bc;
+  }
+  .ok-box {
+    border-left: 3px solid var(--green);
+    background: #101e14;
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    color: #a8dbb8;
+  }
+
+  /* Code */
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    background: #1a1916;
+    border: 1px solid var(--border);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.85em;
+    color: #d4a843;
+  }
+  pre {
+    font-family: 'IBM Plex Mono', monospace;
+    background: #13120f;
+    border: 1px solid var(--border);
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    overflow-x: auto;
+    color: #c8bd9e;
+    margin: 0.8rem 0;
+    line-height: 1.6;
+  }
+  pre .comment { color: #5a5545; }
+  pre .cmd { color: var(--gold); }
+  pre .critical { color: var(--critical); font-weight: 600; }
+  pre .ok { color: var(--green); }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 0.8rem 0 1rem;
+  }
+  th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: #1a1810;
+    border: 1px solid var(--border);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+  }
+  td {
+    border: 1px solid var(--border);
+    padding: 0.55rem 0.8rem;
+    color: var(--text);
+  }
+  tr:nth-child(even) td { background: #181612; }
+  .critical-row td { background: #1e1008 !important; color: #f39c12 !important; font-weight: 600; }
+  .cp-cell { background: rgba(231,76,60,0.15) !important; color: var(--critical) !important; font-weight: 700; }
+
+  /* Gantt Chart */
+  .gantt-wrap { overflow-x: auto; margin: 0.8rem 0; }
+  .gantt {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: max-content;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+  }
+  .gantt-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .gantt-bar {
+    padding: 0.4rem 0;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 3px;
+    color: #0f0e0c;
+    min-width: 28px;
+  }
+  .gantt-time { color: var(--muted); font-size: 0.65rem; margin-top: 2px; }
+  .p1 { background: #e8a430; }
+  .p2 { background: #3498db; }
+  .p3 { background: #27ae60; }
+  .p4 { background: #9b59b6; }
+  .p5 { background: #e74c3c; }
+  .p6 { background: #1abc9c; }
+
+  /* Perm display */
+  .perm-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin: 0.8rem 0;
+  }
+  .perm-cell {
+    background: #1a1810;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 0.8rem;
+    text-align: center;
+  }
+  .perm-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+  .perm-val { font-family: 'IBM Plex Mono', monospace; font-size: 1.1rem; color: var(--gold); font-weight: 600; }
+  .perm-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media(max-width: 650px) { .two-col { grid-template-columns: 1fr; } .perm-grid { grid-template-columns: 1fr; } }
+
+  /* Q&A */
+  .qa-block { margin-bottom: 1.5rem; }
+  .qa-q {
+    font-family: 'IBM Plex Mono', monospace;
+    background: #1a1810;
+    border-left: 3px solid var(--gold-dim);
+    padding: 0.7rem 1rem;
+    font-size: 0.82rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .qa-a { padding-left: 1rem; }
+
+  /* Toggle */
+  .toggle-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: #1a1810;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    padding: 0.4rem 0.9rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0.3rem 0;
+  }
+  .toggle-btn:hover { background: #241f10; }
+  .collapsible { display: none; margin-top: 0.5rem; }
+  .collapsible.open { display: block; }
+
+  .badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 0.4em;
+  }
+  .badge-gold { background: #2e2410; color: var(--gold); border: 1px solid var(--gold-dim); }
+  .badge-red { background: #1e1010; color: var(--critical); border: 1px solid #6e2020; }
+  .badge-green { background: #0e1e12; color: #2ecc71; border: 1px solid #1a4a24; }
+
+  ul, ol { padding-left: 1.5rem; margin-bottom: 0.8rem; }
+  li { margin-bottom: 0.3rem; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+  .problem-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--border);
+    float: right;
+    line-height: 1;
+    margin-left: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="section-label">CIT-U · BSIT 3rd Year · Exam Review</div>
+  <h1>Study Guide — Prefinal Exam</h1>
+  <p>IT344 Systems Administration &amp; Management &nbsp;·&nbsp; IT334 Project Management &amp; OS Concepts</p>
+</header>
+
+<div class="subject-tabs">
+  <div class="subject-tab active" onclick="switchTab(0)">IT344 — SAM 06</div>
+  <div class="subject-tab" onclick="switchTab(1)">IT344 — SAM 07</div>
+  <div class="subject-tab" onclick="switchTab(2)">IT344 — Linux Perms</div>
+  <div class="subject-tab" onclick="switchTab(3)">IT344 — Assignment</div>
+  <div class="subject-tab" onclick="switchTab(4)">IT334 — PERT/CPM</div>
+  <div class="subject-tab" onclick="switchTab(5)">IT334 — CPU Scheduling</div>
+</div>
+
+<!-- ─────────── PAGE 0: SAM 06 ─────────── -->
+<div class="content page active" id="page-0">
+  <div class="section-label">IT344 · SAM Topic 06</div>
+  <h2>DHCP &amp; DNS Servers</h2>
+
+  <h3>DHCP — Dynamic Host Configuration Protocol</h3>
+  <div class="highlight-box">A network management protocol that automatically assigns IP addresses and other network parameters to devices. Operates at the Network layer of TCP/IP.</div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">DHCP Server</div>
+      Centrally installed on the network. Manages the pool of IP addresses and assigns them to clients on request.
+    </div>
+    <div class="card">
+      <div class="card-title">DHCP Client</div>
+      Every device on the network runs a DHCP client that requests IP configuration automatically when it connects.
+    </div>
+  </div>
+
+  <h3>The DORA Process <span class="badge badge-gold">Key Concept</span></h3>
+  <pre>
+<span class="ok">Client  →  Server</span>   DISCOVER   "Is there a DHCP server? I need an IP."
+<span class="ok">Server  →  Client</span>   OFFER      "Here, take 192.168.1.15 for 8 hours."
+<span class="ok">Client  →  Server</span>   REQUEST    "Yes, I'll take 192.168.1.15."
+<span class="ok">Server  →  Client</span>   ACK        "Confirmed. It's yours until [lease expiry]."</pre>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">✅ Pros</div>
+      <ul style="margin:0;padding-left:1.2rem;">
+        <li>Centralized IP management</li>
+        <li>Automated TCP/IP configuration</li>
+        <li>Easy to add new devices</li>
+        <li>Reuses IP addresses efficiently</li>
+        <li>Ideal for wireless / mobile users</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">❌ Cons</div>
+      <ul style="margin:0;padding-left:1.2rem;">
+        <li>IP conflicts can occur</li>
+        <li>Clients accept any DHCP server (rogue server risk)</li>
+        <li>No network access if DHCP server is down</li>
+        <li>Hostname doesn't change with new IP</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>DHCP supports both <strong>IPv4</strong> and <strong>IPv6</strong> (the IPv6 version is called <strong>DHCPv6</strong>). It was first defined in October 1993 and is based on BOOTP (Bootstrap Protocol).</p>
+
+  <hr class="divider">
+
+  <h3>DNS — Domain Name System</h3>
+  <div class="highlight-box">DNS acts as the internet's phonebook. It translates human-readable domain names (e.g., google.com) into IP addresses that computers use to communicate.</div>
+
+  <h3>The 4 Types of DNS Servers</h3>
+  <table>
+    <thead><tr><th>#</th><th>Server Type</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Recursive Resolver</strong></td><td>Receives queries from clients (built into your OS). Contacts other DNS servers to find the answer.</td></tr>
+      <tr><td>2</td><td><strong>Root Nameserver</strong></td><td>First step. Doesn't know the IP but knows who handles .com, .net, .ph, etc.</td></tr>
+      <tr><td>3</td><td><strong>TLD Nameserver</strong></td><td>Handles top-level domains (.com, .net). Points to the authoritative nameserver for the domain.</td></tr>
+      <tr><td>4</td><td><strong>Authoritative Nameserver</strong></td><td>The final answer. Contains the actual DNS record with the IP address.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>DNS Query Flow (No Cache)</h3>
+  <pre>
+Browser asks: "What is the IP for google.com?"
+  → Recursive Resolver → Root Nameserver → "Ask .com TLD server"
+  → TLD Nameserver → "Ask google.com's authoritative server"
+  → Authoritative Nameserver → "It's 142.250.x.x"
+  → Resolver returns IP to browser → Browser connects to 142.250.x.x</pre>
+
+  <div class="warn-box"><strong>Exam tip:</strong> DNS is <em>distributed and fault-tolerant</em> by design. Administrators can delegate authority over subdomains to other name servers — avoiding a single central database that could fail.</div>
+
+  <hr class="divider">
+
+  <h3>Practice Questions</h3>
+  <div class="qa-block">
+    <div class="qa-q">Q: What layer of the TCP/IP model does DHCP operate on?</div>
+    <div class="qa-a"><button class="toggle-btn" onclick="toggleAns(this)">Show Answer</button>
+    <div class="collapsible">The <strong>Network (Application) layer</strong> of the TCP/IP model. DHCP uses UDP, ports 67 (server) and 68 (client).</div></div>
+  </div>
+  <div class="qa-block">
+    <div class="qa-q">Q: A client PC just joined a network and has no IP. What is the very first message it sends?</div>
+    <div class="qa-a"><button class="toggle-btn" onclick="toggleAns(this)">Show Answer</button>
+    <div class="collapsible">A <strong>DHCPDISCOVER</strong> broadcast. It's broadcast because the client doesn't yet know the server's address. (DORA: Discover → Offer → Request → Acknowledge)</div></div>
+  </div>
+  <div class="qa-block">
+    <div class="qa-q">Q: What is the difference between a Root Nameserver and an Authoritative Nameserver?</div>
+    <div class="qa-a"><button class="toggle-btn" onclick="toggleAns(this)">Show Answer</button>
+    <div class="collapsible">A <strong>Root Nameserver</strong> is the starting point of DNS resolution; it knows where the TLD servers are but not the final IP. An <strong>Authoritative Nameserver</strong> holds the actual DNS record and provides the definitive IP address for a domain.</div></div>
+  </div>
+</div>
+
+<!-- ─────────── PAGE 1: SAM 07 ─────────── -->
+<div class="content page" id="page-1">
+  <div class="section-label">IT344 · SAM Topic 07</div>
+  <h2>File and Share Permissions</h2>
+
+  <h3>Two Types of Windows Permissions</h3>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">NTFS Permissions</div>
+      <ul style="margin:0;padding-left:1.2rem;font-size:0.9rem;">
+        <li>File system level control</li>
+        <li>Applied on NTFS-formatted volumes</li>
+        <li><strong>Applies to local AND network users</strong></li>
+        <li>Very granular permission levels</li>
+      </ul>
+      <br>
+      <strong>Levels:</strong> Full Control · Modify · Read &amp; Execute · List Folder · Read · Write
+    </div>
+    <div class="card">
+      <div class="card-title">Share Permissions</div>
+      <ul style="margin:0;padding-left:1.2rem;font-size:0.9rem;">
+        <li>Network-level control only</li>
+        <li>Applied when folder is shared over network</li>
+        <li><strong>Applies ONLY to network users</strong></li>
+        <li>Less granular</li>
+      </ul>
+      <br>
+      <strong>Levels:</strong> Full Control · Change · Read
+    </div>
+  </div>
+
+  <h3>Comparison Table</h3>
+  <table>
+    <thead><tr><th>Feature</th><th>NTFS Permissions</th><th>Share Permissions</th></tr></thead>
+    <tbody>
+      <tr><td>Scope</td><td>Local &amp; Network users</td><td>Network users only</td></tr>
+      <tr><td>Granularity</td><td>6+ permission levels</td><td>3 levels (FC / Change / Read)</td></tr>
+      <tr><td>Applies when</td><td>Always (local + network)</td><td>Only when accessed via share</td></tr>
+      <tr><td>Configured via</td><td>File Properties → Security tab</td><td>File Properties → Sharing tab</td></tr>
+      <tr><td>Works offline</td><td>Yes</td><td>No</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box"><strong>The Most Restrictive Rule:</strong> When NTFS and Share permissions are both set, Windows uses whichever is <em>more restrictive</em>. The combined effective permission is the intersection of both permission sets.</div>
+
+  <h3>Example Scenario</h3>
+  <table>
+    <thead><tr><th></th><th>NTFS</th><th>Share</th><th>Effective Permission</th></tr></thead>
+    <tbody>
+      <tr><td>Case A</td><td>Full Control</td><td>Read</td><td class="cp-cell">Read (most restrictive wins)</td></tr>
+      <tr><td>Case B</td><td>Read</td><td>Full Control</td><td class="cp-cell">Read (most restrictive wins)</td></tr>
+      <tr><td>Case C</td><td>Modify</td><td>Change</td><td style="color:#27ae60">Modify (both allow similar)</td></tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <h3>Explicit vs. Inherited Permissions</h3>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Explicit Permissions</div>
+      Directly assigned to a specific file or folder. <br><br>
+      <span style="color:var(--green)">✓ Always takes priority over inherited</span><br>
+      <strong>Use when:</strong> a sub-folder needs different access than its parent, or a specific user needs unique rights.
+    </div>
+    <div class="card">
+      <div class="card-title">Inherited Permissions</div>
+      Automatically passed down from a parent folder to its children.<br><br>
+      Default behavior in Windows.<br>
+      Can be disabled via the <strong>Disable Inheritance</strong> button in Advanced Security Settings.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>Sharing Methods</h3>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">🔗 Mapped Drive (Persistent)</div>
+      A shared folder is mapped to a drive letter (e.g., Z:) on the user's computer. Reconnects automatically on login.
+      <pre style="margin-top:0.6rem"><span class="cmd">net use Z: \\Server\SharedFolder /persistent:yes</span></pre>
+    </div>
+    <div class="card">
+      <div class="card-title">📁 UNC Path (Direct Access)</div>
+      Access shared folders directly via Universal Naming Convention path. Open Run (Win+R):
+      <pre style="margin-top:0.6rem"><span class="cmd">\\computername\sharedfolder</span></pre>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h3>Practice Questions</h3>
+  <div class="qa-block">
+    <div class="qa-q">Q: A user has Share permission = Full Control, but NTFS permission = Read. What can they actually do?</div>
+    <div class="qa-a"><button class="toggle-btn" onclick="toggleAns(this)">Show Answer</button>
+    <div class="collapsible">They can only <strong>Read</strong>. The most restrictive rule applies: the effective permission is the intersection of NTFS and Share — the more restrictive Read wins over Full Control.</div></div>
+  </div>
+  <div class="qa-block">
+    <div class="qa-q">Q: A local user (not accessing via network) has NTFS = Modify but there's a Share = Read permission. What happens?</div>
+    <div class="qa-a"><button class="toggle-btn" onclick="toggleAns(this)">Show Answer</button>
+    <div class="collapsible">The local user gets <strong>Modify</strong>. Share permissions <em>only apply to network users</em>. Since the user is local, Share permissions are irrelevant and only NTFS applies.</div></div>
+  </div>
+  <div class="qa-block">
+    <div class="qa-q">Q: What is the difference between Explicit and Inherited permissions? Which takes priority?</div>
+    <div class="qa-a"><button class="toggle-btn" onclick="toggleAns(this)">Show Answer</button>
+    <div class="collapsible"><strong>Explicit</strong> permissions are directly set on the specific file/folder. <strong>Inherited</strong> permissions flow down from the parent folder. Explicit permissions always <em>take priority</em> over inherited ones. You can break inheritance via "Disable Inheritance" in Advanced Settings.</div></div>
+  </div>
+</div>
+
+<!-- ─────────── PAGE 2: Linux Perms ─────────── -->
+<div class="content page" id="page-2">
+  <div class="section-label">IT344 · Linux File Permissions</div>
+  <h2>Linux File Permissions</h2>
+
+  <h3>Permission String Format</h3>
+  <pre>
+-  rwx  r-x  r--
+│   │    │    └── Other:  read only
+│   │    └─────── Group:  read + execute
+│   └──────────── Owner:  read + write + execute
+└──────────────── File type: - (file), d (dir), l (link)</pre>
+
+  <div class="perm-grid">
+    <div class="perm-cell">
+      <div class="perm-label">Read</div>
+      <div class="perm-val">r = 4</div>
+      <div class="perm-sub">View file contents / List directory</div>
+    </div>
+    <div class="perm-cell">
+      <div class="perm-label">Write</div>
+      <div class="perm-val">w = 2</div>
+      <div class="perm-sub">Modify file / Create or delete in directory</div>
+    </div>
+    <div class="perm-cell">
+      <div class="perm-label">Execute</div>
+      <div class="perm-val">x = 1</div>
+      <div class="perm-sub">Run file / Enter directory (cd)</div>
+    </div>
+  </div>
+
+  <h3>Octal Notation Quick Reference</h3>
+  <table>
+    <thead><tr><th>Octal</th><th>Binary</th><th>Symbolic</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td>7</td><td>111</td><td>rwx</td><td>Read + Write + Execute</td></tr>
+      <tr><td>6</td><td>110</td><td>rw-</td><td>Read + Write</td></tr>
+      <tr><td>5</td><td>101</td><td>r-x</td><td>Read + Execute</td></tr>
+      <tr><td>4</td><td>100</td><td>r--</td><td>Read only</td></tr>
+      <tr><td>0</td><td>000</td><td>---</td><td>No permissions</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Essential Commands</h3>
+  <pre>
+<span class="comment"># View permissions</span>
+<span class="cmd">ls -l</span>
+
+<span class="comment"># Change permissions (octal)</span>
+<span class="cmd">chmod 755 filename</span>      <span class="comment"># owner=rwx, group=r-x, other=r-x</span>
+<span class="cmd">chmod 644 filename</span>      <span class="comment"># owner=rw-, group=r--, other=r--</span>
+<span class="cmd">chmod 400 filename</span>      <span class="comment"># owner=r-- only (read-only, secure)</span>
+
+<span class="comment"># Change permissions (symbolic)</span>
+<span class="cmd">chmod u+x filename</span>      <span class="comment"># add execute for user/owner</span>
+<span class="cmd">chmod g-w filename</span>      <span class="comment"># remove write for group</span>
+<span class="cmd">chmod o=r filename</span>      <span class="comment"># set other to read-only</span>
+<span class="cmd">chmod a+r filename</span>      <span class="comment"># add read for all (a = all)</span>
+
+<span class="comment"># Change ownership</span>
+<span class="cmd">chown username filename</span>
+<span class="cmd">chown username:groupname filename</span>
+<span class="cmd">chown -R username /folder</span>   <span class="comment"># recursive</span>
+
+<span class="comment"># Change group</span>
+<span class="cmd">chgrp groupname filename</span></pre>
+
+  <h3>KodeKloud Activity Concepts</h3>
+
+  <div class="card">
+    <div class="card-title">Activity 6 — Linux User Data Transfer</div>
+    Moving files between users while respecting ownership. Key concepts:
+    <pre style="margin-top:0.6rem">
+<span class="comment"># Copy files preserving permissions</span>
+<span class="cmd">cp -a /home/user1/data /home/user2/</span>
+
+<span class="comment"># Transfer ownership after copy</span>
+<span class="cmd">chown -R user2:user2 /home/user2/data</span>
+
+<span class="comment"># Using rsync for data transfer</span>
+<span class="cmd">rsync -av /source/path/ /destination/path/</span>
+
+<span class="comment"># Verify permissions after transfer</span>
+<span class="cmd">ls -la /home/user2/data</span></pre>
+    <div class="ok-box" style="margin:0.6rem 0 0">Key rule: <strong>Transferred files keep their original owner</strong> unless you explicitly <code>chown</code> them. Always verify after transfer.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Activity 7 — Secure Root SSH Access</div>
+    Disabling direct root SSH login (security best practice):
+    <pre style="margin-top:0.6rem">
+<span class="comment"># Edit SSH config</span>
+<span class="cmd">sudo nano /etc/ssh/sshd_config</span>
+
+<span class="comment"># Find and change this line:</span>
+<span class="critical">PermitRootLogin yes</span>   <span class="comment"># ← INSECURE</span>
+<span class="ok">PermitRootLogin no</span>    <span class="comment"># ← SECURE</span>
+
+<span class="comment"># Restart SSH service to apply</span>
+<span class="cmd">sudo systemctl restart sshd</span>
+
+<span class="comment"># To become root after SSH as normal user:</span>
+<span class="cmd">sudo su -</span>
+<span class="comment"># or</span>
+<span class="cmd">sudo -i</span></pre>
+    <div class="warn-box" style="margin:0.6rem 0 0">⚠️ Before disabling root SSH, ensure you have a sudo user that can escalate! Otherwise you'll lock yourself out.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Activity 8 — Data Backup for Developer</div>
+    Creating backups using tar and cron:
+    <pre style="margin-top:0.6rem">
+<span class="comment"># Create a compressed archive backup</span>
+<span class="cmd">tar -czvf backup_$(date +%Y%m%d).tar.gz /path/to/data</span>
+
+<span class="comment"># Flags: c=create, z=gzip compress, v=verbose, f=filename</span>
+
+<span class="comment"># Extract a backup</span>
+<span class="cmd">tar -xzvf backup_20260419.tar.gz</span>
+
+<span class="comment"># Schedule automatic backup via cron</span>
+<span class="cmd">crontab -e</span>
+<span class="comment"># Add this line for daily backup at 2AM:</span>
+<span class="ok">0 2 * * * tar -czvf /backup/dev_$(date +\%Y\%m\%d).tar.gz /home/dev/</span>
+
+<span class="comment"># Verify cron jobs</span>
+<span class="cmd">crontab -l</span></pre>
+  </div>
+
+  <hr class="divider">
+  <h3>Quick Reference: Common Permission Patterns</h3>
+  <table>
+    <thead><tr><th>Octal</th><th>Symbolic</th><th>Typical Use Case</th></tr></thead>
+    <tbody>
+      <tr><td>755</td><td>rwxr-xr-x</td><td>Web directories, executables</td></tr>
+      <tr><td>644</td><td>rw-r--r--</td><td>Web files, config files</td></tr>
+      <tr><td>600</td><td>rw-------</td><td>Private SSH keys, sensitive configs</td></tr>
+      <tr><td>777</td><td>rwxrwxrwx</td><td>⚠️ Avoid — full access for everyone</td></tr>
+      <tr><td>400</td><td>r--------</td><td>Read-only private files</td></tr>
+      <tr><td>700</td><td>rwx------</td><td>User-only executable scripts</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ─────────── PAGE 3: Assignment ─────────── -->
+<div class="content page" id="page-3">
+  <div class="section-label">IT344 · Assignment Answers</div>
+  <h2>Assignment: NTFS &amp; Share Permissions</h2>
+
+  <div class="qa-block">
+    <div class="qa-q">1a. Compare &amp; Contrast: What is the difference between NTFS and Windows sharing permissions?</div>
+    <div class="qa-a">
+      <p><strong>NTFS Permissions</strong> are enforced at the <em>file system level</em> and apply to every user — both local users and network users. They offer very granular control with levels like Full Control, Modify, Read &amp; Execute, List Folder Contents, Read, and Write. NTFS permissions persist whether a user is sitting at the machine or accessing it over the network.</p>
+      <p><strong>Share Permissions</strong> are a <em>network-level control</em> and only apply when a user accesses a folder through a network share. They have only three levels — Full Control, Change, and Read — and have no effect on users logged in locally to the machine. Share permissions act as the first gate for network access, while NTFS permissions enforce the final boundary.</p>
+      <table style="margin-top:0.6rem">
+        <thead><tr><th>Feature</th><th>NTFS</th><th>Share</th></tr></thead>
+        <tbody>
+          <tr><td>Who it applies to</td><td>Local + Network users</td><td>Network users only</td></tr>
+          <tr><td>Where enforced</td><td>File system (disk level)</td><td>Network share point</td></tr>
+          <tr><td>Granularity</td><td>6+ levels</td><td>3 levels</td></tr>
+          <tr><td>Works offline (local)</td><td>Yes</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q">1b. Give at least one example scenario where the combination of both affects user access.</div>
+    <div class="qa-a">
+      <div class="highlight-box"><strong>Scenario:</strong> An admin shares a folder "Reports" over the network. The Share permission is set to <em>Full Control</em> for "Everyone," but the NTFS permission for a specific user, Alice, is set to <em>Read</em> only.</div>
+      <p><strong>Result:</strong> Even though the Share permission grants Alice Full Control, the NTFS permission (Read) is more restrictive. Windows applies the most restrictive rule, so Alice can only <strong>read</strong> the files — she cannot modify, delete, or create new files in that folder. The Share permission "promise" is effectively overridden by NTFS at the file system level.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="qa-block">
+    <div class="qa-q">2a. Critical Thinking: Why does Windows apply the "most restrictive" rule when combining NTFS and sharing permissions?</div>
+    <div class="qa-a">
+      <p>Windows applies the most restrictive rule because it follows a <strong>security-first, least-privilege principle</strong>. The intent is that if any layer of permission restricts access, that restriction should hold. This prevents a scenario where a misconfigured Share permission accidentally grants more access than the administrator intended at the file system level, or vice versa.</p>
+      <p>Think of it as two security guards at two doors. Even if one guard lets you through, the other can still stop you. The most restrictive guard always wins — ensuring no single configuration mistake opens a dangerous loophole.</p>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qa-q">2b. How does this protect files in a multi-user environment?</div>
+    <div class="qa-a">
+      <p>In a multi-user environment (e.g., a school lab or office), different users may belong to different groups with different privilege levels. The most-restrictive rule ensures:</p>
+      <ul>
+        <li><strong>No accidental privilege escalation</strong> — a wide-open Share permission can't bypass a tight NTFS restriction.</li>
+        <li><strong>Defense in depth</strong> — even if an attacker compromises the network share settings, NTFS permissions provide a second barrier.</li>
+        <li><strong>Granular user control</strong> — admins can confidently set Share to "Full Control for Everyone" for simplicity, and use NTFS to fine-tune what each user/group can actually do per file or folder.</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="qa-block">
+    <div class="qa-q">3. Application: You're setting up a shared folder for classmates who should view files but NOT delete them. What permissions do you assign? Justify.</div>
+    <div class="qa-a">
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Share Permission Setting</div>
+          Set to: <strong style="color:var(--gold)">Read</strong><br><br>
+          This allows classmates to access the shared folder over the network and see its contents, but the "Change" and "Full Control" options that would allow deletion are not granted at the share level.
+        </div>
+        <div class="card">
+          <div class="card-title">NTFS Permission Setting</div>
+          Set to: <strong style="color:var(--gold)">Read &amp; Execute</strong> (or just Read)<br><br>
+          This allows opening and reading files. Crucially, <strong>do NOT grant Write or Modify</strong>, which would enable file modification or deletion.
+        </div>
+      </div>
+      <div class="ok-box">
+        <strong>Justification:</strong> By setting both Share and NTFS to Read-level, you ensure classmates can open and view any file in the folder but cannot delete, rename, or modify them. The most-restrictive rule reinforces this — even if one layer is accidentally changed, the other acts as a safety net. NTFS "Read" specifically excludes the Delete special permission, which requires "Modify" or higher.
+      </div>
+      <div class="warn-box">
+        <strong>What to avoid:</strong> Do not grant "Change" on Share or "Modify/Full Control" on NTFS — both include delete capability. Also avoid granting "Write" which allows creating/overwriting files.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────── PAGE 4: PERT/CPM ─────────── -->
+<div class="content page" id="page-4">
+  <div class="section-label">IT334 · Project Management</div>
+  <h2>PERT / CPM Network Diagram — Table 6-2</h2>
+
+  <div class="card">
+    <div class="card-title">Activity Data</div>
+    <table>
+      <thead><tr><th>Activity</th><th>Initial Node</th><th>Final Node</th><th>Duration</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>1</td><td>2</td><td>2</td></tr>
+        <tr><td>B</td><td>2</td><td>3</td><td>2</td></tr>
+        <tr><td>C</td><td>2</td><td>4</td><td>3</td></tr>
+        <tr><td>D</td><td>2</td><td>5</td><td>4</td></tr>
+        <tr><td>E</td><td>3</td><td>6</td><td>2</td></tr>
+        <tr><td>F</td><td>4</td><td>6</td><td>3</td></tr>
+        <tr><td>G</td><td>5</td><td>7</td><td>6</td></tr>
+        <tr><td>H</td><td>6</td><td>8</td><td>2</td></tr>
+        <tr><td>I</td><td>6</td><td>7</td><td>5</td></tr>
+        <tr><td>J</td><td>7</td><td>8</td><td>1</td></tr>
+        <tr><td>K</td><td>8</td><td>9</td><td>2</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Step 1 — Forward Pass (Earliest Event Times)</h3>
+  <div class="highlight-box">For each node: EET = maximum of (predecessor EET + activity duration). This finds the <em>earliest</em> the project can reach each node.</div>
+  <pre>
+Node 1:  EET = 0          (project start)
+Node 2:  EET = 0 + 2 = 2  (via A)
+Node 3:  EET = 2 + 2 = 4  (via B)
+Node 4:  EET = 2 + 3 = 5  (via C)
+Node 5:  EET = 2 + 4 = 6  (via D)
+Node 6:  EET = max(4+2, 5+3) = max(6, 8) = <span class="ok">8</span>  (E and F meet here)
+Node 7:  EET = max(6+6, 8+5) = max(12, 13) = <span class="ok">13</span>  (G and I meet here)
+Node 8:  EET = max(8+2, 13+1) = max(10, 14) = <span class="ok">14</span>  (H and J meet here)
+Node 9:  EET = 14 + 2 = <span class="ok">16</span>  (via K — project duration)</pre>
+
+  <h3>Step 2 — Backward Pass (Latest Event Times)</h3>
+  <div class="highlight-box">For each node: LET = minimum of (successor LET − activity duration). Start from the end node (LET = EET = 16) and work backwards.</div>
+  <pre>
+Node 9:  LET = 16         (must finish by 16)
+Node 8:  LET = 16 - 2 = 14  (via K)
+Node 7:  LET = 14 - 1 = 13  (via J)
+Node 6:  LET = min(14-2, 13-5) = min(12, 8) = <span class="ok">8</span>  (H and I go forward from here)
+Node 5:  LET = 13 - 6 = 7   (via G)
+Node 4:  LET = 8 - 3 = 5    (via F)
+Node 3:  LET = 8 - 2 = 6    (via E)
+Node 2:  LET = min(6-2, 5-3, 7-4) = min(4, 2, 3) = <span class="ok">2</span>
+Node 1:  LET = 2 - 2 = <span class="ok">0</span>   ✓ confirms correct</pre>
+
+  <h3>Step 3 — Activity Float &amp; Critical Path</h3>
+  <div class="highlight-box">Total Float = LET(final node) − EET(initial node) − Duration. Activities with Float = 0 are <strong>CRITICAL</strong>.</div>
+  <table>
+    <thead><tr><th>Activity</th><th>Duration</th><th>ES</th><th>EF</th><th>LF</th><th>LS</th><th>Total Float</th><th>Critical?</th></tr></thead>
+    <tbody>
+      <tr class="critical-row"><td>A</td><td>2</td><td>0</td><td>2</td><td>2</td><td>0</td><td class="cp-cell">0</td><td class="cp-cell">✓ YES</td></tr>
+      <tr><td>B</td><td>2</td><td>2</td><td>4</td><td>6</td><td>4</td><td>2</td><td>No</td></tr>
+      <tr class="critical-row"><td>C</td><td>3</td><td>2</td><td>5</td><td>5</td><td>2</td><td class="cp-cell">0</td><td class="cp-cell">✓ YES</td></tr>
+      <tr><td>D</td><td>4</td><td>2</td><td>6</td><td>7</td><td>3</td><td>1</td><td>No</td></tr>
+      <tr><td>E</td><td>2</td><td>4</td><td>6</td><td>8</td><td>6</td><td>2</td><td>No</td></tr>
+      <tr class="critical-row"><td>F</td><td>3</td><td>5</td><td>8</td><td>8</td><td>5</td><td class="cp-cell">0</td><td class="cp-cell">✓ YES</td></tr>
+      <tr><td>G</td><td>6</td><td>6</td><td>12</td><td>13</td><td>7</td><td>1</td><td>No</td></tr>
+      <tr><td>H</td><td>2</td><td>8</td><td>10</td><td>14</td><td>12</td><td>4</td><td>No</td></tr>
+      <tr class="critical-row"><td>I</td><td>5</td><td>8</td><td>13</td><td>13</td><td>8</td><td class="cp-cell">0</td><td class="cp-cell">✓ YES</td></tr>
+      <tr class="critical-row"><td>J</td><td>1</td><td>13</td><td>14</td><td>14</td><td>13</td><td class="cp-cell">0</td><td class="cp-cell">✓ YES</td></tr>
+      <tr class="critical-row"><td>K</td><td>2</td><td>14</td><td>16</td><td>16</td><td>14</td><td class="cp-cell">0</td><td class="cp-cell">✓ YES</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ok-box">
+    <strong>Critical Path:</strong> <code>1 → 2 → 4 → 6 → 7 → 8 → 9</code> via activities <strong>A – C – F – I – J – K</strong><br>
+    <strong>Project Duration:</strong> 2 + 3 + 3 + 5 + 1 + 2 = <strong>16 time units</strong>
+  </div>
+
+  <hr class="divider">
+  <h3>Key Definitions to Remember</h3>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">EET vs LET</div>
+      <strong>EET</strong> (Earliest Event Time) = the earliest a node can be reached.<br>
+      <strong>LET</strong> (Latest Event Time) = the latest a node can be reached without delaying the project.<br><br>
+      For the <em>start node</em>: EET = LET = 0<br>
+      For the <em>end node</em>: EET = LET = project duration
+    </div>
+    <div class="card">
+      <div class="card-title">Float Types</div>
+      <strong>Total Float</strong> = LF − EF = LS − ES (how much an activity can be delayed without delaying the project)<br><br>
+      <strong>Free Float</strong> = EET(successor) − EF (how much without delaying any successor)<br><br>
+      <strong>Critical activities</strong>: TF = 0
+    </div>
+  </div>
+</div>
+
+<!-- ─────────── PAGE 5: CPU Scheduling ─────────── -->
+<div class="content page" id="page-5">
+  <div class="section-label">IT334 · Operating Systems</div>
+  <h2>CPU Scheduling — Practice Problems</h2>
+
+  <div class="highlight-box" style="margin-bottom:1.2rem">
+    <strong>Key Formulas:</strong><br>
+    Turnaround Time (TAT) = Completion Time − Arrival Time<br>
+    Waiting Time (WT) = TAT − Burst Time
+  </div>
+
+  <!-- PROBLEM 1: SJF -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Problem 1 — SJF Non-Preemptive <span class="badge badge-gold">Shortest Job First</span></div>
+    <table>
+      <thead><tr><th>Process</th><th>Arrival</th><th>Burst</th><th>Completion</th><th>TAT</th><th>WT</th></tr></thead>
+      <tbody>
+        <tr><td>P1</td><td>0</td><td>7</td><td>7</td><td>7</td><td>0</td></tr>
+        <tr><td>P3</td><td>4</td><td>1</td><td>8</td><td>4</td><td>3</td></tr>
+        <tr><td>P5</td><td>6</td><td>2</td><td>10</td><td>4</td><td>2</td></tr>
+        <tr><td>P2</td><td>2</td><td>4</td><td>14</td><td>12</td><td>8</td></tr>
+        <tr><td>P4</td><td>5</td><td>4</td><td>18</td><td>13</td><td>9</td></tr>
+      </tbody>
+    </table>
+    <button class="toggle-btn" onclick="toggleAns(this)">Show Gantt &amp; Explanation</button>
+    <div class="collapsible">
+      <h3 style="margin-top:0.8rem">Gantt Chart</h3>
+      <div class="gantt-wrap">
+        <div class="gantt">
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:70px">P1(7)</div><div class="gantt-time">0</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:10px">P3</div><div class="gantt-time">7</div></div>
+          <div class="gantt-block"><div class="gantt-bar p5" style="width:20px">P5</div><div class="gantt-time">8</div></div>
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:40px">P2(4)</div><div class="gantt-time">10</div></div>
+          <div class="gantt-block"><div class="gantt-bar p4" style="width:40px">P4(4)</div><div class="gantt-time">14</div></div>
+          <div class="gantt-block"><div style="width:1px"></div><div class="gantt-time">18</div></div>
+        </div>
+      </div>
+      <pre style="margin-top:0.8rem">
+t=0:  Only P1 available → P1 runs (0→7)
+t=7:  P2(4), P3(1), P4(4), P5(2) all arrived → <span class="ok">P3 shortest (1)</span> → runs (7→8)
+t=8:  P2(4), P4(4), P5(2) → <span class="ok">P5 shortest (2)</span> → runs (8→10)
+t=10: P2(4), P4(4) → <span class="ok">tie: pick P2</span> → runs (10→14)
+t=14: Only P4 → P4 runs (14→18)
+
+<span class="ok">Avg TAT = (7+4+4+12+13)/5 = 40/5 = 8.0</span>
+<span class="ok">Avg WT  = (0+3+2+8+9)/5  = 22/5 = 4.4</span></pre>
+    </div>
+  </div>
+
+  <!-- PROBLEM 2: SRTF -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Problem 2 — SRTF Preemptive <span class="badge badge-gold">Shortest Remaining Time First</span></div>
+    <p style="font-size:0.85rem;margin-bottom:0.6rem">Same processes as Problem 1 but preemptive — a new arrival can kick out the running process if it has a shorter remaining burst.</p>
+    <button class="toggle-btn" onclick="toggleAns(this)">Show Full Solution</button>
+    <div class="collapsible">
+      <pre style="margin-top:0.8rem">
+t=0:  P1(7) only → P1 starts
+t=2:  P2 arrives (burst=4). P1 remaining=5. <span class="ok">P2(4) &lt; P1(5)</span> → preempt P1, P2 runs
+t=4:  P3 arrives (burst=1). P1 rem=5, P2 rem=2. <span class="ok">P3(1) wins</span> → P3 runs (4→5)
+t=5:  P3 done. P4 arrives (burst=4). P1=5, P2=2, P4=4. <span class="ok">P2(2) wins</span> → P2 runs
+t=6:  P5 arrives (burst=2). P1=5, P2=1, P4=4, P5=2. <span class="ok">P2(1) wins</span> → P2 continues
+t=7:  P2 done. P1=5, P4=4, P5=2. <span class="ok">P5(2) wins</span> → P5 runs (7→9)
+t=9:  P5 done. P1=5, P4=4. <span class="ok">P4(4) wins</span> → P4 runs (9→13)
+t=13: P4 done. Only P1(5) left → P1 runs (13→18)</pre>
+      <h3>Gantt Chart</h3>
+      <div class="gantt-wrap">
+        <div class="gantt">
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:20px">P1</div><div class="gantt-time">0</div></div>
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:20px">P2</div><div class="gantt-time">2</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:10px">P3</div><div class="gantt-time">4</div></div>
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:20px">P2</div><div class="gantt-time">5</div></div>
+          <div class="gantt-block"><div class="gantt-bar p5" style="width:20px">P5</div><div class="gantt-time">7</div></div>
+          <div class="gantt-block"><div class="gantt-bar p4" style="width:40px">P4</div><div class="gantt-time">9</div></div>
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:50px">P1</div><div class="gantt-time">13</div></div>
+          <div class="gantt-block"><div style="width:1px"></div><div class="gantt-time">18</div></div>
+        </div>
+      </div>
+      <table style="margin-top:0.8rem">
+        <thead><tr><th>Process</th><th>Arrival</th><th>Burst</th><th>Completion</th><th>TAT</th><th>WT</th></tr></thead>
+        <tbody>
+          <tr><td>P1</td><td>0</td><td>7</td><td>18</td><td>18</td><td>11</td></tr>
+          <tr><td>P2</td><td>2</td><td>4</td><td>7</td><td>5</td><td>1</td></tr>
+          <tr><td>P3</td><td>4</td><td>1</td><td>5</td><td>1</td><td>0</td></tr>
+          <tr><td>P4</td><td>5</td><td>4</td><td>13</td><td>8</td><td>4</td></tr>
+          <tr><td>P5</td><td>6</td><td>2</td><td>9</td><td>3</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <pre>
+<span class="ok">Avg TAT = (18+5+1+8+3)/5 = 35/5 = 7.0</span>
+<span class="ok">Avg WT  = (11+1+0+4+1)/5 = 17/5 = 3.4</span></pre>
+    </div>
+  </div>
+
+  <!-- PROBLEM 3: RR No Arrival -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Problem 3 — Round Robin (No Arrival Time) <span class="badge badge-gold">TQ = 3ms</span></div>
+    <p style="font-size:0.85rem;margin-bottom:0.6rem">P1=10, P2=5, P3=8, P4=6, P5=3. All arrive at t=0.</p>
+    <button class="toggle-btn" onclick="toggleAns(this)">Show Full Solution</button>
+    <div class="collapsible">
+      <pre style="margin-top:0.8rem">
+Queue order on each round (TQ=3):
+t=0:  P1 runs → rem=7  (t=3)
+t=3:  P2 runs → rem=2  (t=6)
+t=6:  P3 runs → rem=5  (t=9)
+t=9:  P4 runs → rem=3  (t=12)
+t=12: P5 runs → rem=0  <span class="ok">P5 DONE at t=15</span>
+t=15: P1 runs → rem=4  (t=18)
+t=18: P2 runs → rem=0  <span class="ok">P2 DONE at t=20</span>
+t=20: P3 runs → rem=2  (t=23)
+t=23: P4 runs → rem=0  <span class="ok">P4 DONE at t=26</span>
+t=26: P1 runs → rem=1  (t=29)
+t=29: P3 runs → rem=0  <span class="ok">P3 DONE at t=31</span>
+t=31: P1 runs → rem=0  <span class="ok">P1 DONE at t=32</span></pre>
+      <div class="gantt-wrap" style="margin:0.6rem 0">
+        <div class="gantt">
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:30px">P1</div><div class="gantt-time">0</div></div>
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:30px">P2</div><div class="gantt-time">3</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:30px">P3</div><div class="gantt-time">6</div></div>
+          <div class="gantt-block"><div class="gantt-bar p4" style="width:30px">P4</div><div class="gantt-time">9</div></div>
+          <div class="gantt-block"><div class="gantt-bar p5" style="width:30px">P5</div><div class="gantt-time">12</div></div>
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:30px">P1</div><div class="gantt-time">15</div></div>
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:20px">P2</div><div class="gantt-time">18</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:30px">P3</div><div class="gantt-time">20</div></div>
+          <div class="gantt-block"><div class="gantt-bar p4" style="width:30px">P4</div><div class="gantt-time">23</div></div>
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:30px">P1</div><div class="gantt-time">26</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:20px">P3</div><div class="gantt-time">29</div></div>
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:10px">P1</div><div class="gantt-time">31</div></div>
+          <div class="gantt-block"><div style="width:1px"></div><div class="gantt-time">32</div></div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Process</th><th>Burst</th><th>Completion</th><th>TAT</th><th>WT</th></tr></thead>
+        <tbody>
+          <tr><td>P1</td><td>10</td><td>32</td><td>32</td><td>22</td></tr>
+          <tr><td>P2</td><td>5</td><td>20</td><td>20</td><td>15</td></tr>
+          <tr><td>P3</td><td>8</td><td>31</td><td>31</td><td>23</td></tr>
+          <tr><td>P4</td><td>6</td><td>26</td><td>26</td><td>20</td></tr>
+          <tr><td>P5</td><td>3</td><td>15</td><td>15</td><td>12</td></tr>
+        </tbody>
+      </table>
+      <pre>
+<span class="ok">Avg TAT = (32+20+31+26+15)/5 = 124/5 = 24.8 ms</span>
+<span class="ok">Avg WT  = (22+15+23+20+12)/5 =  92/5 = 18.4 ms</span></pre>
+    </div>
+  </div>
+
+  <!-- PROBLEM 4: RR With Arrival -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Problem 4 — Round Robin with Arrival Time <span class="badge badge-gold">TQ = 2ms</span></div>
+    <p style="font-size:0.85rem;margin-bottom:0.6rem">P1(at=0,bt=5), P2(at=1,bt=3), P3(at=2,bt=6), P4(at=4,bt=4)</p>
+    <button class="toggle-btn" onclick="toggleAns(this)">Show Full Solution</button>
+    <div class="collapsible">
+      <pre style="margin-top:0.8rem">
+t=0:  Queue=[P1]. P1 runs.
+t=1:  P2 arrives → Queue=[P2] (after current P1)
+t=2:  P1 quantum done (rem=3). P3 arrives. Queue=[P2,P3,P1]
+      P2 starts.
+t=4:  P2 quantum done (rem=1). P4 arrives. Queue=[P3,P1,P4,P2]
+      P3 starts.
+t=6:  P3 quantum done (rem=4). Queue=[P1,P4,P2,P3]. P1 starts.
+t=8:  P1 quantum done (rem=1). Queue=[P4,P2,P3,P1]. P4 starts.
+t=10: P4 quantum done (rem=2). Queue=[P2,P3,P1,P4]. P2 starts.
+t=11: P2 done (rem=0). <span class="ok">P2 DONE at t=11</span> Queue=[P3,P1,P4]. P3 starts.
+t=13: P3 quantum done (rem=2). Queue=[P1,P4,P3]. P1 starts.
+t=14: P1 done (rem=0). <span class="ok">P1 DONE at t=14</span> Queue=[P4,P3]. P4 starts.
+t=16: P4 done (rem=0). <span class="ok">P4 DONE at t=16</span> Queue=[P3]. P3 starts.
+t=18: P3 done (rem=0). <span class="ok">P3 DONE at t=18</span></pre>
+      <div class="gantt-wrap" style="margin:0.6rem 0">
+        <div class="gantt">
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:20px">P1</div><div class="gantt-time">0</div></div>
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:20px">P2</div><div class="gantt-time">2</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:20px">P3</div><div class="gantt-time">4</div></div>
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:20px">P1</div><div class="gantt-time">6</div></div>
+          <div class="gantt-block"><div class="gantt-bar p4" style="width:20px">P4</div><div class="gantt-time">8</div></div>
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:10px">P2</div><div class="gantt-time">10</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:20px">P3</div><div class="gantt-time">11</div></div>
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:10px">P1</div><div class="gantt-time">13</div></div>
+          <div class="gantt-block"><div class="gantt-bar p4" style="width:20px">P4</div><div class="gantt-time">14</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:20px">P3</div><div class="gantt-time">16</div></div>
+          <div class="gantt-block"><div style="width:1px"></div><div class="gantt-time">18</div></div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Process</th><th>Arrival</th><th>Burst</th><th>Completion</th><th>TAT</th><th>WT</th></tr></thead>
+        <tbody>
+          <tr><td>P1</td><td>0</td><td>5</td><td>14</td><td>14</td><td>9</td></tr>
+          <tr><td>P2</td><td>1</td><td>3</td><td>11</td><td>10</td><td>7</td></tr>
+          <tr><td>P3</td><td>2</td><td>6</td><td>18</td><td>16</td><td>10</td></tr>
+          <tr><td>P4</td><td>4</td><td>4</td><td>16</td><td>12</td><td>8</td></tr>
+        </tbody>
+      </table>
+      <pre>
+<span class="ok">Avg TAT = (14+10+16+12)/4 = 52/4 = 13.0 ms</span>
+<span class="ok">Avg WT  = (9+7+10+8)/4   = 34/4 =  8.5 ms</span></pre>
+    </div>
+  </div>
+
+  <!-- PROBLEM 5: Priority -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Problem 5 — Priority Scheduling (No Arrival) <span class="badge badge-gold">Lower # = Higher Priority</span></div>
+    <p style="font-size:0.85rem;margin-bottom:0.6rem">P1(bt=10,p=3), P2(bt=1,p=1), P3(bt=2,p=4), P4(bt=1,p=5), P5(bt=5,p=2)</p>
+    <button class="toggle-btn" onclick="toggleAns(this)">Show Full Solution</button>
+    <div class="collapsible">
+      <pre style="margin-top:0.8rem">
+All arrive at t=0. Sort by priority (ascending):
+P2(p=1) → P5(p=2) → P1(p=3) → P3(p=4) → P4(p=5)
+
+Gantt: P2(0→1) | P5(1→6) | P1(6→16) | P3(16→18) | P4(18→19)</pre>
+      <div class="gantt-wrap" style="margin:0.6rem 0">
+        <div class="gantt">
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:10px">P2</div><div class="gantt-time">0</div></div>
+          <div class="gantt-block"><div class="gantt-bar p5" style="width:50px">P5</div><div class="gantt-time">1</div></div>
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:100px">P1</div><div class="gantt-time">6</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:20px">P3</div><div class="gantt-time">16</div></div>
+          <div class="gantt-block"><div class="gantt-bar p4" style="width:10px">P4</div><div class="gantt-time">18</div></div>
+          <div class="gantt-block"><div style="width:1px"></div><div class="gantt-time">19</div></div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Process</th><th>Burst</th><th>Priority</th><th>Completion</th><th>TAT</th><th>WT</th></tr></thead>
+        <tbody>
+          <tr><td>P1</td><td>10</td><td>3</td><td>16</td><td>16</td><td>6</td></tr>
+          <tr><td>P2</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+          <tr><td>P3</td><td>2</td><td>4</td><td>18</td><td>18</td><td>16</td></tr>
+          <tr><td>P4</td><td>1</td><td>5</td><td>19</td><td>19</td><td>18</td></tr>
+          <tr><td>P5</td><td>5</td><td>2</td><td>6</td><td>6</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <pre>
+<span class="ok">Avg TAT = (16+1+18+19+6)/5 = 60/5 = 12.0 ms</span>
+<span class="ok">Avg WT  = (6+0+16+18+1)/5  = 41/5 =  8.2 ms</span></pre>
+    </div>
+  </div>
+
+  <!-- PROBLEM 6: Priority with Arrival -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Problem 6 — Priority Scheduling with Arrival Time <span class="badge badge-gold">Lower # = Higher Priority</span></div>
+    <p style="font-size:0.85rem;margin-bottom:0.6rem">P1(at=0,bt=7,p=2), P2(at=2,bt=4,p=1), P3(at=3,bt=1,p=3), P4(at=5,bt=4,p=2)</p>
+    <button class="toggle-btn" onclick="toggleAns(this)">Show Full Solution</button>
+    <div class="collapsible">
+      <pre style="margin-top:0.8rem">
+t=0:  Only P1 available → P1 runs (0→7) [non-preemptive]
+t=7:  P2(p=1), P3(p=3), P4(p=2) all available
+      Highest priority: <span class="ok">P2(p=1)</span> → P2 runs (7→11)
+t=11: P3(p=3), P4(p=2) available
+      Highest priority: <span class="ok">P4(p=2)</span> → P4 runs (11→15)
+t=15: Only P3 left → P3 runs (15→16)</pre>
+      <div class="gantt-wrap" style="margin:0.6rem 0">
+        <div class="gantt">
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:70px">P1(7)</div><div class="gantt-time">0</div></div>
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:40px">P2(4)</div><div class="gantt-time">7</div></div>
+          <div class="gantt-block"><div class="gantt-bar p4" style="width:40px">P4(4)</div><div class="gantt-time">11</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:10px">P3</div><div class="gantt-time">15</div></div>
+          <div class="gantt-block"><div style="width:1px"></div><div class="gantt-time">16</div></div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Process</th><th>Arrival</th><th>Burst</th><th>Priority</th><th>Completion</th><th>TAT</th><th>WT</th></tr></thead>
+        <tbody>
+          <tr><td>P1</td><td>0</td><td>7</td><td>2</td><td>7</td><td>7</td><td>0</td></tr>
+          <tr><td>P2</td><td>2</td><td>4</td><td>1</td><td>11</td><td>9</td><td>5</td></tr>
+          <tr><td>P3</td><td>3</td><td>1</td><td>3</td><td>16</td><td>13</td><td>12</td></tr>
+          <tr><td>P4</td><td>5</td><td>4</td><td>2</td><td>15</td><td>10</td><td>6</td></tr>
+        </tbody>
+      </table>
+      <pre>
+<span class="ok">Avg TAT = (7+9+13+10)/4 = 39/4 = 9.75 ms</span>
+<span class="ok">Avg WT  = (0+5+12+6)/4  = 23/4 = 5.75 ms</span></pre>
+    </div>
+  </div>
+
+  <!-- PROBLEM from lecture: FCFS ABCDE -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Lecture Problem — FCFS (A,B,C,D,E arrive simultaneously) <span class="badge badge-gold">First Come First Served</span></div>
+    <p style="font-size:0.85rem;margin-bottom:0.6rem">A=10ms, B=6ms, C=2ms, D=8ms, E=4ms. All arrive at t=0 in order A→E.</p>
+    <button class="toggle-btn" onclick="toggleAns(this)">Show Full Solution</button>
+    <div class="collapsible">
+      <pre style="margin-top:0.8rem">
+FCFS: processes run in arrival order, no preemption.
+Gantt: A(0→10) | B(10→16) | C(16→18) | D(18→26) | E(26→30)</pre>
+      <div class="gantt-wrap" style="margin:0.6rem 0">
+        <div class="gantt">
+          <div class="gantt-block"><div class="gantt-bar p1" style="width:100px">A (10ms)</div><div class="gantt-time">0</div></div>
+          <div class="gantt-block"><div class="gantt-bar p2" style="width:60px">B (6ms)</div><div class="gantt-time">10</div></div>
+          <div class="gantt-block"><div class="gantt-bar p3" style="width:20px">C</div><div class="gantt-time">16</div></div>
+          <div class="gantt-block"><div class="gantt-bar p4" style="width:80px">D (8ms)</div><div class="gantt-time">18</div></div>
+          <div class="gantt-block"><div class="gantt-bar p5" style="width:40px">E (4ms)</div><div class="gantt-time">26</div></div>
+          <div class="gantt-block"><div style="width:1px"></div><div class="gantt-time">30</div></div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Process</th><th>Burst</th><th>Completion</th><th>TAT</th><th>WT</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>10</td><td>10</td><td>10</td><td>0</td></tr>
+          <tr><td>B</td><td>6</td><td>16</td><td>16</td><td>10</td></tr>
+          <tr><td>C</td><td>2</td><td>18</td><td>18</td><td>16</td></tr>
+          <tr><td>D</td><td>8</td><td>26</td><td>26</td><td>18</td></tr>
+          <tr><td>E</td><td>4</td><td>30</td><td>30</td><td>26</td></tr>
+        </tbody>
+      </table>
+      <pre>
+<span class="ok">Avg TAT = (10+16+18+26+30)/5 = 100/5 = 20.0 ms</span>
+<span class="ok">Avg WT  = (0+10+16+18+26)/5  =  70/5 = 14.0 ms</span></pre>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.subject-tab').forEach((t,i)=>{
+    t.classList.toggle('active', i===idx);
+  });
+  document.querySelectorAll('.page').forEach((p,i)=>{
+    p.classList.toggle('active', i===idx);
+  });
+  window.scrollTo(0,0);
+}
+function toggleAns(btn) {
+  const c = btn.nextElementSibling;
+  c.classList.toggle('open');
+  btn.textContent = c.classList.contains('open') ? 'Hide' : (btn.textContent.includes('Gantt') ? 'Show Gantt & Explanation' : btn.textContent.includes('Solution') ? 'Show Full Solution' : 'Show Answer');
+}
+</script>
+</body>
+</html>
