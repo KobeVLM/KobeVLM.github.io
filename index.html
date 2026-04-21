@@ -1,1782 +1,1352 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAM Prefinal Study Guide</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap"
-    rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0d0f14;
-      --surface: #13161e;
-      --surface2: #1a1e29;
-      --border: #252a38;
-      --text: #c9d1e0;
-      --muted: #5a6480;
-      --accent: #f0c040;
-      --accent2: #4fd1c5;
-      --accent3: #f87171;
-      --accent4: #a78bfa;
-      --green: #4ade80;
-      --orange: #fb923c;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Background grid */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(240, 192, 64, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(240, 192, 64, 0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px 24px 80px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Header */
-    header {
-      margin-bottom: 48px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 32px;
-    }
-
-    .header-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    h1 {
-      font-size: clamp(28px, 5vw, 48px);
-      font-weight: 800;
-      line-height: 1.1;
-      color: #fff;
-      margin-bottom: 12px;
-    }
-
-    h1 span {
-      color: var(--accent);
-    }
-
-    .header-sub {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .header-meta {
-      display: flex;
-      gap: 24px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      padding: 4px 12px;
-      border-radius: 4px;
-      letter-spacing: 1px;
-    }
-
-    .badge-red {
-      background: rgba(248, 113, 113, 0.12);
-      color: var(--accent3);
-      border: 1px solid rgba(248, 113, 113, 0.3);
-    }
-
-    .badge-yellow {
-      background: rgba(240, 192, 64, 0.12);
-      color: var(--accent);
-      border: 1px solid rgba(240, 192, 64, 0.3);
-    }
-
-    .badge-teal {
-      background: rgba(79, 209, 197, 0.12);
-      color: var(--accent2);
-      border: 1px solid rgba(79, 209, 197, 0.3);
-    }
-
-    .badge-green {
-      background: rgba(74, 222, 128, 0.12);
-      color: var(--green);
-      border: 1px solid rgba(74, 222, 128, 0.3);
-    }
-
-    /* Nav tabs */
-    .nav-tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 36px;
-      background: var(--surface);
-      padding: 4px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-
-    .nav-tab {
-      flex: 1;
-      min-width: 120px;
-      padding: 10px 16px;
-      border-radius: 7px;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-family: 'Syne', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: center;
-    }
-
-    .nav-tab.active {
-      background: var(--accent);
-      color: #0d0f14;
-    }
-
-    .nav-tab:hover:not(.active) {
-      background: var(--surface2);
-      color: var(--text);
-    }
-
-    /* Sections */
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    /* Priority header */
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* Topic card */
-    .topic-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      margin-bottom: 16px;
-      overflow: hidden;
-      transition: border-color 0.2s;
-    }
-
-    .topic-card:hover {
-      border-color: var(--accent);
-    }
-
-    .topic-header {
-      display: flex;
-      align-items: center;
-      padding: 18px 20px;
-      cursor: pointer;
-      gap: 14px;
-      user-select: none;
-    }
-
-    .priority-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .dot-red {
-      background: var(--accent3);
-      box-shadow: 0 0 8px var(--accent3);
-    }
-
-    .dot-orange {
-      background: var(--orange);
-      box-shadow: 0 0 8px var(--orange);
-    }
-
-    .dot-teal {
-      background: var(--accent2);
-      box-shadow: 0 0 8px var(--accent2);
-    }
-
-    .dot-green {
-      background: var(--green);
-      box-shadow: 0 0 8px var(--green);
-    }
-
-    .topic-title {
-      font-weight: 700;
-      font-size: 15px;
-      color: #fff;
-      flex: 1;
-    }
-
-    .topic-sub {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      margin-left: auto;
-      margin-right: 12px;
-    }
-
-    .chevron {
-      color: var(--muted);
-      transition: transform 0.3s;
-      font-size: 12px;
-    }
-
-    .topic-card.open .chevron {
-      transform: rotate(180deg);
-    }
-
-    .topic-body {
-      display: none;
-      padding: 0 20px 20px;
-      border-top: 1px solid var(--border);
-    }
-
-    .topic-card.open .topic-body {
-      display: block;
-    }
-
-    /* Content styles inside cards */
-    .topic-body h3 {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin: 20px 0 10px;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .topic-body p {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    /* Code blocks */
-    pre {
-      background: #080a0f;
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: 8px;
-      padding: 16px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      line-height: 1.6;
-      overflow-x: auto;
-      margin: 12px 0;
-      color: #a8d8a8;
-    }
-
-    .cmd-comment {
-      color: var(--muted);
-    }
-
-    .cmd-flag {
-      color: var(--accent);
-    }
-
-    .cmd-keyword {
-      color: var(--accent2);
-    }
-
-    .cmd-string {
-      color: var(--orange);
-    }
-
-    /* Tables */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 12px 0;
-      font-size: 13px;
-    }
-
-    th {
-      background: var(--surface2);
-      padding: 10px 14px;
-      text-align: left;
-      font-weight: 700;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--accent);
-      border: 1px solid var(--border);
-    }
-
-    td {
-      padding: 10px 14px;
-      border: 1px solid var(--border);
-      vertical-align: top;
-      line-height: 1.5;
-    }
-
-    tr:nth-child(even) td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    /* Highlight box */
-    .highlight-box {
-      background: rgba(240, 192, 64, 0.06);
-      border: 1px solid rgba(240, 192, 64, 0.25);
-      border-radius: 8px;
-      padding: 14px 16px;
-      margin: 12px 0;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .highlight-box.red {
-      background: rgba(248, 113, 113, 0.06);
-      border-color: rgba(248, 113, 113, 0.25);
-    }
-
-    .highlight-box.teal {
-      background: rgba(79, 209, 197, 0.06);
-      border-color: rgba(79, 209, 197, 0.25);
-    }
-
-    .highlight-box.green {
-      background: rgba(74, 222, 128, 0.06);
-      border-color: rgba(74, 222, 128, 0.25);
-    }
-
-    .highlight-box strong {
-      color: #fff;
-    }
-
-    /* Answer toggle */
-    .qa-item {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-
-    .qa-question {
-      padding: 14px 18px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .qa-question span:first-child {
-      flex: 1;
-      line-height: 1.5;
-    }
-
-    .reveal-btn {
-      background: rgba(240, 192, 64, 0.1);
-      border: 1px solid rgba(240, 192, 64, 0.3);
-      color: var(--accent);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1px;
-      padding: 4px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
-
-    .reveal-btn:hover {
-      background: rgba(240, 192, 64, 0.2);
-    }
-
-    .reveal-btn.revealed {
-      background: rgba(74, 222, 128, 0.1);
-      border-color: rgba(74, 222, 128, 0.3);
-      color: var(--green);
-    }
-
-    .qa-answer {
-      display: none;
-      padding: 14px 18px;
-      border-top: 1px solid var(--border);
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text);
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    .qa-answer.show {
-      display: block;
-    }
-
-    .qa-answer pre {
-      margin: 8px 0;
-    }
-
-    /* Practice problems */
-    .problem-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-
-    .problem-header {
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .problem-num {
-      background: var(--accent);
-      color: #0d0f14;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .problem-type {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 1px;
-    }
-
-    .problem-body {
-      padding: 18px 20px;
-    }
-
-    .problem-body p {
-      font-size: 14px;
-      line-height: 1.7;
-      margin-bottom: 14px;
-    }
-
-    .problem-choices {
-      list-style: none;
-      margin-bottom: 14px;
-    }
-
-    .problem-choices li {
-      padding: 9px 14px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      margin-bottom: 6px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .problem-choices li:hover {
-      background: var(--surface2);
-    }
-
-    .choice-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--accent);
-      font-weight: 700;
-      min-width: 18px;
-      margin-top: 1px;
-    }
-
-    .problem-choices li.correct {
-      background: rgba(74, 222, 128, 0.08);
-      border-color: rgba(74, 222, 128, 0.4);
-    }
-
-    .problem-choices li.wrong {
-      background: rgba(248, 113, 113, 0.08);
-      border-color: rgba(248, 113, 113, 0.4);
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
-
-    .problem-answer {
-      display: none;
-      margin-top: 12px;
-      padding: 14px;
-      background: rgba(74, 222, 128, 0.05);
-      border: 1px solid rgba(74, 222, 128, 0.2);
-      border-radius: 8px;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text);
-    }
-
-    .problem-answer.show {
-      display: block;
-    }
-
-    .answer-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--green);
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .check-btn {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 8px 18px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .check-btn:hover {
-      background: var(--accent);
-      color: #0d0f14;
-      border-color: var(--accent);
-    }
-
-    /* Command reference quick grid */
-    .cmd-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 10px;
-      margin: 12px 0;
-    }
-
-    .cmd-item {
-      background: #080a0f;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 14px;
-    }
-
-    .cmd-item code {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: var(--accent2);
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .cmd-item span {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
-    /* Permission visual */
-    .perm-visual {
-      font-family: 'JetBrains Mono', monospace;
-      background: #080a0f;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-      margin: 12px 0;
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .perm-r {
-      color: #4ade80;
-    }
-
-    .perm-w {
-      color: #f87171;
-    }
-
-    .perm-x {
-      color: #fbbf24;
-    }
-
-    .perm-dash {
-      color: var(--muted);
-    }
-
-    .perm-section {
-      color: var(--accent2);
-    }
-
-    /* Scenario box */
-    .scenario {
-      background: var(--surface2);
-      border-left: 3px solid var(--accent4);
-      border-radius: 0 8px 8px 0;
-      padding: 14px 16px;
-      margin: 12px 0;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .scenario strong {
-      color: var(--accent4);
-    }
-
-    ul.topic-list {
-      list-style: none;
-      margin: 8px 0;
-    }
-
-    ul.topic-list li {
-      padding: 5px 0 5px 20px;
-      position: relative;
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--text);
-    }
-
-    ul.topic-list li::before {
-      content: '›';
-      position: absolute;
-      left: 4px;
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    /* Progress bar decoration */
-    .priority-bar {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 28px;
-      align-items: center;
-    }
-
-    .priority-segment {
-      height: 6px;
-      border-radius: 3px;
-      flex: 1;
-    }
-
-    .seg1 {
-      background: var(--accent3);
-    }
-
-    .seg2 {
-      background: var(--orange);
-    }
-
-    .seg3 {
-      background: var(--accent2);
-    }
-
-    .seg4 {
-      background: var(--green);
-    }
-
-    .priority-bar-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 1px;
-    }
-
-    /* Footer */
-    footer {
-      margin-top: 60px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 3px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--muted);
-    }
-
-    @media (max-width: 600px) {
-      .nav-tab {
-        font-size: 12px;
-        padding: 8px 10px;
-      }
-
-      .topic-sub {
-        display: none;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSIT385 · Pre-Final Survival Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #17171f;
+    --border: #2a2a38;
+    --accent: #f59e0b;
+    --accent2: #ef4444;
+    --accent3: #22d3ee;
+    --accent4: #a78bfa;
+    --text: #e2e2f0;
+    --muted: #6b6b88;
+    --green: #34d399;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,158,11,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,158,11,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .badge {
+    background: var(--accent);
+    color: #000;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    letter-spacing: 1px;
+  }
+  .badge.red { background: var(--accent2); color: #fff; }
+  .badge.cyan { background: var(--accent3); color: #000; }
+  .badge.purple { background: var(--accent4); color: #000; }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  h1 span { color: var(--accent); }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── SCORE TRACKER ── */
+  .score-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .score-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    flex: 1;
+    min-width: 180px;
+  }
+  .score-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .score-card .val {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+  .score-card .val.bad { color: var(--accent2); }
+  .score-card .val.ok { color: var(--accent); }
+  .score-card .val.good { color: var(--green); }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 4px; margin-bottom: 32px; flex-wrap: wrap; }
+  .tab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 10px 18px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--text); border-color: var(--accent); }
+  .tab.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── SECTION HEADINGS ── */
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--accent);
+    border-left: 3px solid var(--accent);
+    padding-left: 12px;
+    margin: 36px 0 16px;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-body {
+    font-size: 13.5px;
+    color: #b0b0c8;
+    line-height: 1.7;
+  }
+  .card-body strong { color: var(--accent); }
+  .card-body em { color: var(--accent3); font-style: normal; font-weight: 500; }
+
+  /* ── ALERT BOXES ── */
+  .alert {
+    border: 1px solid;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  .alert.warn { border-color: var(--accent); background: rgba(245,158,11,0.06); }
+  .alert.danger { border-color: var(--accent2); background: rgba(239,68,68,0.06); }
+  .alert.info { border-color: var(--accent3); background: rgba(34,211,238,0.06); }
+  .alert.success { border-color: var(--green); background: rgba(52,211,153,0.06); }
+  .alert-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .alert.warn .alert-title { color: var(--accent); }
+  .alert.danger .alert-title { color: var(--accent2); }
+  .alert.info .alert-title { color: var(--accent3); }
+  .alert.success .alert-title { color: var(--green); }
+
+  /* ── COMPARISON TABLE ── */
+  .table-wrap { overflow-x: auto; margin: 16px 0 24px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead tr { border-bottom: 2px solid var(--accent); }
+  th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 10px 14px;
+    text-align: left;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #c0c0d8;
+    line-height: 1.6;
+  }
+  tr:hover td { background: rgba(245,158,11,0.03); }
+  td strong { color: var(--text); }
+  td .hit { color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* ── FLASHCARDS ── */
+  .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .flashcard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px;
+    cursor: pointer;
+    user-select: none;
+    min-height: 100px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .flashcard:hover { border-color: var(--accent4); }
+  .flashcard .q {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .flashcard .a {
+    display: none;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--green);
+    line-height: 1.7;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .flashcard.revealed .a { display: block; }
+  .flashcard .hint {
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .flashcard.revealed .hint { color: var(--accent4); }
+
+  /* ── MNEMONIC BOX ── */
+  .mnemonic {
+    background: linear-gradient(135deg, rgba(167,139,250,0.1), rgba(34,211,238,0.05));
+    border: 1px solid var(--accent4);
+    padding: 18px 20px;
+    margin: 16px 0;
+  }
+  .mnemonic-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent4);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .mnemonic-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+  .mnemonic-expand {
+    font-size: 13px;
+    color: #b0b0c8;
+    margin-top: 8px;
+    line-height: 1.7;
+  }
+  .mnemonic-expand strong { color: var(--accent4); }
+
+  /* ── WRONG ANSWERS ── */
+  .wrong-item {
+    background: var(--surface);
+    border-left: 3px solid var(--accent2);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .wrong-q {
+    font-size: 13.5px;
+    color: var(--text);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .wrong-your { color: var(--accent2); font-size: 13px; margin-bottom: 4px; }
+  .wrong-correct { color: var(--green); font-size: 13px; margin-bottom: 6px; }
+  .wrong-explain { color: #9090a8; font-size: 13px; line-height: 1.7; }
+  .wrong-explain strong { color: var(--accent); }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 20px; }
+  .tl-item::before {
+    content:'';
+    position:absolute;
+    left:-20px;
+    top:6px;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background: var(--accent);
+  }
+  .tl-item .tl-title { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; margin-bottom:4px; }
+  .tl-item .tl-body { font-size:13.5px; color:#b0b0c8; line-height:1.7; }
+  .tl-item .tl-body strong { color: var(--accent3); }
+
+  /* ── QUICK REFERENCE ── */
+  .qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .qr-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px;
+  }
+  .qr-term {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent3);
+    margin-bottom: 4px;
+  }
+  .qr-def { font-size: 12.5px; color: #9090a8; line-height: 1.6; }
+
+  /* ── STRATEGY ── */
+  .strat-list { list-style: none; }
+  .strat-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 14px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #c0c0d8;
+  }
+  .strat-list li:last-child { border-bottom: none; }
+  .strat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 24px;
+    margin-top: 2px;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-section { margin: 32px 0; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+  .progress-fill.red { background: var(--accent2); }
+  .progress-fill.cyan { background: var(--accent3); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    h1 { font-size: 2rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .flashcard-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff; color: #000; }
+    .tab { display: none; }
+    .tab-pane { display: block !important; }
+  }
+</style>
 </head>
-
 <body>
+<div class="wrapper">
 
-  <div class="container">
-
-    <header>
-      <span class="header-tag">// SAM · Pre-Final Exam · 2026</span>
-      <h1>Study <span>Guide</span></h1>
-      <p class="header-sub">Topics 06 & 07 + Linux File Permissions · Based on midterm error analysis</p>
-      <div class="header-meta">
-        <span class="badge badge-red">🔴 High — Midterm Mistakes</span>
-        <span class="badge badge-yellow">🟠 High — Assignment Hints</span>
-        <span class="badge badge-teal">🟡 Medium — Linux Perms</span>
-        <span class="badge badge-green">🟢 Revisit — DHCP/DNS</span>
-      </div>
-    </header>
-
-    <div class="nav-tabs">
-      <button class="nav-tab active" onclick="switchTab('notes')">📖 Notes</button>
-      <button class="nav-tab" onclick="switchTab('flashcards')">🃏 Flashcards</button>
-      <button class="nav-tab" onclick="switchTab('commands')">⌨️ Commands</button>
-      <button class="nav-tab" onclick="switchTab('practice')">🎯 Practice</button>
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+      <span class="badge">CSIT385</span>
+      <span class="badge red">PRE-FINAL</span>
+      <span class="badge cyan">EXAM TOMORROW</span>
     </div>
+    <h1>Security <span>Survival</span><br>Study Guide</h1>
+    <p class="subtitle">// Module 5: Endpoint Vulnerabilities · PKI & Digital Certificates</p>
+  </header>
 
-    <!-- ========== NOTES TAB ========== -->
-    <div id="tab-notes" class="tab-content active">
-
-      <div class="priority-bar">
-        <span class="priority-bar-label">PRIORITY</span>
-        <div class="priority-segment seg1"></div>
-        <div class="priority-segment seg2"></div>
-        <div class="priority-segment seg3"></div>
-        <div class="priority-segment seg4"></div>
-      </div>
-
-      <!-- RED PRIORITY -->
-      <div class="section-label" style="color:var(--accent3)">🔴 You got these wrong on midterm</div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-red"></div>
-          <div class="topic-title">DNS Resolution Order</div>
-          <span class="topic-sub">2 wrong questions</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <h3>The exact order — memorize this</h3>
-          <p>In a DNS query without caching, 4 server types work in this exact sequence:</p>
-          <div class="perm-visual">
-            <span class="perm-section">CLIENT</span>
-            └──► <span class="perm-r">Recursive Resolver</span> ← receives query from client (built into OS)
-            └──► <span class="perm-x">Root Nameserver</span> ← first step, returns TLD server address
-            └──► <span class="perm-x">TLD Nameserver</span> ← (.com, .net) returns authoritative NS addr
-            └──► <span class="perm-w">Authoritative NS</span> ← finally responds with the actual IP
-            └──► <span class="perm-section">BACK TO CLIENT</span>
-          </div>
-          <div class="highlight-box red">
-            <strong>Most tested:</strong> "Which server receives queries from clients?" → <strong>Recursive
-              Resolver</strong><br>
-            "Which server finally responds with the IP?" → <strong>Authoritative Nameserver</strong><br>
-            "First step in resolving a domain?" → <strong>Root Nameserver</strong> (after the recursive resolver asks
-            it)
-          </div>
-          <h3>What each one does</h3>
-          <table>
-            <tr>
-              <th>Server</th>
-              <th>Job</th>
-              <th>Analogy</th>
-            </tr>
-            <tr>
-              <td>Recursive Resolver</td>
-              <td>Receives query from your PC, does all the legwork</td>
-              <td>You ask a librarian</td>
-            </tr>
-            <tr>
-              <td>Root Nameserver</td>
-              <td>Points resolver to the right TLD server</td>
-              <td>Librarian checks the index</td>
-            </tr>
-            <tr>
-              <td>TLD Nameserver</td>
-              <td>Handles .com/.net/etc., points to authoritative NS</td>
-              <td>Index points to a section</td>
-            </tr>
-            <tr>
-              <td>Authoritative NS</td>
-              <td>Has the actual IP — gives the final answer</td>
-              <td>The actual book with the info</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-red"></div>
-          <div class="topic-title">SSH + useradd / usermod Syntax</div>
-          <span class="topic-sub">Lost 6+ points</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <h3>SSH — the mistake you made</h3>
-          <div class="highlight-box red">
-            <strong>Wrong:</strong> <code>sudo seankelly@chichipoo.mypup.net</code><br>
-            <strong>Correct:</strong> <code>ssh seankelly@chichipoo.mypup.net</code><br><br>
-            SSH is NOT sudo. You use <code>ssh user@hostname</code> to connect to a remote server first, THEN run sudo
-            commands on it.
-          </div>
-          <pre><span class="cmd-comment"># Connect to remote server first</span>
-ssh seankelly@chichipoo.mypup.net
-
-<span class="cmd-comment"># Then create the user (on the remote machine now)</span>
-sudo useradd jojothepom --shell /sbin/nologin</pre>
-
-          <h3>useradd options order (tested on exam)</h3>
-          <div class="highlight-box">
-            The exam specifically asked for options in this order: <strong>name, uid, group, directory</strong>
-          </div>
-          <pre><span class="cmd-keyword">sudo useradd</span> USERNAME <span class="cmd-flag">-u</span> UID <span class="cmd-flag">-g</span> GROUP <span class="cmd-flag">-d</span> /path/to/home
-
-<span class="cmd-comment"># Example from exam:</span>
-ssh joanna@chichipoo.mypup.net
-sudo su
-groupadd cutepuppies
-useradd Yorki <span class="cmd-flag">-u</span> 3000 <span class="cmd-flag">-g</span> cutepuppies <span class="cmd-flag">-d</span> /var/user/woof</pre>
-
-          <h3>All useradd flags to know</h3>
-          <table>
-            <tr>
-              <th>Flag</th>
-              <th>Meaning</th>
-              <th>Example</th>
-            </tr>
-            <tr>
-              <td><code>-u</code></td>
-              <td>Set UID</td>
-              <td><code>-u 3000</code></td>
-            </tr>
-            <tr>
-              <td><code>-g</code></td>
-              <td>Primary group</td>
-              <td><code>-g developers</code></td>
-            </tr>
-            <tr>
-              <td><code>-G</code></td>
-              <td>Supplementary groups</td>
-              <td><code>-G sudo,www-data</code></td>
-            </tr>
-            <tr>
-              <td><code>-d</code></td>
-              <td>Home directory</td>
-              <td><code>-d /var/user/woof</code></td>
-            </tr>
-            <tr>
-              <td><code>-s</code> / <code>--shell</code></td>
-              <td>Login shell</td>
-              <td><code>--shell /sbin/nologin</code></td>
-            </tr>
-            <tr>
-              <td><code>-e</code></td>
-              <td>Account expiration date</td>
-              <td><code>-e 2026-07-11</code></td>
-            </tr>
-            <tr>
-              <td><code>-m</code></td>
-              <td>Create home directory</td>
-              <td><code>-m</code></td>
-            </tr>
-          </table>
-
-          <h3>Account with expiration (also tested)</h3>
-          <pre><span class="cmd-comment"># Create user with expiry date</span>
-ssh lorraine@chichipoo.mypup.net
-sudo useradd <span class="cmd-flag">-e</span> 2026-07-11 yorkiandjojo</pre>
-
-          <h3>Why /sbin/nologin?</h3>
-          <div class="highlight-box teal">
-            Setting shell to <code>/sbin/nologin</code> prevents the user from opening an interactive terminal session.
-            Useful for service accounts or monitoring users that only need system access, not login access. They exist
-            in <code>/etc/passwd</code> but can't log in.
-          </div>
-        </div>
-      </div>
-
-      <!-- ORANGE PRIORITY -->
-      <div class="section-label" style="color:var(--orange); margin-top:32px">🟠 Directly hinted by assignment</div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-orange"></div>
-          <div class="topic-title">NTFS vs Share Permissions</div>
-          <span class="topic-sub">Assignment Q1</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <h3>Core difference</h3>
-          <table>
-            <tr>
-              <th>Feature</th>
-              <th>NTFS Permissions</th>
-              <th>Share Permissions</th>
-            </tr>
-            <tr>
-              <td>Applies to</td>
-              <td>Local AND network users (file system level)</td>
-              <td>Network users ONLY (accessing via shared folder)</td>
-            </tr>
-            <tr>
-              <td>Granularity</td>
-              <td>Full Control, Modify, Read & Execute, List Folder, Read, Write</td>
-              <td>Full Control, Change, Read only</td>
-            </tr>
-            <tr>
-              <td>Where set</td>
-              <td>Properties → Security tab</td>
-              <td>Properties → Sharing tab</td>
-            </tr>
-            <tr>
-              <td>Applies when</td>
-              <td>Always — local or over network</td>
-              <td>Only when accessed via network path</td>
-            </tr>
-          </table>
-
-          <h3>Example scenario (Assignment Q1)</h3>
-          <div class="scenario">
-            <strong>Scenario:</strong> User accesses a shared folder over the network.<br><br>
-            NTFS says: <strong>Modify</strong> (can read and write)<br>
-            Share says: <strong>Read</strong> (read only)<br><br>
-            Effective permission: <strong>Read</strong> — because the most restrictive wins.<br><br>
-            The user can view files but cannot edit or delete them, even though NTFS would normally allow it locally.
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-orange"></div>
-          <div class="topic-title">Most Restrictive Rule</div>
-          <span class="topic-sub">Assignment Q2 — Critical Thinking</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <h3>The rule</h3>
-          <div class="highlight-box">
-            When NTFS and Share permissions are both applied, <strong>Windows uses the most restrictive
-              combination</strong>. The effective permission is the intersection — what both allow simultaneously.
-          </div>
-
-          <h3>Scenario examples</h3>
-          <table>
-            <tr>
-              <th>NTFS</th>
-              <th>Share</th>
-              <th>Effective (network access)</th>
-            </tr>
-            <tr>
-              <td>Full Control</td>
-              <td>Read</td>
-              <td style="color:var(--accent3)">Read</td>
-            </tr>
-            <tr>
-              <td>Modify</td>
-              <td>Change</td>
-              <td style="color:var(--orange)">Modify (both allow changes)</td>
-            </tr>
-            <tr>
-              <td>Read</td>
-              <td>Full Control</td>
-              <td style="color:var(--accent3)">Read</td>
-            </tr>
-            <tr>
-              <td>Full Control</td>
-              <td>Full Control</td>
-              <td style="color:var(--green)">Full Control</td>
-            </tr>
-          </table>
-
-          <h3>Why does this protect files? (Essay answer)</h3>
-          <div class="highlight-box teal">
-            In a multi-user environment, different users may have different NTFS permissions on the same shared folder.
-            The most restrictive rule ensures that network access never grants <em>more</em> than what the file system
-            explicitly allows. For example, even if an admin accidentally sets Share to "Full Control for Everyone," the
-            NTFS permission still acts as a safety net — a user with only Read on NTFS still can't write or delete files
-            over the network. This defense-in-depth approach means two independent permission systems must agree before
-            a user gets elevated access.
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-orange"></div>
-          <div class="topic-title">Explicit vs Inherited Permissions</div>
-          <span class="topic-sub">SAM-07 slide content</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <h3>Explicit permissions</h3>
-          <ul class="topic-list">
-            <li>Directly assigned to a specific file or folder</li>
-            <li>Can be customized per individual object</li>
-            <li><strong>Always takes priority over inherited permissions</strong></li>
-            <li>Use when: a subfolder needs different access than its parent</li>
-          </ul>
-          <h3>Inherited permissions</h3>
-          <ul class="topic-list">
-            <li>Automatically passed down from parent folder to child objects</li>
-            <li>Default behavior — child inherits parent's permission set</li>
-            <li>Can be blocked via "Disable inheritance" button in Advanced Security Settings</li>
-          </ul>
-          <div class="scenario">
-            <strong>Example:</strong> C:\CompanyFiles has Modify for HR group (inherited by all subfolders).<br>
-            But C:\CompanyFiles\Payroll has an <em>explicit</em> permission: HR = Read only.<br>
-            → Even though Modify flows down from the parent, the explicit Read on Payroll wins.
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-orange"></div>
-          <div class="topic-title">Read-Only Shared Folder Setup</div>
-          <span class="topic-sub">Assignment Q3 — Application</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <h3>Scenario: classmates can view but not delete</h3>
-          <div class="highlight-box green">
-            <strong>Share Permission:</strong> Read (allows viewing files over network, blocks deletion)<br>
-            <strong>NTFS Permission:</strong> Read &amp; Execute (allows opening files and running programs, no
-            write/delete)
-          </div>
-          <h3>Why not just set Share to Read?</h3>
-          <p>Share permissions only apply over the network. If a classmate ever accesses the machine locally (or if NTFS
-            is too permissive), they could still modify files. Using both Read on Share AND Read &amp; Execute on NTFS
-            ensures neither path allows modification.</p>
-          <h3>What "Change" on Share would allow</h3>
-          <table>
-            <tr>
-              <th>Share Permission</th>
-              <th>Can Read</th>
-              <th>Can Write</th>
-              <th>Can Delete</th>
-            </tr>
-            <tr>
-              <td>Read</td>
-              <td>✅</td>
-              <td>❌</td>
-              <td>❌</td>
-            </tr>
-            <tr>
-              <td>Change</td>
-              <td>✅</td>
-              <td>✅</td>
-              <td>✅</td>
-            </tr>
-            <tr>
-              <td>Full Control</td>
-              <td>✅</td>
-              <td>✅</td>
-              <td>✅ + change perms</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <!-- TEAL PRIORITY -->
-      <div class="section-label" style="color:var(--accent2); margin-top:32px">🟡 Linux File Permissions</div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-teal"></div>
-          <div class="topic-title">chmod — Understanding Permission Bits</div>
-          <span class="topic-sub">Commands list hint</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <h3>Reading permission strings</h3>
-          <div class="perm-visual">
-            <span class="perm-section">-rwxr-xr--</span>
-            │<span class="perm-r">rwx</span><span class="perm-x">r-x</span><span class="perm-w">r--</span>
-            │ │ │ └── <span class="perm-w">Others</span>: r-- = 4 (read only)
-            │ │ └────── <span class="perm-x">Group</span>: r-x = 5 (read + execute)
-            │ └────────── <span class="perm-r">Owner</span>: rwx = 7 (read + write + execute)
-            └──────────── <span class="perm-section">file type</span>: - = file, d = directory, l = symlink
-
-            Read=4 Write=2 Execute=1
-            Add them: rwx=7, rw-=6, r-x=5, r--=4, -wx=3, -w-=2, --x=1
-          </div>
-          <h3>chmod numeric (octal)</h3>
-          <pre><span class="cmd-keyword">chmod</span> 755 filename     <span class="cmd-comment"># owner: rwx, group: r-x, others: r-x</span>
-<span class="cmd-keyword">chmod</span> 644 filename     <span class="cmd-comment"># owner: rw-, group: r--, others: r--</span>
-<span class="cmd-keyword">chmod</span> 700 filename     <span class="cmd-comment"># owner: rwx, group: ---, others: ---</span>
-<span class="cmd-keyword">chmod</span> 600 filename     <span class="cmd-comment"># owner: rw-, no one else</span></pre>
-          <h3>chmod symbolic</h3>
-          <pre><span class="cmd-keyword">chmod</span> u+x filename     <span class="cmd-comment"># add execute for owner</span>
-<span class="cmd-keyword">chmod</span> g-w filename     <span class="cmd-comment"># remove write from group</span>
-<span class="cmd-keyword">chmod</span> o=r filename     <span class="cmd-comment"># set others to read-only</span>
-<span class="cmd-keyword">chmod</span> a+r filename     <span class="cmd-comment"># add read for all (u+g+o)</span>
-
-<span class="cmd-comment"># u=owner, g=group, o=others, a=all</span>
-<span class="cmd-comment"># + add, - remove, = set exactly</span></pre>
-          <h3>Common chmod values to memorize</h3>
-          <table>
-            <tr>
-              <th>Value</th>
-              <th>Permission</th>
-              <th>Use case</th>
-            </tr>
-            <tr>
-              <td>777</td>
-              <td>rwxrwxrwx</td>
-              <td>Everyone can do anything (dangerous)</td>
-            </tr>
-            <tr>
-              <td>755</td>
-              <td>rwxr-xr-x</td>
-              <td>Owner full, others read+execute (web dirs)</td>
-            </tr>
-            <tr>
-              <td>644</td>
-              <td>rw-r--r--</td>
-              <td>Owner rw, others read (standard files)</td>
-            </tr>
-            <tr>
-              <td>600</td>
-              <td>rw-------</td>
-              <td>Only owner can read/write (SSH keys)</td>
-            </tr>
-            <tr>
-              <td>400</td>
-              <td>r--------</td>
-              <td>Read-only by owner (config files)</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-teal"></div>
-          <div class="topic-title">setfacl / getfacl — Access Control Lists</div>
-          <span class="topic-sub">Commands list hint</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <h3>Why ACLs?</h3>
-          <p>Standard Linux permissions only allow one owner and one group. ACLs let you assign permissions to specific
-            users/groups beyond the standard three.</p>
-          <pre><span class="cmd-comment"># View current ACL on a file</span>
-<span class="cmd-keyword">getfacl</span> /path/to/file
-
-<span class="cmd-comment"># Give specific user read-only access</span>
-<span class="cmd-keyword">setfacl</span> <span class="cmd-flag">-m</span> u:username:r-- /path/to/file
-
-<span class="cmd-comment"># Give specific group read+write</span>
-<span class="cmd-keyword">setfacl</span> <span class="cmd-flag">-m</span> g:groupname:rw- /path/to/file
-
-<span class="cmd-comment"># Remove ACL for a user</span>
-<span class="cmd-keyword">setfacl</span> <span class="cmd-flag">-x</span> u:username /path/to/file
-
-<span class="cmd-comment"># Remove all ACLs</span>
-<span class="cmd-keyword">setfacl</span> <span class="cmd-flag">-b</span> /path/to/file
-
-<span class="cmd-comment"># Apply recursively to directory</span>
-<span class="cmd-keyword">setfacl</span> <span class="cmd-flag">-R -m</span> u:username:r-x /path/to/dir</pre>
-          <div class="highlight-box teal">
-            <strong>Scenario:</strong> You want classmate "ana" to read files in /shared without giving her group
-            access:<br>
-            <code>setfacl -m u:ana:r-- /shared</code>
-          </div>
-        </div>
-      </div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-teal"></div>
-          <div class="topic-title">Key System Directories & Files</div>
-          <span class="topic-sub">Exam likely coverage</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <table>
-            <tr>
-              <th>Path</th>
-              <th>Purpose</th>
-              <th>What to know</th>
-            </tr>
-            <tr>
-              <td><code>/etc/passwd</code></td>
-              <td>User account database</td>
-              <td>Stores: username:x:UID:GID:comment:home:shell<br>The "x" means password is in /etc/shadow</td>
-            </tr>
-            <tr>
-              <td><code>/sbin/nologin</code></td>
-              <td>Shell that prevents login</td>
-              <td>Assign with <code>--shell /sbin/nologin</code> to block interactive sessions</td>
-            </tr>
-            <tr>
-              <td><code>/etc/cron.allow</code></td>
-              <td>Cron whitelist</td>
-              <td>ONLY users listed here can use cron. If this file exists, everyone else is blocked.</td>
-            </tr>
-            <tr>
-              <td><code>/etc/cron.deny</code></td>
-              <td>Cron blacklist</td>
-              <td>Users listed here CANNOT use cron. If cron.allow doesn't exist, all others can.</td>
-            </tr>
-          </table>
-          <h3>Reading /etc/passwd format</h3>
-          <pre><span class="cmd-comment"># Format: username:password:UID:GID:GECOS:home:shell</span>
-jojothepom:x:1001:1001::/home/jojothepom:/sbin/nologin
-<span class="cmd-comment">#           ^                              ^--- blocked from logging in</span>
-<span class="cmd-comment">#           password hash in /etc/shadow</span></pre>
-        </div>
-      </div>
-
-      <!-- GREEN PRIORITY -->
-      <div class="section-label" style="color:var(--green); margin-top:32px">🟢 DHCP & DNS revisit</div>
-
-      <div class="topic-card" onclick="toggleCard(this)">
-        <div class="topic-header">
-          <div class="priority-dot dot-green"></div>
-          <div class="topic-title">DHCP Concepts You Missed</div>
-          <span class="topic-sub">3 wrong on midterm</span>
-          <span class="chevron">▼</span>
-        </div>
-        <div class="topic-body">
-          <h3>The tricky questions from midterm</h3>
-          <table>
-            <tr>
-              <th>Question type</th>
-              <th>Correct answer</th>
-            </tr>
-            <tr>
-              <td>Rogue DHCP risk</td>
-              <td>Clients accept ANY DHCP server → rogue server can distribute wrong IPs/gateway</td>
-            </tr>
-            <tr>
-              <td>DHCP single-point dependency</td>
-              <td>If DHCP server is down → clients can't get an IP → no network access</td>
-            </tr>
-            <tr>
-              <td>Machine name on new IP</td>
-              <td>Machine hostname does NOT update when DHCP assigns a new IP</td>
-            </tr>
-          </table>
-          <h3>DHCP Pros/Cons summary</h3>
-          <div class="highlight-box">
-            <strong>Pros:</strong> Centralized IP management, no manual config, easy to add new clients, IP
-            reuse<br><br>
-            <strong>Cons:</strong> IP conflicts possible, clients accept any server (rogue risk), no access if server is
-            down, hostname stays old when IP changes
-          </div>
-        </div>
-      </div>
-
-    </div><!-- end notes tab -->
-
-    <!-- ========== FLASHCARDS TAB ========== -->
-    <div id="tab-flashcards" class="tab-content">
-      <div class="section-label" style="color:var(--accent)">Click "Show Answer" to reveal</div>
-
-      <div id="flashcard-container"></div>
+  <!-- SCORE CARDS -->
+  <div class="score-bar">
+    <div class="score-card">
+      <div class="label">Current Knowledge</div>
+      <div class="val bad">3 / 10</div>
     </div>
-
-    <!-- ========== COMMANDS TAB ========== -->
-    <div id="tab-commands" class="tab-content">
-      <div class="section-label" style="color:var(--accent)">Quick command reference — all exam commands</div>
-
-      <div class="topic-card open">
-        <div class="topic-header" onclick="toggleCard(this.parentElement)">
-          <div class="priority-dot dot-red"></div>
-          <div class="topic-title">User Management</div>
-          <span class="chevron" style="transform:rotate(180deg)">▼</span>
-        </div>
-        <div class="topic-body" style="display:block">
-          <pre><span class="cmd-comment"># SSH into a remote server</span>
-ssh <span class="cmd-string">user</span>@<span class="cmd-string">hostname</span>
-
-<span class="cmd-comment"># Create user with all options</span>
-sudo useradd <span class="cmd-string">username</span> <span class="cmd-flag">-u</span> <span class="cmd-string">UID</span> <span class="cmd-flag">-g</span> <span class="cmd-string">group</span> <span class="cmd-flag">-d</span> <span class="cmd-string">/home/path</span> <span class="cmd-flag">-s</span> <span class="cmd-string">/bin/bash</span>
-
-<span class="cmd-comment"># Create user that can't login</span>
-sudo useradd <span class="cmd-string">username</span> <span class="cmd-flag">--shell</span> /sbin/nologin
-
-<span class="cmd-comment"># Create user with expiry date</span>
-sudo useradd <span class="cmd-flag">-e</span> 2026-07-11 <span class="cmd-string">username</span>
-
-<span class="cmd-comment"># Modify existing user — add to group</span>
-sudo usermod <span class="cmd-flag">-aG</span> <span class="cmd-string">groupname</span> <span class="cmd-string">username</span>
-
-<span class="cmd-comment"># Modify — change home directory</span>
-sudo usermod <span class="cmd-flag">-d</span> /new/home <span class="cmd-string">username</span>
-
-<span class="cmd-comment"># Delete user (and home dir)</span>
-sudo userdel <span class="cmd-flag">-r</span> <span class="cmd-string">username</span>
-
-<span class="cmd-comment"># Create a group</span>
-sudo groupadd <span class="cmd-string">groupname</span>
-
-<span class="cmd-comment"># Check user info</span>
-id <span class="cmd-string">username</span></pre>
-        </div>
-      </div>
-
-      <div class="topic-card open">
-        <div class="topic-header" onclick="toggleCard(this.parentElement)">
-          <div class="priority-dot dot-teal"></div>
-          <div class="topic-title">File Permissions</div>
-          <span class="chevron" style="transform:rotate(180deg)">▼</span>
-        </div>
-        <div class="topic-body" style="display:block">
-          <pre><span class="cmd-comment"># Change permissions (numeric)</span>
-chmod 755 <span class="cmd-string">file</span>          <span class="cmd-comment"># rwxr-xr-x</span>
-chmod 644 <span class="cmd-string">file</span>          <span class="cmd-comment"># rw-r--r--</span>
-chmod 600 <span class="cmd-string">file</span>          <span class="cmd-comment"># rw------- (private)</span>
-
-<span class="cmd-comment"># Change permissions (symbolic)</span>
-chmod u+x <span class="cmd-string">file</span>          <span class="cmd-comment"># add execute for owner</span>
-chmod g-w <span class="cmd-string">file</span>          <span class="cmd-comment"># remove write from group</span>
-chmod o=r <span class="cmd-string">file</span>          <span class="cmd-comment"># set others to read only</span>
-chmod <span class="cmd-flag">-R</span> 755 <span class="cmd-string">dir/</span>      <span class="cmd-comment"># apply recursively</span>
-
-<span class="cmd-comment"># ACL — view permissions</span>
-getfacl <span class="cmd-string">/path/to/file</span>
-
-<span class="cmd-comment"># ACL — give user read only</span>
-setfacl <span class="cmd-flag">-m</span> u:<span class="cmd-string">username</span>:r-- <span class="cmd-string">/path</span>
-
-<span class="cmd-comment"># ACL — give group read+write</span>
-setfacl <span class="cmd-flag">-m</span> g:<span class="cmd-string">groupname</span>:rw- <span class="cmd-string">/path</span>
-
-<span class="cmd-comment"># ACL — remove all ACLs</span>
-setfacl <span class="cmd-flag">-b</span> <span class="cmd-string">/path</span></pre>
-        </div>
-      </div>
-
-      <div class="topic-card open">
-        <div class="topic-header" onclick="toggleCard(this.parentElement)">
-          <div class="priority-dot dot-green"></div>
-          <div class="topic-title">Files & Directories</div>
-          <span class="chevron" style="transform:rotate(180deg)">▼</span>
-        </div>
-        <div class="topic-body" style="display:block">
-          <pre><span class="cmd-comment"># List with details + hidden</span>
-ls <span class="cmd-flag">-la</span> /var/log
-
-<span class="cmd-comment"># Search in files</span>
-grep <span class="cmd-string">"failed"</span> /var/log/syslog
-grep <span class="cmd-flag">-r</span> <span class="cmd-string">"pattern"</span> /var/log/
-
-<span class="cmd-comment"># Output with grep piped to file</span>
-ls <span class="cmd-flag">-a</span> /var/log | grep failed > report.txt
-
-<span class="cmd-comment"># cat and grep a file</span>
-cat students.xlsx | grep <span class="cmd-string">"Yutiampo"</span> > lastnames.txt
-
-<span class="cmd-comment"># sed — stream editor (find/replace)</span>
-sed <span class="cmd-string">'s/old/new/g'</span> file.txt
-sed <span class="cmd-flag">-i</span> <span class="cmd-string">'s/old/new/g'</span> file.txt  <span class="cmd-comment"># edit in place</span>
-
-<span class="cmd-comment"># Archive with tar</span>
-tar <span class="cmd-flag">-czf</span> archive.tar.gz /folder/    <span class="cmd-comment"># create compressed</span>
-tar <span class="cmd-flag">-xzf</span> archive.tar.gz            <span class="cmd-comment"># extract</span>
-tar <span class="cmd-flag">-tzf</span> archive.tar.gz            <span class="cmd-comment"># list contents</span>
-
-<span class="cmd-comment"># Copy file to remote server</span>
-scp file.txt <span class="cmd-string">user</span>@<span class="cmd-string">hostname</span>:/remote/path/
-
-<span class="cmd-comment"># Copy from remote to local</span>
-scp <span class="cmd-string">user</span>@<span class="cmd-string">hostname</span>:/remote/file.txt ./local/</pre>
-        </div>
-      </div>
-
-      <div class="topic-card open">
-        <div class="topic-header" onclick="toggleCard(this.parentElement)">
-          <div class="priority-dot dot-orange"></div>
-          <div class="topic-title">Services & System</div>
-          <span class="chevron" style="transform:rotate(180deg)">▼</span>
-        </div>
-        <div class="topic-body" style="display:block">
-          <pre><span class="cmd-comment"># systemctl — manage services</span>
-sudo systemctl start nginx
-sudo systemctl stop nginx
-sudo systemctl restart nginx
-sudo systemctl status nginx
-sudo systemctl enable nginx    <span class="cmd-comment"># start on boot</span>
-sudo systemctl disable nginx
-
-<span class="cmd-comment"># ping with specific count</span>
-ping <span class="cmd-flag">-c</span> 143 chichipoo.mypup.net
-
-<span class="cmd-comment"># Switch to root</span>
-sudo su
-
-<span class="cmd-comment"># Move / Rename file</span>
-mv oldname.txt newname.txt     <span class="cmd-comment"># rename</span>
-mv file.txt /new/location/     <span class="cmd-comment"># move</span>
-
-<span class="cmd-comment"># Copy file</span>
-cp file.txt /backup/file.txt
-cp <span class="cmd-flag">-r</span> dir/ /backup/dir/        <span class="cmd-comment"># recursive (directories)</span>
-
-<span class="cmd-comment"># Remove file / directory</span>
-rm file.txt
-rm <span class="cmd-flag">-rf</span> directory/             <span class="cmd-comment"># force recursive (careful!)</span></pre>
-        </div>
-      </div>
+    <div class="score-card">
+      <div class="label">Quiz Score (Mod 5)</div>
+      <div class="val bad">~50%</div>
     </div>
-
-    <!-- ========== PRACTICE TAB ========== -->
-    <div id="tab-practice" class="tab-content">
-      <div class="section-label" style="color:var(--accent)">Practice problems — based on exam patterns</div>
-      <div id="practice-container"></div>
+    <div class="score-card">
+      <div class="label">Target Score</div>
+      <div class="val good">9 / 10</div>
     </div>
-
-    <footer>
-      SAM Pre-Final Study Guide · CIT-U BSIT · Generated for personal use
-    </footer>
-
+    <div class="score-card">
+      <div class="label">Time to Exam</div>
+      <div class="val ok">~12 hrs</div>
+    </div>
   </div>
 
-  <script>
-    // ===== FLASHCARD DATA =====
-    const flashcards = [
-      {
-        q: "In DNS resolution, which server type receives queries directly from client systems?",
-        a: "The Recursive Resolver (also called Recursive DNS server). It is built into most operating systems and does all the work of asking other DNS servers on behalf of the client.",
-        priority: "red"
-      },
-      {
-        q: "What is the correct order of DNS resolution (without caching)?",
-        a: "Client → Recursive Resolver → Root Nameserver → TLD Nameserver → Authoritative Nameserver → back to Client",
-        priority: "red"
-      },
-      {
-        q: "Which DNS server finally responds with the IP address of the origin server?",
-        a: "The Authoritative Nameserver. It holds the actual DNS records for the domain and gives the definitive IP address.",
-        priority: "red"
-      },
-      {
-        q: "What is the key rule when NTFS and Share permissions are both applied?",
-        a: "The most restrictive combination wins. If NTFS = Modify and Share = Read, the effective permission is Read. Both permissions must allow an action for the user to be able to perform it.",
-        priority: "orange"
-      },
-      {
-        q: "What is the difference between NTFS and Share permissions?",
-        a: "NTFS: applies to local AND network users, very granular (Full Control, Modify, Read & Execute, Read, Write). Share: applies ONLY to network users accessing via shared folder, only 3 levels (Full Control, Change, Read).",
-        priority: "orange"
-      },
-      {
-        q: "What chmod command makes a file readable and writable by the owner, readable by everyone else?",
-        a: "chmod 644 filename — Owner: rw- (6), Group: r-- (4), Others: r-- (4)",
-        priority: "teal",
-        code: "chmod 644 filename"
-      },
-      {
-        q: "What does /sbin/nologin do when set as a user's shell?",
-        a: "It prevents the user from opening an interactive terminal session. The account still exists in /etc/passwd and can be used by services, but the user cannot log in interactively.",
-        priority: "red"
-      },
-      {
-        q: "What is the difference between /etc/cron.allow and /etc/cron.deny?",
-        a: "cron.allow is a whitelist — ONLY users listed here can use cron (everyone else blocked). cron.deny is a blacklist — users listed here CANNOT use cron. If cron.allow exists, cron.deny is ignored.",
-        priority: "teal"
-      },
-      {
-        q: "A user has NTFS = Full Control but Share = Read. They access the folder over the network. What can they do?",
-        a: "They can only Read. The most restrictive rule applies: both permissions must allow an action. Since Share only allows Read, the effective network permission is Read — they cannot modify or delete files.",
-        priority: "orange"
-      },
-      {
-        q: "What is a Rogue DHCP server and why is it a risk?",
-        a: "A rogue DHCP server is an unauthorized DHCP server on the network. Because DHCP clients accept responses from ANY DHCP server, a rogue one can distribute incorrect IPs, wrong gateways, or malicious DNS servers — redirecting all traffic.",
-        priority: "green"
-      },
-      {
-        q: "Explicit permissions vs Inherited permissions — which takes priority?",
-        a: "Explicit permissions always take priority over inherited permissions. Explicit = directly assigned to that specific file/folder. Inherited = flowed down from parent folder automatically.",
-        priority: "orange"
-      },
-      {
-        q: "What setfacl command gives user 'maria' read-only access to /data without changing existing permissions?",
-        a: "setfacl -m u:maria:r-- /data",
-        priority: "teal",
-        code: "setfacl -m u:maria:r-- /data"
-      },
-      {
-        q: "What DHCP limitation means a client can't reach the network at all?",
-        a: "DHCP single-point dependency — if the DHCP server is down or unreachable, the client cannot get an IP address assignment, and therefore cannot access the network at all.",
-        priority: "green"
-      },
-      {
-        q: "What does chmod 755 translate to in rwx notation?",
-        a: "rwxr-xr-x — Owner: rwx (7=4+2+1), Group: r-x (5=4+0+1), Others: r-x (5=4+0+1). Commonly used for web directories and executables.",
-        priority: "teal"
-      }
-    ];
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('wrong')">🔴 My Mistakes</button>
+    <button class="tab" onclick="showTab('malware')">🦠 Malware</button>
+    <button class="tab" onclick="showTab('appattacks')">💉 App Attacks</button>
+    <button class="tab" onclick="showTab('pki')">🔐 PKI / Certs</button>
+    <button class="tab" onclick="showTab('flashcards')">🃏 Flashcards</button>
+    <button class="tab" onclick="showTab('strategy')">⚡ Exam Strategy</button>
+  </div>
 
-    // ===== PRACTICE PROBLEMS =====
-    const problems = [
-      {
-        type: "WRITE A COMMAND",
-        question: "Connect to server workstation.lab.net as user labadmin, then create a user named testuser01 with UID 2500, in group students, and home directory /home/labusers/testuser01.",
-        answer: `ssh labadmin@workstation.lab.net
-sudo useradd testuser01 -u 2500 -g students -d /home/labusers/testuser01`,
-        isCode: true
-      },
-      {
-        type: "MULTIPLE CHOICE",
-        question: "A user accesses a shared folder over the network. Their NTFS permission is Modify, but the Share permission is Read. What is their effective permission?",
-        choices: ["A. Modify — NTFS takes priority over Share", "B. Full Control — NTFS + Share combine to give the maximum", "C. Read — the most restrictive permission wins", "D. Depends on whether they're in the Administrators group"],
-        correct: 2,
-        answer: "C. Read. When NTFS and Share permissions combine, the most restrictive wins. NTFS = Modify means they can read/write/delete locally. But Share = Read caps their network access to Read only. Since they are accessing over the network, Read wins."
-      },
-      {
-        type: "MULTIPLE CHOICE",
-        question: "Which server in the DNS resolution process is contacted first without caching?",
-        choices: ["A. Authoritative Nameserver", "B. TLD Nameserver", "C. Root Nameserver", "D. Recursive Resolver"],
-        correct: 3,
-        answer: "D. Recursive Resolver. The client contacts the Recursive Resolver first (it's built into the OS). The Recursive Resolver then contacts Root → TLD → Authoritative nameservers on behalf of the client."
-      },
-      {
-        type: "WRITE A COMMAND",
-        question: "Give user 'deployer' read and execute access to /var/www/html using ACL, without changing the existing owner/group permissions.",
-        answer: "setfacl -m u:deployer:r-x /var/www/html",
-        isCode: true
-      },
-      {
-        type: "MULTIPLE CHOICE",
-        question: "You want to set up a shared folder so that your classmates can view and open files but cannot modify or delete them. Which combination of permissions is BEST?",
-        choices: [
-          "A. NTFS: Full Control, Share: Read",
-          "B. NTFS: Read & Execute, Share: Read",
-          "C. NTFS: Modify, Share: Change",
-          "D. NTFS: Read, Share: Full Control"
-        ],
-        correct: 1,
-        answer: "B. NTFS: Read & Execute + Share: Read. This ensures that even if someone somehow bypasses the share (local access), NTFS still blocks modification. Most restrictive rule: both are 'Read level', so effective permission is read-only. Option A would work over the network (Share=Read caps it), but leaves NTFS too open locally."
-      },
-      {
-        type: "WRITE A COMMAND",
-        question: "Create a user named 'svcmonitor' on the local machine that has no interactive shell (for use as a monitoring service account only).",
-        answer: "sudo useradd svcmonitor --shell /sbin/nologin",
-        isCode: true
-      },
-      {
-        type: "MULTIPLE CHOICE",
-        question: "You have a folder called /HR/Reports with Modify inherited from its parent /HR. You want Finance users to only Read /HR/Reports without touching the parent folder's permissions. What do you do?",
-        choices: [
-          "A. Change /HR permission to Read for Finance",
-          "B. Set an explicit Read permission on /HR/Reports for Finance — explicit overrides inherited",
-          "C. Delete the inherited Modify permission from /HR",
-          "D. Share permissions cannot override inherited permissions"
-        ],
-        correct: 1,
-        answer: "B. Set an explicit Read permission directly on /HR/Reports for the Finance group. Explicit permissions always override inherited permissions. This way /HR still has Modify inherited but /HR/Reports explicitly restricts Finance to Read only."
-      },
-      {
-        type: "WRITE A COMMAND",
-        question: "List all files including hidden ones in /etc/nginx, filter for lines containing 'server', and overwrite the results to /tmp/nginx_servers.txt.",
-        answer: "ls -a /etc/nginx | grep server > /tmp/nginx_servers.txt",
-        isCode: true
-      },
-      {
-        type: "MULTIPLE CHOICE",
-        question: "A DHCP server is unreachable because of a network outage. What happens to clients trying to join the network?",
-        choices: [
-          "A. They use a cached IP address indefinitely",
-          "B. They fall back to the DNS server for an IP",
-          "C. They cannot get an IP assignment and therefore cannot access the network",
-          "D. They generate a random IP automatically"
-        ],
-        correct: 2,
-        answer: "C. Without a DHCP server, clients cannot receive an IP address, subnet mask, gateway, or DNS server. They will get an APIPA address (169.254.x.x) which is not routable — effectively no real network access. This is the DHCP single-point dependency limitation."
-      },
-      {
-        type: "WRITE A COMMAND",
-        question: "What is the chmod command to set a file so the owner can read and write, group members can only read, and everyone else has no access at all?",
-        answer: "chmod 640 filename\n\n# Breakdown:\n# Owner: rw- = 6 (4+2+0)\n# Group: r-- = 4 (4+0+0)\n# Others: --- = 0 (0+0+0)",
-        isCode: true
-      }
-    ];
+  <!-- ───────────────────────────────── TAB: WRONG ANSWERS ───────────────────────────────── -->
+  <div id="tab-wrong" class="tab-pane active">
+    <div class="alert danger">
+      <div class="alert-title">⚠ Priority Zone — These cost you points</div>
+      Every item below is a question you got WRONG. Study these first. They are the highest-probability repeat topics.
+    </div>
 
-    // ===== RENDER FLASHCARDS =====
-    function renderFlashcards() {
-      const container = document.getElementById('flashcard-container');
-      const priorityColors = { red: 'dot-red', orange: 'dot-orange', teal: 'dot-teal', green: 'dot-green' };
+    <p class="section-title">Certificate Repository</p>
+    <div class="wrong-item">
+      <div class="wrong-q">True or False: A certificate repository stores revoked certificates only.</div>
+      <div class="wrong-your">❌ You answered: TRUE (HI)</div>
+      <div class="wrong-correct">✅ Correct: FALSE (LO)</div>
+      <div class="wrong-explain">A <strong>certificate repository</strong> is a publicly accessible centralized directory of <em>ALL</em> digital certificates — used to <strong>view certificate status</strong>. The CRL (Certificate Revocation List) stores only revoked certs. These are NOT the same thing.</div>
+    </div>
 
-      flashcards.forEach((fc, i) => {
-        const div = document.createElement('div');
-        div.className = 'qa-item';
-        div.innerHTML = `
-      <div class="qa-question">
-        <span>${fc.q}</span>
-        <button class="reveal-btn" onclick="toggleAnswer(this, 'fc-ans-${i}')">SHOW ANSWER</button>
+    <p class="section-title">RA vs CA vs Intermediate CA</p>
+    <div class="wrong-item">
+      <div class="wrong-q">Which most accurately describes the role of an RA, CA, or intermediate CA?</div>
+      <div class="wrong-your">❌ You answered: "The intermediate CA performs functions on behalf of a CA."</div>
+      <div class="wrong-correct">✅ Correct: "An RA performs functions on behalf of a CA."</div>
+      <div class="wrong-explain">
+        <strong>RA (Registration Authority)</strong> = handles the administrative tasks FOR the CA (identity verification, collecting cert requests). It performs functions <em>on behalf of</em> the CA.<br><br>
+        <strong>Intermediate CA</strong> = sits between the Root CA and end-users to <em>issue</em> certificates. It does NOT perform functions "on behalf of" — it issues its own certs under the root's authority.<br><br>
+        Memory trick: <strong>RA = Reception Area</strong> (processes requests for the boss/CA). <strong>Intermediate CA = Middle Manager</strong> (has its own authority, delegated by the root).
       </div>
-      <div class="qa-answer" id="fc-ans-${i}">
-        ${fc.code ? `<pre>${fc.code}</pre>` : ''}
-        ${fc.a}
+    </div>
+
+    <p class="section-title">CSR Generation Process</p>
+    <div class="wrong-item">
+      <div class="wrong-q">Which most accurately describes the CSR generation process?</div>
+      <div class="wrong-your">❌ You likely confused which key is sent / used to sign</div>
+      <div class="wrong-correct">✅ Correct: Create keys → sign request with <em>private key</em> → send <em>public key</em> to RA → CA issues certificate</div>
+      <div class="wrong-explain">
+        <strong>Step 1:</strong> Generate a key pair (public + private)<br>
+        <strong>Step 2:</strong> Sign the CSR with your <strong>PRIVATE key</strong> (proves you own it)<br>
+        <strong>Step 3:</strong> Send the <strong>PUBLIC key</strong> + signed request to the RA/CA<br>
+        <strong>Step 4:</strong> CA verifies and issues the digital certificate<br><br>
+        🔑 <strong>NEVER send the private key to anyone — EVER.</strong> If an option says "send private key to RA," it is ALWAYS wrong.
       </div>
-    `;
-        container.appendChild(div);
-      });
-    }
+    </div>
 
-    function toggleAnswer(btn, id) {
-      const ans = document.getElementById(id);
-      if (ans.classList.contains('show')) {
-        ans.classList.remove('show');
-        btn.textContent = 'SHOW ANSWER';
-        btn.classList.remove('revealed');
-      } else {
-        ans.classList.add('show');
-        btn.textContent = 'HIDE';
-        btn.classList.add('revealed');
-      }
-    }
-
-    // ===== RENDER PRACTICE =====
-    function renderPractice() {
-      const container = document.getElementById('practice-container');
-
-      problems.forEach((p, i) => {
-        const div = document.createElement('div');
-        div.className = 'problem-card';
-
-        let choicesHTML = '';
-        if (p.choices) {
-          choicesHTML = '<ul class="problem-choices" id="choices-' + i + '">';
-          p.choices.forEach((c, ci) => {
-            choicesHTML += `<li onclick="selectChoice(${i}, ${ci}, ${p.correct})" data-idx="${ci}">
-          <span class="choice-label">${String.fromCharCode(65 + ci)}.</span>
-          <span>${c.substring(3)}</span>
-        </li>`;
-          });
-          choicesHTML += '</ul>';
-        }
-
-        div.innerHTML = `
-      <div class="problem-header">
-        <div class="problem-num">${i + 1}</div>
-        <span class="problem-type">${p.type}</span>
+    <p class="section-title">Certificate Suspension vs. Revocation</p>
+    <div class="wrong-item">
+      <div class="wrong-q">An employee's leave has been extended by 9 months. What should the company do to their digital certificate?</div>
+      <div class="wrong-your">❌ You answered: Revoke it</div>
+      <div class="wrong-correct">✅ Correct: <strong>Suspend it</strong> (listed as "Annul it" trap — answer is actually suspend/hold)</div>
+      <div class="wrong-explain">
+        <strong>Revoke</strong> = permanent cancellation. Used for: compromise, employee termination, fraud.<br>
+        <strong>Suspend</strong> = temporary hold. Used for: extended leave, investigation, temporary role change.<br><br>
+        Since the employee is expected to return (just longer leave), the cert should be <strong>suspended</strong>, not revoked. Revoking would require issuing a brand new cert later.
       </div>
-      <div class="problem-body">
-        <p>${p.question}</p>
-        ${choicesHTML}
-        <button class="check-btn" onclick="showProblemAnswer('prob-ans-${i}', this)">Check Answer</button>
-        <div class="problem-answer" id="prob-ans-${i}">
-          <span class="answer-label">// ANSWER</span>
-          ${p.isCode ? `<pre>${p.answer}</pre>` : `<p>${p.answer}</p>`}
+    </div>
+
+    <p class="section-title">Cryptoperiod</p>
+    <div class="wrong-item">
+      <div class="wrong-q">This characteristic refers to the length of time a key is authorized for use.</div>
+      <div class="wrong-your">❌ You answered: Duration</div>
+      <div class="wrong-correct">✅ Correct: <strong>Cryptoperiod</strong></div>
+      <div class="wrong-explain">"Duration" sounds right but is NOT the technical term. The correct term is <strong>Cryptoperiod</strong>. It defines the active lifespan of a cryptographic key. After the cryptoperiod ends, the key must be replaced even if it hasn't been compromised.</div>
+    </div>
+
+    <p class="section-title">Application Allow List</p>
+    <div class="wrong-item">
+      <div class="wrong-q">OS-level protection where only approved applications can run; unapproved items won't function.</div>
+      <div class="wrong-your">❌ You answered: Antivirus</div>
+      <div class="wrong-correct">✅ Correct: <strong>Application Allow List</strong></div>
+      <div class="wrong-explain">
+        <strong>Antivirus</strong> = detects and removes known malware signatures<br>
+        <strong>Application Allow List</strong> = proactive prevention — only whitelisted apps can execute. Unapproved programs simply cannot run.<br><br>
+        This is an OS-level control, not AV software.
+      </div>
+    </div>
+
+    <p class="section-title">Web of Trust</p>
+    <div class="wrong-item">
+      <div class="wrong-q">This CA model is based on direct trust, where each user signs a digital certificate then exchanges with all other users.</div>
+      <div class="wrong-your">❌ You answered: Certificate of Trust</div>
+      <div class="wrong-correct">✅ Correct: <strong>Web of Trust</strong></div>
+      <div class="wrong-explain">
+        <strong>Web of Trust</strong> = decentralized model. No central CA. Users sign each other's public keys. Used in PGP/GPG email encryption. If Alice trusts Bob, and Bob trusts Carol, Alice may transitively trust Carol.<br><br>
+        Contrast with <strong>Hierarchical PKI</strong> which has a central root CA at the top.
+      </div>
+    </div>
+
+    <p class="section-title">SQL Acronym</p>
+    <div class="wrong-item">
+      <div class="wrong-q">What is the meaning of SQL in SQL injection?</div>
+      <div class="wrong-your">❌ You answered: "Injecting SQL Commands in Input fields"</div>
+      <div class="wrong-correct">✅ Correct: <strong>Structured Query Language</strong></div>
+      <div class="wrong-explain">The question asks for the acronym definition, not a description of the attack. SQL = <strong>S</strong>tructured <strong>Q</strong>uery <strong>L</strong>anguage. It's the language used to communicate with relational databases.</div>
+    </div>
+
+    <p class="section-title">Endpoint Hardening — Which Option</p>
+    <div class="wrong-item">
+      <div class="wrong-q">You are a contractor helping harden endpoints. Which could you implement?</div>
+      <div class="wrong-your">❌ You may have selected only one option</div>
+      <div class="wrong-correct">✅ Correct: <strong>Install a HIPS, HIDS, and/or an EDR</strong></div>
+      <div class="wrong-explain">
+        The key word is <strong>"harden"</strong> endpoints. Hardening = strengthening security proactively.<br>
+        ✅ HIPS/HIDS/EDR = monitoring + prevention tools = endpoint hardening<br>
+        ⚠ "Disable ALL ports and protocols" = too extreme, breaks functionality<br>
+        ⚠ "Install antivirus" = good but AV alone isn't called "hardening"<br>
+        ⚠ "Use patch management" = good practice but not endpoint-specific hardening
+      </div>
+    </div>
+
+    <p class="section-title">OCSP Network Error</p>
+    <div class="wrong-item">
+      <div class="wrong-q">Browser shows "network error" when visiting a gaming site. What caused it?</div>
+      <div class="wrong-your">❌ You may have selected certificate revocation</div>
+      <div class="wrong-correct">✅ Correct: <strong>OCSP was not able to access the server it was trying to contact.</strong></div>
+      <div class="wrong-explain">
+        A <strong>network error</strong> (not a security warning or revocation notice) means connectivity failed. OCSP needs to reach its responder server to check certificate status. If OCSP can't connect = network error.<br><br>
+        If the cert was revoked = you'd get a <em>security warning</em>, not a generic network error.
+      </div>
+    </div>
+
+    <p class="section-title">Malware Definition (True/False)</p>
+    <div class="wrong-item">
+      <div class="wrong-q">True or False: Malware is a SOFTWARE-LIMITED attack designed to perform harmful actions.</div>
+      <div class="wrong-your">❌ You answered: TRUE (HI)</div>
+      <div class="wrong-correct">✅ Correct: FALSE (LO)</div>
+      <div class="wrong-explain">Malware is described as "software designed to interfere with a computer's normal functions." The word <strong>"software-limited"</strong> is the trick — malware is not "limited" in scope; it can perform a wide variety of harmful actions. The statement is false because "software-limited" implies restriction, which is inaccurate.</div>
+    </div>
+
+    <p class="section-title">OCSP Stapling (True/False)</p>
+    <div class="wrong-item">
+      <div class="wrong-q">True or False: OCSP stapling improves performance and reduces client requests.</div>
+      <div class="wrong-your">❌ You answered: FALSE (LO)</div>
+      <div class="wrong-correct">✅ Correct: TRUE (HI)</div>
+      <div class="wrong-explain">
+        <strong>OCSP Stapling</strong> = the web server periodically fetches a signed OCSP response from the CA and "staples" it to the TLS handshake. The client gets the status without making a separate request to the CA.<br><br>
+        Result: <strong>✅ faster handshakes, ✅ reduced CA server load, ✅ better privacy</strong> (client doesn't ping CA directly).
+      </div>
+    </div>
+
+    <p class="section-title">IoA vs IoC</p>
+    <div class="wrong-item">
+      <div class="wrong-q">Which statement about IoA is INCORRECT?</div>
+      <div class="wrong-your">❌ You may have confused IoA with IoC</div>
+      <div class="wrong-correct">✅ Correct wrong answer: "An IoA is evidence an attack occurred." — that's actually an IoC</div>
+      <div class="wrong-explain">
+        <strong>IoA (Indicator of Attack)</strong> = signs that an attack is <em>currently happening or about to happen</em> (real-time)<br>
+        <strong>IoC (Indicator of Compromise)</strong> = <em>evidence</em> that an attack already occurred (forensic/post-incident)<br><br>
+        "A user can't log in a day before their password expires" = normal event, NOT an IoA<br>
+        "Email checked in Europe + file downloaded in Australia 6 min later" = impossible travel = ✅ IoA
+      </div>
+    </div>
+
+    <p class="section-title">Digital Certificate Contents</p>
+    <div class="wrong-item">
+      <div class="wrong-q">What type of information is found in a digital signature and/or digital certificate?</div>
+      <div class="wrong-your">❌ Common wrong answer: digital signature contains public key</div>
+      <div class="wrong-correct">✅ Correct: <strong>A digital certificate CAN contain a postal address.</strong></div>
+      <div class="wrong-explain">
+        <strong>Digital Certificate</strong> contains: public key, identity info (name, org, email, address), validity dates, CA signature<br>
+        <strong>Digital Signature</strong> = a hash of the message encrypted with the SENDER's private key. It does NOT contain a key itself.<br><br>
+        ❌ "Digital signature contains a public key" — FALSE (it's a hash/encrypted hash)<br>
+        ❌ "Digital certificate contains a private key" — NEVER. Private keys are never in certs.<br>
+        ✅ "Digital certificate can contain a postal address" — TRUE (Subject field can include address)
+      </div>
+    </div>
+
+    <p class="section-title">Web Application Vulnerability Target</p>
+    <div class="wrong-item">
+      <div class="wrong-q">A vulnerability in a web application infrastructure is most likely to affect which of the following?</div>
+      <div class="wrong-your">❌ You may have selected OS or Network</div>
+      <div class="wrong-correct">✅ Correct: <strong>Platform</strong></div>
+      <div class="wrong-explain">Web application infrastructure = the platform (web server, framework, runtime environment). A vulnerability here affects the <strong>platform layer</strong> — the environment on which the app runs (e.g., Apache, Node.js, IIS), not just the OS or network.</div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────── TAB: MALWARE ───────────────────────────────── -->
+  <div id="tab-malware" class="tab-pane">
+
+    <div class="alert info">
+      <div class="alert-title">📌 Core Framework</div>
+      Malware is classified by its <strong>primary action</strong>: Kidnap · Eavesdrop · Masquerade · Launch · Sidestep
+    </div>
+
+    <p class="section-title">🔒 KIDNAP — Ransomware</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">🔒 Blocking Ransomware</div>
+        <div class="card-body">Manipulates the <strong>OS</strong> to block all normal access. You can't use the computer at all. Desktop is locked — like a fake government message popup demanding payment.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔐 Locking Ransomware</div>
+        <div class="card-body">Encrypts <strong>some or all files</strong> on the device so they can't be opened. Also targets <em>all connected network drives, USB drives, NAS, cloud storage</em>. This is why it's so serious.</div>
+      </div>
+    </div>
+    <div class="alert warn">
+      <div class="alert-title">⭐ Exam Trap: Ransomware Scope</div>
+      Locking ransomware = encrypts files on the local device AND any <strong>network/storage connected to it</strong>. That's what makes it devastating — one infected USB can encrypt your entire company's shared drives.
+    </div>
+
+    <div class="mnemonic">
+      <div class="mnemonic-label">🧠 Mnemonic — Ransomware Types</div>
+      <div class="mnemonic-text">"BLOCK the door vs LOCK the files"</div>
+      <div class="mnemonic-expand"><strong>BLOCK</strong>ing = blocks access to computer (can't use it) | <strong>LOCK</strong>ing = locks (encrypts) your files</div>
+    </div>
+
+    <p class="section-title">👂 EAVESDROP — Spyware & Keyloggers</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">⌨ Keylogger</div>
+        <div class="card-body">Silently records every keystroke. Can be <strong>software</strong> (installed program) or <strong>hardware</strong> (physical USB device plugged between keyboard and PC). Captures passwords, credit cards, personal info.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">👁 Spyware</div>
+        <div class="card-body">Tracking software deployed <strong>without user consent or control</strong>. Monitors behavior, browsing, location. Not always obviously malicious — often bundled with free software.</div>
+      </div>
+    </div>
+
+    <p class="section-title">🎭 MASQUERADE — Trojans</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">🐴 Computer Trojan</div>
+        <div class="card-body">Appears to be a <strong>legitimate/benign program</strong> but performs malicious actions behind the scenes. Does NOT replicate itself (unlike viruses).</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🖥 Remote Access Trojan (RAT)</div>
+        <div class="card-body">Trojan + <strong>unauthorized remote access</strong> using specially configured communication protocols. Creates a backdoor giving the attacker <em>unrestricted access</em> to the victim's system.</div>
+      </div>
+    </div>
+
+    <p class="section-title">🚀 LAUNCH — Viruses, Worms, Bots</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Malware</th><th>How it spreads</th><th>Key characteristic</th><th>Exam note</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>File-based Virus</strong></td>
+            <td>Attaches to files, spreads on same computer</td>
+            <td>Needs a file host; delivers payload then replicates</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><strong>Fileless Virus</strong></td>
+            <td>No file attachment — loads into RAM</td>
+            <td>Uses native OS processes; persistent, hard to detect</td>
+            <td class="hit">⭐ Quiz-worthy</td>
+          </tr>
+          <tr>
+            <td><strong>Worm</strong></td>
+            <td>Network (called "network virus")</td>
+            <td>Self-replicates across network, exploits OS/app vulnerabilities</td>
+            <td class="hit">⭐ Was in quiz</td>
+          </tr>
+          <tr>
+            <td><strong>Bloatware</strong></td>
+            <td>Pre-installed or bundled software</td>
+            <td>Not requested by user; may contain malware or be exploited</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><strong>Bot / Zombie</strong></td>
+            <td>Infected via network/malware</td>
+            <td>Remote-controlled by bot herder via C&C (Command & Control)</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert warn">
+      <div class="alert-title">⭐ True or False Trap: Fileless Virus</div>
+      "There is a virus that operates without appending itself to files." = <strong>TRUE</strong> — that's the fileless virus! It operates entirely in RAM.
+    </div>
+
+    <p class="section-title">🕵 SIDESTEP — Logic Bombs, Rootkits, Backdoors</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">💣 Logic Bomb</div>
+        <div class="card-body">Code added to a <strong>legitimate program</strong>. Lies dormant until a <strong>specific logical event</strong> triggers it (date, action, login). Evades detection until triggered.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🌳 Rootkit</div>
+        <div class="card-body">Hides its own presence AND other malware by accessing <strong>"lower layers" of the OS</strong>. Makes alterations so AV can't see it.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🚪 Backdoor</div>
+        <div class="card-body">Provides access to a computer/program/service that <strong>circumvents normal security</strong>. Can be installed by an attacker or left by a developer intentionally.</div>
+      </div>
+    </div>
+
+    <p class="section-title">📊 Indicator of Attack (IoA) Table</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>IoA Type</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Account Lockout</strong></td><td>Account inaccessible = possibly taken over by attacker locking out real user</td></tr>
+          <tr><td><strong>Concurrent Session</strong></td><td>Same account logged in from two places simultaneously</td></tr>
+          <tr><td><strong>Impossible Travel</strong></td><td>Email in NYC, then file download in LA 5 minutes later = physically impossible</td></tr>
+          <tr><td><strong>Resource Consumption</strong></td><td>Memory/CPU suddenly depleted without explanation</td></tr>
+          <tr><td><strong>Out-of-cycle Logging</strong></td><td>Log entries that don't match actual events</td></tr>
+          <tr><td><strong>Missing Logs</strong></td><td>Log files mysteriously deleted = attacker covering tracks</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert danger">
+      <div class="alert-title">🔴 IoA vs IoC — Know the Difference</div>
+      <strong>IoA</strong> = attack IS happening or about to (real-time signal)<br>
+      <strong>IoC</strong> = evidence that an attack ALREADY happened (forensic artifact)<br><br>
+      "A user can't log in a day before their password expires" → <strong>NOT an IoA</strong> (normal behavior, passwords expire)
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────── TAB: APP ATTACKS ───────────────────────────────── -->
+  <div id="tab-appattacks" class="tab-pane">
+
+    <div class="alert info">
+      <div class="alert-title">📌 Key Concept</div>
+      Application attacks target <strong>vulnerabilities in applications</strong>. They often result in <strong>privilege escalation</strong> — gaining more access than authorized.
+    </div>
+
+    <p class="section-title">Buffer Overflow & Memory Injection</p>
+    <div class="card">
+      <div class="card-title">💾 Buffer Overflow</div>
+      <div class="card-body">
+        A process stores data in RAM <strong>beyond the boundaries</strong> of a fixed-length buffer. Extra data overflows into adjacent memory.<br><br>
+        Also called: <strong>memory injection</strong> (something injected into RAM).<br>
+        Root cause: <strong>poor coding practices</strong> — improper input handling, not validating/filtering user input.
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-title">🏁 Race Condition</div>
+      <div class="card-body">Occurs when <strong>two concurrent threads</strong> access a shared resource simultaneously. Can cause NULL pointer/object dereference → program crash or exploit. Root cause: poor coding.</div>
+    </div>
+
+    <p class="section-title">Web-Based Application Attacks</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Attack</th><th>Full Name</th><th>How it works</th><th>Target</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>XSS</strong></td>
+            <td>Cross-Site Scripting</td>
+            <td>Site accepts unvalidated user input. Attacker injects malicious script that runs in victim's browser</td>
+            <td>The <strong>USER</strong>'s browser</td>
+          </tr>
+          <tr>
+            <td><strong>SQLi</strong></td>
+            <td>SQL Injection</td>
+            <td>Crafted SQL statements entered as input. Extracts or manipulates database</td>
+            <td>The <strong>DATABASE</strong></td>
+          </tr>
+          <tr>
+            <td><strong>CSRF</strong></td>
+            <td>Cross-Site Request Forgery</td>
+            <td>Uses auth token from a site the user is logged into. Forces user's browser to make unauthorized requests</td>
+            <td>The authenticated <strong>USER</strong></td>
+          </tr>
+          <tr>
+            <td><strong>SSRF</strong></td>
+            <td>Server-Side Request Forgery</td>
+            <td>Attacker modifies target URL the server fetches. Web server makes requests on attacker's behalf</td>
+            <td>The <strong>WEB SERVER</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Directory Traversal</strong></td>
+            <td>—</td>
+            <td>Exploits vulnerability to move from root directory to restricted directories</td>
+            <td>Server file system</td>
+          </tr>
+          <tr>
+            <td><strong>Replay</strong></td>
+            <td>—</td>
+            <td>Intercept & copy data, then retransmit later to impersonate legitimate user</td>
+            <td>Authentication server</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic">
+      <div class="mnemonic-label">🧠 Mnemonic — CSRF vs SSRF</div>
+      <div class="mnemonic-text">"CSRF targets the USER · SSRF targets the SERVER"</div>
+      <div class="mnemonic-expand">
+        <strong>C</strong>SRF = the <strong>C</strong>lient/user is tricked into doing something<br>
+        <strong>S</strong>SRF = the <strong>S</strong>erver is tricked into making requests<br><br>
+        Quiz statement was TRUE: CSRF's attack target = user | SSRF's attack target = web server ✅
+      </div>
+    </div>
+
+    <p class="section-title">Defending Against App Attacks</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">🧹 Filter Inputs (SQLi defense)</div>
+        <div class="card-body">Validate and sanitize all user input before it reaches the database. Prevent SQL commands from being injected through form fields.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🍪 Secure Cookies</div>
+        <div class="card-body">Cookies sent only over HTTPS (encrypted). Prevents interception by unauthorized parties during transmission. A web browser protection mechanism.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 HTTP Response Headers</div>
+        <div class="card-body">Headers that instruct the browser how to behave with the website. Can prevent XSS, clickjacking, and other browser-level attacks.</div>
+      </div>
+    </div>
+
+    <p class="section-title">Endpoint Protection Tools</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tool</th><th>What it does</th><th>Key distinction</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>HIDS</strong><br><small>Host Intrusion Detection System</small></td>
+            <td>Detects that an attack HAS occurred</td>
+            <td>Passive — detects AFTER the fact, logs events</td>
+          </tr>
+          <tr>
+            <td><strong>HIPS</strong><br><small>Host Intrusion Prevention System</small></td>
+            <td>Immediately BLOCKS malicious attacks by following rules</td>
+            <td>Active — prevents attacks in real-time</td>
+          </tr>
+          <tr>
+            <td><strong>EDR</strong><br><small>Endpoint Detection & Response</small></td>
+            <td>Aggregates data, performs advanced analytics, detects anomalies, baselines behavior</td>
+            <td>More robust than HIDS + HIPS combined. Centralized database. Pattern detection.</td>
+          </tr>
+          <tr>
+            <td><strong>Antivirus (AV)</strong></td>
+            <td>Scans files for known virus signatures; static or heuristic analysis</td>
+            <td>Static = signature-based | Dynamic = heuristic/behavioral</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="section-title">Endpoint Hardening (OS Level)</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">🚫 Disable Unnecessary Ports/Protocols</div>
+        <div class="card-body">Reduce attack surface by disabling services not in use. Less exposure = fewer entry points for attackers.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">✅ Application Allow List</div>
+        <div class="card-body">Only <strong>approved applications</strong> can run. Unapproved software simply won't execute. This is an OS-level protection — NOT antivirus.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📦 Sandbox</div>
+        <div class="card-body">A container environment where applications run in isolation. Prevents an app from impacting the underlying OS or other applications.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────── TAB: PKI / CERTS ───────────────────────────────── -->
+  <div id="tab-pki" class="tab-pane">
+
+    <div class="alert success">
+      <div class="alert-title">📌 PKI Quick Overview</div>
+      Public Key Infrastructure (PKI) = the system of hardware, software, policies, and procedures needed to create, manage, distribute, use, store, and revoke digital certificates.
+    </div>
+
+    <p class="section-title">The Players: CA, RA, Intermediate CA</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Entity</th><th>Role</th><th>Key Fact</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Root CA</strong></td>
+            <td>Top of the trust hierarchy. Issues certs to intermediate CAs</td>
+            <td>Kept offline for security. Most trusted anchor.</td>
+          </tr>
+          <tr>
+            <td><strong>Intermediate CA</strong></td>
+            <td>Issues certificates to end users/devices</td>
+            <td>Sits between Root CA and users. Has its OWN authority delegated by root.</td>
+          </tr>
+          <tr>
+            <td><strong>RA (Registration Authority)</strong></td>
+            <td>Performs administrative functions <em>on behalf of</em> the CA</td>
+            <td>Verifies identity, collects requests. Does NOT issue certs itself. ⭐ THIS is who acts "on behalf of" the CA.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mnemonic">
+      <div class="mnemonic-label">🧠 Mnemonic — RA vs Intermediate CA</div>
+      <div class="mnemonic-text">RA = "Receptionist/Agent" · Intermediate CA = "Assistant Manager"</div>
+      <div class="mnemonic-expand">
+        <strong>RA</strong> = front desk. Takes your ID, verifies who you are, submits your application to the CA. Works FOR the CA.<br>
+        <strong>Intermediate CA</strong> = has signing authority of its own. Not just a helper — actually issues certificates.
+      </div>
+    </div>
+
+    <p class="section-title">⭐ CSR Process — Step by Step</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-title">Step 1: Generate Key Pair</div>
+        <div class="tl-body">Create both the <strong>public key</strong> and <strong>private key</strong> on your own machine.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-title">Step 2: Sign CSR with PRIVATE Key</div>
+        <div class="tl-body">Sign the Certificate Signing Request using your <strong>private key</strong>. This proves you own the private key without revealing it.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-title">Step 3: Send PUBLIC Key to RA/CA</div>
+        <div class="tl-body">Submit the CSR (which includes your <strong>public key</strong> + identity info) to the RA. <em>NEVER send the private key.</em></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-title">Step 4: CA Issues Digital Certificate</div>
+        <div class="tl-body">CA verifies the request, then <strong>issues the digital certificate</strong> containing your public key bound to your identity.</div>
+      </div>
+    </div>
+
+    <div class="alert danger">
+      <div class="alert-title">🔴 Never Forget This Rule</div>
+      Any answer choice that says "send the <strong>private key</strong> to the RA or CA" is <strong>ALWAYS WRONG</strong>. Private keys never leave your possession.
+    </div>
+
+    <p class="section-title">Digital Certificate Contents</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">✅ What's IN a Digital Certificate</div>
+        <div class="card-body">
+          • Subject's <strong>public key</strong><br>
+          • Owner identity (name, org, email)<br>
+          • <strong>Postal address</strong> (can be included)<br>
+          • Validity dates (not-before, not-after)<br>
+          • Serial number<br>
+          • CA's digital signature<br><br>
+          <em>Primary purpose: Associate identity with a public key</em>
         </div>
       </div>
-    `;
-        container.appendChild(div);
-      });
-    }
+      <div class="card">
+        <div class="card-title">❌ What's NOT in a Certificate/Signature</div>
+        <div class="card-body">
+          • <strong>Private key</strong> — NEVER in any certificate<br>
+          • A digital <em>signature</em> does NOT contain a key<br>
+          • A digital signature = hash of message encrypted with sender's private key<br><br>
+          <em>A digital certificate ≠ a digital signature</em>
+        </div>
+      </div>
+    </div>
 
-    function selectChoice(problemIdx, choiceIdx, correctIdx) {
-      const ul = document.getElementById('choices-' + problemIdx);
-      const items = ul.querySelectorAll('li');
-      items.forEach((li, idx) => {
-        li.classList.remove('correct', 'wrong');
-        if (idx === correctIdx) li.classList.add('correct');
-        else if (idx === choiceIdx && choiceIdx !== correctIdx) li.classList.add('wrong');
-      });
-    }
+    <p class="section-title">Certificate Lifecycle: Revocation vs Suspension</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Action</th><th>Meaning</th><th>When to use</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Expire</strong></td>
+            <td>Certificate reaches end of validity period naturally</td>
+            <td>Normal end-of-life</td>
+          </tr>
+          <tr>
+            <td><strong>Suspend</strong></td>
+            <td>Temporary hold — cert placed on CRL with "hold" status</td>
+            <td>Extended leave, investigation, temporary role change ⭐</td>
+          </tr>
+          <tr>
+            <td><strong>Revoke</strong></td>
+            <td>Permanent cancellation — added to CRL permanently</td>
+            <td>Compromised key, employee termination, fraud</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    function showProblemAnswer(id, btn) {
-      const ans = document.getElementById(id);
-      if (ans.classList.contains('show')) {
-        ans.classList.remove('show');
-        btn.textContent = 'Check Answer';
-      } else {
-        ans.classList.add('show');
-        btn.textContent = 'Hide Answer';
-      }
-    }
+    <div class="alert warn">
+      <div class="alert-title">⭐ Exam Scenario: Extended Leave</div>
+      Employee on extended leave (but expected to return) → <strong>SUSPEND</strong> the certificate, not revoke it. Revocation is permanent and requires a new certificate when they return.
+    </div>
 
-    // ===== TAB SWITCHING =====
-    function switchTab(name) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-      document.getElementById('tab-' + name).classList.add('active');
-      event.target.classList.add('active');
-    }
+    <p class="section-title">CRL, OCSP, and OCSP Stapling</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">📋 CRL (Certificate Revocation List)</div>
+        <div class="card-body">A list maintained by the CA of <strong>revoked</strong> (and suspended) certificates. Delay in adding a cert to the CRL = <strong>security may be compromised</strong> (revoked cert still appears valid).</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔍 OCSP (Online Certificate Status Protocol)</div>
+        <div class="card-body">Internet-based protocol for <strong>real-time certificate status checks</strong>. Client asks OCSP responder: "Is this cert valid?" OCSP responder replies with good/revoked/unknown. If OCSP can't reach its server = <strong>network error</strong>.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📎 OCSP Stapling ⭐</div>
+        <div class="card-body">Server pre-fetches OCSP response from CA and "staples" it to the TLS handshake. Client doesn't need to make a separate request to the CA. <strong>Improves performance ✅ Reduces client requests ✅</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏛 Certificate Repository</div>
+        <div class="card-body">Publicly accessible, centralized directory of <strong>ALL digital certificates</strong> (not just revoked ones). Used to view certificate status. <strong>NOT the same as CRL.</strong></div>
+      </div>
+    </div>
 
-    // ===== CARD TOGGLE =====
-    function toggleCard(card) {
-      card.classList.toggle('open');
-    }
+    <p class="section-title">Trust Models</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">🕸 Web of Trust</div>
+        <div class="card-body">Decentralized. Each user <strong>signs certificates and exchanges with all other users</strong> directly. No central CA. Based on direct trust. Used in PGP. ⭐ This is the answer to "direct trust model where users sign each other's certs."</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏛 Hierarchical (PKI)</div>
+        <div class="card-body">Centralized. Root CA at top → Intermediate CAs → End users. Standard enterprise model.</div>
+      </div>
+    </div>
 
-    // ===== INIT =====
-    renderFlashcards();
-    renderPractice();
-  </script>
+    <p class="section-title">Key Management Terms</p>
+    <div class="qr-grid">
+      <div class="qr-item">
+        <div class="qr-term">CRYPTOPERIOD ⭐</div>
+        <div class="qr-def">Length of time a key is authorized for use. Not "duration" — must use the technical term cryptoperiod.</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">KEY STRENGTH</div>
+        <div class="qr-def">Determined by: key length, algorithm, randomness. "Randomness" is a key characteristic asked in exams.</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">PUBLIC KEY</div>
+        <div class="qr-def">Shared openly. Used to encrypt data or verify signatures. Lives in digital certificates.</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">PRIVATE KEY</div>
+        <div class="qr-def">Never shared. Used to decrypt or create signatures. Never in certificates or sent to CA.</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">DIGITAL SIGNATURE</div>
+        <div class="qr-def">Hash of message encrypted with sender's private key. Proves authenticity + integrity. Does NOT contain a key.</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">DIGITAL CERTIFICATE</div>
+        <div class="qr-def">Primary purpose: associate identity with a public key. Can contain postal address.</div>
+      </div>
+    </div>
+  </div>
 
+  <!-- ───────────────────────────────── TAB: FLASHCARDS ───────────────────────────────── -->
+  <div id="tab-flashcards" class="tab-pane">
+    <div class="alert info">
+      <div class="alert-title">📌 How to Use</div>
+      Click any card to reveal the answer. These are all high-probability exam questions based on your quiz mistakes.
+    </div>
+
+    <p class="section-title">Click to Reveal</p>
+    <div class="flashcard-grid">
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">What does SQL stand for?</div>
+        <div class="a">Structured Query Language</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">What is the correct CSR process order?</div>
+        <div class="a">1. Create keys → 2. Sign request with PRIVATE key → 3. Send PUBLIC key to RA → 4. CA issues certificate</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">A certificate repository stores _____ certificates only. True or False?</div>
+        <div class="a">FALSE. A certificate repository stores ALL certificates (not just revoked ones). The CRL stores revoked certs.</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">Who performs functions on behalf of a CA?</div>
+        <div class="a">The RA (Registration Authority) performs functions on behalf of a CA — not the intermediate CA.</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">OCSP Stapling: does it improve performance? True or False?</div>
+        <div class="a">TRUE. OCSP Stapling pre-fetches cert status and includes it in TLS handshake. Improves performance and reduces client requests.</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">What term describes the authorized lifespan of a cryptographic key?</div>
+        <div class="a">Cryptoperiod (NOT "duration")</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">What OS-level protection maintains a list of approved applications and blocks everything else?</div>
+        <div class="a">Application Allow List (NOT antivirus)</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">What trust model is based on direct trust where users sign each other's certificates?</div>
+        <div class="a">Web of Trust (used in PGP — decentralized, no central CA)</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">Jennifer has locking ransomware and can't open her browser to pay. What type is it?</div>
+        <div class="a">Locking Ransomware (encrypts files including ability to use browser/files)</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">CSRF target vs SSRF target — what's the difference?</div>
+        <div class="a">CSRF targets the USER (forces them to act as authorized user). SSRF targets the WEB SERVER (accesses sensitive data or injects data).</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">An employee is on extended leave (9 months). What should happen to their certificate?</div>
+        <div class="a">SUSPEND it (temporary hold). Revocation is permanent — use suspension for temporary situations.</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">What characteristic helps determine key STRENGTH?</div>
+        <div class="a">Randomness (also key length and algorithm — but "Randomness" is the exam answer for strength characteristic)</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">A worm is sometimes called a ___?</div>
+        <div class="a">Network virus — because it uses a computer network to replicate.</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">What type of malware lies dormant in a legitimate program until a logical event triggers it?</div>
+        <div class="a">Logic Bomb</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">What is the primary purpose of a digital certificate?</div>
+        <div class="a">Associate identity with a public key</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">Browser shows network error when accessing a site. OCSP is involved. What happened?</div>
+        <div class="a">OCSP was not able to access the server it was trying to contact (network connectivity issue with OCSP responder).</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">Buffer overflow is caused by what type of coding issue?</div>
+        <div class="a">Poor coding practices — specifically improper input handling (not filtering/validating user input).</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">What is Endpoint Detection and Response (EDR) better than?</div>
+        <div class="a">EDR is more robust than both HIDS and HIPS. It aggregates data centrally and performs advanced anomaly detection.</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">A user can't log into their account a day before their password expires. Is this an IoA?</div>
+        <div class="a">NO — this is normal expected behavior. It is NOT an Indicator of Attack.</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+      <div class="flashcard" onclick="flip(this)">
+        <div class="q">Can a digital certificate contain a postal address?</div>
+        <div class="a">YES — digital certificates can contain postal addresses in the Subject field.</div>
+        <div class="hint">tap to reveal</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────── TAB: STRATEGY ───────────────────────────────── -->
+  <div id="tab-strategy" class="tab-pane">
+
+    <div class="alert warn">
+      <div class="alert-title">⚡ 12-Hour Game Plan</div>
+      You have ~12 hours. Follow this schedule strictly. Prioritize your mistakes first.
+    </div>
+
+    <p class="section-title">📅 Study Schedule</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Time Block</th><th>Activity</th><th>Goal</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Hour 1–2</strong></td><td>Study the "My Mistakes" tab completely</td><td>Fix all wrong answers from your quiz</td></tr>
+          <tr><td><strong>Hour 3–4</strong></td><td>Read PKI/Certs tab + do flashcards (PKI ones)</td><td>Master CSR, CRL/OCSP, trust models</td></tr>
+          <tr><td><strong>Hour 5–6</strong></td><td>Read Malware tab + do flashcards (malware ones)</td><td>Know all malware categories + IoA</td></tr>
+          <tr><td><strong>Hour 7</strong></td><td>App Attacks tab + CSRF/SSRF comparison</td><td>Know all web attack types cold</td></tr>
+          <tr><td><strong>Hour 8</strong></td><td>Go through ALL 20 flashcards without peeking</td><td>Self-test — aim for 18+/20</td></tr>
+          <tr><td><strong>Hour 9</strong></td><td>Sleep/rest. Seriously.</td><td>Memory consolidation happens during sleep</td></tr>
+          <tr><td><strong>Before exam</strong></td><td>30-min quick review of mnemonics only</td><td>Prime your memory, don't cram new stuff</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="section-title">🎯 Exam Techniques</p>
+    <ul class="strat-list">
+      <li>
+        <span class="strat-num">01</span>
+        <span><strong>Watch for "technical term" traps.</strong> The exam uses exact terminology. "Duration" ≠ Cryptoperiod. "Certificate of Trust" ≠ Web of Trust. When in doubt, go with the most technical-sounding specific term.</span>
+      </li>
+      <li>
+        <span class="strat-num">02</span>
+        <span><strong>For True/False questions, watch for absolutes.</strong> Words like "only," "always," "never," "limited" are often signals that the statement is FALSE. "Software-limited" malware = false. "Repository stores revoked certs ONLY" = false.</span>
+      </li>
+      <li>
+        <span class="strat-num">03</span>
+        <span><strong>For PKI questions: private key = sacred.</strong> Any answer involving sending or sharing the private key is automatically wrong. Use this to eliminate 1–2 choices immediately.</span>
+      </li>
+      <li>
+        <span class="strat-num">04</span>
+        <span><strong>CSRF vs SSRF: remember the target.</strong> C = Client/user is the target. S = Server is the target. This exact comparison appeared in your quiz.</span>
+      </li>
+      <li>
+        <span class="strat-num">05</span>
+        <span><strong>For "who does X on behalf of Y" questions:</strong> RA acts on behalf of CA. Intermediate CA does NOT act "on behalf of" — it issues its own certs. This is a very common distractor.</span>
+      </li>
+      <li>
+        <span class="strat-num">06</span>
+        <span><strong>Error types matter.</strong> Network error = OCSP can't reach server. Security warning = certificate revoked. Generic popup demanding payment = blocking ransomware (extortion). Know what each condition points to.</span>
+      </li>
+      <li>
+        <span class="strat-num">07</span>
+        <span><strong>For scenario questions, focus on keywords:</strong> "temporary" / "extended leave" → suspend. "Compromised" / "terminated" → revoke. "Performance" + "certificate" → OCSP Stapling.</span>
+      </li>
+      <li>
+        <span class="strat-num">08</span>
+        <span><strong>Don't overthink True/False.</strong> You got several True/False wrong by second-guessing. Go with your gut after studying — your instinct after proper review is usually correct.</span>
+      </li>
+    </ul>
+
+    <p class="section-title">⭐ Must-Know One-Liners (Memorize These)</p>
+    <div class="qr-grid">
+      <div class="qr-item">
+        <div class="qr-term">SQL = Structured Query Language</div>
+        <div class="qr-def">Not a description of the attack</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">RA acts on behalf of CA</div>
+        <div class="qr-def">Not the intermediate CA</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">CSR: sign with private, send public</div>
+        <div class="qr-def">Never send private key to anyone</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">Cert repo = ALL certs, not just revoked</div>
+        <div class="qr-def">CRL = revoked only</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">OCSP Stapling = TRUE improves performance</div>
+        <div class="qr-def">Server pre-fetches, client saves a round trip</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">Cryptoperiod = key lifespan term</div>
+        <div class="qr-def">Not "duration"</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">App Allow List = OS protection, not AV</div>
+        <div class="qr-def">Approved apps only can run</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">Web of Trust = direct trust / user-to-user</div>
+        <div class="qr-def">No central CA</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">Worm = network virus (self-replicates)</div>
+        <div class="qr-def">Enters via network vulnerability</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">Locking ransomware = encrypts files</div>
+        <div class="qr-def">Blocking = blocks computer access</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">IoA = in progress · IoC = already happened</div>
+        <div class="qr-def">IoA ≠ evidence of past attack</div>
+      </div>
+      <div class="qr-item">
+        <div class="qr-term">CSRF = user target · SSRF = server target</div>
+        <div class="qr-def">Client vs Server forgery</div>
+      </div>
+    </div>
+
+    <div class="alert success" style="margin-top:32px">
+      <div class="alert-title">💪 You've Got This</div>
+      You went from a ~50% quiz score to having identified every single mistake and understanding why. That's the hardest part. Study the "My Mistakes" tab twice, run through all flashcards, and get some sleep. You're ready.
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function flip(card) {
+  card.classList.toggle('revealed');
+  card.querySelector('.hint').textContent = card.classList.contains('revealed') ? '↑ hide' : 'tap to reveal';
+}
+
+// Animate progress bars on load
+window.addEventListener('load', () => {
+  document.querySelectorAll('.progress-fill').forEach(bar => {
+    const w = bar.style.width;
+    bar.style.width = '0';
+    setTimeout(() => bar.style.width = w, 100);
+  });
+});
+</script>
 </body>
-
 </html>
