@@ -1,1352 +1,2389 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CSIT385 · Pre-Final Survival Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --surface2: #17171f;
-    --border: #2a2a38;
-    --accent: #f59e0b;
-    --accent2: #ef4444;
-    --accent3: #22d3ee;
-    --accent4: #a78bfa;
-    --text: #e2e2f0;
-    --muted: #6b6b88;
-    --green: #34d399;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSIT385 · Pre-Final Survival Guide</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #17171f;
+      --border: #2a2a38;
+      --accent: #f59e0b;
+      --accent2: #ef4444;
+      --accent3: #22d3ee;
+      --accent4: #a78bfa;
+      --text: #e2e2f0;
+      --muted: #6b6b88;
+      --green: #34d399;
+    }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  /* Background grid */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(245,158,11,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(245,158,11,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+    /* Background grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  .wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
 
-  /* ── HEADER ── */
-  header {
-    padding: 48px 0 32px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 40px;
-  }
-  .header-top {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-  }
-  .badge {
-    background: var(--accent);
-    color: #000;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 10px;
-    letter-spacing: 1px;
-  }
-  .badge.red { background: var(--accent2); color: #fff; }
-  .badge.cyan { background: var(--accent3); color: #000; }
-  .badge.purple { background: var(--accent4); color: #000; }
+    /* ── HEADER ── */
+    header {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
 
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-  }
-  h1 span { color: var(--accent); }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
 
-  .subtitle {
-    color: var(--muted);
-    font-size: 14px;
-    margin-top: 8px;
-    font-family: 'JetBrains Mono', monospace;
-  }
+    .badge {
+      background: var(--accent);
+      color: #000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      letter-spacing: 1px;
+    }
 
-  /* ── SCORE TRACKER ── */
-  .score-bar {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-  }
-  .score-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 16px 20px;
-    flex: 1;
-    min-width: 180px;
-  }
-  .score-card .label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .score-card .val {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 800;
-  }
-  .score-card .val.bad { color: var(--accent2); }
-  .score-card .val.ok { color: var(--accent); }
-  .score-card .val.good { color: var(--green); }
+    .badge.red {
+      background: var(--accent2);
+      color: #fff;
+    }
 
-  /* ── TABS ── */
-  .tabs { display: flex; gap: 4px; margin-bottom: 32px; flex-wrap: wrap; }
-  .tab {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    padding: 10px 18px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .tab:hover { color: var(--text); border-color: var(--accent); }
-  .tab.active {
-    background: var(--accent);
-    color: #000;
-    border-color: var(--accent);
-  }
-  .tab-pane { display: none; }
-  .tab-pane.active { display: block; animation: fadeIn 0.3s ease; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .badge.cyan {
+      background: var(--accent3);
+      color: #000;
+    }
 
-  /* ── SECTION HEADINGS ── */
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: var(--accent);
-    border-left: 3px solid var(--accent);
-    padding-left: 12px;
-    margin: 36px 0 16px;
-  }
-  .section-title:first-child { margin-top: 0; }
+    .badge.purple {
+      background: var(--accent4);
+      color: #000;
+    }
 
-  /* ── CARDS ── */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 20px;
-    transition: border-color 0.2s;
-  }
-  .card:hover { border-color: var(--accent); }
-  .card-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .card-body {
-    font-size: 13.5px;
-    color: #b0b0c8;
-    line-height: 1.7;
-  }
-  .card-body strong { color: var(--accent); }
-  .card-body em { color: var(--accent3); font-style: normal; font-weight: 500; }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
 
-  /* ── ALERT BOXES ── */
-  .alert {
-    border: 1px solid;
-    padding: 14px 18px;
-    margin: 16px 0;
-    font-size: 13.5px;
-    line-height: 1.7;
-  }
-  .alert.warn { border-color: var(--accent); background: rgba(245,158,11,0.06); }
-  .alert.danger { border-color: var(--accent2); background: rgba(239,68,68,0.06); }
-  .alert.info { border-color: var(--accent3); background: rgba(34,211,238,0.06); }
-  .alert.success { border-color: var(--green); background: rgba(52,211,153,0.06); }
-  .alert-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .alert.warn .alert-title { color: var(--accent); }
-  .alert.danger .alert-title { color: var(--accent2); }
-  .alert.info .alert-title { color: var(--accent3); }
-  .alert.success .alert-title { color: var(--green); }
+    h1 span {
+      color: var(--accent);
+    }
 
-  /* ── COMPARISON TABLE ── */
-  .table-wrap { overflow-x: auto; margin: 16px 0 24px; }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  thead tr { border-bottom: 2px solid var(--accent); }
-  th {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--accent);
-    padding: 10px 14px;
-    text-align: left;
-  }
-  td {
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--border);
-    color: #c0c0d8;
-    line-height: 1.6;
-  }
-  tr:hover td { background: rgba(245,158,11,0.03); }
-  td strong { color: var(--text); }
-  td .hit { color: var(--accent2); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+    }
 
-  /* ── FLASHCARDS ── */
-  .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
-  .flashcard {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 20px;
-    cursor: pointer;
-    user-select: none;
-    min-height: 100px;
-    position: relative;
-    transition: border-color 0.2s;
-  }
-  .flashcard:hover { border-color: var(--accent4); }
-  .flashcard .q {
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.5;
-    color: var(--text);
-  }
-  .flashcard .a {
-    display: none;
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--green);
-    line-height: 1.7;
-    border-top: 1px solid var(--border);
-    padding-top: 10px;
-  }
-  .flashcard.revealed .a { display: block; }
-  .flashcard .hint {
-    position: absolute;
-    bottom: 10px;
-    right: 14px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-  }
-  .flashcard.revealed .hint { color: var(--accent4); }
+    /* ── SCORE TRACKER ── */
+    .score-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
 
-  /* ── MNEMONIC BOX ── */
-  .mnemonic {
-    background: linear-gradient(135deg, rgba(167,139,250,0.1), rgba(34,211,238,0.05));
-    border: 1px solid var(--accent4);
-    padding: 18px 20px;
-    margin: 16px 0;
-  }
-  .mnemonic-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--accent4);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .mnemonic-text {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: 0.02em;
-  }
-  .mnemonic-expand {
-    font-size: 13px;
-    color: #b0b0c8;
-    margin-top: 8px;
-    line-height: 1.7;
-  }
-  .mnemonic-expand strong { color: var(--accent4); }
+    .score-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      flex: 1;
+      min-width: 180px;
+    }
 
-  /* ── WRONG ANSWERS ── */
-  .wrong-item {
-    background: var(--surface);
-    border-left: 3px solid var(--accent2);
-    padding: 16px 18px;
-    margin-bottom: 12px;
-  }
-  .wrong-q {
-    font-size: 13.5px;
-    color: var(--text);
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-  .wrong-your { color: var(--accent2); font-size: 13px; margin-bottom: 4px; }
-  .wrong-correct { color: var(--green); font-size: 13px; margin-bottom: 6px; }
-  .wrong-explain { color: #9090a8; font-size: 13px; line-height: 1.7; }
-  .wrong-explain strong { color: var(--accent); }
+    .score-card .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
 
-  /* ── TIMELINE ── */
-  .timeline { position: relative; padding-left: 24px; }
-  .timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background: var(--border); }
-  .tl-item { position: relative; margin-bottom: 20px; }
-  .tl-item::before {
-    content:'';
-    position:absolute;
-    left:-20px;
-    top:6px;
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background: var(--accent);
-  }
-  .tl-item .tl-title { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; margin-bottom:4px; }
-  .tl-item .tl-body { font-size:13.5px; color:#b0b0c8; line-height:1.7; }
-  .tl-item .tl-body strong { color: var(--accent3); }
+    .score-card .val {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
 
-  /* ── QUICK REFERENCE ── */
-  .qr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-  .qr-item {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    padding: 14px;
-  }
-  .qr-term {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--accent3);
-    margin-bottom: 4px;
-  }
-  .qr-def { font-size: 12.5px; color: #9090a8; line-height: 1.6; }
+    .score-card .val.bad {
+      color: var(--accent2);
+    }
 
-  /* ── STRATEGY ── */
-  .strat-list { list-style: none; }
-  .strat-list li {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 14px;
-    font-size: 14px;
-    line-height: 1.7;
-    color: #c0c0d8;
-  }
-  .strat-list li:last-child { border-bottom: none; }
-  .strat-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--accent);
-    min-width: 24px;
-    margin-top: 2px;
-  }
+    .score-card .val.ok {
+      color: var(--accent);
+    }
 
-  /* ── PROGRESS ── */
-  .progress-section { margin: 32px 0; }
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .progress-bar {
-    height: 6px;
-    background: var(--border);
-    margin-bottom: 14px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    transition: width 1s ease;
-  }
-  .progress-fill.red { background: var(--accent2); }
-  .progress-fill.cyan { background: var(--accent3); }
+    .score-card .val.good {
+      color: var(--green);
+    }
 
-  /* Responsive */
-  @media (max-width: 600px) {
-    h1 { font-size: 2rem; }
-    .card-grid { grid-template-columns: 1fr; }
-    .flashcard-grid { grid-template-columns: 1fr; }
-  }
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
 
-  /* Print */
-  @media print {
-    body { background: #fff; color: #000; }
-    .tab { display: none; }
-    .tab-pane { display: block !important; }
-  }
-</style>
+    .tab {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 10px 18px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    .tab.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── SECTION HEADINGS ── */
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--accent);
+      border-left: 3px solid var(--accent);
+      padding-left: 12px;
+      margin: 36px 0 16px;
+    }
+
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+    }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-body {
+      font-size: 13.5px;
+      color: #b0b0c8;
+      line-height: 1.7;
+    }
+
+    .card-body strong {
+      color: var(--accent);
+    }
+
+    .card-body em {
+      color: var(--accent3);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    /* ── ALERT BOXES ── */
+    .alert {
+      border: 1px solid;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+
+    .alert.warn {
+      border-color: var(--accent);
+      background: rgba(245, 158, 11, 0.06);
+    }
+
+    .alert.danger {
+      border-color: var(--accent2);
+      background: rgba(239, 68, 68, 0.06);
+    }
+
+    .alert.info {
+      border-color: var(--accent3);
+      background: rgba(34, 211, 238, 0.06);
+    }
+
+    .alert.success {
+      border-color: var(--green);
+      background: rgba(52, 211, 153, 0.06);
+    }
+
+    .alert-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .alert.warn .alert-title {
+      color: var(--accent);
+    }
+
+    .alert.danger .alert-title {
+      color: var(--accent2);
+    }
+
+    .alert.info .alert-title {
+      color: var(--accent3);
+    }
+
+    .alert.success .alert-title {
+      color: var(--green);
+    }
+
+    /* ── COMPARISON TABLE ── */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 16px 0 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    thead tr {
+      border-bottom: 2px solid var(--accent);
+    }
+
+    th {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: #c0c0d8;
+      line-height: 1.6;
+    }
+
+    tr:hover td {
+      background: rgba(245, 158, 11, 0.03);
+    }
+
+    td strong {
+      color: var(--text);
+    }
+
+    td .hit {
+      color: var(--accent2);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    /* ── FLASHCARDS ── */
+    .flashcard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .flashcard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 20px;
+      cursor: pointer;
+      user-select: none;
+      min-height: 100px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .flashcard:hover {
+      border-color: var(--accent4);
+    }
+
+    .flashcard .q {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .flashcard .a {
+      display: none;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--green);
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+
+    .flashcard.revealed .a {
+      display: block;
+    }
+
+    .flashcard .hint {
+      position: absolute;
+      bottom: 10px;
+      right: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .flashcard.revealed .hint {
+      color: var(--accent4);
+    }
+
+    /* ── MNEMONIC BOX ── */
+    .mnemonic {
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.1), rgba(34, 211, 238, 0.05));
+      border: 1px solid var(--accent4);
+      padding: 18px 20px;
+      margin: 16px 0;
+    }
+
+    .mnemonic-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--accent4);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .mnemonic-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .mnemonic-expand {
+      font-size: 13px;
+      color: #b0b0c8;
+      margin-top: 8px;
+      line-height: 1.7;
+    }
+
+    .mnemonic-expand strong {
+      color: var(--accent4);
+    }
+
+    /* ── WRONG ANSWERS ── */
+    .wrong-item {
+      background: var(--surface);
+      border-left: 3px solid var(--accent2);
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+
+    .wrong-q {
+      font-size: 13.5px;
+      color: var(--text);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .wrong-your {
+      color: var(--accent2);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .wrong-correct {
+      color: var(--green);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .wrong-explain {
+      color: #9090a8;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .wrong-explain strong {
+      color: var(--accent);
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .tl-item .tl-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .tl-item .tl-body {
+      font-size: 13.5px;
+      color: #b0b0c8;
+      line-height: 1.7;
+    }
+
+    .tl-item .tl-body strong {
+      color: var(--accent3);
+    }
+
+    /* ── QUICK REFERENCE ── */
+    .qr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .qr-item {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 14px;
+    }
+
+    .qr-term {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent3);
+      margin-bottom: 4px;
+    }
+
+    .qr-def {
+      font-size: 12.5px;
+      color: #9090a8;
+      line-height: 1.6;
+    }
+
+    /* ── STRATEGY ── */
+    .strat-list {
+      list-style: none;
+    }
+
+    .strat-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 14px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #c0c0d8;
+    }
+
+    .strat-list li:last-child {
+      border-bottom: none;
+    }
+
+    .strat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 24px;
+      margin-top: 2px;
+    }
+
+    /* ── PROGRESS ── */
+    .progress-section {
+      margin: 32px 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: var(--border);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 1s ease;
+    }
+
+    .progress-fill.red {
+      background: var(--accent2);
+    }
+
+    .progress-fill.cyan {
+      background: var(--accent3);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .flashcard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Print */
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+
+      .tab {
+        display: none;
+      }
+
+      .tab-pane {
+        display: block !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="wrapper">
+  <div class="wrapper">
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-top">
-      <span class="badge">CSIT385</span>
-      <span class="badge red">PRE-FINAL</span>
-      <span class="badge cyan">EXAM TOMORROW</span>
-    </div>
-    <h1>Security <span>Survival</span><br>Study Guide</h1>
-    <p class="subtitle">// Module 5: Endpoint Vulnerabilities · PKI & Digital Certificates</p>
-  </header>
+    <!-- HEADER -->
+    <header>
+      <div class="header-top">
+        <span class="badge">CSIT385</span>
+        <span class="badge red">PRE-FINAL</span>
+        <span class="badge cyan">EXAM TOMORROW</span>
+      </div>
+      <h1>Security <span>Survival</span><br>Study Guide</h1>
+      <p class="subtitle">// Module 5: Endpoint Vulnerabilities · Module 6: Mobile &amp; Embedded Device Security</p>
+    </header>
 
-  <!-- SCORE CARDS -->
-  <div class="score-bar">
-    <div class="score-card">
-      <div class="label">Current Knowledge</div>
-      <div class="val bad">3 / 10</div>
-    </div>
-    <div class="score-card">
-      <div class="label">Quiz Score (Mod 5)</div>
-      <div class="val bad">~50%</div>
-    </div>
-    <div class="score-card">
-      <div class="label">Target Score</div>
-      <div class="val good">9 / 10</div>
-    </div>
-    <div class="score-card">
-      <div class="label">Time to Exam</div>
-      <div class="val ok">~12 hrs</div>
-    </div>
-  </div>
-
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('wrong')">🔴 My Mistakes</button>
-    <button class="tab" onclick="showTab('malware')">🦠 Malware</button>
-    <button class="tab" onclick="showTab('appattacks')">💉 App Attacks</button>
-    <button class="tab" onclick="showTab('pki')">🔐 PKI / Certs</button>
-    <button class="tab" onclick="showTab('flashcards')">🃏 Flashcards</button>
-    <button class="tab" onclick="showTab('strategy')">⚡ Exam Strategy</button>
-  </div>
-
-  <!-- ───────────────────────────────── TAB: WRONG ANSWERS ───────────────────────────────── -->
-  <div id="tab-wrong" class="tab-pane active">
-    <div class="alert danger">
-      <div class="alert-title">⚠ Priority Zone — These cost you points</div>
-      Every item below is a question you got WRONG. Study these first. They are the highest-probability repeat topics.
-    </div>
-
-    <p class="section-title">Certificate Repository</p>
-    <div class="wrong-item">
-      <div class="wrong-q">True or False: A certificate repository stores revoked certificates only.</div>
-      <div class="wrong-your">❌ You answered: TRUE (HI)</div>
-      <div class="wrong-correct">✅ Correct: FALSE (LO)</div>
-      <div class="wrong-explain">A <strong>certificate repository</strong> is a publicly accessible centralized directory of <em>ALL</em> digital certificates — used to <strong>view certificate status</strong>. The CRL (Certificate Revocation List) stores only revoked certs. These are NOT the same thing.</div>
-    </div>
-
-    <p class="section-title">RA vs CA vs Intermediate CA</p>
-    <div class="wrong-item">
-      <div class="wrong-q">Which most accurately describes the role of an RA, CA, or intermediate CA?</div>
-      <div class="wrong-your">❌ You answered: "The intermediate CA performs functions on behalf of a CA."</div>
-      <div class="wrong-correct">✅ Correct: "An RA performs functions on behalf of a CA."</div>
-      <div class="wrong-explain">
-        <strong>RA (Registration Authority)</strong> = handles the administrative tasks FOR the CA (identity verification, collecting cert requests). It performs functions <em>on behalf of</em> the CA.<br><br>
-        <strong>Intermediate CA</strong> = sits between the Root CA and end-users to <em>issue</em> certificates. It does NOT perform functions "on behalf of" — it issues its own certs under the root's authority.<br><br>
-        Memory trick: <strong>RA = Reception Area</strong> (processes requests for the boss/CA). <strong>Intermediate CA = Middle Manager</strong> (has its own authority, delegated by the root).
+    <!-- SCORE CARDS -->
+    <div class="score-bar">
+      <div class="score-card">
+        <div class="label">Mod 5 Knowledge</div>
+        <div class="val ok">~6 / 10</div>
+      </div>
+      <div class="score-card">
+        <div class="label">Mod 6 Knowledge</div>
+        <div class="val bad">3 / 10</div>
+      </div>
+      <div class="score-card">
+        <div class="label">Target Score</div>
+        <div class="val good">9 / 10</div>
+      </div>
+      <div class="score-card">
+        <div class="label">Priority</div>
+        <div class="val bad">MOD 6 FIRST</div>
       </div>
     </div>
 
-    <p class="section-title">CSR Generation Process</p>
-    <div class="wrong-item">
-      <div class="wrong-q">Which most accurately describes the CSR generation process?</div>
-      <div class="wrong-your">❌ You likely confused which key is sent / used to sign</div>
-      <div class="wrong-correct">✅ Correct: Create keys → sign request with <em>private key</em> → send <em>public key</em> to RA → CA issues certificate</div>
-      <div class="wrong-explain">
-        <strong>Step 1:</strong> Generate a key pair (public + private)<br>
-        <strong>Step 2:</strong> Sign the CSR with your <strong>PRIVATE key</strong> (proves you own it)<br>
-        <strong>Step 3:</strong> Send the <strong>PUBLIC key</strong> + signed request to the RA/CA<br>
-        <strong>Step 4:</strong> CA verifies and issues the digital certificate<br><br>
-        🔑 <strong>NEVER send the private key to anyone — EVER.</strong> If an option says "send private key to RA," it is ALWAYS wrong.
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('wrong')">🔴 My Mistakes</button>
+      <button class="tab" onclick="showTab('malware')">🦠 Malware</button>
+      <button class="tab" onclick="showTab('appattacks')">💉 App Attacks</button>
+      <button class="tab" onclick="showTab('mod6')">📱 Module 6</button>
+      <button class="tab" onclick="showTab('flashcards')">🃏 Flashcards</button>
+      <button class="tab" onclick="showTab('strategy')">⚡ Exam Strategy</button>
+    </div>
+
+    <!-- ───────────────────────────────── TAB: WRONG ANSWERS ───────────────────────────────── -->
+    <div id="tab-wrong" class="tab-pane active">
+      <div class="alert danger">
+        <div class="alert-title">⚠ Priority Zone — These cost you points</div>
+        Every item below is a question you got WRONG. Study these first. They are the highest-probability repeat topics.
       </div>
-    </div>
 
-    <p class="section-title">Certificate Suspension vs. Revocation</p>
-    <div class="wrong-item">
-      <div class="wrong-q">An employee's leave has been extended by 9 months. What should the company do to their digital certificate?</div>
-      <div class="wrong-your">❌ You answered: Revoke it</div>
-      <div class="wrong-correct">✅ Correct: <strong>Suspend it</strong> (listed as "Annul it" trap — answer is actually suspend/hold)</div>
-      <div class="wrong-explain">
-        <strong>Revoke</strong> = permanent cancellation. Used for: compromise, employee termination, fraud.<br>
-        <strong>Suspend</strong> = temporary hold. Used for: extended leave, investigation, temporary role change.<br><br>
-        Since the employee is expected to return (just longer leave), the cert should be <strong>suspended</strong>, not revoked. Revoking would require issuing a brand new cert later.
+      <p class="section-title">Certificate Repository</p>
+      <div class="wrong-item">
+        <div class="wrong-q">True or False: A certificate repository stores revoked certificates only.</div>
+        <div class="wrong-your">❌ You answered: TRUE (HI)</div>
+        <div class="wrong-correct">✅ Correct: FALSE (LO)</div>
+        <div class="wrong-explain">A <strong>certificate repository</strong> is a publicly accessible centralized
+          directory of <em>ALL</em> digital certificates — used to <strong>view certificate status</strong>. The CRL
+          (Certificate Revocation List) stores only revoked certs. These are NOT the same thing.</div>
       </div>
-    </div>
 
-    <p class="section-title">Cryptoperiod</p>
-    <div class="wrong-item">
-      <div class="wrong-q">This characteristic refers to the length of time a key is authorized for use.</div>
-      <div class="wrong-your">❌ You answered: Duration</div>
-      <div class="wrong-correct">✅ Correct: <strong>Cryptoperiod</strong></div>
-      <div class="wrong-explain">"Duration" sounds right but is NOT the technical term. The correct term is <strong>Cryptoperiod</strong>. It defines the active lifespan of a cryptographic key. After the cryptoperiod ends, the key must be replaced even if it hasn't been compromised.</div>
-    </div>
-
-    <p class="section-title">Application Allow List</p>
-    <div class="wrong-item">
-      <div class="wrong-q">OS-level protection where only approved applications can run; unapproved items won't function.</div>
-      <div class="wrong-your">❌ You answered: Antivirus</div>
-      <div class="wrong-correct">✅ Correct: <strong>Application Allow List</strong></div>
-      <div class="wrong-explain">
-        <strong>Antivirus</strong> = detects and removes known malware signatures<br>
-        <strong>Application Allow List</strong> = proactive prevention — only whitelisted apps can execute. Unapproved programs simply cannot run.<br><br>
-        This is an OS-level control, not AV software.
-      </div>
-    </div>
-
-    <p class="section-title">Web of Trust</p>
-    <div class="wrong-item">
-      <div class="wrong-q">This CA model is based on direct trust, where each user signs a digital certificate then exchanges with all other users.</div>
-      <div class="wrong-your">❌ You answered: Certificate of Trust</div>
-      <div class="wrong-correct">✅ Correct: <strong>Web of Trust</strong></div>
-      <div class="wrong-explain">
-        <strong>Web of Trust</strong> = decentralized model. No central CA. Users sign each other's public keys. Used in PGP/GPG email encryption. If Alice trusts Bob, and Bob trusts Carol, Alice may transitively trust Carol.<br><br>
-        Contrast with <strong>Hierarchical PKI</strong> which has a central root CA at the top.
-      </div>
-    </div>
-
-    <p class="section-title">SQL Acronym</p>
-    <div class="wrong-item">
-      <div class="wrong-q">What is the meaning of SQL in SQL injection?</div>
-      <div class="wrong-your">❌ You answered: "Injecting SQL Commands in Input fields"</div>
-      <div class="wrong-correct">✅ Correct: <strong>Structured Query Language</strong></div>
-      <div class="wrong-explain">The question asks for the acronym definition, not a description of the attack. SQL = <strong>S</strong>tructured <strong>Q</strong>uery <strong>L</strong>anguage. It's the language used to communicate with relational databases.</div>
-    </div>
-
-    <p class="section-title">Endpoint Hardening — Which Option</p>
-    <div class="wrong-item">
-      <div class="wrong-q">You are a contractor helping harden endpoints. Which could you implement?</div>
-      <div class="wrong-your">❌ You may have selected only one option</div>
-      <div class="wrong-correct">✅ Correct: <strong>Install a HIPS, HIDS, and/or an EDR</strong></div>
-      <div class="wrong-explain">
-        The key word is <strong>"harden"</strong> endpoints. Hardening = strengthening security proactively.<br>
-        ✅ HIPS/HIDS/EDR = monitoring + prevention tools = endpoint hardening<br>
-        ⚠ "Disable ALL ports and protocols" = too extreme, breaks functionality<br>
-        ⚠ "Install antivirus" = good but AV alone isn't called "hardening"<br>
-        ⚠ "Use patch management" = good practice but not endpoint-specific hardening
-      </div>
-    </div>
-
-    <p class="section-title">OCSP Network Error</p>
-    <div class="wrong-item">
-      <div class="wrong-q">Browser shows "network error" when visiting a gaming site. What caused it?</div>
-      <div class="wrong-your">❌ You may have selected certificate revocation</div>
-      <div class="wrong-correct">✅ Correct: <strong>OCSP was not able to access the server it was trying to contact.</strong></div>
-      <div class="wrong-explain">
-        A <strong>network error</strong> (not a security warning or revocation notice) means connectivity failed. OCSP needs to reach its responder server to check certificate status. If OCSP can't connect = network error.<br><br>
-        If the cert was revoked = you'd get a <em>security warning</em>, not a generic network error.
-      </div>
-    </div>
-
-    <p class="section-title">Malware Definition (True/False)</p>
-    <div class="wrong-item">
-      <div class="wrong-q">True or False: Malware is a SOFTWARE-LIMITED attack designed to perform harmful actions.</div>
-      <div class="wrong-your">❌ You answered: TRUE (HI)</div>
-      <div class="wrong-correct">✅ Correct: FALSE (LO)</div>
-      <div class="wrong-explain">Malware is described as "software designed to interfere with a computer's normal functions." The word <strong>"software-limited"</strong> is the trick — malware is not "limited" in scope; it can perform a wide variety of harmful actions. The statement is false because "software-limited" implies restriction, which is inaccurate.</div>
-    </div>
-
-    <p class="section-title">OCSP Stapling (True/False)</p>
-    <div class="wrong-item">
-      <div class="wrong-q">True or False: OCSP stapling improves performance and reduces client requests.</div>
-      <div class="wrong-your">❌ You answered: FALSE (LO)</div>
-      <div class="wrong-correct">✅ Correct: TRUE (HI)</div>
-      <div class="wrong-explain">
-        <strong>OCSP Stapling</strong> = the web server periodically fetches a signed OCSP response from the CA and "staples" it to the TLS handshake. The client gets the status without making a separate request to the CA.<br><br>
-        Result: <strong>✅ faster handshakes, ✅ reduced CA server load, ✅ better privacy</strong> (client doesn't ping CA directly).
-      </div>
-    </div>
-
-    <p class="section-title">IoA vs IoC</p>
-    <div class="wrong-item">
-      <div class="wrong-q">Which statement about IoA is INCORRECT?</div>
-      <div class="wrong-your">❌ You may have confused IoA with IoC</div>
-      <div class="wrong-correct">✅ Correct wrong answer: "An IoA is evidence an attack occurred." — that's actually an IoC</div>
-      <div class="wrong-explain">
-        <strong>IoA (Indicator of Attack)</strong> = signs that an attack is <em>currently happening or about to happen</em> (real-time)<br>
-        <strong>IoC (Indicator of Compromise)</strong> = <em>evidence</em> that an attack already occurred (forensic/post-incident)<br><br>
-        "A user can't log in a day before their password expires" = normal event, NOT an IoA<br>
-        "Email checked in Europe + file downloaded in Australia 6 min later" = impossible travel = ✅ IoA
-      </div>
-    </div>
-
-    <p class="section-title">Digital Certificate Contents</p>
-    <div class="wrong-item">
-      <div class="wrong-q">What type of information is found in a digital signature and/or digital certificate?</div>
-      <div class="wrong-your">❌ Common wrong answer: digital signature contains public key</div>
-      <div class="wrong-correct">✅ Correct: <strong>A digital certificate CAN contain a postal address.</strong></div>
-      <div class="wrong-explain">
-        <strong>Digital Certificate</strong> contains: public key, identity info (name, org, email, address), validity dates, CA signature<br>
-        <strong>Digital Signature</strong> = a hash of the message encrypted with the SENDER's private key. It does NOT contain a key itself.<br><br>
-        ❌ "Digital signature contains a public key" — FALSE (it's a hash/encrypted hash)<br>
-        ❌ "Digital certificate contains a private key" — NEVER. Private keys are never in certs.<br>
-        ✅ "Digital certificate can contain a postal address" — TRUE (Subject field can include address)
-      </div>
-    </div>
-
-    <p class="section-title">Web Application Vulnerability Target</p>
-    <div class="wrong-item">
-      <div class="wrong-q">A vulnerability in a web application infrastructure is most likely to affect which of the following?</div>
-      <div class="wrong-your">❌ You may have selected OS or Network</div>
-      <div class="wrong-correct">✅ Correct: <strong>Platform</strong></div>
-      <div class="wrong-explain">Web application infrastructure = the platform (web server, framework, runtime environment). A vulnerability here affects the <strong>platform layer</strong> — the environment on which the app runs (e.g., Apache, Node.js, IIS), not just the OS or network.</div>
-    </div>
-  </div>
-
-  <!-- ───────────────────────────────── TAB: MALWARE ───────────────────────────────── -->
-  <div id="tab-malware" class="tab-pane">
-
-    <div class="alert info">
-      <div class="alert-title">📌 Core Framework</div>
-      Malware is classified by its <strong>primary action</strong>: Kidnap · Eavesdrop · Masquerade · Launch · Sidestep
-    </div>
-
-    <p class="section-title">🔒 KIDNAP — Ransomware</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">🔒 Blocking Ransomware</div>
-        <div class="card-body">Manipulates the <strong>OS</strong> to block all normal access. You can't use the computer at all. Desktop is locked — like a fake government message popup demanding payment.</div>
-      </div>
-      <div class="card">
-        <div class="card-title">🔐 Locking Ransomware</div>
-        <div class="card-body">Encrypts <strong>some or all files</strong> on the device so they can't be opened. Also targets <em>all connected network drives, USB drives, NAS, cloud storage</em>. This is why it's so serious.</div>
-      </div>
-    </div>
-    <div class="alert warn">
-      <div class="alert-title">⭐ Exam Trap: Ransomware Scope</div>
-      Locking ransomware = encrypts files on the local device AND any <strong>network/storage connected to it</strong>. That's what makes it devastating — one infected USB can encrypt your entire company's shared drives.
-    </div>
-
-    <div class="mnemonic">
-      <div class="mnemonic-label">🧠 Mnemonic — Ransomware Types</div>
-      <div class="mnemonic-text">"BLOCK the door vs LOCK the files"</div>
-      <div class="mnemonic-expand"><strong>BLOCK</strong>ing = blocks access to computer (can't use it) | <strong>LOCK</strong>ing = locks (encrypts) your files</div>
-    </div>
-
-    <p class="section-title">👂 EAVESDROP — Spyware & Keyloggers</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">⌨ Keylogger</div>
-        <div class="card-body">Silently records every keystroke. Can be <strong>software</strong> (installed program) or <strong>hardware</strong> (physical USB device plugged between keyboard and PC). Captures passwords, credit cards, personal info.</div>
-      </div>
-      <div class="card">
-        <div class="card-title">👁 Spyware</div>
-        <div class="card-body">Tracking software deployed <strong>without user consent or control</strong>. Monitors behavior, browsing, location. Not always obviously malicious — often bundled with free software.</div>
-      </div>
-    </div>
-
-    <p class="section-title">🎭 MASQUERADE — Trojans</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">🐴 Computer Trojan</div>
-        <div class="card-body">Appears to be a <strong>legitimate/benign program</strong> but performs malicious actions behind the scenes. Does NOT replicate itself (unlike viruses).</div>
-      </div>
-      <div class="card">
-        <div class="card-title">🖥 Remote Access Trojan (RAT)</div>
-        <div class="card-body">Trojan + <strong>unauthorized remote access</strong> using specially configured communication protocols. Creates a backdoor giving the attacker <em>unrestricted access</em> to the victim's system.</div>
-      </div>
-    </div>
-
-    <p class="section-title">🚀 LAUNCH — Viruses, Worms, Bots</p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Malware</th><th>How it spreads</th><th>Key characteristic</th><th>Exam note</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>File-based Virus</strong></td>
-            <td>Attaches to files, spreads on same computer</td>
-            <td>Needs a file host; delivers payload then replicates</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>Fileless Virus</strong></td>
-            <td>No file attachment — loads into RAM</td>
-            <td>Uses native OS processes; persistent, hard to detect</td>
-            <td class="hit">⭐ Quiz-worthy</td>
-          </tr>
-          <tr>
-            <td><strong>Worm</strong></td>
-            <td>Network (called "network virus")</td>
-            <td>Self-replicates across network, exploits OS/app vulnerabilities</td>
-            <td class="hit">⭐ Was in quiz</td>
-          </tr>
-          <tr>
-            <td><strong>Bloatware</strong></td>
-            <td>Pre-installed or bundled software</td>
-            <td>Not requested by user; may contain malware or be exploited</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>Bot / Zombie</strong></td>
-            <td>Infected via network/malware</td>
-            <td>Remote-controlled by bot herder via C&C (Command & Control)</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="alert warn">
-      <div class="alert-title">⭐ True or False Trap: Fileless Virus</div>
-      "There is a virus that operates without appending itself to files." = <strong>TRUE</strong> — that's the fileless virus! It operates entirely in RAM.
-    </div>
-
-    <p class="section-title">🕵 SIDESTEP — Logic Bombs, Rootkits, Backdoors</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">💣 Logic Bomb</div>
-        <div class="card-body">Code added to a <strong>legitimate program</strong>. Lies dormant until a <strong>specific logical event</strong> triggers it (date, action, login). Evades detection until triggered.</div>
-      </div>
-      <div class="card">
-        <div class="card-title">🌳 Rootkit</div>
-        <div class="card-body">Hides its own presence AND other malware by accessing <strong>"lower layers" of the OS</strong>. Makes alterations so AV can't see it.</div>
-      </div>
-      <div class="card">
-        <div class="card-title">🚪 Backdoor</div>
-        <div class="card-body">Provides access to a computer/program/service that <strong>circumvents normal security</strong>. Can be installed by an attacker or left by a developer intentionally.</div>
-      </div>
-    </div>
-
-    <p class="section-title">📊 Indicator of Attack (IoA) Table</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>IoA Type</th><th>What it means</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Account Lockout</strong></td><td>Account inaccessible = possibly taken over by attacker locking out real user</td></tr>
-          <tr><td><strong>Concurrent Session</strong></td><td>Same account logged in from two places simultaneously</td></tr>
-          <tr><td><strong>Impossible Travel</strong></td><td>Email in NYC, then file download in LA 5 minutes later = physically impossible</td></tr>
-          <tr><td><strong>Resource Consumption</strong></td><td>Memory/CPU suddenly depleted without explanation</td></tr>
-          <tr><td><strong>Out-of-cycle Logging</strong></td><td>Log entries that don't match actual events</td></tr>
-          <tr><td><strong>Missing Logs</strong></td><td>Log files mysteriously deleted = attacker covering tracks</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="alert danger">
-      <div class="alert-title">🔴 IoA vs IoC — Know the Difference</div>
-      <strong>IoA</strong> = attack IS happening or about to (real-time signal)<br>
-      <strong>IoC</strong> = evidence that an attack ALREADY happened (forensic artifact)<br><br>
-      "A user can't log in a day before their password expires" → <strong>NOT an IoA</strong> (normal behavior, passwords expire)
-    </div>
-  </div>
-
-  <!-- ───────────────────────────────── TAB: APP ATTACKS ───────────────────────────────── -->
-  <div id="tab-appattacks" class="tab-pane">
-
-    <div class="alert info">
-      <div class="alert-title">📌 Key Concept</div>
-      Application attacks target <strong>vulnerabilities in applications</strong>. They often result in <strong>privilege escalation</strong> — gaining more access than authorized.
-    </div>
-
-    <p class="section-title">Buffer Overflow & Memory Injection</p>
-    <div class="card">
-      <div class="card-title">💾 Buffer Overflow</div>
-      <div class="card-body">
-        A process stores data in RAM <strong>beyond the boundaries</strong> of a fixed-length buffer. Extra data overflows into adjacent memory.<br><br>
-        Also called: <strong>memory injection</strong> (something injected into RAM).<br>
-        Root cause: <strong>poor coding practices</strong> — improper input handling, not validating/filtering user input.
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:16px">
-      <div class="card-title">🏁 Race Condition</div>
-      <div class="card-body">Occurs when <strong>two concurrent threads</strong> access a shared resource simultaneously. Can cause NULL pointer/object dereference → program crash or exploit. Root cause: poor coding.</div>
-    </div>
-
-    <p class="section-title">Web-Based Application Attacks</p>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Attack</th><th>Full Name</th><th>How it works</th><th>Target</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>XSS</strong></td>
-            <td>Cross-Site Scripting</td>
-            <td>Site accepts unvalidated user input. Attacker injects malicious script that runs in victim's browser</td>
-            <td>The <strong>USER</strong>'s browser</td>
-          </tr>
-          <tr>
-            <td><strong>SQLi</strong></td>
-            <td>SQL Injection</td>
-            <td>Crafted SQL statements entered as input. Extracts or manipulates database</td>
-            <td>The <strong>DATABASE</strong></td>
-          </tr>
-          <tr>
-            <td><strong>CSRF</strong></td>
-            <td>Cross-Site Request Forgery</td>
-            <td>Uses auth token from a site the user is logged into. Forces user's browser to make unauthorized requests</td>
-            <td>The authenticated <strong>USER</strong></td>
-          </tr>
-          <tr>
-            <td><strong>SSRF</strong></td>
-            <td>Server-Side Request Forgery</td>
-            <td>Attacker modifies target URL the server fetches. Web server makes requests on attacker's behalf</td>
-            <td>The <strong>WEB SERVER</strong></td>
-          </tr>
-          <tr>
-            <td><strong>Directory Traversal</strong></td>
-            <td>—</td>
-            <td>Exploits vulnerability to move from root directory to restricted directories</td>
-            <td>Server file system</td>
-          </tr>
-          <tr>
-            <td><strong>Replay</strong></td>
-            <td>—</td>
-            <td>Intercept & copy data, then retransmit later to impersonate legitimate user</td>
-            <td>Authentication server</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="mnemonic">
-      <div class="mnemonic-label">🧠 Mnemonic — CSRF vs SSRF</div>
-      <div class="mnemonic-text">"CSRF targets the USER · SSRF targets the SERVER"</div>
-      <div class="mnemonic-expand">
-        <strong>C</strong>SRF = the <strong>C</strong>lient/user is tricked into doing something<br>
-        <strong>S</strong>SRF = the <strong>S</strong>erver is tricked into making requests<br><br>
-        Quiz statement was TRUE: CSRF's attack target = user | SSRF's attack target = web server ✅
-      </div>
-    </div>
-
-    <p class="section-title">Defending Against App Attacks</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">🧹 Filter Inputs (SQLi defense)</div>
-        <div class="card-body">Validate and sanitize all user input before it reaches the database. Prevent SQL commands from being injected through form fields.</div>
-      </div>
-      <div class="card">
-        <div class="card-title">🍪 Secure Cookies</div>
-        <div class="card-body">Cookies sent only over HTTPS (encrypted). Prevents interception by unauthorized parties during transmission. A web browser protection mechanism.</div>
-      </div>
-      <div class="card">
-        <div class="card-title">📋 HTTP Response Headers</div>
-        <div class="card-body">Headers that instruct the browser how to behave with the website. Can prevent XSS, clickjacking, and other browser-level attacks.</div>
-      </div>
-    </div>
-
-    <p class="section-title">Endpoint Protection Tools</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Tool</th><th>What it does</th><th>Key distinction</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><strong>HIDS</strong><br><small>Host Intrusion Detection System</small></td>
-            <td>Detects that an attack HAS occurred</td>
-            <td>Passive — detects AFTER the fact, logs events</td>
-          </tr>
-          <tr>
-            <td><strong>HIPS</strong><br><small>Host Intrusion Prevention System</small></td>
-            <td>Immediately BLOCKS malicious attacks by following rules</td>
-            <td>Active — prevents attacks in real-time</td>
-          </tr>
-          <tr>
-            <td><strong>EDR</strong><br><small>Endpoint Detection & Response</small></td>
-            <td>Aggregates data, performs advanced analytics, detects anomalies, baselines behavior</td>
-            <td>More robust than HIDS + HIPS combined. Centralized database. Pattern detection.</td>
-          </tr>
-          <tr>
-            <td><strong>Antivirus (AV)</strong></td>
-            <td>Scans files for known virus signatures; static or heuristic analysis</td>
-            <td>Static = signature-based | Dynamic = heuristic/behavioral</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="section-title">Endpoint Hardening (OS Level)</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">🚫 Disable Unnecessary Ports/Protocols</div>
-        <div class="card-body">Reduce attack surface by disabling services not in use. Less exposure = fewer entry points for attackers.</div>
-      </div>
-      <div class="card">
-        <div class="card-title">✅ Application Allow List</div>
-        <div class="card-body">Only <strong>approved applications</strong> can run. Unapproved software simply won't execute. This is an OS-level protection — NOT antivirus.</div>
-      </div>
-      <div class="card">
-        <div class="card-title">📦 Sandbox</div>
-        <div class="card-body">A container environment where applications run in isolation. Prevents an app from impacting the underlying OS or other applications.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ───────────────────────────────── TAB: PKI / CERTS ───────────────────────────────── -->
-  <div id="tab-pki" class="tab-pane">
-
-    <div class="alert success">
-      <div class="alert-title">📌 PKI Quick Overview</div>
-      Public Key Infrastructure (PKI) = the system of hardware, software, policies, and procedures needed to create, manage, distribute, use, store, and revoke digital certificates.
-    </div>
-
-    <p class="section-title">The Players: CA, RA, Intermediate CA</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Entity</th><th>Role</th><th>Key Fact</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><strong>Root CA</strong></td>
-            <td>Top of the trust hierarchy. Issues certs to intermediate CAs</td>
-            <td>Kept offline for security. Most trusted anchor.</td>
-          </tr>
-          <tr>
-            <td><strong>Intermediate CA</strong></td>
-            <td>Issues certificates to end users/devices</td>
-            <td>Sits between Root CA and users. Has its OWN authority delegated by root.</td>
-          </tr>
-          <tr>
-            <td><strong>RA (Registration Authority)</strong></td>
-            <td>Performs administrative functions <em>on behalf of</em> the CA</td>
-            <td>Verifies identity, collects requests. Does NOT issue certs itself. ⭐ THIS is who acts "on behalf of" the CA.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="mnemonic">
-      <div class="mnemonic-label">🧠 Mnemonic — RA vs Intermediate CA</div>
-      <div class="mnemonic-text">RA = "Receptionist/Agent" · Intermediate CA = "Assistant Manager"</div>
-      <div class="mnemonic-expand">
-        <strong>RA</strong> = front desk. Takes your ID, verifies who you are, submits your application to the CA. Works FOR the CA.<br>
-        <strong>Intermediate CA</strong> = has signing authority of its own. Not just a helper — actually issues certificates.
-      </div>
-    </div>
-
-    <p class="section-title">⭐ CSR Process — Step by Step</p>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-title">Step 1: Generate Key Pair</div>
-        <div class="tl-body">Create both the <strong>public key</strong> and <strong>private key</strong> on your own machine.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-title">Step 2: Sign CSR with PRIVATE Key</div>
-        <div class="tl-body">Sign the Certificate Signing Request using your <strong>private key</strong>. This proves you own the private key without revealing it.</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-title">Step 3: Send PUBLIC Key to RA/CA</div>
-        <div class="tl-body">Submit the CSR (which includes your <strong>public key</strong> + identity info) to the RA. <em>NEVER send the private key.</em></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-title">Step 4: CA Issues Digital Certificate</div>
-        <div class="tl-body">CA verifies the request, then <strong>issues the digital certificate</strong> containing your public key bound to your identity.</div>
-      </div>
-    </div>
-
-    <div class="alert danger">
-      <div class="alert-title">🔴 Never Forget This Rule</div>
-      Any answer choice that says "send the <strong>private key</strong> to the RA or CA" is <strong>ALWAYS WRONG</strong>. Private keys never leave your possession.
-    </div>
-
-    <p class="section-title">Digital Certificate Contents</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">✅ What's IN a Digital Certificate</div>
-        <div class="card-body">
-          • Subject's <strong>public key</strong><br>
-          • Owner identity (name, org, email)<br>
-          • <strong>Postal address</strong> (can be included)<br>
-          • Validity dates (not-before, not-after)<br>
-          • Serial number<br>
-          • CA's digital signature<br><br>
-          <em>Primary purpose: Associate identity with a public key</em>
+      <p class="section-title">RA vs CA vs Intermediate CA</p>
+      <div class="wrong-item">
+        <div class="wrong-q">Which most accurately describes the role of an RA, CA, or intermediate CA?</div>
+        <div class="wrong-your">❌ You answered: "The intermediate CA performs functions on behalf of a CA."</div>
+        <div class="wrong-correct">✅ Correct: "An RA performs functions on behalf of a CA."</div>
+        <div class="wrong-explain">
+          <strong>RA (Registration Authority)</strong> = handles the administrative tasks FOR the CA (identity
+          verification, collecting cert requests). It performs functions <em>on behalf of</em> the CA.<br><br>
+          <strong>Intermediate CA</strong> = sits between the Root CA and end-users to <em>issue</em> certificates. It
+          does NOT perform functions "on behalf of" — it issues its own certs under the root's authority.<br><br>
+          Memory trick: <strong>RA = Reception Area</strong> (processes requests for the boss/CA). <strong>Intermediate
+            CA = Middle Manager</strong> (has its own authority, delegated by the root).
         </div>
       </div>
+
+      <p class="section-title">CSR Generation Process</p>
+      <div class="wrong-item">
+        <div class="wrong-q">Which most accurately describes the CSR generation process?</div>
+        <div class="wrong-your">❌ You likely confused which key is sent / used to sign</div>
+        <div class="wrong-correct">✅ Correct: Create keys → sign request with <em>private key</em> → send <em>public
+            key</em> to RA → CA issues certificate</div>
+        <div class="wrong-explain">
+          <strong>Step 1:</strong> Generate a key pair (public + private)<br>
+          <strong>Step 2:</strong> Sign the CSR with your <strong>PRIVATE key</strong> (proves you own it)<br>
+          <strong>Step 3:</strong> Send the <strong>PUBLIC key</strong> + signed request to the RA/CA<br>
+          <strong>Step 4:</strong> CA verifies and issues the digital certificate<br><br>
+          🔑 <strong>NEVER send the private key to anyone — EVER.</strong> If an option says "send private key to RA,"
+          it is ALWAYS wrong.
+        </div>
+      </div>
+
+      <p class="section-title">Certificate Suspension vs. Revocation</p>
+      <div class="wrong-item">
+        <div class="wrong-q">An employee's leave has been extended by 9 months. What should the company do to their
+          digital certificate?</div>
+        <div class="wrong-your">❌ You answered: Revoke it</div>
+        <div class="wrong-correct">✅ Correct: <strong>Suspend it</strong> (listed as "Annul it" trap — answer is
+          actually suspend/hold)</div>
+        <div class="wrong-explain">
+          <strong>Revoke</strong> = permanent cancellation. Used for: compromise, employee termination, fraud.<br>
+          <strong>Suspend</strong> = temporary hold. Used for: extended leave, investigation, temporary role
+          change.<br><br>
+          Since the employee is expected to return (just longer leave), the cert should be <strong>suspended</strong>,
+          not revoked. Revoking would require issuing a brand new cert later.
+        </div>
+      </div>
+
+      <p class="section-title">Cryptoperiod</p>
+      <div class="wrong-item">
+        <div class="wrong-q">This characteristic refers to the length of time a key is authorized for use.</div>
+        <div class="wrong-your">❌ You answered: Duration</div>
+        <div class="wrong-correct">✅ Correct: <strong>Cryptoperiod</strong></div>
+        <div class="wrong-explain">"Duration" sounds right but is NOT the technical term. The correct term is
+          <strong>Cryptoperiod</strong>. It defines the active lifespan of a cryptographic key. After the cryptoperiod
+          ends, the key must be replaced even if it hasn't been compromised.</div>
+      </div>
+
+      <p class="section-title">Application Allow List</p>
+      <div class="wrong-item">
+        <div class="wrong-q">OS-level protection where only approved applications can run; unapproved items won't
+          function.</div>
+        <div class="wrong-your">❌ You answered: Antivirus</div>
+        <div class="wrong-correct">✅ Correct: <strong>Application Allow List</strong></div>
+        <div class="wrong-explain">
+          <strong>Antivirus</strong> = detects and removes known malware signatures<br>
+          <strong>Application Allow List</strong> = proactive prevention — only whitelisted apps can execute. Unapproved
+          programs simply cannot run.<br><br>
+          This is an OS-level control, not AV software.
+        </div>
+      </div>
+
+      <p class="section-title">Web of Trust</p>
+      <div class="wrong-item">
+        <div class="wrong-q">This CA model is based on direct trust, where each user signs a digital certificate then
+          exchanges with all other users.</div>
+        <div class="wrong-your">❌ You answered: Certificate of Trust</div>
+        <div class="wrong-correct">✅ Correct: <strong>Web of Trust</strong></div>
+        <div class="wrong-explain">
+          <strong>Web of Trust</strong> = decentralized model. No central CA. Users sign each other's public keys. Used
+          in PGP/GPG email encryption. If Alice trusts Bob, and Bob trusts Carol, Alice may transitively trust
+          Carol.<br><br>
+          Contrast with <strong>Hierarchical PKI</strong> which has a central root CA at the top.
+        </div>
+      </div>
+
+      <p class="section-title">SQL Acronym</p>
+      <div class="wrong-item">
+        <div class="wrong-q">What is the meaning of SQL in SQL injection?</div>
+        <div class="wrong-your">❌ You answered: "Injecting SQL Commands in Input fields"</div>
+        <div class="wrong-correct">✅ Correct: <strong>Structured Query Language</strong></div>
+        <div class="wrong-explain">The question asks for the acronym definition, not a description of the attack. SQL =
+          <strong>S</strong>tructured <strong>Q</strong>uery <strong>L</strong>anguage. It's the language used to
+          communicate with relational databases.</div>
+      </div>
+
+      <p class="section-title">Endpoint Hardening — Which Option</p>
+      <div class="wrong-item">
+        <div class="wrong-q">You are a contractor helping harden endpoints. Which could you implement?</div>
+        <div class="wrong-your">❌ You may have selected only one option</div>
+        <div class="wrong-correct">✅ Correct: <strong>Install a HIPS, HIDS, and/or an EDR</strong></div>
+        <div class="wrong-explain">
+          The key word is <strong>"harden"</strong> endpoints. Hardening = strengthening security proactively.<br>
+          ✅ HIPS/HIDS/EDR = monitoring + prevention tools = endpoint hardening<br>
+          ⚠ "Disable ALL ports and protocols" = too extreme, breaks functionality<br>
+          ⚠ "Install antivirus" = good but AV alone isn't called "hardening"<br>
+          ⚠ "Use patch management" = good practice but not endpoint-specific hardening
+        </div>
+      </div>
+
+      <p class="section-title">OCSP Network Error</p>
+      <div class="wrong-item">
+        <div class="wrong-q">Browser shows "network error" when visiting a gaming site. What caused it?</div>
+        <div class="wrong-your">❌ You may have selected certificate revocation</div>
+        <div class="wrong-correct">✅ Correct: <strong>OCSP was not able to access the server it was trying to
+            contact.</strong></div>
+        <div class="wrong-explain">
+          A <strong>network error</strong> (not a security warning or revocation notice) means connectivity failed. OCSP
+          needs to reach its responder server to check certificate status. If OCSP can't connect = network
+          error.<br><br>
+          If the cert was revoked = you'd get a <em>security warning</em>, not a generic network error.
+        </div>
+      </div>
+
+      <p class="section-title">Malware Definition (True/False)</p>
+      <div class="wrong-item">
+        <div class="wrong-q">True or False: Malware is a SOFTWARE-LIMITED attack designed to perform harmful actions.
+        </div>
+        <div class="wrong-your">❌ You answered: TRUE (HI)</div>
+        <div class="wrong-correct">✅ Correct: FALSE (LO)</div>
+        <div class="wrong-explain">Malware is described as "software designed to interfere with a computer's normal
+          functions." The word <strong>"software-limited"</strong> is the trick — malware is not "limited" in scope; it
+          can perform a wide variety of harmful actions. The statement is false because "software-limited" implies
+          restriction, which is inaccurate.</div>
+      </div>
+
+      <p class="section-title">OCSP Stapling (True/False)</p>
+      <div class="wrong-item">
+        <div class="wrong-q">True or False: OCSP stapling improves performance and reduces client requests.</div>
+        <div class="wrong-your">❌ You answered: FALSE (LO)</div>
+        <div class="wrong-correct">✅ Correct: TRUE (HI)</div>
+        <div class="wrong-explain">
+          <strong>OCSP Stapling</strong> = the web server periodically fetches a signed OCSP response from the CA and
+          "staples" it to the TLS handshake. The client gets the status without making a separate request to the
+          CA.<br><br>
+          Result: <strong>✅ faster handshakes, ✅ reduced CA server load, ✅ better privacy</strong> (client doesn't ping
+          CA directly).
+        </div>
+      </div>
+
+      <p class="section-title">IoA vs IoC</p>
+      <div class="wrong-item">
+        <div class="wrong-q">Which statement about IoA is INCORRECT?</div>
+        <div class="wrong-your">❌ You may have confused IoA with IoC</div>
+        <div class="wrong-correct">✅ Correct wrong answer: "An IoA is evidence an attack occurred." — that's actually an
+          IoC</div>
+        <div class="wrong-explain">
+          <strong>IoA (Indicator of Attack)</strong> = signs that an attack is <em>currently happening or about to
+            happen</em> (real-time)<br>
+          <strong>IoC (Indicator of Compromise)</strong> = <em>evidence</em> that an attack already occurred
+          (forensic/post-incident)<br><br>
+          "A user can't log in a day before their password expires" = normal event, NOT an IoA<br>
+          "Email checked in Europe + file downloaded in Australia 6 min later" = impossible travel = ✅ IoA
+        </div>
+      </div>
+
+      <p class="section-title">Digital Certificate Contents</p>
+      <div class="wrong-item">
+        <div class="wrong-q">What type of information is found in a digital signature and/or digital certificate?</div>
+        <div class="wrong-your">❌ Common wrong answer: digital signature contains public key</div>
+        <div class="wrong-correct">✅ Correct: <strong>A digital certificate CAN contain a postal address.</strong></div>
+        <div class="wrong-explain">
+          <strong>Digital Certificate</strong> contains: public key, identity info (name, org, email, address), validity
+          dates, CA signature<br>
+          <strong>Digital Signature</strong> = a hash of the message encrypted with the SENDER's private key. It does
+          NOT contain a key itself.<br><br>
+          ❌ "Digital signature contains a public key" — FALSE (it's a hash/encrypted hash)<br>
+          ❌ "Digital certificate contains a private key" — NEVER. Private keys are never in certs.<br>
+          ✅ "Digital certificate can contain a postal address" — TRUE (Subject field can include address)
+        </div>
+      </div>
+
+      <p class="section-title">Web Application Vulnerability Target</p>
+      <div class="wrong-item">
+        <div class="wrong-q">A vulnerability in a web application infrastructure is most likely to affect which of the
+          following?</div>
+        <div class="wrong-your">❌ You may have selected OS or Network</div>
+        <div class="wrong-correct">✅ Correct: <strong>Platform</strong></div>
+        <div class="wrong-explain">Web application infrastructure = the platform (web server, framework, runtime
+          environment). A vulnerability here affects the <strong>platform layer</strong> — the environment on which the
+          app runs (e.g., Apache, Node.js, IIS), not just the OS or network.</div>
+      </div>
+    </div>
+
+    <!-- ───────────────────────────────── TAB: MALWARE ───────────────────────────────── -->
+    <div id="tab-malware" class="tab-pane">
+
+      <div class="alert info">
+        <div class="alert-title">📌 Core Framework</div>
+        Malware is classified by its <strong>primary action</strong>: Kidnap · Eavesdrop · Masquerade · Launch ·
+        Sidestep
+      </div>
+
+      <p class="section-title">🔒 KIDNAP — Ransomware</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🔒 Blocking Ransomware</div>
+          <div class="card-body">Manipulates the <strong>OS</strong> to block all normal access. You can't use the
+            computer at all. Desktop is locked — like a fake government message popup demanding payment.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔐 Locking Ransomware</div>
+          <div class="card-body">Encrypts <strong>some or all files</strong> on the device so they can't be opened. Also
+            targets <em>all connected network drives, USB drives, NAS, cloud storage</em>. This is why it's so serious.
+          </div>
+        </div>
+      </div>
+      <div class="alert warn">
+        <div class="alert-title">⭐ Exam Trap: Ransomware Scope</div>
+        Locking ransomware = encrypts files on the local device AND any <strong>network/storage connected to
+          it</strong>. That's what makes it devastating — one infected USB can encrypt your entire company's shared
+        drives.
+      </div>
+
+      <div class="mnemonic">
+        <div class="mnemonic-label">🧠 Mnemonic — Ransomware Types</div>
+        <div class="mnemonic-text">"BLOCK the door vs LOCK the files"</div>
+        <div class="mnemonic-expand"><strong>BLOCK</strong>ing = blocks access to computer (can't use it) |
+          <strong>LOCK</strong>ing = locks (encrypts) your files</div>
+      </div>
+
+      <p class="section-title">👂 EAVESDROP — Spyware & Keyloggers</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">⌨ Keylogger</div>
+          <div class="card-body">Silently records every keystroke. Can be <strong>software</strong> (installed program)
+            or <strong>hardware</strong> (physical USB device plugged between keyboard and PC). Captures passwords,
+            credit cards, personal info.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">👁 Spyware</div>
+          <div class="card-body">Tracking software deployed <strong>without user consent or control</strong>. Monitors
+            behavior, browsing, location. Not always obviously malicious — often bundled with free software.</div>
+        </div>
+      </div>
+
+      <p class="section-title">🎭 MASQUERADE — Trojans</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🐴 Computer Trojan</div>
+          <div class="card-body">Appears to be a <strong>legitimate/benign program</strong> but performs malicious
+            actions behind the scenes. Does NOT replicate itself (unlike viruses).</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🖥 Remote Access Trojan (RAT)</div>
+          <div class="card-body">Trojan + <strong>unauthorized remote access</strong> using specially configured
+            communication protocols. Creates a backdoor giving the attacker <em>unrestricted access</em> to the victim's
+            system.</div>
+        </div>
+      </div>
+
+      <p class="section-title">🚀 LAUNCH — Viruses, Worms, Bots</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Malware</th>
+              <th>How it spreads</th>
+              <th>Key characteristic</th>
+              <th>Exam note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>File-based Virus</strong></td>
+              <td>Attaches to files, spreads on same computer</td>
+              <td>Needs a file host; delivers payload then replicates</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Fileless Virus</strong></td>
+              <td>No file attachment — loads into RAM</td>
+              <td>Uses native OS processes; persistent, hard to detect</td>
+              <td class="hit">⭐ Quiz-worthy</td>
+            </tr>
+            <tr>
+              <td><strong>Worm</strong></td>
+              <td>Network (called "network virus")</td>
+              <td>Self-replicates across network, exploits OS/app vulnerabilities</td>
+              <td class="hit">⭐ Was in quiz</td>
+            </tr>
+            <tr>
+              <td><strong>Bloatware</strong></td>
+              <td>Pre-installed or bundled software</td>
+              <td>Not requested by user; may contain malware or be exploited</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Bot / Zombie</strong></td>
+              <td>Infected via network/malware</td>
+              <td>Remote-controlled by bot herder via C&C (Command & Control)</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert warn">
+        <div class="alert-title">⭐ True or False Trap: Fileless Virus</div>
+        "There is a virus that operates without appending itself to files." = <strong>TRUE</strong> — that's the
+        fileless virus! It operates entirely in RAM.
+      </div>
+
+      <p class="section-title">🕵 SIDESTEP — Logic Bombs, Rootkits, Backdoors</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">💣 Logic Bomb</div>
+          <div class="card-body">Code added to a <strong>legitimate program</strong>. Lies dormant until a
+            <strong>specific logical event</strong> triggers it (date, action, login). Evades detection until triggered.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">🌳 Rootkit</div>
+          <div class="card-body">Hides its own presence AND other malware by accessing <strong>"lower layers" of the
+              OS</strong>. Makes alterations so AV can't see it.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🚪 Backdoor</div>
+          <div class="card-body">Provides access to a computer/program/service that <strong>circumvents normal
+              security</strong>. Can be installed by an attacker or left by a developer intentionally.</div>
+        </div>
+      </div>
+
+      <p class="section-title">📊 Indicator of Attack (IoA) Table</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>IoA Type</th>
+              <th>What it means</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Account Lockout</strong></td>
+              <td>Account inaccessible = possibly taken over by attacker locking out real user</td>
+            </tr>
+            <tr>
+              <td><strong>Concurrent Session</strong></td>
+              <td>Same account logged in from two places simultaneously</td>
+            </tr>
+            <tr>
+              <td><strong>Impossible Travel</strong></td>
+              <td>Email in NYC, then file download in LA 5 minutes later = physically impossible</td>
+            </tr>
+            <tr>
+              <td><strong>Resource Consumption</strong></td>
+              <td>Memory/CPU suddenly depleted without explanation</td>
+            </tr>
+            <tr>
+              <td><strong>Out-of-cycle Logging</strong></td>
+              <td>Log entries that don't match actual events</td>
+            </tr>
+            <tr>
+              <td><strong>Missing Logs</strong></td>
+              <td>Log files mysteriously deleted = attacker covering tracks</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert danger">
+        <div class="alert-title">🔴 IoA vs IoC — Know the Difference</div>
+        <strong>IoA</strong> = attack IS happening or about to (real-time signal)<br>
+        <strong>IoC</strong> = evidence that an attack ALREADY happened (forensic artifact)<br><br>
+        "A user can't log in a day before their password expires" → <strong>NOT an IoA</strong> (normal behavior,
+        passwords expire)
+      </div>
+    </div>
+
+    <!-- ───────────────────────────────── TAB: APP ATTACKS ───────────────────────────────── -->
+    <div id="tab-appattacks" class="tab-pane">
+
+      <div class="alert info">
+        <div class="alert-title">📌 Key Concept</div>
+        Application attacks target <strong>vulnerabilities in applications</strong>. They often result in
+        <strong>privilege escalation</strong> — gaining more access than authorized.
+      </div>
+
+      <p class="section-title">Buffer Overflow & Memory Injection</p>
       <div class="card">
-        <div class="card-title">❌ What's NOT in a Certificate/Signature</div>
+        <div class="card-title">💾 Buffer Overflow</div>
         <div class="card-body">
-          • <strong>Private key</strong> — NEVER in any certificate<br>
-          • A digital <em>signature</em> does NOT contain a key<br>
-          • A digital signature = hash of message encrypted with sender's private key<br><br>
-          <em>A digital certificate ≠ a digital signature</em>
+          A process stores data in RAM <strong>beyond the boundaries</strong> of a fixed-length buffer. Extra data
+          overflows into adjacent memory.<br><br>
+          Also called: <strong>memory injection</strong> (something injected into RAM).<br>
+          Root cause: <strong>poor coding practices</strong> — improper input handling, not validating/filtering user
+          input.
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="card-title">🏁 Race Condition</div>
+        <div class="card-body">Occurs when <strong>two concurrent threads</strong> access a shared resource
+          simultaneously. Can cause NULL pointer/object dereference → program crash or exploit. Root cause: poor coding.
+        </div>
+      </div>
+
+      <p class="section-title">Web-Based Application Attacks</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Attack</th>
+              <th>Full Name</th>
+              <th>How it works</th>
+              <th>Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>XSS</strong></td>
+              <td>Cross-Site Scripting</td>
+              <td>Site accepts unvalidated user input. Attacker injects malicious script that runs in victim's browser
+              </td>
+              <td>The <strong>USER</strong>'s browser</td>
+            </tr>
+            <tr>
+              <td><strong>SQLi</strong></td>
+              <td>SQL Injection</td>
+              <td>Crafted SQL statements entered as input. Extracts or manipulates database</td>
+              <td>The <strong>DATABASE</strong></td>
+            </tr>
+            <tr>
+              <td><strong>CSRF</strong></td>
+              <td>Cross-Site Request Forgery</td>
+              <td>Uses auth token from a site the user is logged into. Forces user's browser to make unauthorized
+                requests</td>
+              <td>The authenticated <strong>USER</strong></td>
+            </tr>
+            <tr>
+              <td><strong>SSRF</strong></td>
+              <td>Server-Side Request Forgery</td>
+              <td>Attacker modifies target URL the server fetches. Web server makes requests on attacker's behalf</td>
+              <td>The <strong>WEB SERVER</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Directory Traversal</strong></td>
+              <td>—</td>
+              <td>Exploits vulnerability to move from root directory to restricted directories</td>
+              <td>Server file system</td>
+            </tr>
+            <tr>
+              <td><strong>Replay</strong></td>
+              <td>—</td>
+              <td>Intercept & copy data, then retransmit later to impersonate legitimate user</td>
+              <td>Authentication server</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mnemonic">
+        <div class="mnemonic-label">🧠 Mnemonic — CSRF vs SSRF</div>
+        <div class="mnemonic-text">"CSRF targets the USER · SSRF targets the SERVER"</div>
+        <div class="mnemonic-expand">
+          <strong>C</strong>SRF = the <strong>C</strong>lient/user is tricked into doing something<br>
+          <strong>S</strong>SRF = the <strong>S</strong>erver is tricked into making requests<br><br>
+          Quiz statement was TRUE: CSRF's attack target = user | SSRF's attack target = web server ✅
+        </div>
+      </div>
+
+      <p class="section-title">Defending Against App Attacks</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🧹 Filter Inputs (SQLi defense)</div>
+          <div class="card-body">Validate and sanitize all user input before it reaches the database. Prevent SQL
+            commands from being injected through form fields.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🍪 Secure Cookies</div>
+          <div class="card-body">Cookies sent only over HTTPS (encrypted). Prevents interception by unauthorized parties
+            during transmission. A web browser protection mechanism.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📋 HTTP Response Headers</div>
+          <div class="card-body">Headers that instruct the browser how to behave with the website. Can prevent XSS,
+            clickjacking, and other browser-level attacks.</div>
+        </div>
+      </div>
+
+      <p class="section-title">Endpoint Protection Tools</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>What it does</th>
+              <th>Key distinction</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>HIDS</strong><br><small>Host Intrusion Detection System</small></td>
+              <td>Detects that an attack HAS occurred</td>
+              <td>Passive — detects AFTER the fact, logs events</td>
+            </tr>
+            <tr>
+              <td><strong>HIPS</strong><br><small>Host Intrusion Prevention System</small></td>
+              <td>Immediately BLOCKS malicious attacks by following rules</td>
+              <td>Active — prevents attacks in real-time</td>
+            </tr>
+            <tr>
+              <td><strong>EDR</strong><br><small>Endpoint Detection & Response</small></td>
+              <td>Aggregates data, performs advanced analytics, detects anomalies, baselines behavior</td>
+              <td>More robust than HIDS + HIPS combined. Centralized database. Pattern detection.</td>
+            </tr>
+            <tr>
+              <td><strong>Antivirus (AV)</strong></td>
+              <td>Scans files for known virus signatures; static or heuristic analysis</td>
+              <td>Static = signature-based | Dynamic = heuristic/behavioral</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="section-title">Endpoint Hardening (OS Level)</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🚫 Disable Unnecessary Ports/Protocols</div>
+          <div class="card-body">Reduce attack surface by disabling services not in use. Less exposure = fewer entry
+            points for attackers.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">✅ Application Allow List</div>
+          <div class="card-body">Only <strong>approved applications</strong> can run. Unapproved software simply won't
+            execute. This is an OS-level protection — NOT antivirus.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📦 Sandbox</div>
+          <div class="card-body">A container environment where applications run in isolation. Prevents an app from
+            impacting the underlying OS or other applications.</div>
         </div>
       </div>
     </div>
 
-    <p class="section-title">Certificate Lifecycle: Revocation vs Suspension</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Action</th><th>Meaning</th><th>When to use</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><strong>Expire</strong></td>
-            <td>Certificate reaches end of validity period naturally</td>
-            <td>Normal end-of-life</td>
-          </tr>
-          <tr>
-            <td><strong>Suspend</strong></td>
-            <td>Temporary hold — cert placed on CRL with "hold" status</td>
-            <td>Extended leave, investigation, temporary role change ⭐</td>
-          </tr>
-          <tr>
-            <td><strong>Revoke</strong></td>
-            <td>Permanent cancellation — added to CRL permanently</td>
-            <td>Compromised key, employee termination, fraud</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- ───────────────────────────────── TAB: MODULE 6 ───────────────────────────────── -->
+    <div id="tab-mod6" class="tab-pane">
+
+      <div class="alert danger">
+        <div class="alert-title">🔴 PRIORITY — You were absent for this entire module (3/10 knowledge)</div>
+        This is your highest-risk area. Study this tab FIRST. Three knowledge-check questions from class (KCA 6-1, 6-2,
+        6-3) are high-probability exam items — answers are highlighted throughout.
+      </div>
+
+      <!-- ── SECTION 1: MOBILE DEVICE TYPES ── -->
+      <p class="section-title">📱 Mobile Device Types</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">📱 Smartphones</div>
+          <div class="card-body">Feature phone tools + an <strong>OS that runs apps</strong> and accesses the Internet.
+            The most attack-targeted mobile device category due to sensitive business data access.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📲 Tablets</div>
+          <div class="card-body">Portable computing devices that <strong>generally lack a built-in keyboard or
+              mouse</strong>. Touch-screen interface.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">⌚ Wearables</div>
+          <div class="card-body">Devices <strong>worn by the user</strong> instead of carried. Most common = <em>smart
+              watch</em>. Also includes fitness trackers. Security risk: always-on sensors, location data.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">💻 Portable Computers</div>
+          <div class="card-body">Mirror desktop functionality but are <strong>smaller, self-contained,
+              battery-powered</strong>. Includes laptops. A web-based computer = limited OS + browser with integrated
+            media player (e.g., Chromebook).</div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 2: CONNECTIVITY METHODS ── -->
+      <p class="section-title">📡 Mobile Device Connectivity Methods</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>How it works</th>
+              <th>Key Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cellular</strong></td>
+              <td>Coverage area divided into cells. Each cell has a transmitter.</td>
+              <td>Transmitters connect through an <strong>MTSO</strong> (Mobile Telecommunications Switching Office)
+                that controls all transmitters in the network.</td>
+            </tr>
+            <tr>
+              <td><strong>Wi-Fi</strong></td>
+              <td>Wireless LAN (WLAN) that replaces or supplements a wired LAN.</td>
+              <td>Public Wi-Fi hotspots = major security risk (eavesdropping).</td>
+            </tr>
+            <tr>
+              <td><strong>Bluetooth</strong></td>
+              <td>Short-range radio frequency transmissions.</td>
+              <td>Provides <strong>rapid device pairings</strong>. Short range = lower risk, but still vulnerable to
+                bluejacking/bluesnarfing.</td>
+            </tr>
+            <tr>
+              <td><strong>USB</strong></td>
+              <td>Universal Serial Bus physical connector.</td>
+              <td>Various types/sizes. Used for <strong>data transfer between devices</strong>. Risk: malicious USB
+                cables/drives.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 3: ENTERPRISE DEPLOYMENT MODELS ── -->
+      <p class="section-title">🏢 Enterprise Mobile Deployment Models ⭐</p>
+      <div class="alert info">
+        <div class="alert-title">📌 These are highly testable — know each acronym and its key distinction</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Who owns device?</th>
+              <th>Key Characteristic</th>
+              <th>Exam Clue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>BYOD</strong><br><small>Bring Your Own Device</small></td>
+              <td>Employee owns</td>
+              <td>Employee uses their own personal device for business. Employee has full responsibility for choosing
+                and supporting it.</td>
+              <td>Popular with <strong>smaller companies or temporary staff</strong></td>
+            </tr>
+            <tr>
+              <td><strong>COPE</strong><br><small>Corporate Owned, Personally Enabled</small></td>
+              <td>Company owns &amp; pays</td>
+              <td>Company supplies the device from approved list; employee can also use it for personal activities.</td>
+              <td>Company decides <strong>level of choice and freedom</strong> for employees</td>
+            </tr>
+            <tr>
+              <td><strong>CYOD</strong><br><small>Choose Your Own Device</small></td>
+              <td>Business owns contract; employee pays upfront device cost</td>
+              <td>Employee picks from a limited approved selection. Company provides stipend for monthly carrier fees.
+              </td>
+              <td>Company often provides a <strong>stipend</strong></td>
+            </tr>
+            <tr>
+              <td><strong>VDI</strong><br><small>Virtual Desktop Infrastructure</small></td>
+              <td>Data lives on remote server</td>
+              <td>Sensitive apps and data stored on remote server; accessed via smartphone. Enterprise centrally manages
+                everything.</td>
+              <td>Data never actually on the device — on the <strong>remote server</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Corporate Owned</strong></td>
+              <td>Enterprise owns entirely</td>
+              <td>Device purchased and owned by enterprise. Employee uses it for company business ONLY.</td>
+              <td>Enterprise responsible for <strong>ALL aspects</strong> of the device</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mnemonic">
+        <div class="mnemonic-label">🧠 Mnemonic — Deployment Models</div>
+        <div class="mnemonic-text">"Buy · Company Pays · Choose · Virtual · Corporate"</div>
+        <div class="mnemonic-expand">
+          <strong>BYOD</strong> = you Buy it | <strong>COPE</strong> = Company Pays, you use personally |
+          <strong>CYOD</strong> = you Choose from approved list | <strong>VDI</strong> = Virtual, data lives elsewhere |
+          <strong>Corporate</strong> = company owns, work only
+        </div>
+      </div>
+
+      <!-- ── SECTION 4: MOBILE DEVICE VULNERABILITIES ── -->
+      <p class="section-title">⚠ Mobile Device Vulnerabilities</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🔓 Physical Security</div>
+          <div class="card-body">Mobile devices are <strong>frequently lost or stolen</strong>. Physical access = full
+            access if no strong authentication. First line of defense = screen lock + strong passcode.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔄 Limited Updates</div>
+          <div class="card-body">Security patches distributed via <strong>OTA (Over-The-Air) firmware updates</strong>.
+            Users often delay or skip updates. Unpatched devices = known vulnerabilities exploitable by attackers.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📍 Location Tracking</div>
+          <div class="card-body">Devices using <strong>geolocation</strong> are at increased risk of targeted physical
+            attacks. Related risk: <em>GPS tagging</em> — photos embed GPS coordinates in metadata, revealing user's
+            location.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🎙 Unauthorized Recording</div>
+          <div class="card-body">By infecting a device with malware, a threat actor can <strong>spy on the
+              victim</strong> and record conversations or videos remotely — without the user knowing.</div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 5: CONNECTION VULNERABILITIES ── -->
+      <p class="section-title">🔌 Connection Vulnerabilities ⭐</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>What it is</th>
+              <th>The Vulnerability</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Tethering</strong></td>
+              <td>Sharing a mobile device's internet connection with other devices via Bluetooth or Wi-Fi.</td>
+              <td>An unsecured mobile device may <strong>infect other tethered devices</strong> or the corporate
+                network.</td>
+            </tr>
+            <tr>
+              <td><strong>USB OTG</strong><br><small>On-The-Go</small></td>
+              <td>OTG device can act as either a HOST (connects USB drives) or a PERIPHERAL (mass storage) to another
+                host.</td>
+              <td>Connecting a <strong>malicious flash drive</strong> could infect the device. Or, if used as peripheral
+                connected to infected computer, malware is sent to the device.</td>
+            </tr>
+            <tr>
+              <td><strong>Malicious USB Cable</strong></td>
+              <td>A USB cable embedded with a Wi-Fi controller — receives commands from a nearby attacker and sends them
+                to the connected device.</td>
+              <td>Device recognizes the cable as a <strong>Human Interface Device</strong> (like keyboard/mouse), giving
+                attacker permissions to exploit the system.</td>
+            </tr>
+            <tr>
+              <td><strong>Hotspots</strong></td>
+              <td>A location where users access the Internet wirelessly (public Wi-Fi).</td>
+              <td>Public hotspots are beyond organizational control — attackers can <strong>eavesdrop</strong> on data
+                transmissions and view sensitive information.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 6: UNTRUSTED CONTENT ── -->
+      <p class="section-title">📦 Accessing Untrusted Content ⭐ KCA 6-1</p>
+      <div class="alert warn">
+        <div class="alert-title">⭐ EXAM TRAP — Know iOS vs Android terminology precisely</div>
+        <strong>Jailbreaking</strong> = Apple iOS &nbsp;|&nbsp; <strong>Rooting</strong> = Android &nbsp;|&nbsp;
+        <strong>Sideloading</strong> = downloading from unofficial 3rd-party app store<br><br>
+        KCA 6-1 Answer: Employee trying to circumvent built-in limits on <em>Android</em> smartphone = <strong>A.
+          Rooting</strong>
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🍎 Jailbreaking (iOS)</div>
+          <div class="card-body">Circumventing the built-in installation limitations on an <strong>Apple iOS</strong>
+            device. Allows installing apps outside the App Store. Removes OS security restrictions.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🤖 Rooting (Android)</div>
+          <div class="card-body">Circumventing the built-in installation limitations on an <strong>Android</strong>
+            device. Grants root-level access. Enables sideloading from unofficial sources. ⭐ <em>KCA 6-1 answer</em>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">📥 Sideloading</div>
+          <div class="card-body">Downloading apps from an <strong>unofficial third-party app store</strong> (not the
+            official App Store or Google Play). The act of installing an app this way — enabled by jailbreaking/rooting.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">📱 SMS/MMS/RCS Attacks</div>
+          <div class="card-body">Untrusted content can invade mobile devices through <strong>text messages</strong>
+            (SMS, MMS, RCS). Malicious links or files in messages. Smishing = SMS phishing.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📷 QR Code Attacks</div>
+          <div class="card-body">Attacker creates an advertisement listing a reputable website but includes a <strong>QR
+              code with a malicious URL</strong>. Victim scans and is sent to attacker's site instead.</div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 7: PROTECTING MOBILE DEVICES ── -->
+      <p class="section-title">🛡 Protecting Mobile Devices</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🔑 Strong Authentication</div>
+          <div class="card-body">Verifying the authentic user involves <strong>strong passcode + screen lock</strong>.
+            Options: passcode, PIN, fingerprint, facial recognition, or unlock pattern (connecting dots).</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🗂 Segmentation / Containerization</div>
+          <div class="card-body"><strong>Segmentation</strong> = separates business data from personal data.
+            <strong>Containerization</strong> = storage split into business and personal "containers." Helps avoid data
+            ownership privacy/legal issues.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🗑 Remote Wipe</div>
+          <div class="card-body">If a lost or stolen device cannot be located, it may be necessary to <strong>perform a
+              remote wipe</strong> — erase all data on the device remotely to prevent data breach.</div>
+        </div>
+      </div>
+
+      <p class="section-title">🔍 Anti-Theft / Loss Services</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>What it does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Alarm</strong></td>
+              <td>Device generates an alarm <strong>even if it is on mute</strong>.</td>
+            </tr>
+            <tr>
+              <td><strong>Last Known Location</strong></td>
+              <td>When battery drops below a threshold, the last known location is indicated on an online map.</td>
+            </tr>
+            <tr>
+              <td><strong>Locate</strong></td>
+              <td>Current location pinpointed on a map through the device's GPS.</td>
+            </tr>
+            <tr>
+              <td><strong>Remote Lockout</strong></td>
+              <td>Device remotely locked; a <strong>custom message</strong> displayed on login screen.</td>
+            </tr>
+            <tr>
+              <td><strong>Thief Picture</strong></td>
+              <td>After 3 incorrect passcode attempts, <strong>photo taken via onboard camera</strong> and emailed to
+                owner.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="section-title">📋 Mobile Management Tools — MDM / MAM / MCM / UEM</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">📱 MDM — Mobile Device Management</div>
+          <div class="card-body">Tools that allow a device to be <strong>managed remotely by an organization</strong>.
+            Can enforce policies, push updates, and perform remote wipe.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📲 MAM — Mobile Application Management</div>
+          <div class="card-body">Covers application management: tools and services for <strong>distributing and
+              controlling access to apps</strong>. Controls what apps are installed and how they behave.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📄 MCM — Mobile Content Management</div>
+          <div class="card-body">Supports <strong>creation, editing, and modification of digital content</strong> by
+            multiple employees. Content collaboration on mobile.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🌐 UEM — Unified Endpoint Management</div>
+          <div class="card-body">Provides capabilities for <strong>managing and securing mobile devices, applications,
+              and content</strong> in a single platform. The most comprehensive option.</div>
+        </div>
+      </div>
+      <div class="mnemonic">
+        <div class="mnemonic-label">🧠 Mnemonic — M_M Tools</div>
+        <div class="mnemonic-text">"Device · App · Content · Unified"</div>
+        <div class="mnemonic-expand">
+          <strong>MDM</strong> = manages the Device | <strong>MAM</strong> = manages the Apps | <strong>MCM</strong> =
+          manages the Content | <strong>UEM</strong> = manages all of the above Unified
+        </div>
+      </div>
+
+      <!-- ── SECTION 8: EMBEDDED SYSTEMS ── -->
+      <p class="section-title">🔧 Embedded Systems &amp; Specialized Devices</p>
+      <div class="alert info">
+        <div class="alert-title">📌 Definition</div>
+        An <strong>embedded system</strong> = computer hardware and software contained within a larger system, designed
+        for a specific function. Examples: car systems, medical devices, smart meters.
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🍓 Raspberry Pi</div>
+          <div class="card-body">One of the most common hardware components for embedded systems. A <strong>low-cost,
+              credit-card-sized computer motherboard</strong>. Similar device: Arduino.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚡ FPGA</div>
+          <div class="card-body"><strong>Field-Programmable Gate Array</strong> — a hardware "chip" that can be
+            <strong>programmed by the user</strong> to carry out one or more logical operations. Reprogrammable after
+            manufacturing.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">💾 SoC ⭐</div>
+          <div class="card-body"><strong>System on a Chip</strong> — combines ALL required electronic circuits of
+            various computer components <strong>on a single chip</strong>. SoCs often use an <em>RTOS</em>. Found in
+            smartphones, IoT devices.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">⏱ RTOS ⭐ KCA 6-2</div>
+          <div class="card-body"><strong>Real-Time Operating System</strong> — a specifically designed OS for SoCs in
+            embedded/specialized systems. Designed for deterministic, time-critical processing. <strong>KCA 6-2 Answer:
+              B. RTOS</strong></div>
+        </div>
+      </div>
+      <div class="alert warn">
+        <div class="alert-title">⭐ KCA 6-2 — Which OS is typically found on an embedded system? → RTOS</div>
+        SoC (A) is the hardware chip, not the OS. OTG (C) is a USB connection type. COPE (D) is a mobile deployment
+        model. Only <strong>RTOS (B)</strong> is an operating system.
+      </div>
+
+      <!-- ── SECTION 9: INDUSTRIAL / SCADA ── -->
+      <p class="section-title">🏭 Industrial Systems — ICS &amp; SCADA</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🏗 ICS — Industrial Control Systems</div>
+          <div class="card-body">Collect, monitor, and process <strong>real-time data</strong> so machines can directly
+            control devices (valves, pumps, motors) <em>without human intervention</em>.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📊 SCADA</div>
+          <div class="card-body"><strong>Supervisory Control and Data Acquisition</strong> — manages ICSs. Helps
+            maintain efficiency and provides information on issues to <strong>help reduce downtime</strong>. Manages
+            critical infrastructure.</div>
+        </div>
+      </div>
+
+      <p class="section-title">🔒 SCADA/ICS Hardening Steps</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Hardening Step</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Clearly define security roles, responsibilities, and authorities for managers, admins, and users</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Identify security requirements</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><strong>Disconnect unnecessary connections</strong> to the SCADA network</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Do NOT rely on proprietary protocols to protect the network</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Test to identify and evaluate possible attack scenarios</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Evaluate and strengthen the security of all connections to the SCADA network</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 10: IOT ── -->
+      <p class="section-title">🌐 IoT — Internet of Things</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🌐 What is IoT?</div>
+          <div class="card-body">Connecting <strong>any device to the Internet</strong> for the purpose of sending and
+            receiving data. Examples: thermostats, coffee makers, tire sensors, washing machines, light bulbs,
+            toothbrushes. Avg 22 connected devices per household (2022).</div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚠ IoT Security Problem</div>
+          <div class="card-body">SCADA, specialized systems, and IoT devices have <strong>low resilience</strong> to
+            resist attacks. Key constraint: adding cryptography requires time + energy, which is scarce for small,
+            low-power devices = <em>resource vs security constraint</em>.</div>
+        </div>
+      </div>
+
+      <p class="section-title">⚖ IoT Legislation</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🇺🇸 IoT Cybersecurity Improvement Act 2020</div>
+          <div class="card-body">Federal law requiring agencies to <strong>increase cybersecurity for IoT devices
+              owned/controlled by the federal government</strong>.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📋 California &amp; Oregon State Laws (2020)</div>
+          <div class="card-body">State laws requiring that connected devices be equipped with <strong>"reasonable
+              security features"</strong>. Went into effect 2020.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🏥 FDA Medical Device Powers (2022)</div>
+          <div class="card-body">U.S. FDA gained new authority from legislators to set <strong>minimum security
+              standards for medical-device manufacturers</strong>.</div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 11: APPLICATION SECURITY ── -->
+      <p class="section-title">🔐 Application Security — Attacks &amp; Defenses</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Attack Type</th>
+              <th>How it works</th>
+              <th>Defense</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Executable Files Attack</strong></td>
+              <td>Trick the vulnerable application into <strong>modifying or creating executable files</strong> on the
+                system.</td>
+              <td>Prevent the application from creating or modifying executable files during its normal function.</td>
+            </tr>
+            <tr>
+              <td><strong>System Tampering</strong></td>
+              <td>Use the vulnerable app to modify <strong>sensitive OS areas</strong> (Windows registry, startup files)
+                and exploit those modifications.</td>
+              <td>Do not allow applications to modify special areas of the OS.</td>
+            </tr>
+            <tr>
+              <td><strong>Process Spawning Control</strong></td>
+              <td>Trick the vulnerable app into <strong>spawning executable files</strong> on the system.</td>
+              <td>Take away the process spawning ability from the application.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 12: APP DEVELOPMENT & CODE TESTING ── -->
+      <p class="section-title">⚙ Application Development Models</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">💧 Waterfall Model</div>
+          <div class="card-body">Uses a <strong>sequential design process</strong>. Each phase must complete before the
+            next begins. Stages: Development → Testing → Staging → Production. Less flexible for changes.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔄 Agile Model</div>
+          <div class="card-body">Takes an <strong>incremental approach</strong>, allowing software issues to be
+            incrementally discovered. Flexible and iterative — delivers working software in short cycles (sprints).
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">🛡 SecDevOps</div>
+          <div class="card-body">Integrating <strong>secure development best practices</strong> into the agile model.
+            Enables: Continuous monitoring, validation, integration, delivery, and deployment. Security built in from
+            the start.</div>
+        </div>
+      </div>
+
+      <p class="section-title">🧪 Code Testing — Static vs Dynamic ⭐ KCA 6-3</p>
+      <div class="alert warn">
+        <div class="alert-title">⭐ KCA 6-3 — Another name for runtime verification? → Dynamic Code Analysis (B)</div>
+        Static = <strong>before</strong> compilation | Dynamic = <strong>after</strong> compilation (while running).
+        Runtime = running = Dynamic.
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">📋 Static Code Analysis</div>
+          <div class="card-body">Tests run <strong>before the source code is compiled</strong>. May be accompanied by
+            manual peer reviews. Catches coding errors early without executing the program.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">▶ Dynamic Code Analysis ⭐</div>
+          <div class="card-body">Security testing performed <strong>after source code is compiled</strong> = also called
+            <em>runtime verification</em>. All components are integrated and running. <strong>KCA 6-3 Answer: B. Dynamic
+              code analysis</strong></div>
+        </div>
+        <div class="card">
+          <div class="card-title">🎲 Fuzzing</div>
+          <div class="card-body">Used by dynamic code analysis tools. <strong>Provides random input</strong> to a
+            program in an attempt to trigger exceptions (memory corruption, crashes, security breaches). Stress-tests
+            input handling.</div>
+        </div>
+      </div>
+
+      <div class="mnemonic">
+        <div class="mnemonic-label">🧠 Mnemonic — Static vs Dynamic Code Analysis</div>
+        <div class="mnemonic-text">"Static = Source code · Dynamic = Running code"</div>
+        <div class="mnemonic-expand">
+          <strong>Static</strong> = the code is <em>static</em> (not yet running) — tested before compilation<br>
+          <strong>Dynamic</strong> = the code is <em>in motion</em> (executing) — tested after compilation while running
+          = runtime verification<br>
+          Fuzzing is a dynamic technique (throws random inputs at running program)
+        </div>
+      </div>
+
+      <p class="section-title">⭐ Module 6 Quick Reference — All Key Terms</p>
+      <div class="qr-grid">
+        <div class="qr-item">
+          <div class="qr-term">MTSO</div>
+          <div class="qr-def">Mobile Telecommunications Switching Office — controls all transmitters in a cellular
+            network</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">OTA Update</div>
+          <div class="qr-def">Over-The-Air — how mobile OS security patches are distributed wirelessly</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">GPS Tagging</div>
+          <div class="qr-def">Photos embed GPS coordinates in metadata, revealing the user's location to anyone with the
+            file</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Jailbreaking vs Rooting</div>
+          <div class="qr-def">Jailbreaking = iOS | Rooting = Android. Both circumvent built-in OS installation limits.
+          </div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Sideloading</div>
+          <div class="qr-def">Installing apps from unofficial third-party stores (enabled by jailbreaking/rooting)</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Containerization</div>
+          <div class="qr-def">Separating storage into business and personal containers on a mobile device</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">MDM / MAM / MCM / UEM</div>
+          <div class="qr-def">Device / App / Content / Unified management. UEM = most comprehensive, covers all.</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">FPGA</div>
+          <div class="qr-def">Field-Programmable Gate Array — reprogrammable hardware chip for logical operations</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">SoC + RTOS</div>
+          <div class="qr-def">System on a Chip uses Real-Time OS. RTOS = the OS type for embedded systems. (KCA 6-2)
+          </div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">ICS / SCADA</div>
+          <div class="qr-def">ICS = real-time industrial control. SCADA = manages ICSs, maintains efficiency, reduces
+            downtime.</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Fuzzing</div>
+          <div class="qr-def">Dynamic testing technique — sends random inputs to a running program to trigger exceptions
+          </div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">SecDevOps</div>
+          <div class="qr-def">Security integrated into agile development. Enables continuous monitoring, validation,
+            integration, delivery, deployment.</div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="alert warn">
-      <div class="alert-title">⭐ Exam Scenario: Extended Leave</div>
-      Employee on extended leave (but expected to return) → <strong>SUSPEND</strong> the certificate, not revoke it. Revocation is permanent and requires a new certificate when they return.
-    </div>
+    <!-- ───────────────────────────────── TAB: FLASHCARDS ───────────────────────────────── -->
+    <div id="tab-flashcards" class="tab-pane">
+      <div class="alert info">
+        <div class="alert-title">📌 How to Use</div>
+        Click any card to reveal the answer. These are all high-probability exam questions based on your quiz mistakes.
+      </div>
 
-    <p class="section-title">CRL, OCSP, and OCSP Stapling</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">📋 CRL (Certificate Revocation List)</div>
-        <div class="card-body">A list maintained by the CA of <strong>revoked</strong> (and suspended) certificates. Delay in adding a cert to the CRL = <strong>security may be compromised</strong> (revoked cert still appears valid).</div>
+      <p class="section-title">Click to Reveal</p>
+      <div class="flashcard-grid">
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What does SQL stand for?</div>
+          <div class="a">Structured Query Language</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is the correct CSR process order?</div>
+          <div class="a">1. Create keys → 2. Sign request with PRIVATE key → 3. Send PUBLIC key to RA → 4. CA issues
+            certificate</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">A certificate repository stores _____ certificates only. True or False?</div>
+          <div class="a">FALSE. A certificate repository stores ALL certificates (not just revoked ones). The CRL stores
+            revoked certs.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">Who performs functions on behalf of a CA?</div>
+          <div class="a">The RA (Registration Authority) performs functions on behalf of a CA — not the intermediate CA.
+          </div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">OCSP Stapling: does it improve performance? True or False?</div>
+          <div class="a">TRUE. OCSP Stapling pre-fetches cert status and includes it in TLS handshake. Improves
+            performance and reduces client requests.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What term describes the authorized lifespan of a cryptographic key?</div>
+          <div class="a">Cryptoperiod (NOT "duration")</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What OS-level protection maintains a list of approved applications and blocks everything else?
+          </div>
+          <div class="a">Application Allow List (NOT antivirus)</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What trust model is based on direct trust where users sign each other's certificates?</div>
+          <div class="a">Web of Trust (used in PGP — decentralized, no central CA)</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">Jennifer has locking ransomware and can't open her browser to pay. What type is it?</div>
+          <div class="a">Locking Ransomware (encrypts files including ability to use browser/files)</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">CSRF target vs SSRF target — what's the difference?</div>
+          <div class="a">CSRF targets the USER (forces them to act as authorized user). SSRF targets the WEB SERVER
+            (accesses sensitive data or injects data).</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">An employee is on extended leave (9 months). What should happen to their certificate?</div>
+          <div class="a">SUSPEND it (temporary hold). Revocation is permanent — use suspension for temporary situations.
+          </div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What characteristic helps determine key STRENGTH?</div>
+          <div class="a">Randomness (also key length and algorithm — but "Randomness" is the exam answer for strength
+            characteristic)</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">A worm is sometimes called a ___?</div>
+          <div class="a">Network virus — because it uses a computer network to replicate.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What type of malware lies dormant in a legitimate program until a logical event triggers it?
+          </div>
+          <div class="a">Logic Bomb</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is the primary purpose of a digital certificate?</div>
+          <div class="a">Associate identity with a public key</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">Browser shows network error when accessing a site. OCSP is involved. What happened?</div>
+          <div class="a">OCSP was not able to access the server it was trying to contact (network connectivity issue
+            with OCSP responder).</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">Buffer overflow is caused by what type of coding issue?</div>
+          <div class="a">Poor coding practices — specifically improper input handling (not filtering/validating user
+            input).</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is Endpoint Detection and Response (EDR) better than?</div>
+          <div class="a">EDR is more robust than both HIDS and HIPS. It aggregates data centrally and performs advanced
+            anomaly detection.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">A user can't log into their account a day before their password expires. Is this an IoA?</div>
+          <div class="a">NO — this is normal expected behavior. It is NOT an Indicator of Attack.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">Can a digital certificate contain a postal address?</div>
+          <div class="a">YES — digital certificates can contain postal addresses in the Subject field.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-title">🔍 OCSP (Online Certificate Status Protocol)</div>
-        <div class="card-body">Internet-based protocol for <strong>real-time certificate status checks</strong>. Client asks OCSP responder: "Is this cert valid?" OCSP responder replies with good/revoked/unknown. If OCSP can't reach its server = <strong>network error</strong>.</div>
-      </div>
-      <div class="card">
-        <div class="card-title">📎 OCSP Stapling ⭐</div>
-        <div class="card-body">Server pre-fetches OCSP response from CA and "staples" it to the TLS handshake. Client doesn't need to make a separate request to the CA. <strong>Improves performance ✅ Reduces client requests ✅</strong></div>
-      </div>
-      <div class="card">
-        <div class="card-title">🏛 Certificate Repository</div>
-        <div class="card-body">Publicly accessible, centralized directory of <strong>ALL digital certificates</strong> (not just revoked ones). Used to view certificate status. <strong>NOT the same as CRL.</strong></div>
-      </div>
-    </div>
 
-    <p class="section-title">Trust Models</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-title">🕸 Web of Trust</div>
-        <div class="card-body">Decentralized. Each user <strong>signs certificates and exchanges with all other users</strong> directly. No central CA. Based on direct trust. Used in PGP. ⭐ This is the answer to "direct trust model where users sign each other's certs."</div>
-      </div>
-      <div class="card">
-        <div class="card-title">🏛 Hierarchical (PKI)</div>
-        <div class="card-body">Centralized. Root CA at top → Intermediate CAs → End users. Standard enterprise model.</div>
-      </div>
-    </div>
-
-    <p class="section-title">Key Management Terms</p>
-    <div class="qr-grid">
-      <div class="qr-item">
-        <div class="qr-term">CRYPTOPERIOD ⭐</div>
-        <div class="qr-def">Length of time a key is authorized for use. Not "duration" — must use the technical term cryptoperiod.</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">KEY STRENGTH</div>
-        <div class="qr-def">Determined by: key length, algorithm, randomness. "Randomness" is a key characteristic asked in exams.</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">PUBLIC KEY</div>
-        <div class="qr-def">Shared openly. Used to encrypt data or verify signatures. Lives in digital certificates.</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">PRIVATE KEY</div>
-        <div class="qr-def">Never shared. Used to decrypt or create signatures. Never in certificates or sent to CA.</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">DIGITAL SIGNATURE</div>
-        <div class="qr-def">Hash of message encrypted with sender's private key. Proves authenticity + integrity. Does NOT contain a key.</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">DIGITAL CERTIFICATE</div>
-        <div class="qr-def">Primary purpose: associate identity with a public key. Can contain postal address.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ───────────────────────────────── TAB: FLASHCARDS ───────────────────────────────── -->
-  <div id="tab-flashcards" class="tab-pane">
-    <div class="alert info">
-      <div class="alert-title">📌 How to Use</div>
-      Click any card to reveal the answer. These are all high-probability exam questions based on your quiz mistakes.
-    </div>
-
-    <p class="section-title">Click to Reveal</p>
-    <div class="flashcard-grid">
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">What does SQL stand for?</div>
-        <div class="a">Structured Query Language</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">What is the correct CSR process order?</div>
-        <div class="a">1. Create keys → 2. Sign request with PRIVATE key → 3. Send PUBLIC key to RA → 4. CA issues certificate</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">A certificate repository stores _____ certificates only. True or False?</div>
-        <div class="a">FALSE. A certificate repository stores ALL certificates (not just revoked ones). The CRL stores revoked certs.</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">Who performs functions on behalf of a CA?</div>
-        <div class="a">The RA (Registration Authority) performs functions on behalf of a CA — not the intermediate CA.</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">OCSP Stapling: does it improve performance? True or False?</div>
-        <div class="a">TRUE. OCSP Stapling pre-fetches cert status and includes it in TLS handshake. Improves performance and reduces client requests.</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">What term describes the authorized lifespan of a cryptographic key?</div>
-        <div class="a">Cryptoperiod (NOT "duration")</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">What OS-level protection maintains a list of approved applications and blocks everything else?</div>
-        <div class="a">Application Allow List (NOT antivirus)</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">What trust model is based on direct trust where users sign each other's certificates?</div>
-        <div class="a">Web of Trust (used in PGP — decentralized, no central CA)</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">Jennifer has locking ransomware and can't open her browser to pay. What type is it?</div>
-        <div class="a">Locking Ransomware (encrypts files including ability to use browser/files)</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">CSRF target vs SSRF target — what's the difference?</div>
-        <div class="a">CSRF targets the USER (forces them to act as authorized user). SSRF targets the WEB SERVER (accesses sensitive data or injects data).</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">An employee is on extended leave (9 months). What should happen to their certificate?</div>
-        <div class="a">SUSPEND it (temporary hold). Revocation is permanent — use suspension for temporary situations.</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">What characteristic helps determine key STRENGTH?</div>
-        <div class="a">Randomness (also key length and algorithm — but "Randomness" is the exam answer for strength characteristic)</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">A worm is sometimes called a ___?</div>
-        <div class="a">Network virus — because it uses a computer network to replicate.</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">What type of malware lies dormant in a legitimate program until a logical event triggers it?</div>
-        <div class="a">Logic Bomb</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">What is the primary purpose of a digital certificate?</div>
-        <div class="a">Associate identity with a public key</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">Browser shows network error when accessing a site. OCSP is involved. What happened?</div>
-        <div class="a">OCSP was not able to access the server it was trying to contact (network connectivity issue with OCSP responder).</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">Buffer overflow is caused by what type of coding issue?</div>
-        <div class="a">Poor coding practices — specifically improper input handling (not filtering/validating user input).</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">What is Endpoint Detection and Response (EDR) better than?</div>
-        <div class="a">EDR is more robust than both HIDS and HIPS. It aggregates data centrally and performs advanced anomaly detection.</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">A user can't log into their account a day before their password expires. Is this an IoA?</div>
-        <div class="a">NO — this is normal expected behavior. It is NOT an Indicator of Attack.</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-      <div class="flashcard" onclick="flip(this)">
-        <div class="q">Can a digital certificate contain a postal address?</div>
-        <div class="a">YES — digital certificates can contain postal addresses in the Subject field.</div>
-        <div class="hint">tap to reveal</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ───────────────────────────────── TAB: STRATEGY ───────────────────────────────── -->
-  <div id="tab-strategy" class="tab-pane">
-
-    <div class="alert warn">
-      <div class="alert-title">⚡ 12-Hour Game Plan</div>
-      You have ~12 hours. Follow this schedule strictly. Prioritize your mistakes first.
-    </div>
-
-    <p class="section-title">📅 Study Schedule</p>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Time Block</th><th>Activity</th><th>Goal</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Hour 1–2</strong></td><td>Study the "My Mistakes" tab completely</td><td>Fix all wrong answers from your quiz</td></tr>
-          <tr><td><strong>Hour 3–4</strong></td><td>Read PKI/Certs tab + do flashcards (PKI ones)</td><td>Master CSR, CRL/OCSP, trust models</td></tr>
-          <tr><td><strong>Hour 5–6</strong></td><td>Read Malware tab + do flashcards (malware ones)</td><td>Know all malware categories + IoA</td></tr>
-          <tr><td><strong>Hour 7</strong></td><td>App Attacks tab + CSRF/SSRF comparison</td><td>Know all web attack types cold</td></tr>
-          <tr><td><strong>Hour 8</strong></td><td>Go through ALL 20 flashcards without peeking</td><td>Self-test — aim for 18+/20</td></tr>
-          <tr><td><strong>Hour 9</strong></td><td>Sleep/rest. Seriously.</td><td>Memory consolidation happens during sleep</td></tr>
-          <tr><td><strong>Before exam</strong></td><td>30-min quick review of mnemonics only</td><td>Prime your memory, don't cram new stuff</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="section-title">🎯 Exam Techniques</p>
-    <ul class="strat-list">
-      <li>
-        <span class="strat-num">01</span>
-        <span><strong>Watch for "technical term" traps.</strong> The exam uses exact terminology. "Duration" ≠ Cryptoperiod. "Certificate of Trust" ≠ Web of Trust. When in doubt, go with the most technical-sounding specific term.</span>
-      </li>
-      <li>
-        <span class="strat-num">02</span>
-        <span><strong>For True/False questions, watch for absolutes.</strong> Words like "only," "always," "never," "limited" are often signals that the statement is FALSE. "Software-limited" malware = false. "Repository stores revoked certs ONLY" = false.</span>
-      </li>
-      <li>
-        <span class="strat-num">03</span>
-        <span><strong>For PKI questions: private key = sacred.</strong> Any answer involving sending or sharing the private key is automatically wrong. Use this to eliminate 1–2 choices immediately.</span>
-      </li>
-      <li>
-        <span class="strat-num">04</span>
-        <span><strong>CSRF vs SSRF: remember the target.</strong> C = Client/user is the target. S = Server is the target. This exact comparison appeared in your quiz.</span>
-      </li>
-      <li>
-        <span class="strat-num">05</span>
-        <span><strong>For "who does X on behalf of Y" questions:</strong> RA acts on behalf of CA. Intermediate CA does NOT act "on behalf of" — it issues its own certs. This is a very common distractor.</span>
-      </li>
-      <li>
-        <span class="strat-num">06</span>
-        <span><strong>Error types matter.</strong> Network error = OCSP can't reach server. Security warning = certificate revoked. Generic popup demanding payment = blocking ransomware (extortion). Know what each condition points to.</span>
-      </li>
-      <li>
-        <span class="strat-num">07</span>
-        <span><strong>For scenario questions, focus on keywords:</strong> "temporary" / "extended leave" → suspend. "Compromised" / "terminated" → revoke. "Performance" + "certificate" → OCSP Stapling.</span>
-      </li>
-      <li>
-        <span class="strat-num">08</span>
-        <span><strong>Don't overthink True/False.</strong> You got several True/False wrong by second-guessing. Go with your gut after studying — your instinct after proper review is usually correct.</span>
-      </li>
-    </ul>
-
-    <p class="section-title">⭐ Must-Know One-Liners (Memorize These)</p>
-    <div class="qr-grid">
-      <div class="qr-item">
-        <div class="qr-term">SQL = Structured Query Language</div>
-        <div class="qr-def">Not a description of the attack</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">RA acts on behalf of CA</div>
-        <div class="qr-def">Not the intermediate CA</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">CSR: sign with private, send public</div>
-        <div class="qr-def">Never send private key to anyone</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">Cert repo = ALL certs, not just revoked</div>
-        <div class="qr-def">CRL = revoked only</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">OCSP Stapling = TRUE improves performance</div>
-        <div class="qr-def">Server pre-fetches, client saves a round trip</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">Cryptoperiod = key lifespan term</div>
-        <div class="qr-def">Not "duration"</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">App Allow List = OS protection, not AV</div>
-        <div class="qr-def">Approved apps only can run</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">Web of Trust = direct trust / user-to-user</div>
-        <div class="qr-def">No central CA</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">Worm = network virus (self-replicates)</div>
-        <div class="qr-def">Enters via network vulnerability</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">Locking ransomware = encrypts files</div>
-        <div class="qr-def">Blocking = blocks computer access</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">IoA = in progress · IoC = already happened</div>
-        <div class="qr-def">IoA ≠ evidence of past attack</div>
-      </div>
-      <div class="qr-item">
-        <div class="qr-term">CSRF = user target · SSRF = server target</div>
-        <div class="qr-def">Client vs Server forgery</div>
+      <p class="section-title">📱 Module 6 — Mobile &amp; Embedded Device Security</p>
+      <div class="flashcard-grid">
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">KCA 6-1: Employee tries to circumvent built-in limitations on her ANDROID smartphone. What is
+            this called?</div>
+          <div class="a">A. ROOTING — circumventing built-in limits on Android = rooting. On iOS = jailbreaking.
+            Downloading from unofficial store = sideloading.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">KCA 6-2: Which type of OS is typically found on an embedded system?</div>
+          <div class="a">B. RTOS (Real-Time Operating System) — SoCs (System on a Chip) use RTOS. SoC is the hardware,
+            not the OS. OTG is USB. COPE is a deployment model.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">KCA 6-3: What is another name for runtime verification?</div>
+          <div class="a">B. Dynamic code analysis — security testing AFTER compilation while code is running = dynamic
+            code analysis OR runtime verification. Static = before compilation.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is the difference between jailbreaking and rooting?</div>
+          <div class="a">Same concept, different platform: Jailbreaking = Apple iOS. Rooting = Android. Both circumvent
+            built-in OS installation limitations to allow sideloading.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What does BYOD, COPE, CYOD, and VDI stand for? Who owns the device in each?</div>
+          <div class="a">BYOD = Bring Your Own (employee owns). COPE = Corporate Owned, Personally Enabled (company
+            owns). CYOD = Choose Your Own (business owns contract). VDI = Virtual Desktop Infrastructure (data on remote
+            server).</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is sideloading?</div>
+          <div class="a">Downloading/installing apps from an UNOFFICIAL third-party app store (not Google Play or App
+            Store). Enabled by rooting (Android) or jailbreaking (iOS).</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is a malicious USB cable and why is it dangerous?</div>
+          <div class="a">A USB cable embedded with a Wi-Fi controller. It receives commands from a nearby attacker.
+            Device recognizes the cable as a Human Interface Device (keyboard/mouse), giving attacker permissions to
+            exploit the system.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is the difference between MDM, MAM, MCM, and UEM?</div>
+          <div class="a">MDM = manages the Device remotely. MAM = manages Apps (distributes/controls access). MCM =
+            manages Content (creation/editing). UEM = Unified = manages ALL of the above in one platform.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is an RTOS and where is it used?</div>
+          <div class="a">Real-Time Operating System — a specially designed OS for SoCs (System on a Chip) in embedded
+            and specialized systems. Used when deterministic, time-critical processing is needed (IoT, medical devices,
+            industrial systems).</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What does SCADA stand for and what does it do?</div>
+          <div class="a">Supervisory Control and Data Acquisition — manages Industrial Control Systems (ICSs). Helps
+            maintain efficiency and provides information on issues to help REDUCE DOWNTIME. Controls critical
+            infrastructure.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is fuzzing and what kind of code testing is it?</div>
+          <div class="a">Fuzzing = providing RANDOM INPUT to a program to trigger exceptions (crashes, memory
+            corruption, security breaches). It is a DYNAMIC code analysis technique — used after compilation while the
+            program is running.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is the security risk of location tracking (GPS tagging) on mobile devices?</div>
+          <div class="a">Geolocation increases risk of targeted PHYSICAL attacks. GPS tagging = photos embed GPS
+            coordinates in metadata, revealing user's location to anyone with the file.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What are the mobile anti-theft features? What happens after 3 wrong passcode attempts?</div>
+          <div class="a">Features: Alarm (works on mute), Last Known Location (when battery is low), Locate (GPS map),
+            Remote Lockout (with custom message), Thief Picture. After 3 wrong attempts → THIEF PICTURE taken by onboard
+            camera and emailed to owner.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">What is containerization in mobile security?</div>
+          <div class="a">Separating storage into business and personal "containers" on a mobile device. Part of
+            Segmentation strategy. Helps companies avoid data ownership privacy issues and legal concerns about personal
+            data.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
+        <div class="flashcard" onclick="flip(this)">
+          <div class="q">Static vs Dynamic code analysis — which runs BEFORE compilation and which runs AFTER?</div>
+          <div class="a">STATIC = before compilation (code is not yet running). DYNAMIC = after compilation (code is
+            running = runtime verification). Fuzzing is a dynamic technique.</div>
+          <div class="hint">tap to reveal</div>
+        </div>
       </div>
     </div>
 
-    <div class="alert success" style="margin-top:32px">
-      <div class="alert-title">💪 You've Got This</div>
-      You went from a ~50% quiz score to having identified every single mistake and understanding why. That's the hardest part. Study the "My Mistakes" tab twice, run through all flashcards, and get some sleep. You're ready.
+    <!-- ───────────────────────────────── TAB: STRATEGY ───────────────────────────────── -->
+    <div id="tab-strategy" class="tab-pane">
+
+      <div class="alert danger">
+        <div class="alert-title">🔴 URGENT — Module 6 is your biggest risk (3/10 knowledge, was absent)</div>
+        You know Module 5 reasonably well from prior study. Module 6 is the gap. Prioritize the 📱 Module 6 tab, then
+        review Module 5 mistakes. Do ALL flashcards (both sections) before sleeping.
+      </div>
+
+      <p class="section-title">📅 Study Schedule — Exam Tomorrow</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time Block</th>
+              <th>Activity</th>
+              <th>Goal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Hour 1–3</strong></td>
+              <td>📱 Read the ENTIRE Module 6 tab — all sections top to bottom</td>
+              <td>Build foundational Module 6 knowledge from zero</td>
+            </tr>
+            <tr>
+              <td><strong>Hour 4</strong></td>
+              <td>Do ALL Module 6 flashcards without peeking (KCA 6-1, 6-2, 6-3 priority)</td>
+              <td>Self-test on Module 6 — aim for 12/15</td>
+            </tr>
+            <tr>
+              <td><strong>Hour 5</strong></td>
+              <td>🔴 Study the "My Mistakes" tab completely</td>
+              <td>Fix all Module 5 wrong answers from your quiz</td>
+            </tr>
+            <tr>
+              <td><strong>Hour 6</strong></td>
+              <td>💉 Review App Attacks tab — CSRF vs SSRF, HIDS/HIPS/EDR</td>
+              <td>Reinforce Module 5 application attack concepts</td>
+            </tr>
+            <tr>
+              <td><strong>Hour 7</strong></td>
+              <td>🦠 Quick scan of Malware tab — IoA vs IoC, ransomware types</td>
+              <td>Verify you still know Module 5 malware cold</td>
+            </tr>
+            <tr>
+              <td><strong>Hour 8</strong></td>
+              <td>Run through ALL flashcards (Module 5 + Module 6) without peeking</td>
+              <td>Full self-test — aim for 28+/35 total</td>
+            </tr>
+            <tr>
+              <td><strong>Hour 9</strong></td>
+              <td>Sleep/rest. Seriously.</td>
+              <td>Memory consolidation happens during sleep</td>
+            </tr>
+            <tr>
+              <td><strong>Before exam</strong></td>
+              <td>30-min review: Module 6 mnemonics + My Mistakes quick-scan</td>
+              <td>Prime your memory, don't cram new stuff</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="section-title">🎯 Module 6 Specific Exam Tips</p>
+      <ul class="strat-list">
+        <li>
+          <span class="strat-num">M6-1</span>
+          <span><strong>Android = Rooting. iOS = Jailbreaking. Never confuse these.</strong> The exam will give you the
+            specific device (Android vs iPhone) and you must use the correct term. Sideloading is the action of
+            downloading from an unofficial store — it's the RESULT of rooting/jailbreaking, not the process
+            itself.</span>
+        </li>
+        <li>
+          <span class="strat-num">M6-2</span>
+          <span><strong>RTOS is an OS type, SoC is hardware.</strong> When asked "what OS runs on an embedded system" —
+            RTOS. When asked "what hardware integrates all components on one chip" — SoC. Don't confuse the hardware
+            (SoC) with the software (RTOS).</span>
+        </li>
+        <li>
+          <span class="strat-num">M6-3</span>
+          <span><strong>Runtime verification = Dynamic code analysis.</strong> "Runtime" = the code is running =
+            DYNAMIC. Static = before compilation (code is not executing). Fuzzing is a dynamic technique
+            specifically.</span>
+        </li>
+        <li>
+          <span class="strat-num">M6-4</span>
+          <span><strong>For deployment models, focus on WHO OWNS and WHO PAYS.</strong> BYOD = employee owns. COPE =
+            company pays, employee uses personally. CYOD = employee picks, business owns contract. Corporate Owned =
+            company owns, work only. VDI = data lives on server, not device.</span>
+        </li>
+        <li>
+          <span class="strat-num">M6-5</span>
+          <span><strong>Malicious USB cable = recognized as Human Interface Device.</strong> The key detail is WHY it's
+            dangerous: the device thinks the cable is a keyboard or mouse, which grants the attacker HID-level
+            permissions (input control).</span>
+        </li>
+        <li>
+          <span class="strat-num">M6-6</span>
+          <span><strong>MDM/MAM/MCM/UEM hierarchy:</strong> MDM is most basic (device only). UEM is most comprehensive
+            (device + apps + content). If an exam question asks "what manages apps and controls which apps can be
+            installed" = MAM. "What manages ALL aspects" = UEM.</span>
+        </li>
+      </ul>
+
+      <p class="section-title">🎯 Module 5 Exam Techniques (Carry-Over)</p>
+      <ul class="strat-list">
+        <li>
+          <span class="strat-num">01</span>
+          <span><strong>Watch for "technical term" traps.</strong> The exam uses exact terminology. "Duration" ≠
+            Cryptoperiod. "Certificate of Trust" ≠ Web of Trust. When in doubt, go with the most technical-sounding
+            specific term.</span>
+        </li>
+        <li>
+          <span class="strat-num">02</span>
+          <span><strong>For True/False questions, watch for absolutes.</strong> Words like "only," "always," "never,"
+            "limited" are often signals that the statement is FALSE. "Software-limited" malware = false. "Repository
+            stores revoked certs ONLY" = false.</span>
+        </li>
+        <li>
+          <span class="strat-num">03</span>
+          <span><strong>CSRF vs SSRF: remember the target.</strong> C = Client/user is the target. S = Server is the
+            target. This exact comparison appeared in your quiz.</span>
+        </li>
+        <li>
+          <span class="strat-num">04</span>
+          <span><strong>For scenario questions, focus on keywords:</strong> "temporary" / "extended leave" → suspend.
+            "Compromised" / "terminated" → revoke. "Performance" + "certificate" → OCSP Stapling.</span>
+        </li>
+        <li>
+          <span class="strat-num">05</span>
+          <span><strong>Error types matter.</strong> Network error = OCSP can't reach server. Security warning =
+            certificate revoked. Generic popup demanding payment = blocking ransomware (extortion). Know what each
+            condition points to.</span>
+        </li>
+        <li>
+          <span class="strat-num">06</span>
+          <span><strong>For "who does X on behalf of Y" questions:</strong> RA acts on behalf of CA. Intermediate CA
+            does NOT act "on behalf of" — it issues its own certs.</span>
+        </li>
+      </ul>
+
+      <p class="section-title">⭐ Must-Know One-Liners — Module 5</p>
+      <div class="qr-grid">
+        <div class="qr-item">
+          <div class="qr-term">SQL = Structured Query Language</div>
+          <div class="qr-def">Not a description of the attack</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">RA acts on behalf of CA</div>
+          <div class="qr-def">Not the intermediate CA</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">CSR: sign with private, send public</div>
+          <div class="qr-def">Never send private key to anyone</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Cert repo = ALL certs, not just revoked</div>
+          <div class="qr-def">CRL = revoked only</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">OCSP Stapling = TRUE improves performance</div>
+          <div class="qr-def">Server pre-fetches, client saves a round trip</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Cryptoperiod = key lifespan term</div>
+          <div class="qr-def">Not "duration"</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">App Allow List = OS protection, not AV</div>
+          <div class="qr-def">Approved apps only can run</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">IoA = in progress · IoC = already happened</div>
+          <div class="qr-def">IoA ≠ evidence of past attack</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Worm = network virus (self-replicates)</div>
+          <div class="qr-def">Enters via network vulnerability</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">CSRF = user target · SSRF = server target</div>
+          <div class="qr-def">Client vs Server forgery</div>
+        </div>
+      </div>
+
+      <p class="section-title">⭐ Must-Know One-Liners — Module 6</p>
+      <div class="qr-grid">
+        <div class="qr-item">
+          <div class="qr-term">Android = Rooting · iOS = Jailbreaking</div>
+          <div class="qr-def">Sideloading = downloading from unofficial store</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">RTOS = OS for embedded systems</div>
+          <div class="qr-def">SoC is the hardware; RTOS is the software OS</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Runtime verification = Dynamic code analysis</div>
+          <div class="qr-def">Static = before compile · Dynamic = after compile</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">BYOD = employee owns device</div>
+          <div class="qr-def">Popular with smaller companies / temp staff</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Malicious USB cable = recognized as HID</div>
+          <div class="qr-def">Device thinks it's a keyboard/mouse</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">UEM = manages Device + Apps + Content</div>
+          <div class="qr-def">Most comprehensive mobile management tool</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Containerization = separate biz vs personal data</div>
+          <div class="qr-def">Helps avoid legal/privacy issues on BYOD devices</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">SCADA manages ICSs · reduces downtime</div>
+          <div class="qr-def">ICS = real-time industrial control without humans</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">Thief Picture = 3 wrong passcodes → camera</div>
+          <div class="qr-def">Photo taken by onboard camera, emailed to owner</div>
+        </div>
+        <div class="qr-item">
+          <div class="qr-term">OTA = Over-The-Air firmware updates</div>
+          <div class="qr-def">How mobile OS security patches are distributed</div>
+        </div>
+      </div>
+
+      <div class="alert success" style="margin-top:32px">
+        <div class="alert-title">💪 Focused Strategy</div>
+        Module 6 is new but not hard — it's mostly terminology and knowing which term applies to which scenario. Three
+        hours of focused study on that tab will get you from 3/10 to 7–8/10. Combine that with your existing Module 5
+        knowledge and you're in strong shape. Study smart, sleep, and trust your prep.
+      </div>
     </div>
-  </div>
 
-</div><!-- /wrapper -->
+  </div><!-- /wrapper -->
 
-<script>
-function showTab(name) {
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
-}
+  <script>
+    function showTab(name) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      event.target.classList.add('active');
+    }
 
-function flip(card) {
-  card.classList.toggle('revealed');
-  card.querySelector('.hint').textContent = card.classList.contains('revealed') ? '↑ hide' : 'tap to reveal';
-}
+    function flip(card) {
+      card.classList.toggle('revealed');
+      card.querySelector('.hint').textContent = card.classList.contains('revealed') ? '↑ hide' : 'tap to reveal';
+    }
 
-// Animate progress bars on load
-window.addEventListener('load', () => {
-  document.querySelectorAll('.progress-fill').forEach(bar => {
-    const w = bar.style.width;
-    bar.style.width = '0';
-    setTimeout(() => bar.style.width = w, 100);
-  });
-});
-</script>
+    // Animate progress bars on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.progress-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0';
+        setTimeout(() => bar.style.width = w, 100);
+      });
+    });
+  </script>
 </body>
+
 </html>
