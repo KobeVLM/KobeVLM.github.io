@@ -1,768 +1,955 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SAM — Module 9 & 10 Reviewer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux Labs 8–13 | Interview Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0c0c0c;
-    --surface: #141414;
-    --surface2: #1c1c1c;
-    --border: #2a2a2a;
-    --border-hover: #3a3a3a;
-    --text: #e8e8e8;
-    --text-muted: #6b6b6b;
-    --text-dim: #3d3d3d;
-    --accent: #e8e8e8;
-    --green: #3d7a5c;
-    --green-bg: #0e2019;
-    --green-text: #6dbb96;
-    --red: #7a3d3d;
-    --red-bg: #200e0e;
-    --red-text: #bb6d6d;
-    --amber: #7a6b3d;
-    --amber-bg: #1e1a0e;
-    --amber-text: #c4a85a;
-    --blue: #3d5c7a;
-    --blue-bg: #0e1820;
-    --blue-text: #6d9abb;
-    --radius: 6px;
-    --radius-lg: 10px;
-    --mono: 'DM Mono', monospace;
-    --sans: 'DM Sans', sans-serif;
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --card: #1a2235;
+    --border: #2a3a55;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --warn: #f59e0b;
+    --danger: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --code-bg: #0d1117;
   }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:var(--sans);
-    background:var(--bg);
-    color:var(--text);
-    min-height:100vh;
-    line-height:1.6;
-    font-size:15px;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  /* layout */
-  .shell{max-width:720px;margin:0 auto;padding:48px 24px 80px;}
-
-  /* header */
-  .site-header{margin-bottom:48px;animation:fadeUp .5s ease both;}
-  .site-header .eyebrow{
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:.12em;
-    color:var(--text-muted);
-    text-transform:uppercase;
-    margin-bottom:10px;
-  }
-  .site-header h1{font-size:22px;font-weight:500;color:var(--text);margin-bottom:6px;}
-  .site-header p{font-size:13px;color:var(--text-muted);}
-
-  /* nav tabs */
-  .nav{
-    display:flex;gap:4px;
-    border-bottom:1px solid var(--border);
-    margin-bottom:32px;
-    animation:fadeUp .5s .05s ease both;
-  }
-  .nav-btn{
-    font-family:var(--sans);
-    font-size:13px;
-    font-weight:400;
-    color:var(--text-muted);
-    background:none;
-    border:none;
-    padding:10px 16px;
-    cursor:pointer;
-    border-bottom:1px solid transparent;
-    margin-bottom:-1px;
-    transition:color .15s, border-color .15s;
-  }
-  .nav-btn:hover{color:var(--text);}
-  .nav-btn.active{color:var(--text);border-bottom-color:var(--text);}
-
-  /* filter chips */
-  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;}
-  .chip{
-    font-size:12px;
-    font-family:var(--mono);
-    padding:4px 12px;
-    border-radius:99px;
-    border:1px solid var(--border);
-    background:none;
-    color:var(--text-muted);
-    cursor:pointer;
-    transition:all .15s;
-  }
-  .chip:hover{border-color:var(--border-hover);color:var(--text);}
-  .chip.active{background:var(--text);color:var(--bg);border-color:var(--text);}
-
-  /* progress */
-  .progress-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-  .progress-label{font-family:var(--mono);font-size:11px;color:var(--text-muted);}
-  .progress-track{height:1px;background:var(--border);border-radius:99px;margin-bottom:28px;overflow:hidden;}
-  .progress-fill{height:100%;background:var(--text);border-radius:99px;transition:width .4s ease;}
-
-  /* question card */
-  .q-wrap{animation:fadeUp .25s ease both;}
-  .q-meta{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
-  .q-num{font-family:var(--mono);font-size:11px;color:var(--text-dim);}
-  .badge{
-    font-family:var(--mono);
-    font-size:10px;
-    letter-spacing:.06em;
-    padding:2px 8px;
-    border-radius:99px;
-    text-transform:uppercase;
-  }
-  .badge-mcq{background:var(--blue-bg);color:var(--blue-text);}
-  .badge-tf{background:var(--green-bg);color:var(--green-text);}
-  .badge-essay{background:var(--amber-bg);color:var(--amber-text);}
-  .badge-m9{background:var(--green-bg);color:var(--green-text);}
-  .badge-m10{background:var(--blue-bg);color:var(--blue-text);}
-
-  .q-text{font-size:16px;font-weight:400;color:var(--text);margin-bottom:20px;line-height:1.65;}
-
-  /* options */
-  .opts{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
-  .opt{
-    display:flex;align-items:flex-start;gap:12px;
-    padding:11px 14px;
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    cursor:pointer;
-    transition:border-color .12s, background .12s;
-    font-size:14px;
-    color:var(--text-muted);
-    user-select:none;
-  }
-  .opt:hover:not(.locked){border-color:var(--border-hover);color:var(--text);}
-  .opt.selected:not(.locked){border-color:var(--text-muted);color:var(--text);}
-  .opt.correct{border-color:var(--green);background:var(--green-bg);color:var(--green-text);}
-  .opt.wrong{border-color:var(--red);background:var(--red-bg);color:var(--red-text);}
-  .opt.show-correct{border-color:var(--green);background:var(--green-bg);color:var(--green-text);opacity:.7;}
-  .opt-letter{
-    font-family:var(--mono);font-size:11px;
-    min-width:18px;margin-top:2px;
-    color:inherit;opacity:.6;
-  }
-  .opt-text{flex:1;line-height:1.5;}
-
-  /* tf */
-  .tf-opts{display:flex;gap:8px;margin-bottom:20px;}
-  .tf-opt{
-    flex:1;padding:12px;text-align:center;
-    border:1px solid var(--border);border-radius:var(--radius);
-    cursor:pointer;font-size:14px;color:var(--text-muted);
-    transition:all .12s;user-select:none;
-  }
-  .tf-opt:hover:not(.locked){border-color:var(--border-hover);color:var(--text);}
-  .tf-opt.selected:not(.locked){border-color:var(--text-muted);color:var(--text);}
-  .tf-opt.correct{border-color:var(--green);background:var(--green-bg);color:var(--green-text);}
-  .tf-opt.wrong{border-color:var(--red);background:var(--red-bg);color:var(--red-text);}
-  .tf-opt.show-correct{border-color:var(--green);background:var(--green-bg);color:var(--green-text);opacity:.7;}
-
-  /* essay */
-  .essay-note{
-    font-size:12px;color:var(--text-muted);
-    font-family:var(--mono);margin-bottom:14px;
-  }
-  .hint-toggle{
-    background:none;border:none;cursor:pointer;
-    font-size:12px;color:var(--text-muted);
-    font-family:var(--mono);padding:0;
-    margin-bottom:10px;
-    transition:color .12s;
-    display:block;
-  }
-  .hint-toggle:hover{color:var(--amber-text);}
-  .hint-box{
-    padding:14px 16px;border-left:2px solid var(--amber);
-    background:var(--amber-bg);border-radius:0 var(--radius) var(--radius) 0;
-    font-size:13px;color:var(--amber-text);
-    line-height:1.65;margin-bottom:16px;
-    animation:fadeUp .2s ease;
-  }
-  .hint-box strong{display:block;font-size:11px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin-bottom:6px;}
-
-  /* calc reveal */
-  .calc-toggle{
-    background:none;border:none;cursor:pointer;
-    font-size:11px;color:var(--text-dim);
-    font-family:var(--mono);padding:0;
-    margin-bottom:8px;transition:color .12s;display:block;
-  }
-  .calc-toggle:hover{color:var(--text-muted);}
-  .calc-box{
-    font-family:var(--mono);font-size:13px;
-    padding:12px 14px;border-radius:var(--radius);
-    background:var(--surface2);color:var(--text-muted);
-    margin-bottom:14px;animation:fadeUp .2s ease;
+  /* GRID BG */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  /* essay mark buttons */
-  .essay-btns{display:flex;gap:8px;}
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
 
-  /* action buttons */
-  .btn{
-    font-family:var(--sans);font-size:13px;font-weight:400;
-    padding:9px 18px;border-radius:var(--radius);
-    border:1px solid var(--border);
-    background:none;color:var(--text-muted);
-    cursor:pointer;transition:all .12s;
+  /* HEADER */
+  header {
+    padding: 48px 0 32px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
   }
-  .btn:hover{border-color:var(--border-hover);color:var(--text);}
-  .btn:disabled{opacity:.3;cursor:not-allowed;}
-  .btn-primary{
-    background:var(--text);color:var(--bg);
-    border-color:var(--text);
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
   }
-  .btn-primary:hover{opacity:.85;color:var(--bg);}
-  .btn-green{background:var(--green-bg);color:var(--green-text);border-color:var(--green);}
-  .btn-green:hover{opacity:.8;}
-  .btn-red{background:var(--red-bg);color:var(--red-text);border-color:var(--red);}
-  .btn-red:hover{opacity:.8;}
+  header h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 40%, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  header p {
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    margin-top: 10px;
+  }
 
-  /* row */
-  .btn-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
-  .btn-row .stats{font-family:var(--mono);font-size:11px;color:var(--text-dim);}
+  /* PROGRESS BAR */
+  .progress-bar-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .progress-track { flex: 1; background: var(--card); border-radius: 99px; height: 8px; overflow: hidden; }
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+  .progress-pct { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 700; width: 40px; text-align: right; }
 
-  /* score screen */
-  .score-screen{text-align:center;padding:48px 0;animation:fadeUp .3s ease;}
-  .score-big{font-size:72px;font-weight:300;color:var(--text);line-height:1;}
-  .score-label{font-family:var(--mono);font-size:12px;color:var(--text-muted);margin:8px 0 32px;}
-  .score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:360px;margin:0 auto 32px;}
-  .score-stat{padding:16px;border:1px solid var(--border);border-radius:var(--radius-lg);}
-  .score-stat-n{font-size:28px;font-weight:300;}
-  .score-stat-l{font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:4px;text-transform:uppercase;letter-spacing:.08em;}
-  .s-green{color:var(--green-text);}
-  .s-red{color:var(--red-text);}
+  /* LAB NAV TABS */
+  .lab-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .lab-tab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .lab-tab:hover { border-color: var(--accent); color: var(--accent); }
+  .lab-tab.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
+  .lab-tab .done-dot {
+    position: absolute;
+    top: -3px; right: -3px;
+    width: 8px; height: 8px;
+    background: var(--accent3);
+    border-radius: 50%;
+    display: none;
+  }
+  .lab-tab.done .done-dot { display: block; }
 
-  /* flashcards */
-  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
-  .fc{
-    border:1px solid var(--border);border-radius:var(--radius-lg);
-    padding:16px;min-height:110px;cursor:pointer;
-    transition:border-color .15s, background .15s;
-    position:relative;
-    animation:fadeUp .3s ease;
-  }
-  .fc:hover{border-color:var(--border-hover);background:var(--surface);}
-  .fc.flipped{background:var(--surface);}
-  .fc-mod{
-    position:absolute;top:10px;right:10px;
-    font-family:var(--mono);font-size:9px;
-    letter-spacing:.06em;text-transform:uppercase;
-    padding:2px 6px;border-radius:99px;
-  }
-  .fc-term{font-size:13px;font-weight:500;color:var(--text);line-height:1.4;padding-right:28px;}
-  .fc.flipped .fc-term{font-size:11px;font-family:var(--mono);color:var(--text-dim);font-weight:300;margin-bottom:8px;}
-  .fc-def{font-size:12px;color:var(--text-muted);line-height:1.55;display:none;}
-  .fc.flipped .fc-def{display:block;}
-  .fc-hint{position:absolute;bottom:10px;right:10px;font-size:9px;font-family:var(--mono);color:var(--text-dim);}
-  .fc.flipped .fc-hint{display:none;}
+  /* LAB PANEL */
+  .lab-panel { display: none; animation: fadeIn 0.3s ease; }
+  .lab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* cheat sheet */
-  .cs-block{margin-bottom:36px;animation:fadeUp .3s ease;}
-  .cs-h{
-    font-family:var(--mono);font-size:11px;
-    letter-spacing:.1em;text-transform:uppercase;
-    color:var(--text-muted);padding-bottom:10px;
-    border-bottom:1px solid var(--border);margin-bottom:14px;
+  .lab-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding: 20px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
   }
-  table.cs-t{width:100%;border-collapse:collapse;font-size:13px;}
-  table.cs-t th{
-    text-align:left;padding:6px 10px;
-    font-family:var(--mono);font-size:10px;letter-spacing:.08em;
-    text-transform:uppercase;color:var(--text-dim);
-    border-bottom:1px solid var(--border);font-weight:400;
+  .lab-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 48px;
   }
-  table.cs-t td{
-    padding:9px 10px;border-bottom:1px solid var(--border);
-    color:var(--text-muted);vertical-align:top;line-height:1.5;
-  }
-  table.cs-t tr:last-child td{border-bottom:none;}
-  table.cs-t td:first-child{color:var(--text);font-weight:500;}
-  .pill{display:inline-block;font-size:10px;font-family:var(--mono);padding:2px 7px;border-radius:99px;margin:1px;}
-  .p-g{background:var(--green-bg);color:var(--green-text);}
-  .p-r{background:var(--red-bg);color:var(--red-text);}
-  .p-a{background:var(--amber-bg);color:var(--amber-text);}
-  .p-b{background:var(--blue-bg);color:var(--blue-text);}
-  .formula{
-    font-family:var(--mono);font-size:13px;
-    padding:12px 16px;background:var(--surface2);
-    border-radius:var(--radius);color:var(--text);
-    margin:8px 0;
-  }
-  .note{
-    font-size:13px;padding:12px 16px;
-    border-left:2px solid var(--blue);
-    background:var(--blue-bg);border-radius:0 var(--radius) var(--radius) 0;
-    color:var(--blue-text);margin:8px 0;line-height:1.6;
-  }
-  .cs-two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
-  .rto-box{padding:14px 16px;border-radius:var(--radius-lg);border:1px solid var(--border);}
+  .lab-meta h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+  .lab-meta p { color: var(--muted); font-size: 14px; line-height: 1.5; }
 
-  /* animations */
-  @keyframes fadeUp{
-    from{opacity:0;transform:translateY(10px);}
-    to{opacity:1;transform:translateY(0);}
+  /* SECTION CARDS */
+  .section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    padding-left: 4px;
   }
-  .tab-content{animation:fadeUp .2s ease;}
 
-  /* scrollbar */
-  ::-webkit-scrollbar{width:4px;}
-  ::-webkit-scrollbar-track{background:var(--bg);}
-  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+  .flags-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .flag-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: border-color 0.2s;
+  }
+  .flag-card:hover { border-color: var(--accent); }
+  .flag-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .flag-desc { font-size: 13px; color: var(--muted); line-height: 1.4; }
 
-  /* responsive */
-  @media(max-width:520px){
-    .shell{padding:32px 16px 60px;}
-    .fc-grid{grid-template-columns:1fr 1fr;}
-    .score-big{font-size:52px;}
-    .cs-two{grid-template-columns:1fr;}
-    table.cs-t th:nth-child(3),table.cs-t td:nth-child(3){display:none;}
+  /* COMMAND BLOCKS */
+  .cmd-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .cmd-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cmd-item:last-child { border-bottom: none; }
+  .cmd-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cmd-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent3);
+    word-break: break-all;
+  }
+  .cmd-code .flag { color: var(--warn); }
+  .cmd-code .path { color: #93c5fd; }
+  .cmd-code .user { color: #f9a8d4; }
+  .cmd-note { font-size: 12px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* QUIZ */
+  .quiz-section { margin-top: 28px; }
+  .quiz-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .quiz-q {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .quiz-q .inline-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 5px;
+    color: var(--accent3);
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+  }
+  .quiz-opt:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .quiz-opt.correct { background: rgba(16,185,129,0.15); border-color: var(--accent3); color: var(--accent3); }
+  .quiz-opt.wrong { background: rgba(239,68,68,0.12); border-color: var(--danger); color: var(--danger); }
+  .quiz-opt:disabled { cursor: default; }
+  .quiz-feedback {
+    font-size: 13px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    display: none;
+    line-height: 1.5;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: rgba(16,185,129,0.1); border: 1px solid var(--accent3); color: var(--accent3); }
+  .quiz-feedback.bad { background: rgba(239,68,68,0.1); border: 1px solid var(--danger); color: #fca5a5; }
+
+  /* MARK DONE */
+  .done-btn {
+    margin-top: 24px;
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: 2px solid var(--accent3);
+    background: transparent;
+    color: var(--accent3);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .done-btn:hover { background: var(--accent3); color: #000; }
+  .done-btn.marked { background: var(--accent3); color: #000; }
+
+  /* CHEAT SHEET TOGGLE */
+  .cheat-toggle {
+    margin-top: 28px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: 1px dashed var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cheat-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .cheat-body { display: none; margin-top: 12px; }
+  .cheat-body.open { display: block; }
+  .cheat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .cheat-row:last-child { border-bottom: none; }
+  .cheat-key { font-family: 'JetBrains Mono', monospace; color: var(--accent3); }
+  .cheat-val { color: var(--muted); font-size: 12px; text-align: right; max-width: 55%; }
+
+  /* PERM TABLE */
+  .perm-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .perm-table th { background: var(--code-bg); color: var(--accent); padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+  .perm-table td { padding: 10px 14px; border: 1px solid var(--border); color: var(--text); }
+  .perm-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .num { color: var(--warn); font-weight: 700; }
+
+  footer {
+    text-align: center;
+    padding: 40px 0 24px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
   }
 </style>
 </head>
 <body>
-<div class="shell">
-
-  <header class="site-header">
-    <div class="eyebrow">Systems Administration & Management</div>
-    <h1>Module 9 &amp; 10 — Reviewer</h1>
-    <p>Storage, RAID, High Availability &amp; Fault Tolerance &nbsp;·&nbsp; Pre-final coverage</p>
+<div class="container">
+  <header>
+    <div class="badge">KodeKloud · Intro to Linux</div>
+    <h1>Labs 8 – 13<br>Interview Prep</h1>
+    <p>// study all six labs · quiz yourself · track your progress</p>
   </header>
 
-  <nav class="nav">
-    <button class="nav-btn active" data-tab="quiz">Quiz</button>
-    <button class="nav-btn" data-tab="flash">Flashcards</button>
-    <button class="nav-btn" data-tab="cheat">Cheat Sheet</button>
-  </nav>
+  <div class="progress-bar-wrap">
+    <span class="progress-label">LABS DONE</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
 
-  <div id="tab-quiz" class="tab-content"></div>
-  <div id="tab-flash" class="tab-content" style="display:none"></div>
-  <div id="tab-cheat" class="tab-content" style="display:none"></div>
+  <div class="lab-nav">
+    <button class="lab-tab active" onclick="showLab(8)" id="tab-8">Lab 8 <span class="done-dot"></span></button>
+    <button class="lab-tab" onclick="showLab(9)" id="tab-9">Lab 9 <span class="done-dot"></span></button>
+    <button class="lab-tab" onclick="showLab(10)" id="tab-10">Lab 10 <span class="done-dot"></span></button>
+    <button class="lab-tab" onclick="showLab(11)" id="tab-11">Lab 11 <span class="done-dot"></span></button>
+    <button class="lab-tab" onclick="showLab(12)" id="tab-12">Lab 12 <span class="done-dot"></span></button>
+    <button class="lab-tab" onclick="showLab(13)" id="tab-13">Lab 13 <span class="done-dot"></span></button>
+  </div>
 
+  <!-- ===== LAB 8 ===== -->
+  <div class="lab-panel active" id="lab-8">
+    <div class="lab-header">
+      <div class="lab-num">08</div>
+      <div class="lab-meta">
+        <h2>tar — Archive & Compress</h2>
+        <p>Bundle files into a tarball, compress with gzip, move, verify, and inspect — all without extracting.</p>
+      </div>
+    </div>
+
+    <div class="section-title">// flags</div>
+    <div class="flags-grid">
+      <div class="flag-card"><div class="flag-name">-c</div><div class="flag-desc">Create a new archive</div></div>
+      <div class="flag-card"><div class="flag-name">-v</div><div class="flag-desc">Verbose — print filenames to screen</div></div>
+      <div class="flag-card"><div class="flag-name">-z</div><div class="flag-desc">Compress / decompress using gzip</div></div>
+      <div class="flag-card"><div class="flag-name">-t</div><div class="flag-desc">List contents without extracting</div></div>
+      <div class="flag-card"><div class="flag-name">-f</div><div class="flag-desc">Specify the archive filename (always last before the name)</div></div>
+      <div class="flag-card"><div class="flag-name">-x</div><div class="flag-desc">Extract files from an archive</div></div>
+    </div>
+
+    <div class="section-title">// command flow</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">1 · Create & Compress</div>
+        <div class="cmd-code">tar <span class="flag">-cvzf</span> archive.tar.gz <span class="path">/path/to/source</span></div>
+        <div class="cmd-note">Combines -c (create) -v (verbose) -z (gzip) -f (filename). The output file comes right after -f.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">2 · Move the File</div>
+        <div class="cmd-code">mv archive.tar.gz <span class="path">/destination/</span></div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">3 · Verify File & Size</div>
+        <div class="cmd-code">ls <span class="flag">-lh</span> <span class="path">/destination/</span></div>
+        <div class="cmd-note">-l = long format, -h = human-readable sizes (KB/MB)</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">4 · Inspect Contents Safely (no extract)</div>
+        <div class="cmd-code">tar <span class="flag">-tzvf</span> <span class="path">/destination/archive.tar.gz</span></div>
+        <div class="cmd-note">-t lists contents. Safe: never touches/extracts any file.</div>
+      </div>
+    </div>
+
+    <div class="section-title">// quick quiz</div>
+    <div class="quiz-section" id="quiz-8"></div>
+
+    <button class="done-btn" id="done-8" onclick="markDone(8)">✓ Mark Lab 8 Done</button>
+  </div>
+
+  <!-- ===== LAB 9 ===== -->
+  <div class="lab-panel" id="lab-9">
+    <div class="lab-header">
+      <div class="lab-num">09</div>
+      <div class="lab-meta">
+        <h2>chmod & chown — Permissions & Ownership</h2>
+        <p>Control who can read, write, and execute files. Assign ownership to users and groups.</p>
+      </div>
+    </div>
+
+    <div class="section-title">// permission values</div>
+    <table class="perm-table">
+      <tr><th>Symbol</th><th>Value</th><th>Meaning</th></tr>
+      <tr><td>r</td><td class="num">4</td><td>Read</td></tr>
+      <tr><td>w</td><td class="num">2</td><td>Write</td></tr>
+      <tr><td>x</td><td class="num">1</td><td>Execute</td></tr>
+      <tr><td>—</td><td class="num">0</td><td>No permission</td></tr>
+    </table>
+
+    <div class="section-title">// common permission numbers</div>
+    <table class="perm-table">
+      <tr><th>Number</th><th>Owner</th><th>Group</th><th>Others</th><th>Use case</th></tr>
+      <tr><td class="num">755</td><td>rwx</td><td>r-x</td><td>r-x</td><td>Public scripts / executables</td></tr>
+      <tr><td class="num">750</td><td>rwx</td><td>r-x</td><td>---</td><td>Group-accessible dirs</td></tr>
+      <tr><td class="num">644</td><td>rw-</td><td>r--</td><td>r--</td><td>Normal files</td></tr>
+      <tr><td class="num">600</td><td>rw-</td><td>---</td><td>---</td><td>Private files (SSH keys)</td></tr>
+    </table>
+
+    <div class="section-title">// command flow</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">Change Owner & Group</div>
+        <div class="cmd-code">chown <span class="user">owner:group</span> file.txt</div>
+        <div class="cmd-note">Colon separates user and group. Either side can be omitted to change just one.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Recursive Ownership</div>
+        <div class="cmd-code">chown <span class="flag">-R</span> <span class="user">owner:group</span> <span class="path">/dir/</span></div>
+        <div class="cmd-note">-R applies to all files and subdirectories inside.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Set Standard Permission</div>
+        <div class="cmd-code">chmod <span class="flag">755</span> <span class="path">/opt/app/script.sh</span></div>
+        <div class="cmd-note">7=rwx (owner), 5=r-x (group), 5=r-x (others)</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Recursive Permission Change</div>
+        <div class="cmd-code">chmod <span class="flag">-R 750</span> <span class="path">/opt/data/</span></div>
+        <div class="cmd-note">Others get zero access. Group can read and execute.</div>
+      </div>
+    </div>
+
+    <div class="section-title">// quick quiz</div>
+    <div class="quiz-section" id="quiz-9"></div>
+    <button class="done-btn" id="done-9" onclick="markDone(9)">✓ Mark Lab 9 Done</button>
+  </div>
+
+  <!-- ===== LAB 10 ===== -->
+  <div class="lab-panel" id="lab-10">
+    <div class="lab-header">
+      <div class="lab-num">10</div>
+      <div class="lab-meta">
+        <h2>ACL — Access Control Lists</h2>
+        <p>Grant fine-grained access to specific users or groups beyond standard owner/group/others model.</p>
+      </div>
+    </div>
+
+    <div class="section-title">// setfacl flags</div>
+    <div class="flags-grid">
+      <div class="flag-card"><div class="flag-name">-m</div><div class="flag-desc">Modify — add or update an ACL rule</div></div>
+      <div class="flag-card"><div class="flag-name">-x</div><div class="flag-desc">Remove a specific user/group ACL entry</div></div>
+      <div class="flag-card"><div class="flag-name">-R</div><div class="flag-desc">Recursive — apply to all files in a directory</div></div>
+      <div class="flag-card"><div class="flag-name">-b</div><div class="flag-desc">Remove all ACLs — revert to standard permissions</div></div>
+    </div>
+
+    <div class="section-title">// acl rule format</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">Format</div>
+        <div class="cmd-code"><span class="flag">u</span>:username:<span class="flag">rwx</span> &nbsp;|&nbsp; <span class="flag">g</span>:groupname:<span class="flag">rw</span></div>
+        <div class="cmd-note">u = user, g = group. Permissions follow the same r/w/x letters.</div>
+      </div>
+    </div>
+
+    <div class="section-title">// command flow</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">Check Current ACL</div>
+        <div class="cmd-code">getfacl <span class="path">/opt/data/file.txt</span></div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Grant User Access</div>
+        <div class="cmd-code">setfacl <span class="flag">-m</span> u:<span class="user">bob</span>:rw <span class="path">/opt/data/file.txt</span></div>
+        <div class="cmd-note">bob gets read+write even if he's not the owner.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Grant Group Access</div>
+        <div class="cmd-code">setfacl <span class="flag">-m</span> g:<span class="user">devs</span>:rw <span class="path">/opt/data/</span></div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Recursive Apply (incl. new files)</div>
+        <div class="cmd-code">setfacl <span class="flag">-Rm</span> u:<span class="user">bob</span>:rwx <span class="path">/opt/data/</span></div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Remove an Entry</div>
+        <div class="cmd-code">setfacl <span class="flag">-x</span> u:<span class="user">bob</span> <span class="path">/opt/data/file.txt</span></div>
+        <div class="cmd-note">No permission string needed — just identify the user/group to remove.</div>
+      </div>
+    </div>
+
+    <div class="section-title">// quick quiz</div>
+    <div class="quiz-section" id="quiz-10"></div>
+    <button class="done-btn" id="done-10" onclick="markDone(10)">✓ Mark Lab 10 Done</button>
+  </div>
+
+  <!-- ===== LAB 11 ===== -->
+  <div class="lab-panel" id="lab-11">
+    <div class="lab-header">
+      <div class="lab-num">11</div>
+      <div class="lab-meta">
+        <h2>sed — Stream Editor</h2>
+        <p>Find and replace text in files, delete lines, and pipe transformations — all non-interactively.</p>
+      </div>
+    </div>
+
+    <div class="section-title">// anatomy of a sed command</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">Full Structure</div>
+        <div class="cmd-code">sed <span class="flag">-i</span> '<span class="flag">s</span>/OldWord/NewWord/<span class="flag">g</span>' file.txt</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">What each part means</div>
+        <div class="cmd-code">
+          <span class="flag">-i</span> &nbsp;→ in-place (edit file directly)<br>
+          <span class="flag">s</span> &nbsp;&nbsp;→ substitute mode<br>
+          /Old/ → pattern to find<br>
+          /New/ → replacement text<br>
+          <span class="flag">g</span> &nbsp;&nbsp;→ global (all matches on each line)<br>
+          <span class="flag">gI</span> &nbsp;→ global + case-insensitive
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">// command flow</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">Global In-Place Swap</div>
+        <div class="cmd-code">sed <span class="flag">-i</span> 's/OldWord/NewWord/g' file.txt</div>
+        <div class="cmd-note">Replaces every occurrence of OldWord. Modifies the file directly.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Case-Insensitive Swap</div>
+        <div class="cmd-code">sed <span class="flag">-i</span> 's/OldWord/NewWord/gI' file.txt</div>
+        <div class="cmd-note">Matches "oldword", "OldWord", "OLDWORD", etc.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Delete Lines Containing a Word → New File</div>
+        <div class="cmd-code">sed '/word/d' <span class="path">/home/BSD.txt</span> > <span class="path">/home/BSD_DELETE.txt</span></div>
+        <div class="cmd-note">No -i here — output is redirected. Original file untouched.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Validate the Swap</div>
+        <div class="cmd-code">grep 'OldWord' file.txt &nbsp;<span class="flag"># should return nothing</span><br>grep 'NewWord' file.txt &nbsp;<span class="flag"># should show results</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">// quick quiz</div>
+    <div class="quiz-section" id="quiz-11"></div>
+    <button class="done-btn" id="done-11" onclick="markDone(11)">✓ Mark Lab 11 Done</button>
+  </div>
+
+  <!-- ===== LAB 12 ===== -->
+  <div class="lab-panel" id="lab-12">
+    <div class="lab-header">
+      <div class="lab-num">12</div>
+      <div class="lab-meta">
+        <h2>scp — Secure Copy (SSH-based)</h2>
+        <p>Transfer files and directories between local and remote systems over an encrypted SSH connection.</p>
+      </div>
+    </div>
+
+    <div class="section-title">// flags</div>
+    <div class="flags-grid">
+      <div class="flag-card"><div class="flag-name">-r</div><div class="flag-desc">Recursive — copy entire directories</div></div>
+      <div class="flag-card"><div class="flag-name">-P</div><div class="flag-desc">Port — specify non-standard SSH port (capital P)</div></div>
+    </div>
+
+    <div class="section-title">// scp syntax pattern</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">Remote Path Format</div>
+        <div class="cmd-code"><span class="user">user</span>@<span class="path">host</span>:<span class="path">/remote/path/file.txt</span></div>
+        <div class="cmd-note">The colon (:) separates the host from the remote path.</div>
+      </div>
+    </div>
+
+    <div class="section-title">// command flow</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">Upload: Local → Remote</div>
+        <div class="cmd-code">scp <span class="path">/local/file.txt</span> <span class="user">user</span>@<span class="path">host</span>:<span class="path">/remote/dest/</span></div>
+        <div class="cmd-note">Source first, destination second — same as cp.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Download: Remote → Local</div>
+        <div class="cmd-code">scp <span class="user">user</span>@<span class="path">host</span>:<span class="path">/remote/file.txt</span> <span class="path">/local/dest/</span></div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Recursive Directory Push</div>
+        <div class="cmd-code">scp <span class="flag">-r</span> <span class="path">/local/dir/</span> <span class="user">user</span>@<span class="path">host</span>:<span class="path">/remote/path</span></div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Non-Standard Port</div>
+        <div class="cmd-code">scp <span class="flag">-P 2222</span> <span class="user">user</span>@<span class="path">host</span>:<span class="path">/path/file.txt</span> <span class="path">local/</span></div>
+        <div class="cmd-note">Capital -P for scp. (ssh uses lowercase -p — a common trick question!)</div>
+      </div>
+    </div>
+
+    <div class="section-title">// quick quiz</div>
+    <div class="quiz-section" id="quiz-12"></div>
+    <button class="done-btn" id="done-12" onclick="markDone(12)">✓ Mark Lab 12 Done</button>
+  </div>
+
+  <!-- ===== LAB 13 ===== -->
+  <div class="lab-panel" id="lab-13">
+    <div class="lab-header">
+      <div class="lab-num">13</div>
+      <div class="lab-meta">
+        <h2>cron — Job Scheduling & Access Control</h2>
+        <p>Schedule recurring tasks. Restrict or allow specific users from running cron jobs.</p>
+      </div>
+    </div>
+
+    <div class="section-title">// cron access control files</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">/etc/cron.deny</div>
+        <div class="cmd-code"><span class="path">/etc/cron.deny</span></div>
+        <div class="cmd-note">Users listed here are BLOCKED from using cron. Everyone else can use it by default.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">/etc/cron.allow</div>
+        <div class="cmd-code"><span class="path">/etc/cron.allow</span></div>
+        <div class="cmd-note">If this file exists, ONLY users listed here can use cron. Acts as a whitelist. More restrictive.</div>
+      </div>
+    </div>
+
+    <div class="section-title">// crontab time format</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">Format</div>
+        <div class="cmd-code">* &nbsp;* &nbsp;* &nbsp;* &nbsp;* &nbsp;/command/to/run<br><span class="flag">│ &nbsp;│ &nbsp;│ &nbsp;│ &nbsp;│</span><br>min hr dom mon dow</div>
+        <div class="cmd-note">dom=day of month, dow=day of week (0=Sun). * means "every".</div>
+      </div>
+    </div>
+
+    <div class="section-title">// command flow</div>
+    <div class="cmd-block">
+      <div class="cmd-item">
+        <div class="cmd-label">Block a User (add to deny list)</div>
+        <div class="cmd-code">echo 'Jerome' >> <span class="path">/etc/cron.deny</span></div>
+        <div class="cmd-note">>> appends without overwriting. Jerome can no longer use crontab.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Whitelist a User (exclusive allow)</div>
+        <div class="cmd-code">echo 'siva' >> <span class="path">/etc/cron.allow</span></div>
+        <div class="cmd-note">If cron.allow exists, only listed users can schedule jobs.</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Restart the Cron Daemon</div>
+        <div class="cmd-code">systemctl restart crond</div>
+        <div class="cmd-note">Apply changes. On some distros the service is called "cron" not "crond".</div>
+      </div>
+      <div class="cmd-item">
+        <div class="cmd-label">Other useful crontab commands</div>
+        <div class="cmd-code">crontab <span class="flag">-e</span> &nbsp;<span class="flag"># edit your crontab</span><br>crontab <span class="flag">-l</span> &nbsp;<span class="flag"># list current crontab</span><br>crontab <span class="flag">-r</span> &nbsp;<span class="flag"># remove all cron jobs</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">// quick quiz</div>
+    <div class="quiz-section" id="quiz-13"></div>
+    <button class="done-btn" id="done-13" onclick="markDone(13)">✓ Mark Lab 13 Done</button>
+  </div>
+
+  <footer>good luck tomorrow, Korblox · you've got this 🚀</footer>
 </div>
 
 <script>
-const Q = [
-  // Module 9
-  {id:1,m:9,t:'mcq',pts:1,q:'What does RAID stand for?',o:['Redundant Array of Individual Disks','Redundant Array of Independent Disks','Rapid Array of Integrated Drives','Resilient Array of Integrated Data'],a:1},
-  {id:2,m:9,t:'mcq',pts:1,q:'Which RAID level provides NO fault tolerance but delivers the highest read/write speed?',o:['RAID 1','RAID 5','RAID 0','RAID 10'],a:2},
-  {id:3,m:9,t:'mcq',pts:1,q:'What is the minimum number of drives required for RAID 5?',o:['2','3','4','5'],a:1},
-  {id:4,m:9,t:'mcq',pts:1,q:'Which RAID level uses mirroring only — an exact duplicate of all data?',o:['RAID 0','RAID 1','RAID 5','RAID 6'],a:1},
-  {id:5,m:9,t:'mcq',pts:1,q:'A database server requires both high speed and fault tolerance. Which RAID is the best fit?',o:['RAID 0','RAID 1','RAID 5','RAID 10'],a:3},
-  {id:6,m:9,t:'mcq',pts:1,q:'RAID 6 can tolerate how many simultaneous drive failures?',o:['None','1','2','3'],a:2},
-  {id:7,m:9,t:'mcq',pts:1,q:'With 4 drives in RAID 1 (2-drive mirror), what percentage of total capacity is usable?',o:['100%','75%','67%','50%'],a:3},
-  {id:8,m:9,t:'mcq',pts:1,q:'Which storage type operates over a high-speed network but appears as a local disk to servers?',o:['NAS','Cloud Storage','SAN','Local HDD'],a:2},
-  {id:9,m:9,t:'mcq',pts:1,q:'A video production team needs pure speed. Raw footage can always be re-shot. Which RAID?',o:['RAID 10','RAID 6','RAID 0','RAID 5'],a:2},
-  {id:10,m:9,t:'mcq',pts:1,q:'Which intelligent storage feature automatically moves cold (rarely accessed) data to cheaper storage?',o:['Snapshots','Thin Provisioning','Caching','Auto-Tiering'],a:3},
-  {id:11,m:9,t:'mcq',pts:1,q:'What does the 3-2-1 backup rule specify?',o:['3 backups, 2 cloud copies, 1 local copy','3 copies of data, on 2 different media types, with 1 copy off-site','3 drives, 2 RAID arrays, 1 off-site tape','3 full backups per week, 2 incremental, 1 mirror'],a:1},
-  {id:12,m:9,t:'mcq',pts:1,q:'Which intelligent storage feature allocates physical disk space only as data is actually written?',o:['Snapshots','Caching','Thin Provisioning','Auto-Tiering'],a:2},
-  {id:13,m:9,t:'mcq',pts:1,q:'Which storage type is best described as "pay-per-use, accessible from anywhere, infinitely scalable"?',o:['Local Storage','SAN','NAS','Cloud Storage'],a:3},
-  {id:14,m:9,t:'mcq',pts:1,q:'A snapshot in intelligent storage is best described as:',o:['A full backup copy of all data','A point-in-time, space-efficient copy of data','A mirror of data on another drive','A compressed archive file'],a:1},
-  {id:15,m:9,t:'mcq',pts:1,q:'Which RAID level is typically recommended for backup servers due to its maximum fault tolerance?',o:['RAID 0','RAID 1','RAID 5','RAID 6'],a:3},
-  {id:16,m:9,t:'tf',pts:1,q:'RAID 0 stripes data across multiple drives and provides fault tolerance if one drive fails.',a:false},
-  {id:17,m:9,t:'tf',pts:1,q:'NAS (Network Attached Storage) allows multiple users to access shared folders over a local network.',a:true},
-  {id:18,m:9,t:'tf',pts:1,q:'On-site storage is preferred for disaster recovery because it is immune to local disasters like fire or floods.',a:false},
-  {id:19,m:9,t:'tf',pts:1,q:'RAID 10 requires a minimum of 4 drives and combines both mirroring and striping.',a:true},
-  {id:20,m:9,t:'tf',pts:1,q:'Parity in RAID is a mathematical checksum that allows data recovery without needing a full mirror of every drive.',a:true},
-  {id:21,m:9,t:'essay',pts:4,q:'A company stores medical records. Compare RAID 5 vs RAID 10 and justify which is more appropriate. Address fault tolerance, performance, and storage efficiency.',hint:'RAID 5: striping + parity, 1 drive failure tolerance, 67–94% usable capacity, good balance of speed and protection. RAID 10: mirror + stripe, 1 failure per mirror pair, 50% capacity, best combined performance + reliability. Medical records = critical data → argue RAID 10 for superior performance under load and stronger fault tolerance.'},
-  {id:22,m:9,t:'essay',pts:3,q:'Explain the 3-2-1 backup rule and give a concrete real-world example of how an organization can implement it.',hint:'3 = three copies of data. 2 = on two different media types. 1 = one copy stored off-site. Example: 1 local HDD copy + 1 NAS device (different hardware) + 1 cloud copy via Azure Backup or AWS S3. Protects against hardware failure, site disaster, and accidental deletion.'},
-
-  // Module 10
-  {id:23,m:10,t:'mcq',pts:1,q:'What is the maximum downtime per year allowed under a 99.99% SLA?',o:['8.76 hours','52.6 minutes','5.26 minutes','3.65 days'],a:1},
-  {id:24,m:10,t:'mcq',pts:1,q:'What is the primary difference between High Availability and Fault Tolerance?',o:['HA uses RAID; FT uses clustering','HA minimizes downtime with possible brief interruption; FT operates with zero downtime during failures','HA is software-based; FT is hardware-based','HA is cheaper; FT always uses geographic redundancy'],a:1},
-  {id:25,m:10,t:'mcq',pts:1,q:'Which redundancy model fully duplicates all systems AND adds one extra spare — used in stock exchanges and air traffic control?',o:['N+1','N+M','2N','2N+1'],a:3},
-  {id:26,m:10,t:'mcq',pts:1,q:'What does MTTR stand for?',o:['Mean Time To Recover','Maximum Time To Repair','Mean Time To Repair','Minimum Time To Restore'],a:2},
-  {id:27,m:10,t:'mcq',pts:1,q:'A server has MTBF = 8,760 hrs and MTTR = 4 hrs. What is its availability?',o:['99.9%','99.95%','99.99%','98%'],a:1,calc:'8760 ÷ (8760 + 4) = 8760 ÷ 8764 = 0.99954… ≈ 99.95%'},
-  {id:28,m:10,t:'mcq',pts:1,q:'Which load balancing algorithm routes each new request to the server with fewest active connections?',o:['Round Robin','Weighted Round Robin','IP Hash','Least Connections'],a:3},
-  {id:29,m:10,t:'mcq',pts:1,q:'Which load balancing method ensures the same client always reaches the same server (session persistence)?',o:['Round Robin','Least Connections','IP Hash','Weighted Round Robin'],a:2},
-  {id:30,m:10,t:'mcq',pts:1,q:'What does RPO define?',o:['The maximum time to restore service','The maximum acceptable data loss measured in time','The number of spare servers required','System uptime percentage'],a:1},
-  {id:31,m:10,t:'mcq',pts:1,q:'Which failover type has the secondary system already fully running — providing near-instant switchover?',o:['Cold Standby','Warm Standby','Hot Standby','Manual Standby'],a:2},
-  {id:32,m:10,t:'mcq',pts:1,q:'Which backup type copies ALL data every time — slowest backup, but simplest and fastest to restore?',o:['Incremental','Differential','Mirror','Full'],a:3},
-  {id:33,m:10,t:'mcq',pts:1,q:'Which backup type copies ONLY data changed since the LAST backup (not last full)?',o:['Full','Differential','Incremental','Mirror'],a:2},
-  {id:34,m:10,t:'mcq',pts:1,q:'An organization sets RPO = 1 hour. What does this practically mean?',o:['The system must be restored within 1 hour','They can afford to lose at most 1 hour of data','Backups must run exactly every 1 hour','Failover must complete in under 1 hour'],a:1},
-  {id:35,m:10,t:'mcq',pts:1,q:'Which replication type writes data to the primary AND replica simultaneously — guaranteeing zero data loss?',o:['Asynchronous','Semi-Synchronous','Batch','Synchronous'],a:3},
-  {id:36,m:10,t:'mcq',pts:1,q:'Which cluster type is used for scientific computing and AI training — and NOT for fault tolerance?',o:['Failover Cluster','Load Balancing Cluster','High-Performance Cluster (HPC)','Geographic Cluster'],a:2},
-  {id:37,m:10,t:'mcq',pts:1,q:'N+1 redundancy for a system that needs 5 servers means deploying how many servers in total?',o:['5','6','7','10'],a:1},
-  {id:38,m:10,t:'mcq',pts:1,q:'Which backup strategy requires the most complex restore process — needing the full backup plus every subsequent set?',o:['Full','Mirror','Differential','Incremental'],a:3},
-  {id:39,m:10,t:'mcq',pts:1,q:'Asynchronous replication is preferred for geographically distant DR sites primarily because:',o:['It guarantees zero data loss','It has lower latency than synchronous replication','It is more secure','It does not require a network connection'],a:1},
-  {id:40,m:10,t:'mcq',pts:1,q:'What does a Mirror backup risk that other backup types do not?',o:['Slowest restore time','Largest storage usage','Deleted source files are also deleted from the mirror','No compression support'],a:2},
-  {id:41,m:10,t:'tf',pts:1,q:'A fault-tolerant system may have a brief interruption of seconds when switching over to its backup.',a:false},
-  {id:42,m:10,t:'tf',pts:1,q:'The 3-2-1 rule requires keeping at least 1 copy of data off-site.',a:true},
-  {id:43,m:10,t:'tf',pts:1,q:'Incremental backup is the fastest to restore because you only need the most recent backup file.',a:false},
-  {id:44,m:10,t:'tf',pts:1,q:'A 99.9% SLA allows a maximum of approximately 8.76 hours of downtime per year.',a:true},
-  {id:45,m:10,t:'essay',pts:4,q:"A hospital's patient monitoring system cannot tolerate ANY downtime. Explain: (1) HA or Fault Tolerant? (2) Which redundancy model? (3) Which replication type? (4) Which backup strategy?",hint:'Fault Tolerant (zero downtime). Use 2N or 2N+1 redundancy — two complete independent systems plus a spare. Synchronous replication (zero RPO, no data loss). Hot Standby failover (instant switch). Full + Differential backup strategy with off-site copies following the 3-2-1 rule.'},
-  {id:46,m:10,t:'essay',pts:3,q:'Differentiate RTO and RPO. Give a scenario where RTO = 2 hours and RPO = 30 minutes — what does each value mean practically?',hint:'RTO (Recovery Time Objective) = max acceptable time to restore service after failure. RPO (Recovery Point Objective) = max acceptable data loss in time. Scenario: if failure occurs at 10:00am → service must be back online by 12:00pm (RTO), and data from at least 9:30am must be recoverable (RPO). Backup frequency must align with RPO.'},
-];
-
-const FC = [
-  {m:9,term:'RAID 0',def:'Striping only. Min 2 drives. No fault tolerance. 100% usable capacity. Use case: video editing, scratch disks.'},
-  {m:9,term:'RAID 1',def:'Mirroring only. Min 2 drives. Tolerates 1 drive failure. 50% capacity. Use case: OS drives, small critical systems.'},
-  {m:9,term:'RAID 5',def:'Striping + distributed parity. Min 3 drives. Tolerates 1 failure. 67–94% capacity. Use case: file servers, general storage.'},
-  {m:9,term:'RAID 6',def:'Striping + double parity. Min 4 drives. Tolerates 2 simultaneous failures. Use case: backup servers, large drives.'},
-  {m:9,term:'RAID 10',def:'Mirror + Stripe. Min 4 drives. Tolerates 1 failure per mirror pair. 50% capacity. Use case: databases, VM hosts.'},
-  {m:9,term:'NAS',def:'Network Attached Storage — shared file-level storage on the local network. Acts like an on-premises personal cloud for multiple users.'},
-  {m:9,term:'SAN',def:'Storage Area Network — high-speed block-level storage network. Appears as a local disk to servers. Used for databases and VMs.'},
-  {m:9,term:'Auto-Tiering',def:'ISS feature that automatically moves hot (frequently accessed) data to SSDs and cold (rarely accessed) data to cheaper HDDs or tape.'},
-  {m:9,term:'Thin Provisioning',def:'Allocates storage on demand rather than upfront. A 1 TB volume is created but only uses physical space as data is written.'},
-  {m:9,term:'Snapshot',def:'A point-in-time, space-efficient copy of data. Near-instant and used for fast backup/recovery without duplicating all data.'},
-  {m:9,term:'3-2-1 Rule',def:'3 copies of data, on 2 different media types, with 1 copy off-site. E.g. local HDD + NAS + Azure cloud backup.'},
-  {m:9,term:'Striping',def:'Splitting data across multiple drives so reads/writes happen in parallel. Increases performance. Used in RAID 0, 5, 6, 10.'},
-  {m:9,term:'Parity',def:'A math checksum distributed across drives. Allows recovery of lost data without mirroring every bit. Used in RAID 5 and 6.'},
-  {m:9,term:'Mirroring',def:'An exact duplicate of data written simultaneously to two (or more) drives. If one fails, the other takes over instantly.'},
-  {m:10,term:'High Availability (HA)',def:'Minimizes downtime through quick recovery. May have a brief interruption. Measured in "nines" — 99.9%, 99.99%, etc.'},
-  {m:10,term:'Fault Tolerance',def:'Zero downtime even during component failure. System continues without ANY interruption. More expensive than HA.'},
-  {m:10,term:'MTBF',def:'Mean Time Between Failures — the average time a component operates before failing. Longer = more reliable.'},
-  {m:10,term:'MTTR',def:'Mean Time To Repair — the average time it takes to fix a failure. Shorter = faster recovery.'},
-  {m:10,term:'Availability Formula',def:'Availability = MTBF ÷ (MTBF + MTTR). Example: 8760 ÷ (8760 + 4) = 99.95%'},
-  {m:10,term:'RTO',def:'Recovery Time Objective — the maximum acceptable time to restore service after a failure.'},
-  {m:10,term:'RPO',def:'Recovery Point Objective — the maximum acceptable data loss measured in time. RPO = 1 hr means you can lose at most 1 hour of data.'},
-  {m:10,term:'N+1 Redundancy',def:'For every N components needed, have 1 extra spare. Example: need 3 servers → deploy 4.'},
-  {m:10,term:'2N Redundancy',def:'Fully duplicate every system — run two complete, independent systems simultaneously. Used in hospitals and data centers.'},
-  {m:10,term:'2N+1 Redundancy',def:'Two full systems PLUS one extra spare. Used in mission-critical infrastructure: stock exchanges, air traffic control.'},
-  {m:10,term:'Hot Standby',def:'Backup system already fully running. Instant failover. Most expensive. Used where zero downtime is required.'},
-  {m:10,term:'Warm Standby',def:'Backup system partially running. Failover takes minutes. Balance between cost and recovery speed.'},
-  {m:10,term:'Cold Standby',def:'Backup system powered off — needs full setup before use. Failover takes hours. Cheapest option.'},
-  {m:10,term:'Synchronous Replication',def:'Data written to primary AND replica simultaneously. Zero data loss. Higher latency. Used for financial systems.'},
-  {m:10,term:'Asynchronous Replication',def:'Data written to primary first, then replicated later. Some potential data loss (matches RPO window). Lower latency. Used for DR sites.'},
-  {m:10,term:'Full Backup',def:'Copies all data every time. Slowest and uses most storage. Fastest and simplest to restore — only one backup set needed.'},
-  {m:10,term:'Incremental Backup',def:'Copies only data changed since the last backup. Fastest backup, least storage. Slowest restore — needs full + ALL incrementals.'},
-  {m:10,term:'Differential Backup',def:'Copies data changed since the last FULL backup. Medium speed and storage. Easier restore than incremental.'},
-  {m:10,term:'Round Robin',def:'Load balancing: requests distributed in sequence (1→2→3→repeat). Best when all servers have equal capacity.'},
-  {m:10,term:'IP Hash',def:'Load balancing: client IP determines which server handles the request. Guarantees session persistence — same client → same server.'},
-  {m:10,term:'Failover Cluster',def:'Nodes monitor each other. If primary fails, secondary takes over in seconds. Used for SQL Server, file servers, domain controllers.'},
-  {m:10,term:'99.9% SLA ("three nines")',def:'Maximum 8.76 hours of downtime per year (approximately 9 hours).'},
-  {m:10,term:'99.99% SLA ("four nines")',def:'Maximum 52.6 minutes of downtime per year (approximately 53 minutes).'},
-];
-
-// State
-let S = {
-  tab:'quiz',
-  modF:'all',
-  qIdx:0,
-  sel:null,
-  revealed:false,
-  score:0,
-  correct:0,
-  wrong:0,
-  done:false,
-  qs:[],
-  flipped:{},
-  showHint:{},
-  showCalc:{},
-  fcF:'all',
+// ====== QUIZ DATA ======
+const quizData = {
+  8: [
+    {
+      q: "What flag do you use with tar to list archive contents WITHOUT extracting?",
+      opts: ["-c", "-t", "-x", "-v"],
+      ans: 1,
+      explain: "-t (think: 't'able of contents). Safe to run anytime."
+    },
+    {
+      q: "Which command creates a gzip-compressed archive called backup.tar.gz from /home/data?",
+      opts: [
+        "tar -cvzf backup.tar.gz /home/data",
+        "tar -xvzf backup.tar.gz /home/data",
+        "tar -tvzf /home/data backup.tar.gz",
+        "tar -czf /home/data backup.tar.gz"
+      ],
+      ans: 0,
+      explain: "-c (create) -v (verbose) -z (gzip) -f (filename). The archive name always comes right after -f."
+    },
+    {
+      q: "What does -f tell tar?",
+      opts: ["Force overwrite", "Use gzip filter", "Specify the archive filename", "Full directory listing"],
+      ans: 2,
+      explain: "-f specifies the filename. It must be followed immediately by the archive name."
+    }
+  ],
+  9: [
+    {
+      q: "What numeric value represents rwx (full permissions)?",
+      opts: ["5", "6", "7", "3"],
+      ans: 2,
+      explain: "r=4, w=2, x=1. 4+2+1 = 7."
+    },
+    {
+      q: "You want only the owner to read/write/execute, group to read+execute, others nothing. What chmod value?",
+      opts: ["755", "750", "644", "700"],
+      ans: 1,
+      explain: "750 = owner(7=rwx), group(5=r-x), others(0=none)."
+    },
+    {
+      q: "Which command changes file.txt owner to 'alice' and group to 'devs'?",
+      opts: [
+        "chmod alice:devs file.txt",
+        "chown alice:devs file.txt",
+        "chown -g devs -u alice file.txt",
+        "usermod alice:devs file.txt"
+      ],
+      ans: 1,
+      explain: "chown user:group file. Simple colon-separated format."
+    }
+  ],
+  10: [
+    {
+      q: "Which command checks the current ACL on a file?",
+      opts: ["setfacl -l", "getfacl", "ls -la", "acl --show"],
+      ans: 1,
+      explain: "getfacl displays all ACL entries for a file or directory."
+    },
+    {
+      q: "Grant user 'bob' read+write access to /opt/data/file.txt using ACL:",
+      opts: [
+        "setfacl -m u:bob:rw /opt/data/file.txt",
+        "setfacl -x u:bob:rw /opt/data/file.txt",
+        "getfacl -m u:bob:rw /opt/data/file.txt",
+        "chmod u:bob:rw /opt/data/file.txt"
+      ],
+      ans: 0,
+      explain: "setfacl -m (modify) u:user:perms path. This is the standard ACL grant command."
+    },
+    {
+      q: "What does setfacl -b do?",
+      opts: [
+        "Block a user from all access",
+        "Remove ALL ACL entries and revert to standard permissions",
+        "Apply ACLs recursively backwards",
+        "Back up current ACL rules"
+      ],
+      ans: 1,
+      explain: "-b removes all extended ACL entries, reverting the file to standard Unix permissions."
+    }
+  ],
+  11: [
+    {
+      q: "What does the 'g' flag do at the end of a sed substitution?",
+      opts: [
+        "Makes the match case-insensitive",
+        "Replaces ALL matches on each line (global)",
+        "Only replaces the first match",
+        "Groups the output"
+      ],
+      ans: 1,
+      explain: "Without 'g', sed only replaces the FIRST match per line. 'g' makes it replace every match."
+    },
+    {
+      q: "Which command replaces 'foo' with 'bar' in file.txt, modifying the file directly?",
+      opts: [
+        "sed 's/foo/bar/g' file.txt",
+        "sed -i 's/foo/bar/g' file.txt",
+        "sed -e 's/foo/bar/g' file.txt",
+        "sed -r 's/foo/bar/' file.txt"
+      ],
+      ans: 1,
+      explain: "-i means in-place edit. Without -i, sed only prints to stdout and the file is unchanged."
+    },
+    {
+      q: "How do you delete all lines containing 'error' and save output to a new file?",
+      opts: [
+        "sed -i '/error/d' file.txt > new.txt",
+        "sed '/error/d' file.txt > new.txt",
+        "sed -d 'error' file.txt > new.txt",
+        "sed 's/error//g' file.txt"
+      ],
+      ans: 1,
+      explain: "No -i here — we redirect to a new file. The /pattern/d syntax deletes matching lines."
+    }
+  ],
+  12: [
+    {
+      q: "What is the scp flag for specifying a non-default SSH port?",
+      opts: ["-p", "-P", "--port", "-n"],
+      ans: 1,
+      explain: "Capital -P for scp. Watch out: ssh uses lowercase -p. This difference is a common interview question!"
+    },
+    {
+      q: "Which command downloads /remote/logs/app.log from server 192.168.1.10 to your current directory?",
+      opts: [
+        "scp /remote/logs/app.log admin@192.168.1.10:.",
+        "scp admin@192.168.1.10:/remote/logs/app.log .",
+        "scp -d admin@192.168.1.10:/remote/logs/app.log",
+        "scp admin@192.168.1.10 /remote/logs/app.log ."
+      ],
+      ans: 1,
+      explain: "Download = remote source first, local destination second. The colon separates host from path."
+    },
+    {
+      q: "You want to copy an entire directory /data/ to a remote server. What flag is required?",
+      opts: ["-d", "-a", "-r", "-z"],
+      ans: 2,
+      explain: "-r (recursive) is required to copy directory trees with scp."
+    }
+  ],
+  13: [
+    {
+      q: "If /etc/cron.allow exists, who can use cron?",
+      opts: [
+        "Everyone except those in cron.deny",
+        "Only root",
+        "Only users explicitly listed in cron.allow",
+        "All users — allow file is just informational"
+      ],
+      ans: 2,
+      explain: "When cron.allow exists, it acts as a strict whitelist. Only listed users can schedule jobs."
+    },
+    {
+      q: "What command blocks user 'maria' from using cron?",
+      opts: [
+        "echo 'maria' >> /etc/cron.allow",
+        "crontab -r maria",
+        "echo 'maria' >> /etc/cron.deny",
+        "usermod --no-cron maria"
+      ],
+      ans: 2,
+      explain: "Appending to /etc/cron.deny blocks that user. >> appends without erasing existing entries."
+    },
+    {
+      q: "After editing cron access files, what should you run?",
+      opts: [
+        "reboot",
+        "systemctl restart crond",
+        "crontab -r",
+        "service ssh restart"
+      ],
+      ans: 1,
+      explain: "Restart the cron daemon to apply changes. On some distros it's 'cron', on others 'crond'."
+    }
+  ]
 };
 
-function shuffle(arr){
-  const a=[...arr];
-  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
-  return a;
-}
-
-function filteredQs(){
-  return S.modF==='all'?S.qs:S.qs.filter(q=>q.m===parseInt(S.modF));
-}
-
-function init(){
-  S.qs=shuffle([...Q]);
-  renderAll();
-  document.querySelectorAll('.nav-btn').forEach(b=>{
-    b.addEventListener('click',()=>{
-      S.tab=b.dataset.tab;
-      document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
-      b.classList.add('active');
-      ['quiz','flash','cheat'].forEach(t=>{
-        document.getElementById('tab-'+t).style.display = t===S.tab?'':'none';
-      });
-      renderAll();
-    });
-  });
-}
-
-function renderAll(){
-  if(S.tab==='quiz') renderQuiz();
-  if(S.tab==='flash') renderFlash();
-  if(S.tab==='cheat') renderCheat();
-}
-
-// ─── QUIZ ───────────────────────────────────────────────────────────────────
-function renderQuiz(){
-  const qs=filteredQs();
-  const el=document.getElementById('tab-quiz');
-  if(S.done){el.innerHTML=buildScore(qs);return;}
-  if(!qs.length){el.innerHTML=`<p style="color:var(--text-muted);font-size:14px;">No questions for this filter.</p>`;return;}
-  const idx=Math.min(S.qIdx,qs.length-1);
-  const q=qs[idx];
-  const pct=Math.round((idx/qs.length)*100);
-
-  el.innerHTML=`
-    <div class="chips">
-      <button class="chip${S.modF==='all'?' active':''}" onclick="setMod('all')">All modules</button>
-      <button class="chip${S.modF==='9'?' active':''}" onclick="setMod('9')">Module 9 — RAID</button>
-      <button class="chip${S.modF==='10'?' active':''}" onclick="setMod('10')">Module 10 — HA &amp; FT</button>
-    </div>
-    <div class="progress-row">
-      <span class="progress-label">${idx+1} / ${qs.length}</span>
-      <span class="progress-label s-green">✓ ${S.correct}</span>
-    </div>
-    <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
-    <div class="q-wrap">
-      <div class="q-meta">
-        <span class="badge badge-m${q.m}">Module ${q.m}</span>
-        <span class="badge badge-${q.t}">${q.t==='mcq'?'MCQ':q.t==='tf'?'True / False':'Essay · '+q.pts+' pts'}</span>
+// ====== RENDER QUIZZES ======
+function renderQuiz(labNum) {
+  const container = document.getElementById(`quiz-${labNum}`);
+  const questions = quizData[labNum];
+  container.innerHTML = questions.map((q, qi) => `
+    <div class="quiz-card" id="qcard-${labNum}-${qi}">
+      <div class="quiz-q">${qi+1}. ${q.q}</div>
+      <div class="quiz-options">
+        ${q.opts.map((opt, oi) => `
+          <button class="quiz-opt" onclick="answer(${labNum},${qi},${oi})" id="opt-${labNum}-${qi}-${oi}">${opt}</button>
+        `).join('')}
       </div>
-      <p class="q-text">${q.q}</p>
-      ${buildInput(q)}
+      <div class="quiz-feedback" id="fb-${labNum}-${qi}"></div>
     </div>
-    <div class="btn-row" style="margin-top:20px;">
-      <button class="btn" onclick="prevQ()" ${idx===0?'disabled':''}>← prev</button>
-      <span class="stats">✓ ${S.correct} &nbsp;·&nbsp; ✗ ${S.wrong}</span>
-      ${S.revealed?`<button class="btn btn-primary" onclick="nextQ()">next →</button>`:`<span></span>`}
-    </div>
-  `;
+  `).join('');
 }
 
-function buildInput(q){
-  const L=['A','B','C','D'];
-  if(q.t==='mcq'){
-    const opts=q.o.map((o,i)=>{
-      let cls='opt';
-      if(S.revealed){
-        cls+=' locked';
-        if(i===q.a) cls+=' correct';
-        else if(i===S.sel && i!==q.a) cls+=' wrong';
-      } else {
-        if(i===S.sel) cls+=' selected';
-      }
-      return `<div class="${cls}" onclick="selOpt(${i})"><span class="opt-letter">${L[i]}</span><span class="opt-text">${o}</span></div>`;
-    }).join('');
-    const calcHtml=q.calc&&S.revealed?`
-      <button class="calc-toggle" onclick="toggleCalc(${q.id})">[ ${S.showCalc[q.id]?'hide':'show'} calculation ]</button>
-      ${S.showCalc[q.id]?`<div class="calc-box">${q.calc}</div>`:''}
-    `:'';
-    return `<div class="opts">${opts}</div>${calcHtml}
-      ${!S.revealed?`<button class="btn btn-primary" onclick="revealMCQ()">check answer</button>`:''}`;
+function answer(labNum, qi, oi) {
+  const q = quizData[labNum][qi];
+  const opts = document.querySelectorAll(`#qcard-${labNum}-${qi} .quiz-opt`);
+  const fb = document.getElementById(`fb-${labNum}-${qi}`);
+  opts.forEach(btn => btn.disabled = true);
+  if (oi === q.ans) {
+    opts[oi].classList.add('correct');
+    fb.textContent = '✓ Correct! ' + q.explain;
+    fb.className = 'quiz-feedback show ok';
+  } else {
+    opts[oi].classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    fb.textContent = '✗ Not quite. ' + q.explain;
+    fb.className = 'quiz-feedback show bad';
   }
-  if(q.t==='tf'){
-    const tfC=['True','False'],tfV=[true,false];
-    const opts=tfC.map((c,i)=>{
-      let cls='tf-opt';
-      if(S.revealed){
-        cls+=' locked';
-        if(tfV[i]===q.a) cls+=' correct';
-        else if(S.sel===i&&tfV[i]!==q.a) cls+=' wrong';
-      } else {
-        if(S.sel===i) cls+=' selected';
-      }
-      return `<div class="${cls}" onclick="selTF(${i})">${c}</div>`;
-    }).join('');
-    return `<div class="tf-opts">${opts}</div>
-      ${!S.revealed?`<button class="btn btn-primary" onclick="revealTF()">check answer</button>`:''}`;
-  }
-  if(q.t==='essay'){
-    const sh=S.showHint[q.id];
-    return `<p class="essay-note">${q.pts}-point question — self-grade after reading the guide</p>
-      <button class="hint-toggle" onclick="toggleHint(${q.id})">${sh?'▲ hide answer guide':'▼ reveal answer guide'}</button>
-      ${sh?`<div class="hint-box"><strong>Key points to include</strong>${q.hint}</div>`:''}
-      ${!S.revealed?`<div class="essay-btns">
-        <button class="btn btn-green" onclick="markEssay(true,${q.pts})">✓ I got it (${q.pts} pts)</button>
-        <button class="btn btn-red" onclick="markEssay(false,0)">✗ need review</button>
-      </div>`:'<span style="font-size:12px;font-family:var(--mono);color:var(--text-muted);">marked — continue when ready</span>'}`;
-  }
-  return '';
 }
 
-function buildScore(qs){
-  const total=qs.reduce((a,q)=>a+q.pts,0);
-  const pct=Math.round((S.score/total)*100);
-  const msg=pct>=90?'excellent.':pct>=75?'good job.':pct>=60?'keep studying.':'needs work.';
-  return `<div class="score-screen">
-    <div class="score-big">${pct}<span style="font-size:32px;color:var(--text-muted)">%</span></div>
-    <div class="score-label">${msg} &nbsp;·&nbsp; ${S.score} / ${total} pts</div>
-    <div class="score-grid">
-      <div class="score-stat"><div class="score-stat-n s-green">${S.correct}</div><div class="score-stat-l">correct</div></div>
-      <div class="score-stat"><div class="score-stat-n s-red">${S.wrong}</div><div class="score-stat-l">wrong</div></div>
-      <div class="score-stat"><div class="score-stat-n">${qs.length}</div><div class="score-stat-l">total</div></div>
-    </div>
-    <button class="btn btn-primary" onclick="resetQuiz()">try again (reshuffled)</button>
-  </div>`;
+// ====== LAB NAVIGATION ======
+function showLab(num) {
+  document.querySelectorAll('.lab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.lab-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`lab-${num}`).classList.add('active');
+  document.getElementById(`tab-${num}`).classList.add('active');
 }
 
-// ─── FLASHCARDS ──────────────────────────────────────────────────────────────
-function renderFlash(){
-  const all=FC;
-  const filt=S.fcF==='all'?all:all.filter(f=>f.m===parseInt(S.fcF));
-  document.getElementById('tab-flash').innerHTML=`
-    <div class="chips">
-      <button class="chip${S.fcF==='all'?' active':''}" onclick="setFc('all')">All (${all.length})</button>
-      <button class="chip${S.fcF==='9'?' active':''}" onclick="setFc('9')">Module 9 — Storage &amp; RAID (${all.filter(f=>f.m===9).length})</button>
-      <button class="chip${S.fcF==='10'?' active':''}" onclick="setFc('10')">Module 10 — HA &amp; FT (${all.filter(f=>f.m===10).length})</button>
-    </div>
-    <div class="fc-grid">
-      ${filt.map((f,i)=>`
-        <div class="fc${S.flipped[i]?' flipped':''}" onclick="flipFC(${i})">
-          <span class="fc-mod badge-m${f.m}" style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:99px;position:absolute;top:10px;right:10px;">M${f.m}</span>
-          <div class="fc-term">${f.term}</div>
-          <div class="fc-def">${f.def}</div>
-          <span class="fc-hint" style="position:absolute;bottom:10px;right:10px;font-size:9px;font-family:var(--mono);color:var(--text-dim);">tap to flip</span>
-        </div>
-      `).join('')}
-    </div>
-  `;
+// ====== MARK DONE ======
+const done = {};
+function markDone(num) {
+  done[num] = true;
+  const btn = document.getElementById(`done-${num}`);
+  btn.textContent = '✓ Lab ' + num + ' Complete!';
+  btn.classList.add('marked');
+  document.getElementById(`tab-${num}`).classList.add('done');
+  updateProgress();
+}
+function updateProgress() {
+  const count = Object.keys(done).length;
+  const pct = Math.round(count / 6 * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
 }
 
-// ─── CHEAT SHEET ─────────────────────────────────────────────────────────────
-function renderCheat(){
-  document.getElementById('tab-cheat').innerHTML=`
-    <div class="cs-block">
-      <div class="cs-h">Module 9 — RAID Levels</div>
-      <table class="cs-t">
-        <tr><th>Level</th><th>Method</th><th>Min Drives</th><th>Failures Tolerated</th><th>Capacity</th><th>Best For</th></tr>
-        <tr><td>RAID 0</td><td>Striping</td><td>2</td><td><span class="pill p-r">None</span></td><td>100%</td><td>Video editing</td></tr>
-        <tr><td>RAID 1</td><td>Mirroring</td><td>2</td><td><span class="pill p-g">1</span></td><td>50%</td><td>OS drives</td></tr>
-        <tr><td>RAID 5</td><td>Stripe + Parity</td><td>3</td><td><span class="pill p-g">1</span></td><td>67–94%</td><td>File servers</td></tr>
-        <tr><td>RAID 6</td><td>Stripe + 2× Parity</td><td>4</td><td><span class="pill p-g">2</span></td><td>Varies</td><td>Backup servers</td></tr>
-        <tr><td>RAID 10</td><td>Mirror + Stripe</td><td>4</td><td><span class="pill p-g">1 per pair</span></td><td>50%</td><td>Databases, VMs</td></tr>
-      </table>
-    </div>
-    <div class="cs-block">
-      <div class="cs-h">Module 9 — Storage Types</div>
-      <table class="cs-t">
-        <tr><th>Type</th><th>Speed</th><th>Cost</th><th>Key Characteristic</th></tr>
-        <tr><td>Local (HDD/SSD)</td><td><span class="pill p-g">Fastest</span></td><td>Medium</td><td>No redundancy, single machine only</td></tr>
-        <tr><td>NAS</td><td>Good</td><td>Medium</td><td>Shared folders over the network for multiple users</td></tr>
-        <tr><td>SAN</td><td><span class="pill p-g">Very fast</span></td><td><span class="pill p-a">High</span></td><td>Block-level, appears as local disk to servers</td></tr>
-        <tr><td>Cloud</td><td>Internet-dependent</td><td>Pay-per-use</td><td>Off-site, scalable, accessible anywhere</td></tr>
-      </table>
-    </div>
-    <div class="cs-block">
-      <div class="cs-h">Module 10 — HA Uptime (The Nines)</div>
-      <table class="cs-t">
-        <tr><th>SLA</th><th>Max Downtime / Year</th><th>Label</th></tr>
-        <tr><td>99%</td><td>3.65 days (87.6 hrs)</td><td>Two nines</td></tr>
-        <tr><td>99.9%</td><td>8.76 hours (~9 hrs)</td><td>Three nines</td></tr>
-        <tr><td>99.99%</td><td>52.6 minutes (~53 min)</td><td>Four nines</td></tr>
-        <tr><td>99.999%</td><td>5.26 minutes (~5 min)</td><td>Five nines</td></tr>
-      </table>
-    </div>
-    <div class="cs-block">
-      <div class="cs-h">Module 10 — Availability Formula</div>
-      <div class="formula">Availability = MTBF ÷ (MTBF + MTTR)</div>
-      <div class="note">Example: MTBF = 8,760 hrs, MTTR = 4 hrs<br>→ 8760 ÷ 8764 = <strong>99.95%</strong></div>
-    </div>
-    <div class="cs-block">
-      <div class="cs-h">Module 10 — RTO vs RPO</div>
-      <div class="cs-two">
-        <div class="rto-box" style="border-color:var(--blue);">
-          <div style="font-family:var(--mono);font-size:10px;color:var(--blue-text);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">RTO</div>
-          <div style="font-weight:500;margin-bottom:4px;">Recovery Time Objective</div>
-          <div style="font-size:13px;color:var(--text-muted);">Max time allowed to restore service after a failure.</div>
-        </div>
-        <div class="rto-box" style="border-color:var(--amber);">
-          <div style="font-family:var(--mono);font-size:10px;color:var(--amber-text);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">RPO</div>
-          <div style="font-weight:500;margin-bottom:4px;">Recovery Point Objective</div>
-          <div style="font-size:13px;color:var(--text-muted);">Max acceptable data loss, measured in time.</div>
-        </div>
-      </div>
-    </div>
-    <div class="cs-block">
-      <div class="cs-h">Module 10 — Redundancy Models</div>
-      <table class="cs-t">
-        <tr><th>Model</th><th>Meaning</th><th>Use Case</th></tr>
-        <tr><td>N+1</td><td>1 spare for every N components</td><td>Most common servers</td></tr>
-        <tr><td>N+M</td><td>M spares for N components</td><td>Higher resilience</td></tr>
-        <tr><td>2N</td><td>Two full independent systems</td><td>Hospitals, data centers</td></tr>
-        <tr><td>2N+1</td><td>Two full systems + 1 extra spare</td><td>Stock exchanges, air traffic control</td></tr>
-      </table>
-    </div>
-    <div class="cs-block">
-      <div class="cs-h">Module 10 — Backup Types</div>
-      <table class="cs-t">
-        <tr><th>Type</th><th>What it copies</th><th>Backup speed</th><th>Restore</th><th>Storage used</th></tr>
-        <tr><td>Full</td><td>Everything</td><td><span class="pill p-r">Slowest</span></td><td><span class="pill p-g">Simplest</span></td><td>Most</td></tr>
-        <tr><td>Incremental</td><td>Since last backup</td><td><span class="pill p-g">Fastest</span></td><td><span class="pill p-r">Hardest</span></td><td>Least</td></tr>
-        <tr><td>Differential</td><td>Since last full</td><td>Medium</td><td>Medium</td><td>Medium</td></tr>
-        <tr><td>Mirror</td><td>Exact copy (no versioning)</td><td>Fast</td><td><span class="pill p-g">Instant</span></td><td>Same as source</td></tr>
-      </table>
-    </div>
-    <div class="cs-block">
-      <div class="cs-h">Module 10 — Load Balancing Algorithms</div>
-      <table class="cs-t">
-        <tr><th>Algorithm</th><th>How it works</th><th>Best when</th></tr>
-        <tr><td>Round Robin</td><td>Sends requests in sequence: 1→2→3→repeat</td><td>All servers have equal capacity</td></tr>
-        <tr><td>Weighted Round Robin</td><td>Faster servers receive proportionally more requests</td><td>Servers have different capacities</td></tr>
-        <tr><td>Least Connections</td><td>New request → server with fewest active connections</td><td>Requests vary in processing time</td></tr>
-        <tr><td>IP Hash</td><td>Client IP determines server (same client → same server)</td><td>Session persistence needed</td></tr>
-      </table>
-    </div>
-    <div class="cs-block">
-      <div class="cs-h">Module 10 — Failover &amp; Replication Types</div>
-      <table class="cs-t">
-        <tr><th>Type</th><th>Speed</th><th>Data loss?</th><th>Cost</th></tr>
-        <tr><td>Hot Standby</td><td>Instant</td><td>None</td><td><span class="pill p-a">Highest</span></td></tr>
-        <tr><td>Warm Standby</td><td>Minutes</td><td>Possible</td><td>Medium</td></tr>
-        <tr><td>Cold Standby</td><td>Hours</td><td>Yes</td><td><span class="pill p-g">Lowest</span></td></tr>
-        <tr><td>Sync Replication</td><td>Simultaneous write</td><td>Zero</td><td><span class="pill p-a">High latency</span></td></tr>
-        <tr><td>Async Replication</td><td>Delayed write</td><td>Within RPO window</td><td><span class="pill p-g">Low latency</span></td></tr>
-      </table>
-    </div>
-  `;
-}
-
-// ─── EVENTS ──────────────────────────────────────────────────────────────────
-window.setMod=f=>{S.modF=f;S.qIdx=0;S.sel=null;S.revealed=false;S.score=0;S.correct=0;S.wrong=0;S.done=false;S.qs=shuffle([...Q]);renderQuiz();};
-window.setFc=f=>{S.fcF=f;S.flipped={};renderFlash();};
-window.flipFC=i=>{S.flipped[i]=!S.flipped[i];renderFlash();};
-window.toggleHint=id=>{S.showHint[id]=!S.showHint[id];renderQuiz();};
-window.toggleCalc=id=>{S.showCalc[id]=!S.showCalc[id];renderQuiz();};
-
-window.selOpt=i=>{if(!S.revealed){S.sel=i;renderQuiz();}};
-window.selTF=i=>{if(!S.revealed){S.sel=i;renderQuiz();}};
-
-window.revealMCQ=()=>{
-  if(S.sel===null){return;}
-  const q=filteredQs()[S.qIdx];
-  S.revealed=true;
-  if(S.sel===q.a){S.score+=q.pts;S.correct++;}else{S.wrong++;}
-  renderQuiz();
-};
-window.revealTF=()=>{
-  if(S.sel===null){return;}
-  const q=filteredQs()[S.qIdx];
-  S.revealed=true;
-  const v=[true,false];
-  if(v[S.sel]===q.a){S.score+=q.pts;S.correct++;}else{S.wrong++;}
-  renderQuiz();
-};
-window.markEssay=(got,pts)=>{
-  S.revealed=true;
-  S.score+=pts;
-  if(got)S.correct++;else S.wrong++;
-  renderQuiz();
-};
-window.nextQ=()=>{
-  const qs=filteredQs();
-  if(S.qIdx>=qs.length-1){S.done=true;}else{S.qIdx++;}
-  S.sel=null;S.revealed=false;
-  renderQuiz();
-};
-window.prevQ=()=>{
-  if(S.qIdx>0){S.qIdx--;S.sel=null;S.revealed=false;renderQuiz();}
-};
-window.resetQuiz=()=>{
-  S.qIdx=0;S.sel=null;S.revealed=false;S.score=0;S.correct=0;S.wrong=0;S.done=false;
-  S.flipped={};S.showHint={};S.showCalc={};S.qs=shuffle([...Q]);
-  renderQuiz();
-};
-
-init();
+// ====== INIT ======
+[8,9,10,11,12,13].forEach(n => renderQuiz(n));
 </script>
 </body>
 </html>
