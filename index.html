@@ -3,953 +3,763 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Linux Labs 8–13 | Interview Prep</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<title>Kobe's Full Stack Learning Path</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap');
+
   :root {
-    --bg: #0a0e1a;
-    --surface: #111827;
-    --card: #1a2235;
-    --border: #2a3a55;
-    --accent: #00e5ff;
-    --accent2: #7c3aed;
-    --accent3: #10b981;
-    --warn: #f59e0b;
-    --danger: #ef4444;
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --accent: #7c3aed;
+    --accent2: #06b6d4;
+    --accent3: #f59e0b;
+    --accent4: #10b981;
+    --accent5: #ef4444;
     --text: #e2e8f0;
     --muted: #64748b;
-    --code-bg: #0d1117;
+    --card: #13131c;
   }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    font-family: 'Syne', sans-serif;
     background: var(--bg);
     color: var(--text);
+    font-family: 'Syne', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* GRID BG */
+  /* Grid background */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(124,58,237,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,58,237,0.03) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none;
     z-index: 0;
   }
 
-  .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
 
-  /* HEADER */
-  header {
-    padding: 48px 0 32px;
+  /* Header */
+  .header {
+    margin-bottom: 56px;
     text-align: center;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 32px;
   }
-  .badge {
+
+  .header .tag {
     display: inline-block;
-    background: linear-gradient(135deg, var(--accent2), var(--accent));
-    color: #fff;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Space Mono', monospace;
     font-size: 11px;
-    letter-spacing: 2px;
-    padding: 4px 14px;
-    border-radius: 20px;
-    margin-bottom: 16px;
+    color: var(--accent2);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
+    border: 1px solid rgba(6,182,212,0.3);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
   }
-  header h1 {
-    font-size: clamp(28px, 5vw, 48px);
+
+  .header h1 {
+    font-size: clamp(28px, 5vw, 42px);
     font-weight: 800;
     line-height: 1.1;
-    background: linear-gradient(135deg, #fff 40%, var(--accent));
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .header h1 span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  header p {
+
+  .header p {
     color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto;
   }
 
-  /* PROGRESS BAR */
-  .progress-bar-wrap {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin-bottom: 28px;
+  /* Phase cards */
+  .phase {
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .phase-header {
     display: flex;
     align-items: center;
     gap: 16px;
-  }
-  .progress-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; }
-  .progress-track { flex: 1; background: var(--card); border-radius: 99px; height: 8px; overflow: hidden; }
-  .progress-fill {
-    height: 100%;
-    border-radius: 99px;
-    background: linear-gradient(90deg, var(--accent2), var(--accent));
-    transition: width 0.5s ease;
-    width: 0%;
-  }
-  .progress-pct { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); font-weight: 700; width: 40px; text-align: right; }
-
-  /* LAB NAV TABS */
-  .lab-nav {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 28px;
-  }
-  .lab-tab {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--muted);
+    margin-bottom: 16px;
     cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
+    user-select: none;
   }
-  .lab-tab:hover { border-color: var(--accent); color: var(--accent); }
-  .lab-tab.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
-  .lab-tab .done-dot {
-    position: absolute;
-    top: -3px; right: -3px;
-    width: 8px; height: 8px;
-    background: var(--accent3);
-    border-radius: 50%;
-    display: none;
-  }
-  .lab-tab.done .done-dot { display: block; }
 
-  /* LAB PANEL */
-  .lab-panel { display: none; animation: fadeIn 0.3s ease; }
-  .lab-panel.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  .lab-header {
+  .phase-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
     display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    margin-bottom: 24px;
-    padding: 20px 24px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .phase-title-block h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .phase-title-block .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    margin-top: 2px;
+  }
+
+  .phase-badge {
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .phase-body {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 12px;
+    padding: 20px;
+    display: grid;
+    gap: 12px;
   }
-  .lab-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 36px;
+
+  /* Resource row */
+  .resource {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.2s, transform 0.15s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .resource:hover {
+    border-color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  .resource-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .resource-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .resource-info .name {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .resource-info .desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .resource-tags {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+
+  .rtag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: rgba(124,58,237,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(124,58,237,0.2);
+  }
+
+  .rtag.free {
+    background: rgba(16,185,129,0.1);
+    color: var(--accent4);
+    border-color: rgba(16,185,129,0.2);
+  }
+
+  .rtag.game {
+    background: rgba(245,158,11,0.1);
+    color: var(--accent3);
+    border-color: rgba(245,158,11,0.2);
+  }
+
+  .rtag.video {
+    background: rgba(239,68,68,0.1);
+    color: var(--accent5);
+    border-color: rgba(239,68,68,0.2);
+  }
+
+  .rtag.ref {
+    background: rgba(6,182,212,0.1);
+    color: var(--accent2);
+    border-color: rgba(6,182,212,0.2);
+  }
+
+  /* Phase color themes */
+  .phase-1 .phase-number { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .phase-1 .phase-badge { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+  .phase-1 .resource:hover { border-color: #ef4444; }
+
+  .phase-2 .phase-number { background: rgba(245,158,11,0.15); color: #f59e0b; }
+  .phase-2 .phase-badge { background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); }
+  .phase-2 .resource:hover { border-color: #f59e0b; }
+
+  .phase-3 .phase-number { background: rgba(16,185,129,0.15); color: #10b981; }
+  .phase-3 .phase-badge { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
+  .phase-3 .resource:hover { border-color: #10b981; }
+
+  .phase-4 .phase-number { background: rgba(124,58,237,0.15); color: #7c3aed; }
+  .phase-4 .phase-badge { background: rgba(124,58,237,0.1); color: #7c3aed; border: 1px solid rgba(124,58,237,0.2); }
+
+  .phase-5 .phase-number { background: rgba(6,182,212,0.15); color: #06b6d4; }
+  .phase-5 .phase-badge { background: rgba(6,182,212,0.1); color: #06b6d4; border: 1px solid rgba(6,182,212,0.2); }
+  .phase-5 .resource:hover { border-color: #06b6d4; }
+
+  .phase-6 .phase-number { background: rgba(236,72,153,0.15); color: #ec4899; }
+  .phase-6 .phase-badge { background: rgba(236,72,153,0.1); color: #ec4899; border: 1px solid rgba(236,72,153,0.2); }
+  .phase-6 .resource:hover { border-color: #ec4899; }
+
+  /* Connector line between phases */
+  .connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    gap: 6px;
+    margin: -8px 0;
+  }
+
+  .connector::before, .connector::after {
+    content: '';
+    height: 1px;
+    width: 24px;
+    background: var(--border);
+  }
+
+  .connector span {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* Note blocks */
+  .note {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    background: rgba(6,182,212,0.05);
+    border: 1px solid rgba(6,182,212,0.15);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .note .icon { font-size: 14px; flex-shrink: 0; }
+
+  /* Pro tip */
+  .pro-tip {
+    background: rgba(124,58,237,0.05);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 40px;
+  }
+
+  .pro-tip h3 {
+    font-size: 14px;
     font-weight: 700;
     color: var(--accent);
-    line-height: 1;
-    min-width: 48px;
-  }
-  .lab-meta h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
-  .lab-meta p { color: var(--muted); font-size: 14px; line-height: 1.5; }
-
-  /* SECTION CARDS */
-  .section-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-    padding-left: 4px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .flags-grid {
+  .pro-tip p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .pro-tip strong { color: var(--text); }
+
+  /* Timeline estimate */
+  .timeline {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    margin-bottom: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 40px;
   }
-  .flag-card {
+
+  .tl-item {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 14px 16px;
-    transition: border-color 0.2s;
+    padding: 14px;
+    text-align: center;
   }
-  .flag-card:hover { border-color: var(--accent); }
-  .flag-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
+
+  .tl-item .phase-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .tl-item .duration {
+    font-size: 15px;
     font-weight: 700;
+  }
+
+  .tl-total {
+    background: var(--card);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    grid-column: 1 / -1;
+  }
+
+  .tl-total .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
     color: var(--accent);
     margin-bottom: 4px;
   }
-  .flag-desc { font-size: 13px; color: var(--muted); line-height: 1.4; }
 
-  /* COMMAND BLOCKS */
-  .cmd-block {
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 24px;
-    overflow: hidden;
+  .tl-total .val {
+    font-size: 16px;
+    font-weight: 800;
   }
-  .cmd-item {
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-  }
-  .cmd-item:last-child { border-bottom: none; }
-  .cmd-label {
+
+  h3.section-label {
+    font-family: 'Space Mono', monospace;
     font-size: 11px;
+    letter-spacing: 0.1em;
     color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
     text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .cmd-code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--accent3);
-    word-break: break-all;
-  }
-  .cmd-code .flag { color: var(--warn); }
-  .cmd-code .path { color: #93c5fd; }
-  .cmd-code .user { color: #f9a8d4; }
-  .cmd-note { font-size: 12px; color: var(--muted); margin-top: 6px; font-style: italic; }
-
-  /* QUIZ */
-  .quiz-section { margin-top: 28px; }
-  .quiz-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px 24px;
-    margin-bottom: 14px;
-  }
-  .quiz-q {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 14px;
-    line-height: 1.5;
-  }
-  .quiz-q .inline-code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    padding: 2px 7px;
-    border-radius: 5px;
-    color: var(--accent3);
-  }
-  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
-  .quiz-opt {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.15s;
-  }
-  .quiz-opt:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-  .quiz-opt.correct { background: rgba(16,185,129,0.15); border-color: var(--accent3); color: var(--accent3); }
-  .quiz-opt.wrong { background: rgba(239,68,68,0.12); border-color: var(--danger); color: var(--danger); }
-  .quiz-opt:disabled { cursor: default; }
-  .quiz-feedback {
-    font-size: 13px;
-    margin-top: 12px;
-    padding: 10px 14px;
-    border-radius: 8px;
-    display: none;
-    line-height: 1.5;
-  }
-  .quiz-feedback.show { display: block; }
-  .quiz-feedback.ok { background: rgba(16,185,129,0.1); border: 1px solid var(--accent3); color: var(--accent3); }
-  .quiz-feedback.bad { background: rgba(239,68,68,0.1); border: 1px solid var(--danger); color: #fca5a5; }
-
-  /* MARK DONE */
-  .done-btn {
-    margin-top: 24px;
-    padding: 12px 28px;
-    border-radius: 10px;
-    border: 2px solid var(--accent3);
-    background: transparent;
-    color: var(--accent3);
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .done-btn:hover { background: var(--accent3); color: #000; }
-  .done-btn.marked { background: var(--accent3); color: #000; }
-
-  /* CHEAT SHEET TOGGLE */
-  .cheat-toggle {
-    margin-top: 28px;
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: 1px dashed var(--border);
-    background: var(--surface);
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-    transition: all 0.2s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .cheat-toggle:hover { border-color: var(--accent); color: var(--accent); }
-  .cheat-body { display: none; margin-top: 12px; }
-  .cheat-body.open { display: block; }
-  .cheat-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-  }
-  .cheat-row:last-child { border-bottom: none; }
-  .cheat-key { font-family: 'JetBrains Mono', monospace; color: var(--accent3); }
-  .cheat-val { color: var(--muted); font-size: 12px; text-align: right; max-width: 55%; }
-
-  /* PERM TABLE */
-  .perm-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
-  .perm-table th { background: var(--code-bg); color: var(--accent); padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
-  .perm-table td { padding: 10px 14px; border: 1px solid var(--border); color: var(--text); }
-  .perm-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-  .num { color: var(--warn); font-weight: 700; }
-
-  footer {
-    text-align: center;
-    padding: 40px 0 24px;
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    border-top: 1px solid var(--border);
-    margin-top: 48px;
+    margin-bottom: 12px;
+    margin-top: 40px;
   }
 </style>
 </head>
 <body>
 <div class="container">
-  <header>
-    <div class="badge">KodeKloud · Intro to Linux</div>
-    <h1>Labs 8 – 13<br>Interview Prep</h1>
-    <p>// study all six labs · quiz yourself · track your progress</p>
-  </header>
 
-  <div class="progress-bar-wrap">
-    <span class="progress-label">LABS DONE</span>
-    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-    <span class="progress-pct" id="progressPct">0%</span>
+  <div class="header">
+    <div class="tag">// learning_path.md</div>
+    <h1>Kobe's Full Stack<br><span>Learning Roadmap</span></h1>
+    <p>Free resources only. Community-proven. Ordered by dependency so nothing feels random.</p>
   </div>
 
-  <div class="lab-nav">
-    <button class="lab-tab active" onclick="showLab(8)" id="tab-8">Lab 8 <span class="done-dot"></span></button>
-    <button class="lab-tab" onclick="showLab(9)" id="tab-9">Lab 9 <span class="done-dot"></span></button>
-    <button class="lab-tab" onclick="showLab(10)" id="tab-10">Lab 10 <span class="done-dot"></span></button>
-    <button class="lab-tab" onclick="showLab(11)" id="tab-11">Lab 11 <span class="done-dot"></span></button>
-    <button class="lab-tab" onclick="showLab(12)" id="tab-12">Lab 12 <span class="done-dot"></span></button>
-    <button class="lab-tab" onclick="showLab(13)" id="tab-13">Lab 13 <span class="done-dot"></span></button>
-  </div>
-
-  <!-- ===== LAB 8 ===== -->
-  <div class="lab-panel active" id="lab-8">
-    <div class="lab-header">
-      <div class="lab-num">08</div>
-      <div class="lab-meta">
-        <h2>tar — Archive & Compress</h2>
-        <p>Bundle files into a tarball, compress with gzip, move, verify, and inspect — all without extracting.</p>
+  <!-- Phase 1 -->
+  <div class="phase phase-1">
+    <div class="phase-header">
+      <div class="phase-number">01</div>
+      <div class="phase-title-block">
+        <h2>HTML Foundations</h2>
+        <div class="subtitle">Structure before style</div>
       </div>
+      <div class="phase-badge">START HERE</div>
     </div>
-
-    <div class="section-title">// flags</div>
-    <div class="flags-grid">
-      <div class="flag-card"><div class="flag-name">-c</div><div class="flag-desc">Create a new archive</div></div>
-      <div class="flag-card"><div class="flag-name">-v</div><div class="flag-desc">Verbose — print filenames to screen</div></div>
-      <div class="flag-card"><div class="flag-name">-z</div><div class="flag-desc">Compress / decompress using gzip</div></div>
-      <div class="flag-card"><div class="flag-name">-t</div><div class="flag-desc">List contents without extracting</div></div>
-      <div class="flag-card"><div class="flag-name">-f</div><div class="flag-desc">Specify the archive filename (always last before the name)</div></div>
-      <div class="flag-card"><div class="flag-name">-x</div><div class="flag-desc">Extract files from an archive</div></div>
-    </div>
-
-    <div class="section-title">// command flow</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">1 · Create & Compress</div>
-        <div class="cmd-code">tar <span class="flag">-cvzf</span> archive.tar.gz <span class="path">/path/to/source</span></div>
-        <div class="cmd-note">Combines -c (create) -v (verbose) -z (gzip) -f (filename). The output file comes right after -f.</div>
+    <div class="phase-body">
+      <div class="note">
+        <span class="icon">💡</span>
+        <span>Don't skip this even if it feels too basic. Semantic HTML (header, nav, main, section, article) is what separates devs who can structure real apps from those who just throw divs everywhere.</span>
       </div>
-      <div class="cmd-item">
-        <div class="cmd-label">2 · Move the File</div>
-        <div class="cmd-code">mv archive.tar.gz <span class="path">/destination/</span></div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">3 · Verify File & Size</div>
-        <div class="cmd-code">ls <span class="flag">-lh</span> <span class="path">/destination/</span></div>
-        <div class="cmd-note">-l = long format, -h = human-readable sizes (KB/MB)</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">4 · Inspect Contents Safely (no extract)</div>
-        <div class="cmd-code">tar <span class="flag">-tzvf</span> <span class="path">/destination/archive.tar.gz</span></div>
-        <div class="cmd-note">-t lists contents. Safe: never touches/extracts any file.</div>
-      </div>
-    </div>
-
-    <div class="section-title">// quick quiz</div>
-    <div class="quiz-section" id="quiz-8"></div>
-
-    <button class="done-btn" id="done-8" onclick="markDone(8)">✓ Mark Lab 8 Done</button>
-  </div>
-
-  <!-- ===== LAB 9 ===== -->
-  <div class="lab-panel" id="lab-9">
-    <div class="lab-header">
-      <div class="lab-num">09</div>
-      <div class="lab-meta">
-        <h2>chmod & chown — Permissions & Ownership</h2>
-        <p>Control who can read, write, and execute files. Assign ownership to users and groups.</p>
-      </div>
-    </div>
-
-    <div class="section-title">// permission values</div>
-    <table class="perm-table">
-      <tr><th>Symbol</th><th>Value</th><th>Meaning</th></tr>
-      <tr><td>r</td><td class="num">4</td><td>Read</td></tr>
-      <tr><td>w</td><td class="num">2</td><td>Write</td></tr>
-      <tr><td>x</td><td class="num">1</td><td>Execute</td></tr>
-      <tr><td>—</td><td class="num">0</td><td>No permission</td></tr>
-    </table>
-
-    <div class="section-title">// common permission numbers</div>
-    <table class="perm-table">
-      <tr><th>Number</th><th>Owner</th><th>Group</th><th>Others</th><th>Use case</th></tr>
-      <tr><td class="num">755</td><td>rwx</td><td>r-x</td><td>r-x</td><td>Public scripts / executables</td></tr>
-      <tr><td class="num">750</td><td>rwx</td><td>r-x</td><td>---</td><td>Group-accessible dirs</td></tr>
-      <tr><td class="num">644</td><td>rw-</td><td>r--</td><td>r--</td><td>Normal files</td></tr>
-      <tr><td class="num">600</td><td>rw-</td><td>---</td><td>---</td><td>Private files (SSH keys)</td></tr>
-    </table>
-
-    <div class="section-title">// command flow</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">Change Owner & Group</div>
-        <div class="cmd-code">chown <span class="user">owner:group</span> file.txt</div>
-        <div class="cmd-note">Colon separates user and group. Either side can be omitted to change just one.</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Recursive Ownership</div>
-        <div class="cmd-code">chown <span class="flag">-R</span> <span class="user">owner:group</span> <span class="path">/dir/</span></div>
-        <div class="cmd-note">-R applies to all files and subdirectories inside.</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Set Standard Permission</div>
-        <div class="cmd-code">chmod <span class="flag">755</span> <span class="path">/opt/app/script.sh</span></div>
-        <div class="cmd-note">7=rwx (owner), 5=r-x (group), 5=r-x (others)</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Recursive Permission Change</div>
-        <div class="cmd-code">chmod <span class="flag">-R 750</span> <span class="path">/opt/data/</span></div>
-        <div class="cmd-note">Others get zero access. Group can read and execute.</div>
-      </div>
-    </div>
-
-    <div class="section-title">// quick quiz</div>
-    <div class="quiz-section" id="quiz-9"></div>
-    <button class="done-btn" id="done-9" onclick="markDone(9)">✓ Mark Lab 9 Done</button>
-  </div>
-
-  <!-- ===== LAB 10 ===== -->
-  <div class="lab-panel" id="lab-10">
-    <div class="lab-header">
-      <div class="lab-num">10</div>
-      <div class="lab-meta">
-        <h2>ACL — Access Control Lists</h2>
-        <p>Grant fine-grained access to specific users or groups beyond standard owner/group/others model.</p>
-      </div>
-    </div>
-
-    <div class="section-title">// setfacl flags</div>
-    <div class="flags-grid">
-      <div class="flag-card"><div class="flag-name">-m</div><div class="flag-desc">Modify — add or update an ACL rule</div></div>
-      <div class="flag-card"><div class="flag-name">-x</div><div class="flag-desc">Remove a specific user/group ACL entry</div></div>
-      <div class="flag-card"><div class="flag-name">-R</div><div class="flag-desc">Recursive — apply to all files in a directory</div></div>
-      <div class="flag-card"><div class="flag-name">-b</div><div class="flag-desc">Remove all ACLs — revert to standard permissions</div></div>
-    </div>
-
-    <div class="section-title">// acl rule format</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">Format</div>
-        <div class="cmd-code"><span class="flag">u</span>:username:<span class="flag">rwx</span> &nbsp;|&nbsp; <span class="flag">g</span>:groupname:<span class="flag">rw</span></div>
-        <div class="cmd-note">u = user, g = group. Permissions follow the same r/w/x letters.</div>
-      </div>
-    </div>
-
-    <div class="section-title">// command flow</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">Check Current ACL</div>
-        <div class="cmd-code">getfacl <span class="path">/opt/data/file.txt</span></div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Grant User Access</div>
-        <div class="cmd-code">setfacl <span class="flag">-m</span> u:<span class="user">bob</span>:rw <span class="path">/opt/data/file.txt</span></div>
-        <div class="cmd-note">bob gets read+write even if he's not the owner.</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Grant Group Access</div>
-        <div class="cmd-code">setfacl <span class="flag">-m</span> g:<span class="user">devs</span>:rw <span class="path">/opt/data/</span></div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Recursive Apply (incl. new files)</div>
-        <div class="cmd-code">setfacl <span class="flag">-Rm</span> u:<span class="user">bob</span>:rwx <span class="path">/opt/data/</span></div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Remove an Entry</div>
-        <div class="cmd-code">setfacl <span class="flag">-x</span> u:<span class="user">bob</span> <span class="path">/opt/data/file.txt</span></div>
-        <div class="cmd-note">No permission string needed — just identify the user/group to remove.</div>
-      </div>
-    </div>
-
-    <div class="section-title">// quick quiz</div>
-    <div class="quiz-section" id="quiz-10"></div>
-    <button class="done-btn" id="done-10" onclick="markDone(10)">✓ Mark Lab 10 Done</button>
-  </div>
-
-  <!-- ===== LAB 11 ===== -->
-  <div class="lab-panel" id="lab-11">
-    <div class="lab-header">
-      <div class="lab-num">11</div>
-      <div class="lab-meta">
-        <h2>sed — Stream Editor</h2>
-        <p>Find and replace text in files, delete lines, and pipe transformations — all non-interactively.</p>
-      </div>
-    </div>
-
-    <div class="section-title">// anatomy of a sed command</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">Full Structure</div>
-        <div class="cmd-code">sed <span class="flag">-i</span> '<span class="flag">s</span>/OldWord/NewWord/<span class="flag">g</span>' file.txt</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">What each part means</div>
-        <div class="cmd-code">
-          <span class="flag">-i</span> &nbsp;→ in-place (edit file directly)<br>
-          <span class="flag">s</span> &nbsp;&nbsp;→ substitute mode<br>
-          /Old/ → pattern to find<br>
-          /New/ → replacement text<br>
-          <span class="flag">g</span> &nbsp;&nbsp;→ global (all matches on each line)<br>
-          <span class="flag">gI</span> &nbsp;→ global + case-insensitive
+      <a class="resource" href="https://theodinproject.com/paths/foundations/courses/foundations" target="_blank">
+        <div class="resource-icon" style="background:rgba(239,68,68,0.1);">⚔️</div>
+        <div class="resource-info">
+          <div class="name">The Odin Project — Foundations</div>
+          <div class="desc">The most community-praised free full stack curriculum. Starts with HTML/CSS, uses real dev tools (VS Code, Git, terminal) from day one. No hand-holding, which is good.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag">Project-based</span>
+            <span class="rtag">Community</span>
+          </div>
         </div>
-      </div>
+      </a>
+      <a class="resource" href="https://developer.mozilla.org/en-US/docs/Learn/HTML" target="_blank">
+        <div class="resource-icon" style="background:rgba(239,68,68,0.1);">📖</div>
+        <div class="resource-info">
+          <div class="name">MDN Web Docs — HTML</div>
+          <div class="desc">The official web reference. Use this alongside Odin Project whenever you need to understand why something works. It's the dictionary, not the textbook.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag ref">Reference</span>
+          </div>
+        </div>
+      </a>
     </div>
-
-    <div class="section-title">// command flow</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">Global In-Place Swap</div>
-        <div class="cmd-code">sed <span class="flag">-i</span> 's/OldWord/NewWord/g' file.txt</div>
-        <div class="cmd-note">Replaces every occurrence of OldWord. Modifies the file directly.</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Case-Insensitive Swap</div>
-        <div class="cmd-code">sed <span class="flag">-i</span> 's/OldWord/NewWord/gI' file.txt</div>
-        <div class="cmd-note">Matches "oldword", "OldWord", "OLDWORD", etc.</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Delete Lines Containing a Word → New File</div>
-        <div class="cmd-code">sed '/word/d' <span class="path">/home/BSD.txt</span> > <span class="path">/home/BSD_DELETE.txt</span></div>
-        <div class="cmd-note">No -i here — output is redirected. Original file untouched.</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Validate the Swap</div>
-        <div class="cmd-code">grep 'OldWord' file.txt &nbsp;<span class="flag"># should return nothing</span><br>grep 'NewWord' file.txt &nbsp;<span class="flag"># should show results</span></div>
-      </div>
-    </div>
-
-    <div class="section-title">// quick quiz</div>
-    <div class="quiz-section" id="quiz-11"></div>
-    <button class="done-btn" id="done-11" onclick="markDone(11)">✓ Mark Lab 11 Done</button>
   </div>
 
-  <!-- ===== LAB 12 ===== -->
-  <div class="lab-panel" id="lab-12">
-    <div class="lab-header">
-      <div class="lab-num">12</div>
-      <div class="lab-meta">
-        <h2>scp — Secure Copy (SSH-based)</h2>
-        <p>Transfer files and directories between local and remote systems over an encrypted SSH connection.</p>
-      </div>
-    </div>
+  <div class="connector"><span>then</span></div>
 
-    <div class="section-title">// flags</div>
-    <div class="flags-grid">
-      <div class="flag-card"><div class="flag-name">-r</div><div class="flag-desc">Recursive — copy entire directories</div></div>
-      <div class="flag-card"><div class="flag-name">-P</div><div class="flag-desc">Port — specify non-standard SSH port (capital P)</div></div>
+  <!-- Phase 2 -->
+  <div class="phase phase-2">
+    <div class="phase-header">
+      <div class="phase-number">02</div>
+      <div class="phase-title-block">
+        <h2>CSS — Learn by Playing</h2>
+        <div class="subtitle">Layouts, flexbox, grid</div>
+      </div>
+      <div class="phase-badge">MOST FUN PHASE</div>
     </div>
-
-    <div class="section-title">// scp syntax pattern</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">Remote Path Format</div>
-        <div class="cmd-code"><span class="user">user</span>@<span class="path">host</span>:<span class="path">/remote/path/file.txt</span></div>
-        <div class="cmd-note">The colon (:) separates the host from the remote path.</div>
+    <div class="phase-body">
+      <div class="note">
+        <span class="icon">🎮</span>
+        <span>Do the games first before reading anything. They take 2–3 hours total and you'll understand Flexbox and Grid better than most devs who read docs for days.</span>
       </div>
+      <a class="resource" href="https://flexboxfroggy.com" target="_blank">
+        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">🐸</div>
+        <div class="resource-info">
+          <div class="name">Flexbox Froggy</div>
+          <div class="desc">Move frogs to lily pads using CSS Flexbox properties. 24 levels. Sounds dumb, actually one of the best ways to internalize Flexbox alignment and direction.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag game">GAME</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://cssgridgarden.com" target="_blank">
+        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">🥕</div>
+        <div class="resource-info">
+          <div class="name">CSS Grid Garden</div>
+          <div class="desc">Same concept as Froggy but for CSS Grid. 28 levels covering grid-column, grid-row, grid-area, and more. Do this right after Froggy.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag game">GAME</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://flukeout.github.io" target="_blank">
+        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">🍽️</div>
+        <div class="resource-info">
+          <div class="name">CSS Diner</div>
+          <div class="desc">32 levels of CSS selector challenges set in a restaurant. Covers basic to advanced selectors. Extremely useful for React/Next.js styled components later.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag game">GAME</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://www.youtube.com/@KevinPowell" target="_blank">
+        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">▶️</div>
+        <div class="resource-info">
+          <div class="name">Kevin Powell — YouTube</div>
+          <div class="desc">Widely regarded as the best CSS teacher on the internet. Explains why things work, not just how. Watch topic-by-topic as you encounter things you don't understand. "Responsive CSS" and "CSS Variables" playlists are must-watches.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag video">VIDEO</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://theodinproject.com/paths/foundations/courses/foundations#css-foundations" target="_blank">
+        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">⚔️</div>
+        <div class="resource-info">
+          <div class="name">The Odin Project — CSS Foundations</div>
+          <div class="desc">Continue from Phase 1. The CSS section has you build real projects: a landing page, a recipe site, a calculator. This is where it clicks.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag">Project-based</span>
+          </div>
+        </div>
+      </a>
     </div>
-
-    <div class="section-title">// command flow</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">Upload: Local → Remote</div>
-        <div class="cmd-code">scp <span class="path">/local/file.txt</span> <span class="user">user</span>@<span class="path">host</span>:<span class="path">/remote/dest/</span></div>
-        <div class="cmd-note">Source first, destination second — same as cp.</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Download: Remote → Local</div>
-        <div class="cmd-code">scp <span class="user">user</span>@<span class="path">host</span>:<span class="path">/remote/file.txt</span> <span class="path">/local/dest/</span></div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Recursive Directory Push</div>
-        <div class="cmd-code">scp <span class="flag">-r</span> <span class="path">/local/dir/</span> <span class="user">user</span>@<span class="path">host</span>:<span class="path">/remote/path</span></div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Non-Standard Port</div>
-        <div class="cmd-code">scp <span class="flag">-P 2222</span> <span class="user">user</span>@<span class="path">host</span>:<span class="path">/path/file.txt</span> <span class="path">local/</span></div>
-        <div class="cmd-note">Capital -P for scp. (ssh uses lowercase -p — a common trick question!)</div>
-      </div>
-    </div>
-
-    <div class="section-title">// quick quiz</div>
-    <div class="quiz-section" id="quiz-12"></div>
-    <button class="done-btn" id="done-12" onclick="markDone(12)">✓ Mark Lab 12 Done</button>
   </div>
 
-  <!-- ===== LAB 13 ===== -->
-  <div class="lab-panel" id="lab-13">
-    <div class="lab-header">
-      <div class="lab-num">13</div>
-      <div class="lab-meta">
-        <h2>cron — Job Scheduling & Access Control</h2>
-        <p>Schedule recurring tasks. Restrict or allow specific users from running cron jobs.</p>
-      </div>
-    </div>
+  <div class="connector"><span>then</span></div>
 
-    <div class="section-title">// cron access control files</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">/etc/cron.deny</div>
-        <div class="cmd-code"><span class="path">/etc/cron.deny</span></div>
-        <div class="cmd-note">Users listed here are BLOCKED from using cron. Everyone else can use it by default.</div>
+  <!-- Phase 3 -->
+  <div class="phase phase-3">
+    <div class="phase-header">
+      <div class="phase-number">03</div>
+      <div class="phase-title-block">
+        <h2>JavaScript Deep Dive</h2>
+        <div class="subtitle">Before React, this must be solid</div>
       </div>
-      <div class="cmd-item">
-        <div class="cmd-label">/etc/cron.allow</div>
-        <div class="cmd-code"><span class="path">/etc/cron.allow</span></div>
-        <div class="cmd-note">If this file exists, ONLY users listed here can use cron. Acts as a whitelist. More restrictive.</div>
-      </div>
+      <div class="phase-badge">CRITICAL</div>
     </div>
-
-    <div class="section-title">// crontab time format</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">Format</div>
-        <div class="cmd-code">* &nbsp;* &nbsp;* &nbsp;* &nbsp;* &nbsp;/command/to/run<br><span class="flag">│ &nbsp;│ &nbsp;│ &nbsp;│ &nbsp;│</span><br>min hr dom mon dow</div>
-        <div class="cmd-note">dom=day of month, dow=day of week (0=Sun). * means "every".</div>
+    <div class="phase-body">
+      <div class="note">
+        <span class="icon">⚠️</span>
+        <span>Most people rush to React with weak JS fundamentals and suffer later. Spend real time here. Focus on: DOM manipulation, array methods, async/await, fetch, and ES6+ features.</span>
       </div>
+      <a class="resource" href="https://javascript.info" target="_blank">
+        <div class="resource-icon" style="background:rgba(16,185,129,0.1);">📘</div>
+        <div class="resource-info">
+          <div class="name">javascript.info — The Modern JS Tutorial</div>
+          <div class="desc">The most recommended free JS learning resource on the internet. Covers everything from basics to advanced topics like closures, prototypes, async, and the browser API. Extremely well-written with exercises.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag">Community #1 pick</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://www.youtube.com/watch?v=jS4aFq5-91M" target="_blank">
+        <div class="resource-icon" style="background:rgba(16,185,129,0.1);">▶️</div>
+        <div class="resource-info">
+          <div class="name">JavaScript Full Course — Bro Code (YouTube)</div>
+          <div class="desc">12-hour free JavaScript course on YouTube. Great supplementary visual resource to use alongside javascript.info. Bro Code's teaching style is fast, clear, and no-fluff.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag video">VIDEO</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://theodinproject.com/paths/full-stack-javascript/courses/javascript" target="_blank">
+        <div class="resource-icon" style="background:rgba(16,185,129,0.1);">⚔️</div>
+        <div class="resource-info">
+          <div class="name">The Odin Project — JavaScript</div>
+          <div class="desc">Continues the Odin path into advanced JavaScript: OOP, testing, async, data structures and algorithms basics. Projects include a weather app, a library, a battleship game.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag">Project-based</span>
+          </div>
+        </div>
+      </a>
     </div>
-
-    <div class="section-title">// command flow</div>
-    <div class="cmd-block">
-      <div class="cmd-item">
-        <div class="cmd-label">Block a User (add to deny list)</div>
-        <div class="cmd-code">echo 'Jerome' >> <span class="path">/etc/cron.deny</span></div>
-        <div class="cmd-note">>> appends without overwriting. Jerome can no longer use crontab.</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Whitelist a User (exclusive allow)</div>
-        <div class="cmd-code">echo 'siva' >> <span class="path">/etc/cron.allow</span></div>
-        <div class="cmd-note">If cron.allow exists, only listed users can schedule jobs.</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Restart the Cron Daemon</div>
-        <div class="cmd-code">systemctl restart crond</div>
-        <div class="cmd-note">Apply changes. On some distros the service is called "cron" not "crond".</div>
-      </div>
-      <div class="cmd-item">
-        <div class="cmd-label">Other useful crontab commands</div>
-        <div class="cmd-code">crontab <span class="flag">-e</span> &nbsp;<span class="flag"># edit your crontab</span><br>crontab <span class="flag">-l</span> &nbsp;<span class="flag"># list current crontab</span><br>crontab <span class="flag">-r</span> &nbsp;<span class="flag"># remove all cron jobs</span></div>
-      </div>
-    </div>
-
-    <div class="section-title">// quick quiz</div>
-    <div class="quiz-section" id="quiz-13"></div>
-    <button class="done-btn" id="done-13" onclick="markDone(13)">✓ Mark Lab 13 Done</button>
   </div>
 
-  <footer>good luck tomorrow, Korblox · you've got this 🚀</footer>
+  <div class="connector"><span>then</span></div>
+
+  <!-- Phase 4 -->
+  <div class="phase phase-4">
+    <div class="phase-header">
+      <div class="phase-number">04</div>
+      <div class="phase-title-block">
+        <h2>TypeScript</h2>
+        <div class="subtitle">JS with superpowers</div>
+      </div>
+      <div class="phase-badge">HIGH ROI</div>
+    </div>
+    <div class="phase-body">
+      <div class="note">
+        <span class="icon">💡</span>
+        <span>You already use TS in PAMANA and Flashcard Frenzy. This phase is about going from "it compiles so I'm fine" to actually understanding the type system — generics, unions, type guards, and utility types.</span>
+      </div>
+      <a class="resource" href="https://www.totaltypescript.com/tutorials" target="_blank">
+        <div class="resource-icon" style="background:rgba(124,58,237,0.1);">🔷</div>
+        <div class="resource-info">
+          <div class="name">Total TypeScript — Free Tutorials</div>
+          <div class="desc">By Matt Pocock — widely considered the best TS educator. His free tutorials cover Beginner's TypeScript, TypeScript Errors, and React with TypeScript. Hands-on in your editor with real exercises.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag">Community #1 for TS</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://www.typescriptlang.org/docs/handbook/intro.html" target="_blank">
+        <div class="resource-icon" style="background:rgba(124,58,237,0.1);">📖</div>
+        <div class="resource-info">
+          <div class="name">TypeScript Official Handbook</div>
+          <div class="desc">Use this as a reference when Total TypeScript doesn't cover something specific. The "Everyday Types" and "Generics" sections are the most important to read top to bottom.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag ref">Reference</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="connector"><span>then</span></div>
+
+  <!-- Phase 5 -->
+  <div class="phase phase-5">
+    <div class="phase-header">
+      <div class="phase-number">05</div>
+      <div class="phase-title-block">
+        <h2>React + Next.js</h2>
+        <div class="subtitle">The main event</div>
+      </div>
+      <div class="phase-badge">CORE STACK</div>
+    </div>
+    <div class="phase-body">
+      <div class="note">
+        <span class="icon">🚀</span>
+        <span>You already have React exposure. This phase is about going deeper — hooks properly, state management, Server Components, and the App Router. Learn React first, then Next.js on top of it.</span>
+      </div>
+      <a class="resource" href="https://react.dev/learn" target="_blank">
+        <div class="resource-icon" style="background:rgba(6,182,212,0.1);">⚛️</div>
+        <div class="resource-info">
+          <div class="name">react.dev — Official Docs</div>
+          <div class="desc">The official React docs were completely rewritten and are now excellent tutorial-quality content. The "Learn React" section covers components, state, effects, and custom hooks with interactive sandboxes.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag ref">Official</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://nextjs.org/learn" target="_blank">
+        <div class="resource-icon" style="background:rgba(6,182,212,0.1);">▲</div>
+        <div class="resource-info">
+          <div class="name">Next.js Official Learn Course</div>
+          <div class="desc">Vercel's own free course. Walks you through building a full-stack dashboard app with App Router, Server Components, Server Actions, authentication, and database integration. The most up-to-date Next.js learning resource that exists.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag ref">Official</span>
+            <span class="rtag">Full-stack project</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://www.youtube.com/@joshtriedcoding" target="_blank">
+        <div class="resource-icon" style="background:rgba(6,182,212,0.1);">▶️</div>
+        <div class="resource-info">
+          <div class="name">Josh tried coding — YouTube</div>
+          <div class="desc">Best YouTube channel for Next.js projects in 2025–2026. Builds real apps with Next.js, TypeScript, Tailwind, and Supabase. Very practical and up to date with the App Router.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag video">VIDEO</span>
+            <span class="rtag">Project-based</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="connector"><span>then</span></div>
+
+  <!-- Phase 6 -->
+  <div class="phase phase-6">
+    <div class="phase-header">
+      <div class="phase-number">06</div>
+      <div class="phase-title-block">
+        <h2>Node.js, Docker & Git</h2>
+        <div class="subtitle">Backend + DevOps essentials</div>
+      </div>
+      <div class="phase-badge">JOB-READY</div>
+    </div>
+    <div class="phase-body">
+      <a class="resource" href="https://theodinproject.com/paths/full-stack-javascript/courses/nodejs" target="_blank">
+        <div class="resource-icon" style="background:rgba(236,72,153,0.1);">🟢</div>
+        <div class="resource-info">
+          <div class="name">The Odin Project — NodeJS</div>
+          <div class="desc">Covers Express.js, REST APIs, MVC architecture, authentication with Passport, and PostgreSQL. The final project is a full-stack social media app. Battle-tested curriculum.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag">Project-based</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://www.youtube.com/@TechWorldwithNana" target="_blank">
+        <div class="resource-icon" style="background:rgba(236,72,153,0.1);">🐳</div>
+        <div class="resource-info">
+          <div class="name">TechWorld with Nana — Docker (YouTube)</div>
+          <div class="desc">Nana is the most praised DevOps educator on YouTube. Her Docker crash course and Docker Compose tutorial are the community's top free picks. Extremely clear explanations with real demos.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag video">VIDEO</span>
+          </div>
+        </div>
+      </a>
+      <a class="resource" href="https://learngitbranching.js.org" target="_blank">
+        <div class="resource-icon" style="background:rgba(236,72,153,0.1);">🌿</div>
+        <div class="resource-info">
+          <div class="name">Learn Git Branching</div>
+          <div class="desc">Interactive visual game for learning Git. Covers commit, branching, merging, rebasing, and remote operations. The best way to understand Git beyond just the basics you already know.</div>
+          <div class="resource-tags">
+            <span class="rtag free">FREE</span>
+            <span class="rtag game">GAME</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <h3 class="section-label">⏱ Estimated Timeline (part-time, ~2hrs/day)</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="phase-label">Phase 01</div>
+      <div class="duration" style="color:#ef4444;">1–2 weeks</div>
+    </div>
+    <div class="tl-item">
+      <div class="phase-label">Phase 02</div>
+      <div class="duration" style="color:#f59e0b;">2–3 weeks</div>
+    </div>
+    <div class="tl-item">
+      <div class="phase-label">Phase 03</div>
+      <div class="duration" style="color:#10b981;">3–5 weeks</div>
+    </div>
+    <div class="tl-item">
+      <div class="phase-label">Phase 04</div>
+      <div class="duration" style="color:#7c3aed;">1–2 weeks</div>
+    </div>
+    <div class="tl-item">
+      <div class="phase-label">Phase 05</div>
+      <div class="duration" style="color:#06b6d4;">3–4 weeks</div>
+    </div>
+    <div class="tl-item">
+      <div class="phase-label">Phase 06</div>
+      <div class="duration" style="color:#ec4899;">2–3 weeks</div>
+    </div>
+    <div class="tl-total">
+      <div class="label">TOTAL ESTIMATE</div>
+      <div class="val">~3–4 months → job-ready portfolio</div>
+    </div>
+  </div>
+
+  <!-- Pro tip -->
+  <div class="pro-tip">
+    <h3>🧠 The Rule That Changes Everything</h3>
+    <p>
+      For every phase, the pattern is: <strong>read/watch just enough to start</strong>, then <strong>build something with it immediately</strong>. Don't finish an entire course before coding. 
+      The mistake most students make is consuming 40 hours of content with 2 hours of actual building. 
+      <strong>Flip that ratio.</strong> After each section of Odin Project or any tutorial, close the tab and rebuild what you just learned from scratch without looking. 
+      That's when it actually sticks. And every project you build — no matter how small — goes on GitHub with a proper README.
+    </p>
+  </div>
+
 </div>
-
-<script>
-// ====== QUIZ DATA ======
-const quizData = {
-  8: [
-    {
-      q: "What flag do you use with tar to list archive contents WITHOUT extracting?",
-      opts: ["-c", "-t", "-x", "-v"],
-      ans: 1,
-      explain: "-t (think: 't'able of contents). Safe to run anytime."
-    },
-    {
-      q: "Which command creates a gzip-compressed archive called backup.tar.gz from /home/data?",
-      opts: [
-        "tar -cvzf backup.tar.gz /home/data",
-        "tar -xvzf backup.tar.gz /home/data",
-        "tar -tvzf /home/data backup.tar.gz",
-        "tar -czf /home/data backup.tar.gz"
-      ],
-      ans: 0,
-      explain: "-c (create) -v (verbose) -z (gzip) -f (filename). The archive name always comes right after -f."
-    },
-    {
-      q: "What does -f tell tar?",
-      opts: ["Force overwrite", "Use gzip filter", "Specify the archive filename", "Full directory listing"],
-      ans: 2,
-      explain: "-f specifies the filename. It must be followed immediately by the archive name."
-    }
-  ],
-  9: [
-    {
-      q: "What numeric value represents rwx (full permissions)?",
-      opts: ["5", "6", "7", "3"],
-      ans: 2,
-      explain: "r=4, w=2, x=1. 4+2+1 = 7."
-    },
-    {
-      q: "You want only the owner to read/write/execute, group to read+execute, others nothing. What chmod value?",
-      opts: ["755", "750", "644", "700"],
-      ans: 1,
-      explain: "750 = owner(7=rwx), group(5=r-x), others(0=none)."
-    },
-    {
-      q: "Which command changes file.txt owner to 'alice' and group to 'devs'?",
-      opts: [
-        "chmod alice:devs file.txt",
-        "chown alice:devs file.txt",
-        "chown -g devs -u alice file.txt",
-        "usermod alice:devs file.txt"
-      ],
-      ans: 1,
-      explain: "chown user:group file. Simple colon-separated format."
-    }
-  ],
-  10: [
-    {
-      q: "Which command checks the current ACL on a file?",
-      opts: ["setfacl -l", "getfacl", "ls -la", "acl --show"],
-      ans: 1,
-      explain: "getfacl displays all ACL entries for a file or directory."
-    },
-    {
-      q: "Grant user 'bob' read+write access to /opt/data/file.txt using ACL:",
-      opts: [
-        "setfacl -m u:bob:rw /opt/data/file.txt",
-        "setfacl -x u:bob:rw /opt/data/file.txt",
-        "getfacl -m u:bob:rw /opt/data/file.txt",
-        "chmod u:bob:rw /opt/data/file.txt"
-      ],
-      ans: 0,
-      explain: "setfacl -m (modify) u:user:perms path. This is the standard ACL grant command."
-    },
-    {
-      q: "What does setfacl -b do?",
-      opts: [
-        "Block a user from all access",
-        "Remove ALL ACL entries and revert to standard permissions",
-        "Apply ACLs recursively backwards",
-        "Back up current ACL rules"
-      ],
-      ans: 1,
-      explain: "-b removes all extended ACL entries, reverting the file to standard Unix permissions."
-    }
-  ],
-  11: [
-    {
-      q: "What does the 'g' flag do at the end of a sed substitution?",
-      opts: [
-        "Makes the match case-insensitive",
-        "Replaces ALL matches on each line (global)",
-        "Only replaces the first match",
-        "Groups the output"
-      ],
-      ans: 1,
-      explain: "Without 'g', sed only replaces the FIRST match per line. 'g' makes it replace every match."
-    },
-    {
-      q: "Which command replaces 'foo' with 'bar' in file.txt, modifying the file directly?",
-      opts: [
-        "sed 's/foo/bar/g' file.txt",
-        "sed -i 's/foo/bar/g' file.txt",
-        "sed -e 's/foo/bar/g' file.txt",
-        "sed -r 's/foo/bar/' file.txt"
-      ],
-      ans: 1,
-      explain: "-i means in-place edit. Without -i, sed only prints to stdout and the file is unchanged."
-    },
-    {
-      q: "How do you delete all lines containing 'error' and save output to a new file?",
-      opts: [
-        "sed -i '/error/d' file.txt > new.txt",
-        "sed '/error/d' file.txt > new.txt",
-        "sed -d 'error' file.txt > new.txt",
-        "sed 's/error//g' file.txt"
-      ],
-      ans: 1,
-      explain: "No -i here — we redirect to a new file. The /pattern/d syntax deletes matching lines."
-    }
-  ],
-  12: [
-    {
-      q: "What is the scp flag for specifying a non-default SSH port?",
-      opts: ["-p", "-P", "--port", "-n"],
-      ans: 1,
-      explain: "Capital -P for scp. Watch out: ssh uses lowercase -p. This difference is a common interview question!"
-    },
-    {
-      q: "Which command downloads /remote/logs/app.log from server 192.168.1.10 to your current directory?",
-      opts: [
-        "scp /remote/logs/app.log admin@192.168.1.10:.",
-        "scp admin@192.168.1.10:/remote/logs/app.log .",
-        "scp -d admin@192.168.1.10:/remote/logs/app.log",
-        "scp admin@192.168.1.10 /remote/logs/app.log ."
-      ],
-      ans: 1,
-      explain: "Download = remote source first, local destination second. The colon separates host from path."
-    },
-    {
-      q: "You want to copy an entire directory /data/ to a remote server. What flag is required?",
-      opts: ["-d", "-a", "-r", "-z"],
-      ans: 2,
-      explain: "-r (recursive) is required to copy directory trees with scp."
-    }
-  ],
-  13: [
-    {
-      q: "If /etc/cron.allow exists, who can use cron?",
-      opts: [
-        "Everyone except those in cron.deny",
-        "Only root",
-        "Only users explicitly listed in cron.allow",
-        "All users — allow file is just informational"
-      ],
-      ans: 2,
-      explain: "When cron.allow exists, it acts as a strict whitelist. Only listed users can schedule jobs."
-    },
-    {
-      q: "What command blocks user 'maria' from using cron?",
-      opts: [
-        "echo 'maria' >> /etc/cron.allow",
-        "crontab -r maria",
-        "echo 'maria' >> /etc/cron.deny",
-        "usermod --no-cron maria"
-      ],
-      ans: 2,
-      explain: "Appending to /etc/cron.deny blocks that user. >> appends without erasing existing entries."
-    },
-    {
-      q: "After editing cron access files, what should you run?",
-      opts: [
-        "reboot",
-        "systemctl restart crond",
-        "crontab -r",
-        "service ssh restart"
-      ],
-      ans: 1,
-      explain: "Restart the cron daemon to apply changes. On some distros it's 'cron', on others 'crond'."
-    }
-  ]
-};
-
-// ====== RENDER QUIZZES ======
-function renderQuiz(labNum) {
-  const container = document.getElementById(`quiz-${labNum}`);
-  const questions = quizData[labNum];
-  container.innerHTML = questions.map((q, qi) => `
-    <div class="quiz-card" id="qcard-${labNum}-${qi}">
-      <div class="quiz-q">${qi+1}. ${q.q}</div>
-      <div class="quiz-options">
-        ${q.opts.map((opt, oi) => `
-          <button class="quiz-opt" onclick="answer(${labNum},${qi},${oi})" id="opt-${labNum}-${qi}-${oi}">${opt}</button>
-        `).join('')}
-      </div>
-      <div class="quiz-feedback" id="fb-${labNum}-${qi}"></div>
-    </div>
-  `).join('');
-}
-
-function answer(labNum, qi, oi) {
-  const q = quizData[labNum][qi];
-  const opts = document.querySelectorAll(`#qcard-${labNum}-${qi} .quiz-opt`);
-  const fb = document.getElementById(`fb-${labNum}-${qi}`);
-  opts.forEach(btn => btn.disabled = true);
-  if (oi === q.ans) {
-    opts[oi].classList.add('correct');
-    fb.textContent = '✓ Correct! ' + q.explain;
-    fb.className = 'quiz-feedback show ok';
-  } else {
-    opts[oi].classList.add('wrong');
-    opts[q.ans].classList.add('correct');
-    fb.textContent = '✗ Not quite. ' + q.explain;
-    fb.className = 'quiz-feedback show bad';
-  }
-}
-
-// ====== LAB NAVIGATION ======
-function showLab(num) {
-  document.querySelectorAll('.lab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.lab-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(`lab-${num}`).classList.add('active');
-  document.getElementById(`tab-${num}`).classList.add('active');
-}
-
-// ====== MARK DONE ======
-const done = {};
-function markDone(num) {
-  done[num] = true;
-  const btn = document.getElementById(`done-${num}`);
-  btn.textContent = '✓ Lab ' + num + ' Complete!';
-  btn.classList.add('marked');
-  document.getElementById(`tab-${num}`).classList.add('done');
-  updateProgress();
-}
-function updateProgress() {
-  const count = Object.keys(done).length;
-  const pct = Math.round(count / 6 * 100);
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressPct').textContent = pct + '%';
-}
-
-// ====== INIT ======
-[8,9,10,11,12,13].forEach(n => renderQuiz(n));
-</script>
 </body>
 </html>
