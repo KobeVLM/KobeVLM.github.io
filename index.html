@@ -1,765 +1,745 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kobe's Full Stack Learning Path</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kobe's Full-Stack + AI Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --border: #1e1e2e;
-    --accent: #7c3aed;
-    --accent2: #06b6d4;
-    --accent3: #f59e0b;
-    --accent4: #10b981;
-    --accent5: #ef4444;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --card: #13131c;
+    --bg:        #0D1117;
+    --surface:   #161B22;
+    --border:    #21262D;
+    --blue:      #58A6FF;
+    --green:     #3FB950;
+    --orange:    #D29922;
+    --text:      #F0F6FC;
+    --muted:     #8B949E;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'Inter', sans-serif;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
 
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Syne', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* Grid background */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(124,58,237,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124,58,237,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 48px 24px 80px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Header */
-  .header {
-    margin-bottom: 56px;
-    text-align: center;
-  }
-
-  .header .tag {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--accent2);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border: 1px solid rgba(6,182,212,0.3);
-    padding: 4px 12px;
-    border-radius: 2px;
-    margin-bottom: 20px;
-  }
-
-  .header h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-  }
-
-  .header h1 span {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .header p {
-    color: var(--muted);
-    font-size: 15px;
+    font-family: var(--sans);
+    font-size: 14px;
     line-height: 1.6;
-    max-width: 480px;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 28px 24px 24px;
+    max-width: 720px;
     margin: 0 auto;
   }
 
-  /* Phase cards */
-  .phase {
-    margin-bottom: 32px;
-    position: relative;
+  .header-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
   }
+
+  header h1 {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .progress-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+  }
+
+  .progress-count {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--blue);
+  }
+
+  .bar-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 2px;
+    transition: width .4s ease;
+  }
+
+  /* ── PHASE LAYOUT ── */
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 24px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* ── PHASE CARD ── */
+  .phase {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+
+  .phase.done { border-color: #238636; }
+  .phase.active { border-color: var(--blue); }
 
   .phase-header {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 12px;
+    padding: 14px 16px;
     cursor: pointer;
     user-select: none;
+    -webkit-user-select: none;
   }
 
-  .phase-number {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
+  .phase-header:hover { background: rgba(255,255,255,.02); }
 
-  .phase-title-block h2 {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  .phase-title-block .subtitle {
-    font-size: 12px;
+  .phase-num {
+    font-family: var(--mono);
+    font-size: 10px;
     color: var(--muted);
-    font-family: 'Space Mono', monospace;
-    margin-top: 2px;
+    min-width: 28px;
+    letter-spacing: .05em;
+  }
+
+  .phase-title {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
   }
 
   .phase-badge {
-    margin-left: auto;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    padding: 3px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.05em;
-    flex-shrink: 0;
-  }
-
-  .phase-body {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    display: grid;
-    gap: 12px;
-  }
-
-  /* Resource row */
-  .resource {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    padding: 14px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: border-color 0.2s, transform 0.15s;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .resource:hover {
-    border-color: var(--accent);
-    transform: translateX(3px);
-  }
-
-  .resource-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
-  .resource-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .resource-info .name {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 3px;
-  }
-
-  .resource-info .desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .resource-tags {
-    display: flex;
-    gap: 6px;
-    margin-top: 6px;
-    flex-wrap: wrap;
-  }
-
-  .rtag {
-    font-family: 'Space Mono', monospace;
+    font-family: var(--mono);
     font-size: 10px;
     padding: 2px 7px;
-    border-radius: 3px;
-    background: rgba(124,58,237,0.1);
-    color: var(--accent);
-    border: 1px solid rgba(124,58,237,0.2);
-  }
-
-  .rtag.free {
-    background: rgba(16,185,129,0.1);
-    color: var(--accent4);
-    border-color: rgba(16,185,129,0.2);
-  }
-
-  .rtag.game {
-    background: rgba(245,158,11,0.1);
-    color: var(--accent3);
-    border-color: rgba(245,158,11,0.2);
-  }
-
-  .rtag.video {
-    background: rgba(239,68,68,0.1);
-    color: var(--accent5);
-    border-color: rgba(239,68,68,0.2);
-  }
-
-  .rtag.ref {
-    background: rgba(6,182,212,0.1);
-    color: var(--accent2);
-    border-color: rgba(6,182,212,0.2);
-  }
-
-  /* Phase color themes */
-  .phase-1 .phase-number { background: rgba(239,68,68,0.15); color: #ef4444; }
-  .phase-1 .phase-badge { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
-  .phase-1 .resource:hover { border-color: #ef4444; }
-
-  .phase-2 .phase-number { background: rgba(245,158,11,0.15); color: #f59e0b; }
-  .phase-2 .phase-badge { background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); }
-  .phase-2 .resource:hover { border-color: #f59e0b; }
-
-  .phase-3 .phase-number { background: rgba(16,185,129,0.15); color: #10b981; }
-  .phase-3 .phase-badge { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
-  .phase-3 .resource:hover { border-color: #10b981; }
-
-  .phase-4 .phase-number { background: rgba(124,58,237,0.15); color: #7c3aed; }
-  .phase-4 .phase-badge { background: rgba(124,58,237,0.1); color: #7c3aed; border: 1px solid rgba(124,58,237,0.2); }
-
-  .phase-5 .phase-number { background: rgba(6,182,212,0.15); color: #06b6d4; }
-  .phase-5 .phase-badge { background: rgba(6,182,212,0.1); color: #06b6d4; border: 1px solid rgba(6,182,212,0.2); }
-  .phase-5 .resource:hover { border-color: #06b6d4; }
-
-  .phase-6 .phase-number { background: rgba(236,72,153,0.15); color: #ec4899; }
-  .phase-6 .phase-badge { background: rgba(236,72,153,0.1); color: #ec4899; border: 1px solid rgba(236,72,153,0.2); }
-  .phase-6 .resource:hover { border-color: #ec4899; }
-
-  /* Connector line between phases */
-  .connector {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 28px;
-    gap: 6px;
-    margin: -8px 0;
-  }
-
-  .connector::before, .connector::after {
-    content: '';
-    height: 1px;
-    width: 24px;
-    background: var(--border);
-  }
-
-  .connector span {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
+    border-radius: 20px;
+    border: 1px solid;
     white-space: nowrap;
   }
 
-  /* Note blocks */
-  .note {
-    display: flex;
-    gap: 10px;
-    padding: 12px 14px;
-    background: rgba(6,182,212,0.05);
-    border: 1px solid rgba(6,182,212,0.15);
-    border-radius: 8px;
-    font-size: 12px;
+  .badge-done   { color: var(--green);  border-color: #238636;  background: rgba(63,185,80,.08); }
+  .badge-active { color: var(--blue);   border-color: var(--blue); background: rgba(88,166,255,.08); }
+  .badge-todo   { color: var(--muted);  border-color: var(--border); background: transparent; }
+
+  .phase-time {
+    font-family: var(--mono);
+    font-size: 10px;
     color: var(--muted);
-    line-height: 1.6;
+    margin-left: 8px;
   }
 
-  .note .icon { font-size: 14px; flex-shrink: 0; }
-
-  /* Pro tip */
-  .pro-tip {
-    background: rgba(124,58,237,0.05);
-    border: 1px solid rgba(124,58,237,0.2);
-    border-radius: 12px;
-    padding: 20px;
-    margin-top: 40px;
+  .chevron {
+    color: var(--muted);
+    font-size: 10px;
+    margin-left: 4px;
+    transition: transform .2s;
   }
 
-  .pro-tip h3 {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 10px;
+  .phase.open .chevron { transform: rotate(90deg); }
+
+  /* ── TOPICS ── */
+  .topics {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 12px 16px 16px;
+  }
+
+  .phase.open .topics { display: block; }
+
+  .topics-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .topic {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background .15s;
   }
 
-  .pro-tip p {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
+  .topic:hover { background: rgba(255,255,255,.03); }
 
-  .pro-tip strong { color: var(--text); }
-
-  /* Timeline estimate */
-  .timeline {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 12px;
-    margin-top: 40px;
-  }
-
-  .tl-item {
-    background: var(--card);
+  .topic input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    text-align: center;
+    border-radius: 3px;
+    background: var(--bg);
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    transition: background .15s, border-color .15s;
   }
 
-  .tl-item .phase-label {
-    font-family: 'Space Mono', monospace;
+  .topic input[type="checkbox"]:checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .topic input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 1px;
+    width: 5px;
+    height: 8px;
+    border: 2px solid #0D1117;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+  }
+
+  .topic-label {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .topic.checked .topic-label {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: #3d444d;
+  }
+
+  .topic-link {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--blue);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity .15s;
+    white-space: nowrap;
+  }
+
+  .topic:hover .topic-link { opacity: 1; }
+  .topic-link:hover { text-decoration: underline; }
+
+  /* ── PHASE PROGRESS BAR ── */
+  .phase-bar-wrap { margin-top: 4px; }
+
+  .phase-bar-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .phase-bar-label {
+    font-family: var(--mono);
     font-size: 10px;
     color: var(--muted);
-    margin-bottom: 6px;
   }
 
-  .tl-item .duration {
-    font-size: 15px;
-    font-weight: 700;
-  }
-
-  .tl-total {
-    background: var(--card);
-    border: 1px solid var(--accent);
-    border-radius: 10px;
-    padding: 14px;
-    text-align: center;
-    grid-column: 1 / -1;
-  }
-
-  .tl-total .label {
-    font-family: 'Space Mono', monospace;
+  .phase-bar-pct {
+    font-family: var(--mono);
     font-size: 10px;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
-
-  .tl-total .val {
-    font-size: 16px;
-    font-weight: 800;
-  }
-
-  h3.section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
     color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    margin-top: 40px;
+  }
+
+  .phase-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .phase-fill {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 2px;
+    transition: width .3s ease;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .reset-btn {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+  }
+
+  .reset-btn:hover { color: var(--text); border-color: var(--muted); }
+
+  @media (max-width: 500px) {
+    header, .progress-wrap, main, footer { padding-left: 16px; padding-right: 16px; }
+    .phase-time { display: none; }
   }
 </style>
 </head>
 <body>
-<div class="container">
 
-  <div class="header">
-    <div class="tag">// learning_path.md</div>
-    <h1>Kobe's Full Stack<br><span>Learning Roadmap</span></h1>
-    <p>Free resources only. Community-proven. Ordered by dependency so nothing feels random.</p>
+<header>
+  <div class="header-eyebrow">2026 · Personal Roadmap</div>
+  <h1>Full-Stack + AI Engineer</h1>
+  <p>Free resources only. Track topics as you go. Click a phase to expand.</p>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span class="progress-label">Overall Progress</span>
+    <span class="progress-count" id="global-count">0 / 0 topics</span>
   </div>
-
-  <!-- Phase 1 -->
-  <div class="phase phase-1">
-    <div class="phase-header">
-      <div class="phase-number">01</div>
-      <div class="phase-title-block">
-        <h2>HTML Foundations</h2>
-        <div class="subtitle">Structure before style</div>
-      </div>
-      <div class="phase-badge">START HERE</div>
-    </div>
-    <div class="phase-body">
-      <div class="note">
-        <span class="icon">💡</span>
-        <span>Don't skip this even if it feels too basic. Semantic HTML (header, nav, main, section, article) is what separates devs who can structure real apps from those who just throw divs everywhere.</span>
-      </div>
-      <a class="resource" href="https://theodinproject.com/paths/foundations/courses/foundations" target="_blank">
-        <div class="resource-icon" style="background:rgba(239,68,68,0.1);">⚔️</div>
-        <div class="resource-info">
-          <div class="name">The Odin Project — Foundations</div>
-          <div class="desc">The most community-praised free full stack curriculum. Starts with HTML/CSS, uses real dev tools (VS Code, Git, terminal) from day one. No hand-holding, which is good.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag">Project-based</span>
-            <span class="rtag">Community</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://developer.mozilla.org/en-US/docs/Learn/HTML" target="_blank">
-        <div class="resource-icon" style="background:rgba(239,68,68,0.1);">📖</div>
-        <div class="resource-info">
-          <div class="name">MDN Web Docs — HTML</div>
-          <div class="desc">The official web reference. Use this alongside Odin Project whenever you need to understand why something works. It's the dictionary, not the textbook.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag ref">Reference</span>
-          </div>
-        </div>
-      </a>
-    </div>
+  <div class="bar-track">
+    <div class="bar-fill" id="global-bar" style="width:0%"></div>
   </div>
-
-  <div class="connector"><span>then</span></div>
-
-  <!-- Phase 2 -->
-  <div class="phase phase-2">
-    <div class="phase-header">
-      <div class="phase-number">02</div>
-      <div class="phase-title-block">
-        <h2>CSS — Learn by Playing</h2>
-        <div class="subtitle">Layouts, flexbox, grid</div>
-      </div>
-      <div class="phase-badge">MOST FUN PHASE</div>
-    </div>
-    <div class="phase-body">
-      <div class="note">
-        <span class="icon">🎮</span>
-        <span>Do the games first before reading anything. They take 2–3 hours total and you'll understand Flexbox and Grid better than most devs who read docs for days.</span>
-      </div>
-      <a class="resource" href="https://flexboxfroggy.com" target="_blank">
-        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">🐸</div>
-        <div class="resource-info">
-          <div class="name">Flexbox Froggy</div>
-          <div class="desc">Move frogs to lily pads using CSS Flexbox properties. 24 levels. Sounds dumb, actually one of the best ways to internalize Flexbox alignment and direction.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag game">GAME</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://cssgridgarden.com" target="_blank">
-        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">🥕</div>
-        <div class="resource-info">
-          <div class="name">CSS Grid Garden</div>
-          <div class="desc">Same concept as Froggy but for CSS Grid. 28 levels covering grid-column, grid-row, grid-area, and more. Do this right after Froggy.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag game">GAME</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://flukeout.github.io" target="_blank">
-        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">🍽️</div>
-        <div class="resource-info">
-          <div class="name">CSS Diner</div>
-          <div class="desc">32 levels of CSS selector challenges set in a restaurant. Covers basic to advanced selectors. Extremely useful for React/Next.js styled components later.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag game">GAME</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://www.youtube.com/@KevinPowell" target="_blank">
-        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">▶️</div>
-        <div class="resource-info">
-          <div class="name">Kevin Powell — YouTube</div>
-          <div class="desc">Widely regarded as the best CSS teacher on the internet. Explains why things work, not just how. Watch topic-by-topic as you encounter things you don't understand. "Responsive CSS" and "CSS Variables" playlists are must-watches.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag video">VIDEO</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://theodinproject.com/paths/foundations/courses/foundations#css-foundations" target="_blank">
-        <div class="resource-icon" style="background:rgba(245,158,11,0.1);">⚔️</div>
-        <div class="resource-info">
-          <div class="name">The Odin Project — CSS Foundations</div>
-          <div class="desc">Continue from Phase 1. The CSS section has you build real projects: a landing page, a recipe site, a calculator. This is where it clicks.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag">Project-based</span>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <div class="connector"><span>then</span></div>
-
-  <!-- Phase 3 -->
-  <div class="phase phase-3">
-    <div class="phase-header">
-      <div class="phase-number">03</div>
-      <div class="phase-title-block">
-        <h2>JavaScript Deep Dive</h2>
-        <div class="subtitle">Before React, this must be solid</div>
-      </div>
-      <div class="phase-badge">CRITICAL</div>
-    </div>
-    <div class="phase-body">
-      <div class="note">
-        <span class="icon">⚠️</span>
-        <span>Most people rush to React with weak JS fundamentals and suffer later. Spend real time here. Focus on: DOM manipulation, array methods, async/await, fetch, and ES6+ features.</span>
-      </div>
-      <a class="resource" href="https://javascript.info" target="_blank">
-        <div class="resource-icon" style="background:rgba(16,185,129,0.1);">📘</div>
-        <div class="resource-info">
-          <div class="name">javascript.info — The Modern JS Tutorial</div>
-          <div class="desc">The most recommended free JS learning resource on the internet. Covers everything from basics to advanced topics like closures, prototypes, async, and the browser API. Extremely well-written with exercises.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag">Community #1 pick</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://www.youtube.com/watch?v=jS4aFq5-91M" target="_blank">
-        <div class="resource-icon" style="background:rgba(16,185,129,0.1);">▶️</div>
-        <div class="resource-info">
-          <div class="name">JavaScript Full Course — Bro Code (YouTube)</div>
-          <div class="desc">12-hour free JavaScript course on YouTube. Great supplementary visual resource to use alongside javascript.info. Bro Code's teaching style is fast, clear, and no-fluff.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag video">VIDEO</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://theodinproject.com/paths/full-stack-javascript/courses/javascript" target="_blank">
-        <div class="resource-icon" style="background:rgba(16,185,129,0.1);">⚔️</div>
-        <div class="resource-info">
-          <div class="name">The Odin Project — JavaScript</div>
-          <div class="desc">Continues the Odin path into advanced JavaScript: OOP, testing, async, data structures and algorithms basics. Projects include a weather app, a library, a battleship game.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag">Project-based</span>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <div class="connector"><span>then</span></div>
-
-  <!-- Phase 4 -->
-  <div class="phase phase-4">
-    <div class="phase-header">
-      <div class="phase-number">04</div>
-      <div class="phase-title-block">
-        <h2>TypeScript</h2>
-        <div class="subtitle">JS with superpowers</div>
-      </div>
-      <div class="phase-badge">HIGH ROI</div>
-    </div>
-    <div class="phase-body">
-      <div class="note">
-        <span class="icon">💡</span>
-        <span>You already use TS in PAMANA and Flashcard Frenzy. This phase is about going from "it compiles so I'm fine" to actually understanding the type system — generics, unions, type guards, and utility types.</span>
-      </div>
-      <a class="resource" href="https://www.totaltypescript.com/tutorials" target="_blank">
-        <div class="resource-icon" style="background:rgba(124,58,237,0.1);">🔷</div>
-        <div class="resource-info">
-          <div class="name">Total TypeScript — Free Tutorials</div>
-          <div class="desc">By Matt Pocock — widely considered the best TS educator. His free tutorials cover Beginner's TypeScript, TypeScript Errors, and React with TypeScript. Hands-on in your editor with real exercises.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag">Community #1 for TS</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://www.typescriptlang.org/docs/handbook/intro.html" target="_blank">
-        <div class="resource-icon" style="background:rgba(124,58,237,0.1);">📖</div>
-        <div class="resource-info">
-          <div class="name">TypeScript Official Handbook</div>
-          <div class="desc">Use this as a reference when Total TypeScript doesn't cover something specific. The "Everyday Types" and "Generics" sections are the most important to read top to bottom.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag ref">Reference</span>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <div class="connector"><span>then</span></div>
-
-  <!-- Phase 5 -->
-  <div class="phase phase-5">
-    <div class="phase-header">
-      <div class="phase-number">05</div>
-      <div class="phase-title-block">
-        <h2>React + Next.js</h2>
-        <div class="subtitle">The main event</div>
-      </div>
-      <div class="phase-badge">CORE STACK</div>
-    </div>
-    <div class="phase-body">
-      <div class="note">
-        <span class="icon">🚀</span>
-        <span>You already have React exposure. This phase is about going deeper — hooks properly, state management, Server Components, and the App Router. Learn React first, then Next.js on top of it.</span>
-      </div>
-      <a class="resource" href="https://react.dev/learn" target="_blank">
-        <div class="resource-icon" style="background:rgba(6,182,212,0.1);">⚛️</div>
-        <div class="resource-info">
-          <div class="name">react.dev — Official Docs</div>
-          <div class="desc">The official React docs were completely rewritten and are now excellent tutorial-quality content. The "Learn React" section covers components, state, effects, and custom hooks with interactive sandboxes.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag ref">Official</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://nextjs.org/learn" target="_blank">
-        <div class="resource-icon" style="background:rgba(6,182,212,0.1);">▲</div>
-        <div class="resource-info">
-          <div class="name">Next.js Official Learn Course</div>
-          <div class="desc">Vercel's own free course. Walks you through building a full-stack dashboard app with App Router, Server Components, Server Actions, authentication, and database integration. The most up-to-date Next.js learning resource that exists.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag ref">Official</span>
-            <span class="rtag">Full-stack project</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://www.youtube.com/@joshtriedcoding" target="_blank">
-        <div class="resource-icon" style="background:rgba(6,182,212,0.1);">▶️</div>
-        <div class="resource-info">
-          <div class="name">Josh tried coding — YouTube</div>
-          <div class="desc">Best YouTube channel for Next.js projects in 2025–2026. Builds real apps with Next.js, TypeScript, Tailwind, and Supabase. Very practical and up to date with the App Router.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag video">VIDEO</span>
-            <span class="rtag">Project-based</span>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <div class="connector"><span>then</span></div>
-
-  <!-- Phase 6 -->
-  <div class="phase phase-6">
-    <div class="phase-header">
-      <div class="phase-number">06</div>
-      <div class="phase-title-block">
-        <h2>Node.js, Docker & Git</h2>
-        <div class="subtitle">Backend + DevOps essentials</div>
-      </div>
-      <div class="phase-badge">JOB-READY</div>
-    </div>
-    <div class="phase-body">
-      <a class="resource" href="https://theodinproject.com/paths/full-stack-javascript/courses/nodejs" target="_blank">
-        <div class="resource-icon" style="background:rgba(236,72,153,0.1);">🟢</div>
-        <div class="resource-info">
-          <div class="name">The Odin Project — NodeJS</div>
-          <div class="desc">Covers Express.js, REST APIs, MVC architecture, authentication with Passport, and PostgreSQL. The final project is a full-stack social media app. Battle-tested curriculum.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag">Project-based</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://www.youtube.com/@TechWorldwithNana" target="_blank">
-        <div class="resource-icon" style="background:rgba(236,72,153,0.1);">🐳</div>
-        <div class="resource-info">
-          <div class="name">TechWorld with Nana — Docker (YouTube)</div>
-          <div class="desc">Nana is the most praised DevOps educator on YouTube. Her Docker crash course and Docker Compose tutorial are the community's top free picks. Extremely clear explanations with real demos.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag video">VIDEO</span>
-          </div>
-        </div>
-      </a>
-      <a class="resource" href="https://learngitbranching.js.org" target="_blank">
-        <div class="resource-icon" style="background:rgba(236,72,153,0.1);">🌿</div>
-        <div class="resource-info">
-          <div class="name">Learn Git Branching</div>
-          <div class="desc">Interactive visual game for learning Git. Covers commit, branching, merging, rebasing, and remote operations. The best way to understand Git beyond just the basics you already know.</div>
-          <div class="resource-tags">
-            <span class="rtag free">FREE</span>
-            <span class="rtag game">GAME</span>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- Timeline -->
-  <h3 class="section-label">⏱ Estimated Timeline (part-time, ~2hrs/day)</h3>
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="phase-label">Phase 01</div>
-      <div class="duration" style="color:#ef4444;">1–2 weeks</div>
-    </div>
-    <div class="tl-item">
-      <div class="phase-label">Phase 02</div>
-      <div class="duration" style="color:#f59e0b;">2–3 weeks</div>
-    </div>
-    <div class="tl-item">
-      <div class="phase-label">Phase 03</div>
-      <div class="duration" style="color:#10b981;">3–5 weeks</div>
-    </div>
-    <div class="tl-item">
-      <div class="phase-label">Phase 04</div>
-      <div class="duration" style="color:#7c3aed;">1–2 weeks</div>
-    </div>
-    <div class="tl-item">
-      <div class="phase-label">Phase 05</div>
-      <div class="duration" style="color:#06b6d4;">3–4 weeks</div>
-    </div>
-    <div class="tl-item">
-      <div class="phase-label">Phase 06</div>
-      <div class="duration" style="color:#ec4899;">2–3 weeks</div>
-    </div>
-    <div class="tl-total">
-      <div class="label">TOTAL ESTIMATE</div>
-      <div class="val">~3–4 months → job-ready portfolio</div>
-    </div>
-  </div>
-
-  <!-- Pro tip -->
-  <div class="pro-tip">
-    <h3>🧠 The Rule That Changes Everything</h3>
-    <p>
-      For every phase, the pattern is: <strong>read/watch just enough to start</strong>, then <strong>build something with it immediately</strong>. Don't finish an entire course before coding. 
-      The mistake most students make is consuming 40 hours of content with 2 hours of actual building. 
-      <strong>Flip that ratio.</strong> After each section of Odin Project or any tutorial, close the tab and rebuild what you just learned from scratch without looking. 
-      That's when it actually sticks. And every project you build — no matter how small — goes on GitHub with a proper README.
-    </p>
-  </div>
-
 </div>
+
+<main id="roadmap"></main>
+
+<footer>
+  <span class="footer-note">Progress saved in your browser</span>
+  <button class="reset-btn" onclick="resetAll()">Reset all</button>
+</footer>
+
+<script>
+const PHASES = [
+  {
+    id: "p1",
+    num: "01",
+    title: "Foundations — HTML, CSS, Git, Terminal",
+    time: "~2 weeks",
+    topics: [
+      { id: "html-odin",   label: "The Odin Project — Foundations",         url: "https://www.theodinproject.com" },
+      { id: "html-mdn",    label: "MDN Web Docs — Semantic HTML",            url: "https://developer.mozilla.org" },
+      { id: "html-sem",    label: "Semantic tags: header, nav, main, footer" },
+      { id: "git-basics",  label: "Git & GitHub basics" },
+      { id: "terminal",    label: "Terminal & VS Code fundamentals" },
+    ]
+  },
+  {
+    id: "p2",
+    num: "02",
+    title: "CSS Mastery",
+    time: "~2 weeks",
+    topics: [
+      { id: "flexbox",    label: "Flexbox Froggy",           url: "https://flexboxfroggy.com" },
+      { id: "grid",       label: "CSS Grid Garden",          url: "https://cssgridgarden.com" },
+      { id: "selectors",  label: "CSS Diner — selectors",    url: "https://flukeout.github.io" },
+      { id: "kevin",      label: "Kevin Powell — Responsive Design, CSS Variables" },
+      { id: "odin-css",   label: "Odin Project — CSS projects (landing page, calculator, portfolio)" },
+    ]
+  },
+  {
+    id: "p3",
+    num: "03",
+    title: "JavaScript Fundamentals",
+    time: "4–6 weeks",
+    topics: [
+      { id: "jsinfo",    label: "javascript.info — core concepts",   url: "https://javascript.info" },
+      { id: "dom",       label: "DOM Manipulation & Event Handling" },
+      { id: "async",     label: "Async/Await & Fetch API" },
+      { id: "closures",  label: "Closures & Modules" },
+      { id: "odin-js",   label: "Odin Project JS — Library, Weather, Battleship, Todo" },
+    ]
+  },
+  {
+    id: "p4",
+    num: "04",
+    title: "Databases & SQL",
+    time: "~2 weeks",
+    topics: [
+      { id: "pg",         label: "PostgreSQL basics",         url: "https://neon.com/postgresql/tutorial" },
+      { id: "sql-crud",   label: "SELECT, INSERT, UPDATE, DELETE" },
+      { id: "sql-join",   label: "JOIN, GROUP BY, ORDER BY, HAVING" },
+      { id: "sql-proj",   label: "Mini projects — Student DB, Expense Tracker, Flashcard DB" },
+    ]
+  },
+  {
+    id: "p5",
+    num: "05",
+    title: "TypeScript",
+    time: "~2 weeks",
+    topics: [
+      { id: "ts-total",    label: "Total TypeScript",         url: "https://www.totaltypescript.com" },
+      { id: "ts-handbook", label: "TypeScript Handbook",      url: "https://www.typescriptlang.org/docs" },
+      { id: "ts-gen",      label: "Generics & Utility Types" },
+      { id: "ts-guards",   label: "Type Guards & Narrowing" },
+    ]
+  },
+  {
+    id: "p6",
+    num: "06",
+    title: "React",
+    time: "~4 weeks",
+    topics: [
+      { id: "react-docs",  label: "React official docs",      url: "https://react.dev" },
+      { id: "react-hooks", label: "Components, Props, State, Effects, Custom Hooks" },
+      { id: "react-ctx",   label: "Context API" },
+      { id: "react-beg",   label: "Beginner projects — Notes, Weather, Expense Tracker" },
+      { id: "react-int",   label: "Intermediate — Kanban Board, Habit Tracker, Flashcard App" },
+      { id: "react-adv",   label: "Advanced — Dashboard, Real-Time Chat UI, SaaS Clone" },
+    ]
+  },
+  {
+    id: "p7",
+    num: "07",
+    title: "Next.js & Modern Full Stack",
+    time: "~3 weeks",
+    topics: [
+      { id: "next-learn",  label: "Next.js Learn",            url: "https://nextjs.org/learn" },
+      { id: "next-rsc",    label: "App Router, Server Components, Server Actions" },
+      { id: "next-auth",   label: "Auth — Sessions, JWT, OAuth (Auth.js / Clerk)" },
+      { id: "next-deploy", label: "Deployment — Vercel, Railway, Cloudflare" },
+    ]
+  },
+  {
+    id: "p8",
+    num: "08",
+    title: "Backend Development",
+    time: "~3 weeks",
+    topics: [
+      { id: "node",       label: "Odin Project — Node.js & Express" },
+      { id: "rest",       label: "REST APIs & MVC Architecture" },
+      { id: "be-proj",    label: "Projects — Blog API, Social Media Clone, CRUD Apps" },
+    ]
+  },
+  {
+    id: "p9",
+    num: "09",
+    title: "Git Beyond Basics",
+    time: "~1 week",
+    topics: [
+      { id: "git-branch", label: "Learn Git Branching",       url: "https://learngitbranching.js.org" },
+      { id: "git-rebase", label: "Merge, Rebase, Cherry Pick" },
+      { id: "git-remote", label: "Remote workflows & team collaboration" },
+    ]
+  },
+  {
+    id: "p10",
+    num: "10",
+    title: "Docker & Deployment Infrastructure",
+    time: "~1 week",
+    topics: [
+      { id: "docker-nana", label: "TechWorld with Nana — Docker" },
+      { id: "docker-comp", label: "Docker Compose, Volumes, Networking" },
+      { id: "docker-proj", label: "Containerize a project" },
+    ]
+  },
+  {
+    id: "p11",
+    num: "11",
+    title: "Testing",
+    time: "~1 week",
+    topics: [
+      { id: "test-why",     label: "Why testing matters — unit vs integration vs e2e" },
+      { id: "test-vitest",  label: "Vitest — unit testing for modern JS/TS projects",  url: "https://vitest.dev" },
+      { id: "test-rtl",     label: "React Testing Library — component testing",         url: "https://testing-library.com" },
+      { id: "test-playwright", label: "Playwright — end-to-end browser testing",       url: "https://playwright.dev" },
+      { id: "test-patterns",label: "Testing patterns — mocking, setup/teardown, coverage" },
+      { id: "test-ci",      label: "Run tests in CI (GitHub Actions)" },
+    ]
+  },
+  {
+    id: "p12",
+    num: "12",
+    title: "AI-Powered Full Stack Development",
+    time: "4–6 weeks",
+    topics: [
+      { id: "oai",        label: "OpenAI API",                url: "https://platform.openai.com/docs" },
+      { id: "ai-sdk",     label: "AI SDK",                    url: "https://ai-sdk.dev" },
+      { id: "langchain",  label: "LangChain",                 url: "https://langchain.com" },
+      { id: "supabase",   label: "Supabase & Vector Databases",url: "https://supabase.com" },
+      { id: "rag",        label: "RAG — Chunking, Embeddings, Retrieval, Context Injection" },
+      { id: "ai-beg",     label: "Beginner AI — Flashcard Generator, Study Assistant" },
+      { id: "ai-int",     label: "Intermediate AI — Resume Analyzer, PDF Chat, Meeting Notes" },
+      { id: "ai-adv",     label: "Advanced AI — Multi-Doc RAG, Knowledge Base, Support Agent" },
+    ]
+  },
+];
+
+const STORAGE_KEY = "kobe-roadmap-v1";
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+let state = loadState();
+
+function getPhaseStatus(phase) {
+  const total = phase.topics.length;
+  const done = phase.topics.filter(t => state[t.id]).length;
+  if (done === 0) return "todo";
+  if (done === total) return "done";
+  return "active";
+}
+
+function renderAll() {
+  const container = document.getElementById("roadmap");
+  container.innerHTML = "";
+
+  PHASES.forEach(phase => {
+    const status = getPhaseStatus(phase);
+    const doneCnt = phase.topics.filter(t => state[t.id]).length;
+    const total = phase.topics.length;
+    const pct = Math.round((doneCnt / total) * 100);
+
+    const el = document.createElement("div");
+    el.className = `phase ${status}`;
+    el.dataset.id = phase.id;
+
+    const badgeClass = status === "done" ? "badge-done" : status === "active" ? "badge-active" : "badge-todo";
+    const badgeLabel = status === "done" ? "Complete" : status === "active" ? "In Progress" : "To Do";
+
+    el.innerHTML = `
+      <div class="phase-header" onclick="togglePhase('${phase.id}')">
+        <span class="phase-num">${phase.num}</span>
+        <span class="phase-title">${phase.title}</span>
+        <span class="phase-badge ${badgeClass}">${badgeLabel}</span>
+        <span class="phase-time">${phase.time}</span>
+        <span class="chevron">›</span>
+      </div>
+      <div class="topics">
+        <div class="topics-grid">
+          ${phase.topics.map(t => `
+            <label class="topic ${state[t.id] ? 'checked' : ''}" onclick="toggleTopic('${t.id}', event)">
+              <input type="checkbox" ${state[t.id] ? 'checked' : ''} />
+              <span class="topic-label">${t.label}</span>
+              ${t.url ? `<a class="topic-link" href="${t.url}" target="_blank" rel="noopener" onclick="e=>e.stopPropagation()">↗ open</a>` : ''}
+            </label>
+          `).join('')}
+        </div>
+        <div class="phase-bar-wrap">
+          <div class="phase-bar-meta">
+            <span class="phase-bar-label">Phase progress</span>
+            <span class="phase-bar-pct">${doneCnt} / ${total} · ${pct}%</span>
+          </div>
+          <div class="phase-track">
+            <div class="phase-fill" style="width:${pct}%"></div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(el);
+
+    // restore open state
+    if (state[`_open_${phase.id}`]) el.classList.add("open");
+  });
+
+  updateGlobal();
+}
+
+function togglePhase(id) {
+  const el = document.querySelector(`[data-id="${id}"]`);
+  const isOpen = el.classList.toggle("open");
+  state[`_open_${id}`] = isOpen;
+  saveState(state);
+}
+
+function toggleTopic(id, e) {
+  // prevent label double-firing
+  if (e.target.tagName === "A") return;
+  state[id] = !state[id];
+  saveState(state);
+  renderAll();
+
+  // re-open the phase after re-render
+  const phaseEl = document.querySelector(`[data-id]`);
+}
+
+function updateGlobal() {
+  const allTopics = PHASES.flatMap(p => p.topics);
+  const total = allTopics.length;
+  const done = allTopics.filter(t => state[t.id]).length;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+
+  document.getElementById("global-count").textContent = `${done} / ${total} topics`;
+  document.getElementById("global-bar").style.width = pct + "%";
+}
+
+function resetAll() {
+  if (!confirm("Reset all progress? This can't be undone.")) return;
+  const openStates = {};
+  PHASES.forEach(p => { if (state[`_open_${p.id}`]) openStates[`_open_${p.id}`] = true; });
+  state = { ...openStates };
+  saveState(state);
+  renderAll();
+}
+
+// ── TOOLS REFERENCE ──
+const TOOL_GROUPS = [
+  {
+    category: "Editor & Terminal",
+    tools: [
+      { name: "VS Code",         desc: "Primary editor. Learn shortcuts, extensions, multi-cursor." },
+      { name: "Zsh + Oh My Zsh", desc: "Shell setup. Makes the terminal actually pleasant to use." },
+      { name: "iTerm2 / Windows Terminal", desc: "Better terminal emulator than the default." },
+    ]
+  },
+  {
+    category: "Version Control",
+    tools: [
+      { name: "Git",             desc: "Non-negotiable. Commit early, commit often." },
+      { name: "GitHub",          desc: "Your public portfolio lives here. Keep it active." },
+      { name: "GitHub Actions",  desc: "CI/CD pipelines. Run tests and deploy automatically." },
+    ]
+  },
+  {
+    category: "Frontend",
+    tools: [
+      { name: "React + Vite",    desc: "Go-to for SPAs and quick prototypes." },
+      { name: "Next.js",         desc: "Production full-stack React. App Router is the current standard." },
+      { name: "Tailwind CSS",    desc: "Utility-first CSS. Faster than writing custom stylesheets." },
+      { name: "shadcn/ui",       desc: "Component library built on Tailwind. Used in most modern SaaS." },
+    ]
+  },
+  {
+    category: "Backend & APIs",
+    tools: [
+      { name: "Node.js + Express", desc: "Baseline backend. Know it even if you use Next.js." },
+      { name: "Prisma",          desc: "ORM for TypeScript. Makes database queries type-safe." },
+      { name: "Hono",            desc: "Lightweight alternative to Express. Growing fast in 2026." },
+      { name: "Postman / Bruno", desc: "Test your APIs before wiring up a frontend." },
+    ]
+  },
+  {
+    category: "Database",
+    tools: [
+      { name: "PostgreSQL",      desc: "Primary relational DB. Learn it deeply." },
+      { name: "Supabase",        desc: "Postgres with auth, storage, and real-time out of the box." },
+      { name: "Redis",           desc: "Caching and session storage. Good to be aware of." },
+      { name: "pgvector",        desc: "Vector extension for Postgres. Used in AI/RAG apps." },
+    ]
+  },
+  {
+    category: "Testing",
+    tools: [
+      { name: "Vitest",          desc: "Fastest unit test runner for Vite/modern projects." },
+      { name: "React Testing Library", desc: "Test components the way users interact with them." },
+      { name: "Playwright",      desc: "End-to-end testing. Automates real browser interactions." },
+      { name: "MSW (Mock Service Worker)", desc: "Mock API calls in tests without a real server." },
+    ]
+  },
+  {
+    category: "DevOps & Infra",
+    tools: [
+      { name: "Docker",          desc: "Containerize everything. Removes 'works on my machine'." },
+      { name: "Vercel",          desc: "Easiest Next.js deployment. Free tier is generous." },
+      { name: "Railway",         desc: "Deploy backends and databases with minimal config." },
+      { name: "Cloudflare",      desc: "DNS, CDN, and edge functions. Learn the basics." },
+    ]
+  },
+  {
+    category: "AI & ML Tooling",
+    tools: [
+      { name: "OpenAI API",      desc: "GPT-4o and embeddings. The baseline every employer expects." },
+      { name: "Vercel AI SDK",   desc: "Streaming AI responses in Next.js. Handles the hard parts." },
+      { name: "LangChain.js",    desc: "Orchestration for complex AI workflows and agents." },
+      { name: "Pinecone / pgvector", desc: "Vector stores for semantic search and RAG." },
+      { name: "Cursor / GitHub Copilot", desc: "AI-assisted coding. Learn to use it well, not as a crutch." },
+    ]
+  },
+  {
+    category: "Design & Collaboration",
+    tools: [
+      { name: "Figma",           desc: "Read designs from it. Know how to inspect spacing and tokens." },
+      { name: "Linear",          desc: "Issue tracking used at most startups. Know the workflow." },
+      { name: "Notion",          desc: "Docs and wikis. Common in remote teams." },
+      { name: "Slack",           desc: "Standard async communication at tech companies." },
+    ]
+  },
+];
+
+function renderTools() {
+  const wrap = document.getElementById("tools-section");
+  wrap.innerHTML = TOOL_GROUPS.map(group => `
+    <div class="tool-group">
+      <div class="tool-group-label">${group.category}</div>
+      <div class="tool-list">
+        ${group.tools.map(t => `
+          <div class="tool-item">
+            <span class="tool-name">${t.name}</span>
+            <span class="tool-desc">${t.desc}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+renderAll();
+renderTools();
+</script>
 </body>
 </html>
