@@ -1,745 +1,878 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kobe's Full-Stack + AI Roadmap</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kobe's Full-Stack + AI Roadmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-  :root {
-    --bg:        #0D1117;
-    --surface:   #161B22;
-    --border:    #21262D;
-    --blue:      #58A6FF;
-    --green:     #3FB950;
-    --orange:    #D29922;
-    --text:      #F0F6FC;
-    --muted:     #8B949E;
-    --mono:      'JetBrains Mono', monospace;
-    --sans:      'Inter', sans-serif;
-  }
+        :root {
+            --bg: #0D1117;
+            --surface: #161B22;
+            --border: #21262D;
+            --blue: #58A6FF;
+            --green: #3FB950;
+            --orange: #D29922;
+            --text: #F0F6FC;
+            --muted: #8B949E;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+        }
 
-  html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
 
-  /* ── HEADER ── */
-  header {
-    border-bottom: 1px solid var(--border);
-    padding: 28px 24px 24px;
-    max-width: 720px;
-    margin: 0 auto;
-  }
+        /* ── HEADER ── */
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 28px 24px 24px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
 
-  .header-eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
+        .header-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
 
-  header h1 {
-    font-family: var(--mono);
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
+        header h1 {
+            font-family: var(--mono);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
 
-  header p {
-    color: var(--muted);
-    font-size: 13px;
-  }
+        header p {
+            color: var(--muted);
+            font-size: 13px;
+        }
 
-  /* ── PROGRESS BAR ── */
-  .progress-wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--border);
-  }
+        /* ── PROGRESS BAR ── */
+        .progress-wrap {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+        }
 
-  .progress-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
-  }
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
 
-  .progress-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: .07em;
-  }
+        .progress-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+        }
 
-  .progress-count {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--blue);
-  }
+        .progress-count {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--blue);
+        }
 
-  .bar-track {
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
+        .bar-track {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
 
-  .bar-fill {
-    height: 100%;
-    background: var(--green);
-    border-radius: 2px;
-    transition: width .4s ease;
-  }
+        .bar-fill {
+            height: 100%;
+            background: var(--green);
+            border-radius: 2px;
+            transition: width .4s ease;
+        }
 
-  /* ── PHASE LAYOUT ── */
-  main {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 24px 24px 64px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+        /* ── PHASE LAYOUT ── */
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px 24px 64px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
-  /* ── PHASE CARD ── */
-  .phase {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--surface);
-    overflow: hidden;
-    transition: border-color .2s;
-  }
+        /* ── PHASE CARD ── */
+        .phase {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            overflow: hidden;
+            transition: border-color .2s;
+        }
 
-  .phase.done { border-color: #238636; }
-  .phase.active { border-color: var(--blue); }
+        .phase.done {
+            border-color: #238636;
+        }
 
-  .phase-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-  }
+        .phase.active {
+            border-color: var(--blue);
+        }
 
-  .phase-header:hover { background: rgba(255,255,255,.02); }
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-  .phase-num {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    min-width: 28px;
-    letter-spacing: .05em;
-  }
+        .phase-header:hover {
+            background: rgba(255, 255, 255, .02);
+        }
 
-  .phase-title {
-    flex: 1;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-  }
+        .phase-num {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            min-width: 28px;
+            letter-spacing: .05em;
+        }
 
-  .phase-badge {
-    font-family: var(--mono);
-    font-size: 10px;
-    padding: 2px 7px;
-    border-radius: 20px;
-    border: 1px solid;
-    white-space: nowrap;
-  }
+        .phase-title {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
 
-  .badge-done   { color: var(--green);  border-color: #238636;  background: rgba(63,185,80,.08); }
-  .badge-active { color: var(--blue);   border-color: var(--blue); background: rgba(88,166,255,.08); }
-  .badge-todo   { color: var(--muted);  border-color: var(--border); background: transparent; }
+        .phase-badge {
+            font-family: var(--mono);
+            font-size: 10px;
+            padding: 2px 7px;
+            border-radius: 20px;
+            border: 1px solid;
+            white-space: nowrap;
+        }
 
-  .phase-time {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    margin-left: 8px;
-  }
+        .badge-done {
+            color: var(--green);
+            border-color: #238636;
+            background: rgba(63, 185, 80, .08);
+        }
 
-  .chevron {
-    color: var(--muted);
-    font-size: 10px;
-    margin-left: 4px;
-    transition: transform .2s;
-  }
+        .badge-active {
+            color: var(--blue);
+            border-color: var(--blue);
+            background: rgba(88, 166, 255, .08);
+        }
 
-  .phase.open .chevron { transform: rotate(90deg); }
+        .badge-todo {
+            color: var(--muted);
+            border-color: var(--border);
+            background: transparent;
+        }
 
-  /* ── TOPICS ── */
-  .topics {
-    display: none;
-    border-top: 1px solid var(--border);
-    padding: 12px 16px 16px;
-  }
+        .phase-time {
+            display: none;
+        }
 
-  .phase.open .topics { display: block; }
+        .chevron {
+            color: var(--muted);
+            font-size: 10px;
+            margin-left: 4px;
+            transition: transform .2s;
+        }
 
-  .topics-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin-bottom: 12px;
-  }
+        .phase.open .chevron {
+            transform: rotate(90deg);
+        }
 
-  .topic {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px 8px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background .15s;
-  }
+        /* ── TOPICS ── */
+        .topics {
+            display: none;
+            border-top: 1px solid var(--border);
+            padding: 12px 16px 16px;
+        }
 
-  .topic:hover { background: rgba(255,255,255,.03); }
+        .phase.open .topics {
+            display: block;
+        }
 
-  .topic input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    background: var(--bg);
-    cursor: pointer;
-    flex-shrink: 0;
-    position: relative;
-    transition: background .15s, border-color .15s;
-  }
+        .topics-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
 
-  .topic input[type="checkbox"]:checked {
-    background: var(--green);
-    border-color: var(--green);
-  }
+        .topic {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background .15s;
+        }
 
-  .topic input[type="checkbox"]:checked::after {
-    content: '';
-    position: absolute;
-    left: 3px;
-    top: 1px;
-    width: 5px;
-    height: 8px;
-    border: 2px solid #0D1117;
-    border-top: none;
-    border-left: none;
-    transform: rotate(45deg);
-  }
+        .topic:hover {
+            background: rgba(255, 255, 255, .03);
+        }
 
-  .topic-label {
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.3;
-  }
+        .topic input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            background: var(--bg);
+            cursor: pointer;
+            flex-shrink: 0;
+            position: relative;
+            transition: background .15s, border-color .15s;
+        }
 
-  .topic.checked .topic-label {
-    color: var(--muted);
-    text-decoration: line-through;
-    text-decoration-color: #3d444d;
-  }
+        .topic input[type="checkbox"]:checked {
+            background: var(--green);
+            border-color: var(--green);
+        }
 
-  .topic-link {
-    margin-left: auto;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--blue);
-    text-decoration: none;
-    opacity: 0;
-    transition: opacity .15s;
-    white-space: nowrap;
-  }
+        .topic input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 1px;
+            width: 5px;
+            height: 8px;
+            border: 2px solid #0D1117;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg);
+        }
 
-  .topic:hover .topic-link { opacity: 1; }
-  .topic-link:hover { text-decoration: underline; }
+        .topic-label {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.3;
+        }
 
-  /* ── PHASE PROGRESS BAR ── */
-  .phase-bar-wrap { margin-top: 4px; }
+        .topic.checked .topic-label {
+            color: var(--muted);
+            text-decoration: line-through;
+            text-decoration-color: #3d444d;
+        }
 
-  .phase-bar-meta {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-  }
+        .topic-link {
+            margin-left: auto;
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--blue);
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity .15s;
+            white-space: nowrap;
+        }
 
-  .phase-bar-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-  }
+        .topic:hover .topic-link {
+            opacity: 1;
+        }
 
-  .phase-bar-pct {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-  }
+        .topic-link:hover {
+            text-decoration: underline;
+        }
 
-  .phase-track {
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
+        /* ── PHASE PROGRESS BAR ── */
+        .phase-bar-wrap {
+            margin-top: 4px;
+        }
 
-  .phase-fill {
-    height: 100%;
-    background: var(--blue);
-    border-radius: 2px;
-    transition: width .3s ease;
-  }
+        .phase-bar-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
 
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid var(--border);
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 20px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+        .phase-bar-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+        }
 
-  .footer-note {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-  }
+        .phase-bar-pct {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+        }
 
-  .reset-btn {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 4px 10px;
-    cursor: pointer;
-    transition: color .15s, border-color .15s;
-  }
+        .phase-track {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
 
-  .reset-btn:hover { color: var(--text); border-color: var(--muted); }
+        .phase-fill {
+            height: 100%;
+            background: var(--blue);
+            border-radius: 2px;
+            transition: width .3s ease;
+        }
 
-  @media (max-width: 500px) {
-    header, .progress-wrap, main, footer { padding-left: 16px; padding-right: 16px; }
-    .phase-time { display: none; }
-  }
-</style>
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-note {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .reset-btn {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 4px 10px;
+            cursor: pointer;
+            transition: color .15s, border-color .15s;
+        }
+
+        .reset-btn:hover {
+            color: var(--text);
+            border-color: var(--muted);
+        }
+
+        @media (max-width: 500px) {
+
+            header,
+            .progress-wrap,
+            main,
+            footer {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<header>
-  <div class="header-eyebrow">2026 · Personal Roadmap</div>
-  <h1>Full-Stack + AI Engineer</h1>
-  <p>Free resources only. Track topics as you go. Click a phase to expand.</p>
-</header>
+    <header>
+        <div class="header-eyebrow">2026 · Personal Roadmap</div>
+        <h1>Full-Stack + AI Engineer</h1>
+        <p>Self-paced. Free resources only. Track topics as you go. Click a phase to expand.</p>
+    </header>
 
-<div class="progress-wrap">
-  <div class="progress-meta">
-    <span class="progress-label">Overall Progress</span>
-    <span class="progress-count" id="global-count">0 / 0 topics</span>
-  </div>
-  <div class="bar-track">
-    <div class="bar-fill" id="global-bar" style="width:0%"></div>
-  </div>
-</div>
-
-<main id="roadmap"></main>
-
-<footer>
-  <span class="footer-note">Progress saved in your browser</span>
-  <button class="reset-btn" onclick="resetAll()">Reset all</button>
-</footer>
-
-<script>
-const PHASES = [
-  {
-    id: "p1",
-    num: "01",
-    title: "Foundations — HTML, CSS, Git, Terminal",
-    time: "~2 weeks",
-    topics: [
-      { id: "html-odin",   label: "The Odin Project — Foundations",         url: "https://www.theodinproject.com" },
-      { id: "html-mdn",    label: "MDN Web Docs — Semantic HTML",            url: "https://developer.mozilla.org" },
-      { id: "html-sem",    label: "Semantic tags: header, nav, main, footer" },
-      { id: "git-basics",  label: "Git & GitHub basics" },
-      { id: "terminal",    label: "Terminal & VS Code fundamentals" },
-    ]
-  },
-  {
-    id: "p2",
-    num: "02",
-    title: "CSS Mastery",
-    time: "~2 weeks",
-    topics: [
-      { id: "flexbox",    label: "Flexbox Froggy",           url: "https://flexboxfroggy.com" },
-      { id: "grid",       label: "CSS Grid Garden",          url: "https://cssgridgarden.com" },
-      { id: "selectors",  label: "CSS Diner — selectors",    url: "https://flukeout.github.io" },
-      { id: "kevin",      label: "Kevin Powell — Responsive Design, CSS Variables" },
-      { id: "odin-css",   label: "Odin Project — CSS projects (landing page, calculator, portfolio)" },
-    ]
-  },
-  {
-    id: "p3",
-    num: "03",
-    title: "JavaScript Fundamentals",
-    time: "4–6 weeks",
-    topics: [
-      { id: "jsinfo",    label: "javascript.info — core concepts",   url: "https://javascript.info" },
-      { id: "dom",       label: "DOM Manipulation & Event Handling" },
-      { id: "async",     label: "Async/Await & Fetch API" },
-      { id: "closures",  label: "Closures & Modules" },
-      { id: "odin-js",   label: "Odin Project JS — Library, Weather, Battleship, Todo" },
-    ]
-  },
-  {
-    id: "p4",
-    num: "04",
-    title: "Databases & SQL",
-    time: "~2 weeks",
-    topics: [
-      { id: "pg",         label: "PostgreSQL basics",         url: "https://neon.com/postgresql/tutorial" },
-      { id: "sql-crud",   label: "SELECT, INSERT, UPDATE, DELETE" },
-      { id: "sql-join",   label: "JOIN, GROUP BY, ORDER BY, HAVING" },
-      { id: "sql-proj",   label: "Mini projects — Student DB, Expense Tracker, Flashcard DB" },
-    ]
-  },
-  {
-    id: "p5",
-    num: "05",
-    title: "TypeScript",
-    time: "~2 weeks",
-    topics: [
-      { id: "ts-total",    label: "Total TypeScript",         url: "https://www.totaltypescript.com" },
-      { id: "ts-handbook", label: "TypeScript Handbook",      url: "https://www.typescriptlang.org/docs" },
-      { id: "ts-gen",      label: "Generics & Utility Types" },
-      { id: "ts-guards",   label: "Type Guards & Narrowing" },
-    ]
-  },
-  {
-    id: "p6",
-    num: "06",
-    title: "React",
-    time: "~4 weeks",
-    topics: [
-      { id: "react-docs",  label: "React official docs",      url: "https://react.dev" },
-      { id: "react-hooks", label: "Components, Props, State, Effects, Custom Hooks" },
-      { id: "react-ctx",   label: "Context API" },
-      { id: "react-beg",   label: "Beginner projects — Notes, Weather, Expense Tracker" },
-      { id: "react-int",   label: "Intermediate — Kanban Board, Habit Tracker, Flashcard App" },
-      { id: "react-adv",   label: "Advanced — Dashboard, Real-Time Chat UI, SaaS Clone" },
-    ]
-  },
-  {
-    id: "p7",
-    num: "07",
-    title: "Next.js & Modern Full Stack",
-    time: "~3 weeks",
-    topics: [
-      { id: "next-learn",  label: "Next.js Learn",            url: "https://nextjs.org/learn" },
-      { id: "next-rsc",    label: "App Router, Server Components, Server Actions" },
-      { id: "next-auth",   label: "Auth — Sessions, JWT, OAuth (Auth.js / Clerk)" },
-      { id: "next-deploy", label: "Deployment — Vercel, Railway, Cloudflare" },
-    ]
-  },
-  {
-    id: "p8",
-    num: "08",
-    title: "Backend Development",
-    time: "~3 weeks",
-    topics: [
-      { id: "node",       label: "Odin Project — Node.js & Express" },
-      { id: "rest",       label: "REST APIs & MVC Architecture" },
-      { id: "be-proj",    label: "Projects — Blog API, Social Media Clone, CRUD Apps" },
-    ]
-  },
-  {
-    id: "p9",
-    num: "09",
-    title: "Git Beyond Basics",
-    time: "~1 week",
-    topics: [
-      { id: "git-branch", label: "Learn Git Branching",       url: "https://learngitbranching.js.org" },
-      { id: "git-rebase", label: "Merge, Rebase, Cherry Pick" },
-      { id: "git-remote", label: "Remote workflows & team collaboration" },
-    ]
-  },
-  {
-    id: "p10",
-    num: "10",
-    title: "Docker & Deployment Infrastructure",
-    time: "~1 week",
-    topics: [
-      { id: "docker-nana", label: "TechWorld with Nana — Docker" },
-      { id: "docker-comp", label: "Docker Compose, Volumes, Networking" },
-      { id: "docker-proj", label: "Containerize a project" },
-    ]
-  },
-  {
-    id: "p11",
-    num: "11",
-    title: "Testing",
-    time: "~1 week",
-    topics: [
-      { id: "test-why",     label: "Why testing matters — unit vs integration vs e2e" },
-      { id: "test-vitest",  label: "Vitest — unit testing for modern JS/TS projects",  url: "https://vitest.dev" },
-      { id: "test-rtl",     label: "React Testing Library — component testing",         url: "https://testing-library.com" },
-      { id: "test-playwright", label: "Playwright — end-to-end browser testing",       url: "https://playwright.dev" },
-      { id: "test-patterns",label: "Testing patterns — mocking, setup/teardown, coverage" },
-      { id: "test-ci",      label: "Run tests in CI (GitHub Actions)" },
-    ]
-  },
-  {
-    id: "p12",
-    num: "12",
-    title: "AI-Powered Full Stack Development",
-    time: "4–6 weeks",
-    topics: [
-      { id: "oai",        label: "OpenAI API",                url: "https://platform.openai.com/docs" },
-      { id: "ai-sdk",     label: "AI SDK",                    url: "https://ai-sdk.dev" },
-      { id: "langchain",  label: "LangChain",                 url: "https://langchain.com" },
-      { id: "supabase",   label: "Supabase & Vector Databases",url: "https://supabase.com" },
-      { id: "rag",        label: "RAG — Chunking, Embeddings, Retrieval, Context Injection" },
-      { id: "ai-beg",     label: "Beginner AI — Flashcard Generator, Study Assistant" },
-      { id: "ai-int",     label: "Intermediate AI — Resume Analyzer, PDF Chat, Meeting Notes" },
-      { id: "ai-adv",     label: "Advanced AI — Multi-Doc RAG, Knowledge Base, Support Agent" },
-    ]
-  },
-];
-
-const STORAGE_KEY = "kobe-roadmap-v1";
-
-function loadState() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
-}
-
-function saveState(state) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
-let state = loadState();
-
-function getPhaseStatus(phase) {
-  const total = phase.topics.length;
-  const done = phase.topics.filter(t => state[t.id]).length;
-  if (done === 0) return "todo";
-  if (done === total) return "done";
-  return "active";
-}
-
-function renderAll() {
-  const container = document.getElementById("roadmap");
-  container.innerHTML = "";
-
-  PHASES.forEach(phase => {
-    const status = getPhaseStatus(phase);
-    const doneCnt = phase.topics.filter(t => state[t.id]).length;
-    const total = phase.topics.length;
-    const pct = Math.round((doneCnt / total) * 100);
-
-    const el = document.createElement("div");
-    el.className = `phase ${status}`;
-    el.dataset.id = phase.id;
-
-    const badgeClass = status === "done" ? "badge-done" : status === "active" ? "badge-active" : "badge-todo";
-    const badgeLabel = status === "done" ? "Complete" : status === "active" ? "In Progress" : "To Do";
-
-    el.innerHTML = `
-      <div class="phase-header" onclick="togglePhase('${phase.id}')">
-        <span class="phase-num">${phase.num}</span>
-        <span class="phase-title">${phase.title}</span>
-        <span class="phase-badge ${badgeClass}">${badgeLabel}</span>
-        <span class="phase-time">${phase.time}</span>
-        <span class="chevron">›</span>
-      </div>
-      <div class="topics">
-        <div class="topics-grid">
-          ${phase.topics.map(t => `
-            <label class="topic ${state[t.id] ? 'checked' : ''}" onclick="toggleTopic('${t.id}', event)">
-              <input type="checkbox" ${state[t.id] ? 'checked' : ''} />
-              <span class="topic-label">${t.label}</span>
-              ${t.url ? `<a class="topic-link" href="${t.url}" target="_blank" rel="noopener" onclick="e=>e.stopPropagation()">↗ open</a>` : ''}
-            </label>
-          `).join('')}
+    <div class="progress-wrap">
+        <div class="progress-meta">
+            <span class="progress-label">Overall Progress</span>
+            <span class="progress-count" id="global-count">0 / 0 topics</span>
         </div>
-        <div class="phase-bar-wrap">
-          <div class="phase-bar-meta">
-            <span class="phase-bar-label">Phase progress</span>
-            <span class="phase-bar-pct">${doneCnt} / ${total} · ${pct}%</span>
-          </div>
-          <div class="phase-track">
-            <div class="phase-fill" style="width:${pct}%"></div>
-          </div>
+        <div class="bar-track">
+            <div class="bar-fill" id="global-bar" style="width:0%"></div>
         </div>
-      </div>
-    `;
-
-    container.appendChild(el);
-
-    // restore open state
-    if (state[`_open_${phase.id}`]) el.classList.add("open");
-  });
-
-  updateGlobal();
-}
-
-function togglePhase(id) {
-  const el = document.querySelector(`[data-id="${id}"]`);
-  const isOpen = el.classList.toggle("open");
-  state[`_open_${id}`] = isOpen;
-  saveState(state);
-}
-
-function toggleTopic(id, e) {
-  // prevent label double-firing
-  if (e.target.tagName === "A") return;
-  state[id] = !state[id];
-  saveState(state);
-  renderAll();
-
-  // re-open the phase after re-render
-  const phaseEl = document.querySelector(`[data-id]`);
-}
-
-function updateGlobal() {
-  const allTopics = PHASES.flatMap(p => p.topics);
-  const total = allTopics.length;
-  const done = allTopics.filter(t => state[t.id]).length;
-  const pct = total ? Math.round((done / total) * 100) : 0;
-
-  document.getElementById("global-count").textContent = `${done} / ${total} topics`;
-  document.getElementById("global-bar").style.width = pct + "%";
-}
-
-function resetAll() {
-  if (!confirm("Reset all progress? This can't be undone.")) return;
-  const openStates = {};
-  PHASES.forEach(p => { if (state[`_open_${p.id}`]) openStates[`_open_${p.id}`] = true; });
-  state = { ...openStates };
-  saveState(state);
-  renderAll();
-}
-
-// ── TOOLS REFERENCE ──
-const TOOL_GROUPS = [
-  {
-    category: "Editor & Terminal",
-    tools: [
-      { name: "VS Code",         desc: "Primary editor. Learn shortcuts, extensions, multi-cursor." },
-      { name: "Zsh + Oh My Zsh", desc: "Shell setup. Makes the terminal actually pleasant to use." },
-      { name: "iTerm2 / Windows Terminal", desc: "Better terminal emulator than the default." },
-    ]
-  },
-  {
-    category: "Version Control",
-    tools: [
-      { name: "Git",             desc: "Non-negotiable. Commit early, commit often." },
-      { name: "GitHub",          desc: "Your public portfolio lives here. Keep it active." },
-      { name: "GitHub Actions",  desc: "CI/CD pipelines. Run tests and deploy automatically." },
-    ]
-  },
-  {
-    category: "Frontend",
-    tools: [
-      { name: "React + Vite",    desc: "Go-to for SPAs and quick prototypes." },
-      { name: "Next.js",         desc: "Production full-stack React. App Router is the current standard." },
-      { name: "Tailwind CSS",    desc: "Utility-first CSS. Faster than writing custom stylesheets." },
-      { name: "shadcn/ui",       desc: "Component library built on Tailwind. Used in most modern SaaS." },
-    ]
-  },
-  {
-    category: "Backend & APIs",
-    tools: [
-      { name: "Node.js + Express", desc: "Baseline backend. Know it even if you use Next.js." },
-      { name: "Prisma",          desc: "ORM for TypeScript. Makes database queries type-safe." },
-      { name: "Hono",            desc: "Lightweight alternative to Express. Growing fast in 2026." },
-      { name: "Postman / Bruno", desc: "Test your APIs before wiring up a frontend." },
-    ]
-  },
-  {
-    category: "Database",
-    tools: [
-      { name: "PostgreSQL",      desc: "Primary relational DB. Learn it deeply." },
-      { name: "Supabase",        desc: "Postgres with auth, storage, and real-time out of the box." },
-      { name: "Redis",           desc: "Caching and session storage. Good to be aware of." },
-      { name: "pgvector",        desc: "Vector extension for Postgres. Used in AI/RAG apps." },
-    ]
-  },
-  {
-    category: "Testing",
-    tools: [
-      { name: "Vitest",          desc: "Fastest unit test runner for Vite/modern projects." },
-      { name: "React Testing Library", desc: "Test components the way users interact with them." },
-      { name: "Playwright",      desc: "End-to-end testing. Automates real browser interactions." },
-      { name: "MSW (Mock Service Worker)", desc: "Mock API calls in tests without a real server." },
-    ]
-  },
-  {
-    category: "DevOps & Infra",
-    tools: [
-      { name: "Docker",          desc: "Containerize everything. Removes 'works on my machine'." },
-      { name: "Vercel",          desc: "Easiest Next.js deployment. Free tier is generous." },
-      { name: "Railway",         desc: "Deploy backends and databases with minimal config." },
-      { name: "Cloudflare",      desc: "DNS, CDN, and edge functions. Learn the basics." },
-    ]
-  },
-  {
-    category: "AI & ML Tooling",
-    tools: [
-      { name: "OpenAI API",      desc: "GPT-4o and embeddings. The baseline every employer expects." },
-      { name: "Vercel AI SDK",   desc: "Streaming AI responses in Next.js. Handles the hard parts." },
-      { name: "LangChain.js",    desc: "Orchestration for complex AI workflows and agents." },
-      { name: "Pinecone / pgvector", desc: "Vector stores for semantic search and RAG." },
-      { name: "Cursor / GitHub Copilot", desc: "AI-assisted coding. Learn to use it well, not as a crutch." },
-    ]
-  },
-  {
-    category: "Design & Collaboration",
-    tools: [
-      { name: "Figma",           desc: "Read designs from it. Know how to inspect spacing and tokens." },
-      { name: "Linear",          desc: "Issue tracking used at most startups. Know the workflow." },
-      { name: "Notion",          desc: "Docs and wikis. Common in remote teams." },
-      { name: "Slack",           desc: "Standard async communication at tech companies." },
-    ]
-  },
-];
-
-function renderTools() {
-  const wrap = document.getElementById("tools-section");
-  wrap.innerHTML = TOOL_GROUPS.map(group => `
-    <div class="tool-group">
-      <div class="tool-group-label">${group.category}</div>
-      <div class="tool-list">
-        ${group.tools.map(t => `
-          <div class="tool-item">
-            <span class="tool-name">${t.name}</span>
-            <span class="tool-desc">${t.desc}</span>
-          </div>
-        `).join('')}
-      </div>
     </div>
-  `).join('');
-}
 
-renderAll();
-renderTools();
-</script>
+    <main id="roadmap"></main>
+
+    <footer>
+        <span class="footer-note">Progress saved in your browser</span>
+        <button class="reset-btn" onclick="resetAll()">Reset all</button>
+    </footer>
+
+    <script>
+        const PHASES = [
+            {
+                id: "p1",
+                num: "01",
+                title: "Foundations — HTML, CSS, Git, Terminal",
+                topics: [
+                    { id: "html-odin", label: "The Odin Project — Foundations", url: "https://www.theodinproject.com" },
+                    { id: "html-mdn", label: "MDN Web Docs — Semantic HTML", url: "https://developer.mozilla.org" },
+                    { id: "html-sem", label: "Semantic tags: header, nav, main, footer" },
+                    { id: "git-basics", label: "Git & GitHub basics" },
+                    { id: "terminal", label: "Terminal & VS Code fundamentals" },
+                    { id: "linux-cli", label: "Linux CLI Basics", url: "https://linuxjourney.com" }
+                ]
+            },
+            {
+                id: "p2",
+                num: "02",
+                title: "CSS Mastery",
+                topics: [
+                    { id: "flexbox", label: "Flexbox Froggy", url: "https://flexboxfroggy.com" },
+                    { id: "grid", label: "CSS Grid Garden", url: "https://cssgridgarden.com" },
+                    { id: "selectors", label: "CSS Diner — selectors", url: "https://flukeout.github.io" },
+                    { id: "kevin", label: "Kevin Powell — Responsive Design, CSS Variables" },
+                    { id: "odin-css", label: "Odin Project — CSS projects (landing page, calculator, portfolio)" },
+                ]
+            },
+            {
+                id: "p3",
+                num: "03",
+                title: "JavaScript Fundamentals",
+                topics: [
+                    { id: "jsinfo", label: "javascript.info — core concepts", url: "https://javascript.info" },
+                    { id: "dom", label: "DOM Manipulation & Event Handling" },
+                    { id: "async", label: "Async/Await & Fetch API" },
+                    { id: "closures", label: "Closures & Modules" },
+                    { id: "odin-js", label: "Odin Project JS — Library, Weather, Battleship, Todo" },
+                ]
+            },
+            {
+                id: "p4",
+                num: "04",
+                title: "Python for AI",
+                topics: [
+                    { id: "python", label: "Python Basics (Variables, Functions, OOP)", url: "https://www.python.org/about/gettingstarted/" },
+                    { id: "venv", label: "Virtual Environments & Package Management" },
+                    { id: "asyncio", label: "AsyncIO Basics" },
+                    { id: "typing", label: "Type Hints" },
+                ]
+            },
+            {
+                id: "p5",
+                num: "05",
+                title: "Databases & SQL",
+                topics: [
+                    { id: "pg", label: "PostgreSQL basics", url: "https://neon.com/postgresql/tutorial" },
+                    { id: "sql-crud", label: "SELECT, INSERT, UPDATE, DELETE" },
+                    { id: "sql-join", label: "JOIN, GROUP BY, ORDER BY, HAVING" },
+                    { id: "sql-proj", label: "Mini projects — Student DB, Expense Tracker, Flashcard DB" },
+                    { id: "fts", label: "PostgreSQL Full Text Search (tsvector)" },
+                    { id: "pgvector", label: "pgvector & Vector Search" }
+                ]
+            },
+            {
+                id: "p6",
+                num: "06",
+                title: "TypeScript",
+                topics: [
+                    { id: "ts-total", label: "Total TypeScript", url: "https://www.totaltypescript.com" },
+                    { id: "ts-handbook", label: "TypeScript Handbook", url: "https://www.typescriptlang.org/docs" },
+                    { id: "ts-gen", label: "Generics & Utility Types" },
+                    { id: "ts-guards", label: "Type Guards & Narrowing" },
+                ]
+            },
+            {
+                id: "p7",
+                num: "07",
+                title: "React",
+                topics: [
+                    { id: "react-docs", label: "React official docs", url: "https://react.dev" },
+                    { id: "react-hooks", label: "Components, Props, State, Effects, Custom Hooks" },
+                    { id: "react-ctx", label: "Context API" },
+                    { id: "react-beg", label: "Beginner projects — Notes, Weather, Expense Tracker" },
+                    { id: "react-int", label: "Intermediate — Kanban Board, Habit Tracker, Flashcard App" },
+                    { id: "react-adv", label: "Advanced — Dashboard, Real-Time Chat UI, SaaS Clone" },
+                    { id: "tanstack-query", label: "TanStack Query", url: "https://tanstack.com/query/latest" }
+                ]
+            },
+            {
+                id: "p8",
+                num: "08",
+                title: "API Fundamentals",
+                topics: [
+                    { id: "http", label: "HTTP Request/Response Lifecycle", url: "https://developer.mozilla.org" },
+                    { id: "methods", label: "GET, POST, PUT, PATCH, DELETE" },
+                    { id: "status", label: "HTTP Status Codes" },
+                    { id: "json", label: "JSON APIs" },
+                    { id: "jwt", label: "Cookies, Sessions & JWT" }
+                ]
+            },
+            {
+                id: "p9",
+                num: "09",
+                title: "Next.js & Modern Full Stack",
+                topics: [
+                    { id: "next-learn", label: "Next.js Learn", url: "https://nextjs.org/learn" },
+                    { id: "next-rsc", label: "App Router, Server Components, Server Actions" },
+                    { id: "next-auth", label: "Auth — Sessions, JWT, OAuth (Auth.js / Clerk)" },
+                    { id: "next-deploy", label: "Deployment — Vercel, Railway, Cloudflare" },
+                ]
+            },
+            {
+                id: "p10",
+                num: "10",
+                title: "Backend Development",
+                topics: [
+                    { id: "node", label: "Odin Project — Node.js & Express" },
+                    { id: "rest", label: "REST APIs & MVC Architecture" },
+                    { id: "be-proj", label: "Projects — Blog API, Social Media Clone, CRUD Apps" },
+                    { id: "prisma", label: "Prisma ORM", url: "https://www.prisma.io/docs" },
+                    { id: "hono", label: "Hono (Modern TypeScript APIs)", url: "https://hono.dev" }
+                ]
+            },
+            {
+                id: "p11",
+                num: "11",
+                title: "Testing",
+                topics: [
+                    { id: "test-why", label: "Why testing matters — unit vs integration vs e2e" },
+                    { id: "test-vitest", label: "Vitest — unit testing for modern JS/TS projects", url: "https://vitest.dev" },
+                    { id: "test-rtl", label: "React Testing Library — component testing", url: "https://testing-library.com" },
+                    { id: "test-playwright", label: "Playwright — end-to-end browser testing", url: "https://playwright.dev" },
+                    { id: "test-patterns", label: "Testing patterns — mocking, setup/teardown, coverage" },
+                    { id: "test-ci", label: "Run tests in CI" },
+                    { id: "github-actions", label: "GitHub Actions CI", url: "https://docs.github.com/actions" }
+                ]
+            },
+            {
+                id: "p12",
+                num: "12",
+                title: "Docker & Deployment Infrastructure",
+                topics: [
+                    { id: "docker-nana", label: "TechWorld with Nana — Docker" },
+                    { id: "docker-comp", label: "Docker Compose, Volumes, Networking" },
+                    { id: "docker-proj", label: "Containerize a project" },
+                ]
+            },
+            {
+                id: "p13",
+                num: "13",
+                title: "Cloud Fundamentals",
+                topics: [
+                    { id: "ssh", label: "SSH & Remote Servers" },
+                    { id: "env", label: "Environment Variables" },
+                    { id: "dns", label: "DNS Fundamentals" },
+                    { id: "ssl", label: "HTTPS, SSL & TLS" },
+                    { id: "systemd", label: "systemd Services", url: "https://linuxjourney.com" },
+                    { id: "networking", label: "Ports & Basic Networking" }
+                ]
+            },
+            {
+                id: "p14",
+                num: "14",
+                title: "Security Fundamentals",
+                topics: [
+                    { id: "owasp", label: "OWASP Top 10 — understand the most common vulnerabilities", url: "https://owasp.org/www-project-top-ten/" },
+                    { id: "sql-injection", label: "SQL Injection & Parameterized Queries" },
+                    { id: "xss", label: "XSS & CSRF — how they work and how to prevent them" },
+                    { id: "input-validation", label: "Input Validation & Sanitization" },
+                    { id: "auth-security", label: "Auth Security — password hashing (bcrypt), token storage, expiry" },
+                    { id: "rate-limiting", label: "Rate Limiting & Brute Force Protection" },
+                    { id: "sec-headers", label: "Security Headers (CORS, CSP, HSTS)" },
+                    { id: "secrets-mgmt", label: "Secrets Management — never commit credentials, use .env properly" },
+                ]
+            },
+            {
+                id: "p15",
+                num: "15",
+                title: "AI Engineering",
+                topics: [
+                    { id: "oai", label: "OpenAI API", url: "https://platform.openai.com/docs" },
+                    { id: "ai-sdk", label: "AI SDK", url: "https://ai-sdk.dev" },
+                    { id: "supabase", label: "Supabase & Vector Databases", url: "https://supabase.com" },
+                    { id: "rag", label: "RAG — Chunking, Embeddings, Retrieval, Context Injection" },
+                    { id: "langchain", label: "LangChain Concepts (Optional)", url: "https://langchain.com" },
+                    { id: "mastra", label: "Mastra Framework", url: "https://mastra.ai" },
+                    { id: "mcp", label: "Model Context Protocol (MCP)", url: "https://modelcontextprotocol.io" },
+                    { id: "mcp-security", label: "MCP Security & Tool Permissions" },
+                    { id: "evals", label: "AI Evaluation (Ragas / DeepEval)", url: "https://deepeval.com" },
+                    { id: "observability", label: "Tracing & Observability", url: "https://docs.ragas.io" },
+                    { id: "hybrid-search", label: "Hybrid Search" },
+                    { id: "rrf", label: "Reciprocal Rank Fusion (RRF)" },
+                    { id: "tool-calling", label: "Tool Calling" },
+                    { id: "agents", label: "Agent Workflows" },
+                    { id: "caching", label: "Caching Basics" },
+                    { id: "queues", label: "Background Jobs & Queues" },
+                    { id: "system-design", label: "System Design Fundamentals" }
+                ]
+            },
+            {
+                id: "p16",
+                num: "16",
+                title: "DSA & Interview Prep",
+                topics: [
+                    { id: "dsa-why", label: "Big-O Notation & Time/Space Complexity" },
+                    { id: "dsa-arrays", label: "Arrays & Strings — Two Pointers, Sliding Window", url: "https://neetcode.io" },
+                    { id: "dsa-hashmaps", label: "Hash Maps & Sets" },
+                    { id: "dsa-stack", label: "Stacks & Queues" },
+                    { id: "dsa-linked", label: "Linked Lists" },
+                    { id: "dsa-trees", label: "Binary Trees & BFS / DFS" },
+                    { id: "dsa-recursion", label: "Recursion & Backtracking" },
+                    { id: "dsa-sorting", label: "Sorting — Merge Sort, Quick Sort" },
+                    { id: "dsa-neetcode", label: "Neetcode 150 — work through at your own pace", url: "https://neetcode.io/practice" },
+                    { id: "dsa-behavioral", label: "Behavioral interviews — STAR method, common questions" },
+                    { id: "dsa-sysdesign", label: "System Design basics — scalability, load balancing, caching" },
+                ]
+            },
+            {
+                id: "p17",
+                num: "17",
+                title: "Portfolio & Job Readiness",
+                topics: [
+                    { id: "portfolio", label: "Personal Portfolio Website — clean, fast, deployed" },
+                    { id: "crud-app", label: "Full Stack CRUD Application with auth + DB" },
+                    { id: "saas-app", label: "Authentication-Based SaaS App (billing optional)" },
+                    { id: "ai-app", label: "AI-Powered Application (RAG or agent-based)" },
+                    { id: "capstone", label: "Capstone Project — your best, most polished work" },
+                    { id: "readme-docs", label: "Polish GitHub READMEs — demo GIFs, setup instructions, stack badges" },
+                    { id: "resume", label: "Resume — one page, results-oriented, tailored per role" },
+                    { id: "linkedin", label: "LinkedIn — headline, about, featured projects, open to work" },
+                    { id: "mock-interviews", label: "Mock technical interviews — practice with peers or Pramp" },
+                    { id: "job-tracker", label: "Build a job tracker — apply consistently, follow up" },
+                    { id: "contrib", label: "Open source contribution — even a small PR counts" },
+                ]
+            }
+        ];
+
+        const STORAGE_KEY = "kobe-roadmap-v2";
+
+        function loadState() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+        }
+
+        function saveState(state) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        let state = loadState();
+
+        function getPhaseStatus(phase) {
+            const total = phase.topics.length;
+            const done = phase.topics.filter(t => state[t.id]).length;
+            if (done === 0) return "todo";
+            if (done === total) return "done";
+            return "active";
+        }
+
+        function renderAll() {
+            const container = document.getElementById("roadmap");
+            container.innerHTML = "";
+
+            PHASES.forEach(phase => {
+                const status = getPhaseStatus(phase);
+                const doneCnt = phase.topics.filter(t => state[t.id]).length;
+                const total = phase.topics.length;
+                const pct = Math.round((doneCnt / total) * 100);
+
+                const el = document.createElement("div");
+                el.className = `phase ${status}`;
+                el.dataset.id = phase.id;
+
+                const badgeClass = status === "done" ? "badge-done" : status === "active" ? "badge-active" : "badge-todo";
+                const badgeLabel = status === "done" ? "Complete" : status === "active" ? "In Progress" : "To Do";
+
+                el.innerHTML = `
+        <div class="phase-header" onclick="togglePhase('${phase.id}')">
+            <span class="phase-num">${phase.num}</span>
+            <span class="phase-title">${phase.title}</span>
+            <span class="phase-badge ${badgeClass}">${badgeLabel}</span>
+            <span class="chevron">›</span>
+        </div>
+        <div class="topics">
+            <div class="topics-grid">
+            ${phase.topics.map(t => `
+                <label class="topic ${state[t.id] ? 'checked' : ''}" onclick="toggleTopic('${t.id}', event)">
+                <input type="checkbox" ${state[t.id] ? 'checked' : ''} />
+                <span class="topic-label">${t.label}</span>
+                ${t.url ? `<a class="topic-link" href="${t.url}" target="_blank" rel="noopener" onclick="e=>e.stopPropagation()">↗ open</a>` : ''}
+                </label>
+            `).join('')}
+            </div>
+            <div class="phase-bar-wrap">
+            <div class="phase-bar-meta">
+                <span class="phase-bar-label">Phase progress</span>
+                <span class="phase-bar-pct">${doneCnt} / ${total} · ${pct}%</span>
+            </div>
+            <div class="phase-track">
+                <div class="phase-fill" style="width:${pct}%"></div>
+            </div>
+            </div>
+        </div>
+        `;
+
+                container.appendChild(el);
+
+                // restore open state
+                if (state[`_open_${phase.id}`]) el.classList.add("open");
+            });
+
+            updateGlobal();
+        }
+
+        function togglePhase(id) {
+            const el = document.querySelector(`[data-id="${id}"]`);
+            const isOpen = el.classList.toggle("open");
+            state[`_open_${id}`] = isOpen;
+            saveState(state);
+        }
+
+        function toggleTopic(id, e) {
+            // prevent label double-firing
+            if (e.target.tagName === "A") return;
+            state[id] = !state[id];
+            saveState(state);
+            renderAll();
+
+            // re-open the phase after re-render
+            const phaseEl = document.querySelector(`[data-id]`);
+        }
+
+        function updateGlobal() {
+            const allTopics = PHASES.flatMap(p => p.topics);
+            const total = allTopics.length;
+            const done = allTopics.filter(t => state[t.id]).length;
+            const pct = total ? Math.round((done / total) * 100) : 0;
+
+            document.getElementById("global-count").textContent = `${done} / ${total} topics`;
+            document.getElementById("global-bar").style.width = pct + "%";
+        }
+
+        function resetAll() {
+            if (!confirm("Reset all progress? This can't be undone.")) return;
+            const openStates = {};
+            PHASES.forEach(p => { if (state[`_open_${p.id}`]) openStates[`_open_${p.id}`] = true; });
+            state = { ...openStates };
+            saveState(state);
+            renderAll();
+        }
+
+        // ── TOOLS REFERENCE ──
+        const TOOL_GROUPS = [
+            {
+                category: "Editor & Terminal",
+                tools: [
+                    { name: "VS Code", desc: "Primary editor. Learn shortcuts, extensions, multi-cursor." },
+                    { name: "Zsh + Oh My Zsh", desc: "Shell setup. Makes the terminal actually pleasant to use." },
+                    { name: "iTerm2 / Windows Terminal", desc: "Better terminal emulator than the default." },
+                ]
+            },
+            {
+                category: "Version Control",
+                tools: [
+                    { name: "Git", desc: "Non-negotiable. Commit early, commit often." },
+                    { name: "GitHub", desc: "Your public portfolio lives here. Keep it active." },
+                    { name: "GitHub Actions", desc: "CI/CD pipelines. Run tests and deploy automatically." },
+                ]
+            },
+            {
+                category: "Frontend",
+                tools: [
+                    { name: "React + Vite", desc: "Go-to for SPAs and quick prototypes." },
+                    { name: "Next.js", desc: "Production full-stack React. App Router is the current standard." },
+                    { name: "Tailwind CSS", desc: "Utility-first CSS. Faster than writing custom stylesheets." },
+                    { name: "shadcn/ui", desc: "Component library built on Tailwind. Used in most modern SaaS." },
+                ]
+            },
+            {
+                category: "Backend & APIs",
+                tools: [
+                    { name: "Node.js + Express", desc: "Baseline backend. Know it even if you use Next.js." },
+                    { name: "Prisma", desc: "ORM for TypeScript. Makes database queries type-safe." },
+                    { name: "Hono", desc: "Lightweight alternative to Express. Growing fast in 2026." },
+                    { name: "Postman / Bruno", desc: "Test your APIs before wiring up a frontend." },
+                ]
+            },
+            {
+                category: "Database",
+                tools: [
+                    { name: "PostgreSQL", desc: "Primary relational DB. Learn it deeply." },
+                    { name: "Supabase", desc: "Postgres with auth, storage, and real-time out of the box." },
+                    { name: "Redis", desc: "Caching and session storage. Good to be aware of." },
+                    { name: "pgvector", desc: "Vector extension for Postgres. Used in AI/RAG apps." },
+                ]
+            },
+            {
+                category: "Testing",
+                tools: [
+                    { name: "Vitest", desc: "Fastest unit test runner for Vite/modern projects." },
+                    { name: "React Testing Library", desc: "Test components the way users interact with them." },
+                    { name: "Playwright", desc: "End-to-end testing. Automates real browser interactions." },
+                    { name: "MSW (Mock Service Worker)", desc: "Mock API calls in tests without a real server." },
+                ]
+            },
+            {
+                category: "DevOps & Infra",
+                tools: [
+                    { name: "Docker", desc: "Containerize everything. Removes 'works on my machine'." },
+                    { name: "Vercel", desc: "Easiest Next.js deployment. Free tier is generous." },
+                    { name: "Railway", desc: "Deploy backends and databases with minimal config." },
+                    { name: "Cloudflare", desc: "DNS, CDN, and edge functions. Learn the basics." },
+                ]
+            },
+            {
+                category: "AI & ML Tooling",
+                tools: [
+                    { name: "OpenAI API", desc: "GPT-4o and embeddings. The baseline every employer expects." },
+                    { name: "Vercel AI SDK", desc: "Streaming AI responses in Next.js. Handles the hard parts." },
+                    { name: "LangChain.js", desc: "Orchestration for complex AI workflows and agents." },
+                    { name: "Pinecone / pgvector", desc: "Vector stores for semantic search and RAG." },
+                    { name: "Cursor / GitHub Copilot", desc: "AI-assisted coding. Learn to use it well, not as a crutch." },
+                ]
+            },
+            {
+                category: "Design & Collaboration",
+                tools: [
+                    { name: "Figma", desc: "Read designs from it. Know how to inspect spacing and tokens." },
+                    { name: "Linear", desc: "Issue tracking used at most startups. Know the workflow." },
+                    { name: "Notion", desc: "Docs and wikis. Common in remote teams." },
+                    { name: "Slack", desc: "Standard async communication at tech companies." },
+                ]
+            },
+        ];
+
+        function renderTools() {
+            const wrap = document.getElementById("tools-section");
+            wrap.innerHTML = TOOL_GROUPS.map(group => `
+        <div class="tool-group">
+            <div class="tool-group-label">${group.category}</div>
+            <div class="tool-list">
+            ${group.tools.map(t => `
+                <div class="tool-item">
+                <span class="tool-name">${t.name}</span>
+                <span class="tool-desc">${t.desc}</span>
+                </div>
+            `).join('')}
+            </div>
+        </div>
+        `).join('');
+        }
+
+        renderAll();
+        renderTools();
+    </script>
 </body>
+
 </html>
