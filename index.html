@@ -1,878 +1,845 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kobe's Full-Stack + AI Roadmap</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap"
-        rel="stylesheet" />
-    <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FL033 – Japanese Language Midterm Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #C41E3A;
+      --red-dark: #9B1B30;
+      --gold: #D4A843;
+      --cream: #FFF8F0;
+      --bg: #FAF6F1;
+      --card: #FFFFFF;
+      --text: #2D2D2D;
+      --text-light: #6B6B6B;
+      --border: #E8E0D8;
+      --correct: #2E8B57;
+      --correct-bg: #E8F5E9;
+      --incorrect: #C62828;
+      --incorrect-bg: #FFEBEE;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+      --radius: 12px;
+    }
 
-        :root {
-            --bg: #0D1117;
-            --surface: #161B22;
-            --border: #21262D;
-            --blue: #58A6FF;
-            --green: #3FB950;
-            --orange: #D29922;
-            --text: #F0F6FC;
-            --muted: #8B949E;
-            --mono: 'JetBrains Mono', monospace;
-            --sans: 'Inter', sans-serif;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    body {
+      font-family: 'Poppins', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--sans);
-            font-size: 14px;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
+    /* === HEADER === */
+    .hero {
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+      color: white;
+      text-align: center;
+      padding: 3rem 1.5rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '🌸';
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.08;
+      top: -1rem;
+      right: -1rem;
+    }
+    .hero::after {
+      content: '日本語';
+      position: absolute;
+      font-size: 6rem;
+      opacity: 0.06;
+      bottom: -1.5rem;
+      left: 1rem;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      position: relative;
+    }
+    .hero p {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 300;
+      position: relative;
+    }
 
-        /* ── HEADER ── */
-        header {
-            border-bottom: 1px solid var(--border);
-            padding: 28px 24px 24px;
-            max-width: 720px;
-            margin: 0 auto;
-        }
+    /* === SCOREBOARD === */
+    .scoreboard {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      max-width: 700px;
+      margin: -1.5rem auto 2rem;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    .score-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem 1.5rem;
+      text-align: center;
+      min-width: 130px;
+      flex: 1;
+    }
+    .score-card .label { font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; }
+    .score-card .value { font-size: 1.8rem; font-weight: 700; color: var(--red); }
+    .score-card .value.perfect { color: var(--correct); }
 
-        .header-eyebrow {
-            font-family: var(--mono);
-            font-size: 11px;
-            color: var(--muted);
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
+    /* === NAV TABS === */
+    .nav-wrap {
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+      padding: 0 1rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      min-width: max-content;
+    }
+    .nav-tab {
+      padding: 0.65rem 1.2rem;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      background: var(--card);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-light);
+      transition: all 0.25s;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .nav-tab:hover { border-color: var(--red); color: var(--red); }
+    .nav-tab.active {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+    .nav-tab .tab-score {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.7rem;
+      margin-left: 0.4rem;
+    }
+    .nav-tab:not(.active) .tab-score {
+      background: var(--cream);
+      color: var(--text-light);
+    }
 
-        header h1 {
-            font-family: var(--mono);
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 4px;
-        }
+    /* === QUIZ SECTION === */
+    .quiz-section {
+      display: none;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem 3rem;
+    }
+    .quiz-section.active { display: block; }
 
-        header p {
-            color: var(--muted);
-            font-size: 13px;
-        }
+    .section-header {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--red);
+    }
+    .section-header h2 { font-size: 1.3rem; color: var(--red-dark); margin-bottom: 0.2rem; }
+    .section-header .meta { font-size: 0.85rem; color: var(--text-light); }
 
-        /* ── PROGRESS BAR ── */
-        .progress-wrap {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border);
-        }
+    /* === QUESTION CARD === */
+    .q-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: box-shadow 0.25s;
+      border: 2px solid transparent;
+    }
+    .q-card:hover { box-shadow: var(--shadow-hover); }
+    .q-card.answered-correct { border-color: var(--correct); }
+    .q-card.answered-incorrect { border-color: var(--incorrect); }
 
-        .progress-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 8px;
-        }
+    .q-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-right: 0.7rem;
+      flex-shrink: 0;
+    }
+    .q-card.answered-correct .q-num { background: var(--correct); }
+    .q-card.answered-incorrect .q-num { background: var(--incorrect); }
 
-        .progress-label {
-            font-family: var(--mono);
-            font-size: 11px;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: .07em;
-        }
+    .q-text {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+    }
+    .q-text span { flex: 1; }
 
-        .progress-count {
-            font-family: var(--mono);
-            font-size: 12px;
-            color: var(--blue);
-        }
+    /* MCQ Options */
+    .options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .option {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+    .option:hover { border-color: var(--gold); background: var(--cream); }
+    .option.selected { border-color: var(--red); background: #FFF0F3; }
+    .option.correct-answer { border-color: var(--correct); background: var(--correct-bg); }
+    .option.wrong-answer { border-color: var(--incorrect); background: var(--incorrect-bg); }
+    .option .radio {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .option.selected .radio { border-color: var(--red); }
+    .option.selected .radio::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+    .option.correct-answer .radio { border-color: var(--correct); }
+    .option.correct-answer .radio::after {
+      content: '✓';
+      font-size: 0.7rem;
+      color: var(--correct);
+      font-weight: 700;
+    }
+    .option.wrong-answer .radio { border-color: var(--incorrect); }
+    .option.wrong-answer .radio::after {
+      content: '✗';
+      font-size: 0.7rem;
+      color: var(--incorrect);
+      font-weight: 700;
+    }
+    .option.disabled { pointer-events: none; }
 
-        .bar-track {
-            height: 4px;
-            background: var(--border);
-            border-radius: 2px;
-            overflow: hidden;
-        }
+    /* Text Input */
+    .input-group { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+    .q-input {
+      padding: 0.65rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+      flex: 1;
+      min-width: 150px;
+      max-width: 300px;
+    }
+    .q-input:focus { border-color: var(--red); }
+    .q-input.correct { border-color: var(--correct); background: var(--correct-bg); }
+    .q-input.incorrect { border-color: var(--incorrect); background: var(--incorrect-bg); }
+    .q-input:disabled { opacity: 0.8; }
 
-        .bar-fill {
-            height: 100%;
-            background: var(--green);
-            border-radius: 2px;
-            transition: width .4s ease;
-        }
+    .feedback {
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.correct { color: var(--correct); }
+    .feedback.incorrect { color: var(--incorrect); }
 
-        /* ── PHASE LAYOUT ── */
-        main {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 24px 24px 64px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+    /* === BUTTONS === */
+    .btn {
+      padding: 0.7rem 1.8rem;
+      border: none;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .btn-primary {
+      background: var(--red);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--red);
+      border: 2px solid var(--red);
+    }
+    .btn-outline:hover { background: var(--red); color: white; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        /* ── PHASE CARD ── */
-        .phase {
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--surface);
-            overflow: hidden;
-            transition: border-color .2s;
-        }
+    .section-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
 
-        .phase.done {
-            border-color: #238636;
-        }
+    /* === RESULT BANNER === */
+    .result-banner {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      margin-top: 1rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .result-banner.show { display: block; }
+    .result-banner.great { background: var(--correct-bg); color: var(--correct); }
+    .result-banner.ok { background: #FFF8E1; color: #F57F17; }
+    .result-banner.bad { background: var(--incorrect-bg); color: var(--incorrect); }
 
-        .phase.active {
-            border-color: var(--blue);
-        }
+    /* === FOOTER === */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-light);
+      font-size: 0.8rem;
+    }
+    footer a { color: var(--red); text-decoration: none; }
 
-        .phase-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            cursor: pointer;
-            user-select: none;
-            -webkit-user-select: none;
-        }
+    /* === RESPONSIVE === */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.6rem; }
+      .scoreboard { gap: 0.75rem; }
+      .score-card { min-width: 100px; padding: 0.75rem 1rem; }
+      .score-card .value { font-size: 1.4rem; }
+      .q-card { padding: 1.2rem; }
+      .section-header { padding: 1.2rem; }
+    }
 
-        .phase-header:hover {
-            background: rgba(255, 255, 255, .02);
-        }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .q-card { animation: fadeIn 0.3s ease-out backwards; }
+    .q-card:nth-child(2) { animation-delay: 0.03s; }
+    .q-card:nth-child(3) { animation-delay: 0.06s; }
+    .q-card:nth-child(4) { animation-delay: 0.09s; }
+    .q-card:nth-child(5) { animation-delay: 0.12s; }
 
-        .phase-num {
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--muted);
-            min-width: 28px;
-            letter-spacing: .05em;
-        }
-
-        .phase-title {
-            flex: 1;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .phase-badge {
-            font-family: var(--mono);
-            font-size: 10px;
-            padding: 2px 7px;
-            border-radius: 20px;
-            border: 1px solid;
-            white-space: nowrap;
-        }
-
-        .badge-done {
-            color: var(--green);
-            border-color: #238636;
-            background: rgba(63, 185, 80, .08);
-        }
-
-        .badge-active {
-            color: var(--blue);
-            border-color: var(--blue);
-            background: rgba(88, 166, 255, .08);
-        }
-
-        .badge-todo {
-            color: var(--muted);
-            border-color: var(--border);
-            background: transparent;
-        }
-
-        .phase-time {
-            display: none;
-        }
-
-        .chevron {
-            color: var(--muted);
-            font-size: 10px;
-            margin-left: 4px;
-            transition: transform .2s;
-        }
-
-        .phase.open .chevron {
-            transform: rotate(90deg);
-        }
-
-        /* ── TOPICS ── */
-        .topics {
-            display: none;
-            border-top: 1px solid var(--border);
-            padding: 12px 16px 16px;
-        }
-
-        .phase.open .topics {
-            display: block;
-        }
-
-        .topics-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 12px;
-        }
-
-        .topic {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background .15s;
-        }
-
-        .topic:hover {
-            background: rgba(255, 255, 255, .03);
-        }
-
-        .topic input[type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
-            border: 1px solid var(--border);
-            border-radius: 3px;
-            background: var(--bg);
-            cursor: pointer;
-            flex-shrink: 0;
-            position: relative;
-            transition: background .15s, border-color .15s;
-        }
-
-        .topic input[type="checkbox"]:checked {
-            background: var(--green);
-            border-color: var(--green);
-        }
-
-        .topic input[type="checkbox"]:checked::after {
-            content: '';
-            position: absolute;
-            left: 3px;
-            top: 1px;
-            width: 5px;
-            height: 8px;
-            border: 2px solid #0D1117;
-            border-top: none;
-            border-left: none;
-            transform: rotate(45deg);
-        }
-
-        .topic-label {
-            font-size: 13px;
-            color: var(--text);
-            line-height: 1.3;
-        }
-
-        .topic.checked .topic-label {
-            color: var(--muted);
-            text-decoration: line-through;
-            text-decoration-color: #3d444d;
-        }
-
-        .topic-link {
-            margin-left: auto;
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--blue);
-            text-decoration: none;
-            opacity: 0;
-            transition: opacity .15s;
-            white-space: nowrap;
-        }
-
-        .topic:hover .topic-link {
-            opacity: 1;
-        }
-
-        .topic-link:hover {
-            text-decoration: underline;
-        }
-
-        /* ── PHASE PROGRESS BAR ── */
-        .phase-bar-wrap {
-            margin-top: 4px;
-        }
-
-        .phase-bar-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
-
-        .phase-bar-label {
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--muted);
-        }
-
-        .phase-bar-pct {
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--muted);
-        }
-
-        .phase-track {
-            height: 3px;
-            background: var(--border);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .phase-fill {
-            height: 100%;
-            background: var(--blue);
-            border-radius: 2px;
-            transition: width .3s ease;
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            border-top: 1px solid var(--border);
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 20px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-note {
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--muted);
-        }
-
-        .reset-btn {
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--muted);
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 4px 10px;
-            cursor: pointer;
-            transition: color .15s, border-color .15s;
-        }
-
-        .reset-btn:hover {
-            color: var(--text);
-            border-color: var(--muted);
-        }
-
-        @media (max-width: 500px) {
-
-            header,
-            .progress-wrap,
-            main,
-            footer {
-                padding-left: 16px;
-                padding-right: 16px;
-            }
-        }
-    </style>
+    /* Confetti canvas */
+    #confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+  </style>
 </head>
-
 <body>
+  <canvas id="confetti"></canvas>
 
-    <header>
-        <div class="header-eyebrow">2026 · Personal Roadmap</div>
-        <h1>Full-Stack + AI Engineer</h1>
-        <p>Self-paced. Free resources only. Track topics as you go. Click a phase to expand.</p>
-    </header>
+  <!-- HERO -->
+  <header class="hero">
+    <h1>🌸 FL033 日本語 Midterm Quiz</h1>
+    <p>Japanese Language — Midterm Exercises Review</p>
+  </header>
 
-    <div class="progress-wrap">
-        <div class="progress-meta">
-            <span class="progress-label">Overall Progress</span>
-            <span class="progress-count" id="global-count">0 / 0 topics</span>
-        </div>
-        <div class="bar-track">
-            <div class="bar-fill" id="global-bar" style="width:0%"></div>
-        </div>
+  <!-- SCOREBOARD -->
+  <div class="scoreboard">
+    <div class="score-card">
+      <div class="label">Total Score</div>
+      <div class="value" id="totalScore">0</div>
     </div>
+    <div class="score-card">
+      <div class="label">Answered</div>
+      <div class="value" id="totalAnswered">0</div>
+    </div>
+    <div class="score-card">
+      <div class="label">Accuracy</div>
+      <div class="value" id="totalAccuracy">—</div>
+    </div>
+  </div>
 
-    <main id="roadmap"></main>
+  <!-- NAV TABS -->
+  <div class="nav-wrap">
+    <div class="nav-tabs" id="navTabs"></div>
+  </div>
 
-    <footer>
-        <span class="footer-note">Progress saved in your browser</span>
-        <button class="reset-btn" onclick="resetAll()">Reset all</button>
-    </footer>
+  <!-- QUIZ CONTAINER -->
+  <main id="quizContainer"></main>
 
-    <script>
-        const PHASES = [
-            {
-                id: "p1",
-                num: "01",
-                title: "Foundations — HTML, CSS, Git, Terminal",
-                topics: [
-                    { id: "html-odin", label: "The Odin Project — Foundations", url: "https://www.theodinproject.com" },
-                    { id: "html-mdn", label: "MDN Web Docs — Semantic HTML", url: "https://developer.mozilla.org" },
-                    { id: "html-sem", label: "Semantic tags: header, nav, main, footer" },
-                    { id: "git-basics", label: "Git & GitHub basics" },
-                    { id: "terminal", label: "Terminal & VS Code fundamentals" },
-                    { id: "linux-cli", label: "Linux CLI Basics", url: "https://linuxjourney.com" }
-                ]
-            },
-            {
-                id: "p2",
-                num: "02",
-                title: "CSS Mastery",
-                topics: [
-                    { id: "flexbox", label: "Flexbox Froggy", url: "https://flexboxfroggy.com" },
-                    { id: "grid", label: "CSS Grid Garden", url: "https://cssgridgarden.com" },
-                    { id: "selectors", label: "CSS Diner — selectors", url: "https://flukeout.github.io" },
-                    { id: "kevin", label: "Kevin Powell — Responsive Design, CSS Variables" },
-                    { id: "odin-css", label: "Odin Project — CSS projects (landing page, calculator, portfolio)" },
-                ]
-            },
-            {
-                id: "p3",
-                num: "03",
-                title: "JavaScript Fundamentals",
-                topics: [
-                    { id: "jsinfo", label: "javascript.info — core concepts", url: "https://javascript.info" },
-                    { id: "dom", label: "DOM Manipulation & Event Handling" },
-                    { id: "async", label: "Async/Await & Fetch API" },
-                    { id: "closures", label: "Closures & Modules" },
-                    { id: "odin-js", label: "Odin Project JS — Library, Weather, Battleship, Todo" },
-                ]
-            },
-            {
-                id: "p4",
-                num: "04",
-                title: "Python for AI",
-                topics: [
-                    { id: "python", label: "Python Basics (Variables, Functions, OOP)", url: "https://www.python.org/about/gettingstarted/" },
-                    { id: "venv", label: "Virtual Environments & Package Management" },
-                    { id: "asyncio", label: "AsyncIO Basics" },
-                    { id: "typing", label: "Type Hints" },
-                ]
-            },
-            {
-                id: "p5",
-                num: "05",
-                title: "Databases & SQL",
-                topics: [
-                    { id: "pg", label: "PostgreSQL basics", url: "https://neon.com/postgresql/tutorial" },
-                    { id: "sql-crud", label: "SELECT, INSERT, UPDATE, DELETE" },
-                    { id: "sql-join", label: "JOIN, GROUP BY, ORDER BY, HAVING" },
-                    { id: "sql-proj", label: "Mini projects — Student DB, Expense Tracker, Flashcard DB" },
-                    { id: "fts", label: "PostgreSQL Full Text Search (tsvector)" },
-                    { id: "pgvector", label: "pgvector & Vector Search" }
-                ]
-            },
-            {
-                id: "p6",
-                num: "06",
-                title: "TypeScript",
-                topics: [
-                    { id: "ts-total", label: "Total TypeScript", url: "https://www.totaltypescript.com" },
-                    { id: "ts-handbook", label: "TypeScript Handbook", url: "https://www.typescriptlang.org/docs" },
-                    { id: "ts-gen", label: "Generics & Utility Types" },
-                    { id: "ts-guards", label: "Type Guards & Narrowing" },
-                ]
-            },
-            {
-                id: "p7",
-                num: "07",
-                title: "React",
-                topics: [
-                    { id: "react-docs", label: "React official docs", url: "https://react.dev" },
-                    { id: "react-hooks", label: "Components, Props, State, Effects, Custom Hooks" },
-                    { id: "react-ctx", label: "Context API" },
-                    { id: "react-beg", label: "Beginner projects — Notes, Weather, Expense Tracker" },
-                    { id: "react-int", label: "Intermediate — Kanban Board, Habit Tracker, Flashcard App" },
-                    { id: "react-adv", label: "Advanced — Dashboard, Real-Time Chat UI, SaaS Clone" },
-                    { id: "tanstack-query", label: "TanStack Query", url: "https://tanstack.com/query/latest" }
-                ]
-            },
-            {
-                id: "p8",
-                num: "08",
-                title: "API Fundamentals",
-                topics: [
-                    { id: "http", label: "HTTP Request/Response Lifecycle", url: "https://developer.mozilla.org" },
-                    { id: "methods", label: "GET, POST, PUT, PATCH, DELETE" },
-                    { id: "status", label: "HTTP Status Codes" },
-                    { id: "json", label: "JSON APIs" },
-                    { id: "jwt", label: "Cookies, Sessions & JWT" }
-                ]
-            },
-            {
-                id: "p9",
-                num: "09",
-                title: "Next.js & Modern Full Stack",
-                topics: [
-                    { id: "next-learn", label: "Next.js Learn", url: "https://nextjs.org/learn" },
-                    { id: "next-rsc", label: "App Router, Server Components, Server Actions" },
-                    { id: "next-auth", label: "Auth — Sessions, JWT, OAuth (Auth.js / Clerk)" },
-                    { id: "next-deploy", label: "Deployment — Vercel, Railway, Cloudflare" },
-                ]
-            },
-            {
-                id: "p10",
-                num: "10",
-                title: "Backend Development",
-                topics: [
-                    { id: "node", label: "Odin Project — Node.js & Express" },
-                    { id: "rest", label: "REST APIs & MVC Architecture" },
-                    { id: "be-proj", label: "Projects — Blog API, Social Media Clone, CRUD Apps" },
-                    { id: "prisma", label: "Prisma ORM", url: "https://www.prisma.io/docs" },
-                    { id: "hono", label: "Hono (Modern TypeScript APIs)", url: "https://hono.dev" }
-                ]
-            },
-            {
-                id: "p11",
-                num: "11",
-                title: "Testing",
-                topics: [
-                    { id: "test-why", label: "Why testing matters — unit vs integration vs e2e" },
-                    { id: "test-vitest", label: "Vitest — unit testing for modern JS/TS projects", url: "https://vitest.dev" },
-                    { id: "test-rtl", label: "React Testing Library — component testing", url: "https://testing-library.com" },
-                    { id: "test-playwright", label: "Playwright — end-to-end browser testing", url: "https://playwright.dev" },
-                    { id: "test-patterns", label: "Testing patterns — mocking, setup/teardown, coverage" },
-                    { id: "test-ci", label: "Run tests in CI" },
-                    { id: "github-actions", label: "GitHub Actions CI", url: "https://docs.github.com/actions" }
-                ]
-            },
-            {
-                id: "p12",
-                num: "12",
-                title: "Docker & Deployment Infrastructure",
-                topics: [
-                    { id: "docker-nana", label: "TechWorld with Nana — Docker" },
-                    { id: "docker-comp", label: "Docker Compose, Volumes, Networking" },
-                    { id: "docker-proj", label: "Containerize a project" },
-                ]
-            },
-            {
-                id: "p13",
-                num: "13",
-                title: "Cloud Fundamentals",
-                topics: [
-                    { id: "ssh", label: "SSH & Remote Servers" },
-                    { id: "env", label: "Environment Variables" },
-                    { id: "dns", label: "DNS Fundamentals" },
-                    { id: "ssl", label: "HTTPS, SSL & TLS" },
-                    { id: "systemd", label: "systemd Services", url: "https://linuxjourney.com" },
-                    { id: "networking", label: "Ports & Basic Networking" }
-                ]
-            },
-            {
-                id: "p14",
-                num: "14",
-                title: "Security Fundamentals",
-                topics: [
-                    { id: "owasp", label: "OWASP Top 10 — understand the most common vulnerabilities", url: "https://owasp.org/www-project-top-ten/" },
-                    { id: "sql-injection", label: "SQL Injection & Parameterized Queries" },
-                    { id: "xss", label: "XSS & CSRF — how they work and how to prevent them" },
-                    { id: "input-validation", label: "Input Validation & Sanitization" },
-                    { id: "auth-security", label: "Auth Security — password hashing (bcrypt), token storage, expiry" },
-                    { id: "rate-limiting", label: "Rate Limiting & Brute Force Protection" },
-                    { id: "sec-headers", label: "Security Headers (CORS, CSP, HSTS)" },
-                    { id: "secrets-mgmt", label: "Secrets Management — never commit credentials, use .env properly" },
-                ]
-            },
-            {
-                id: "p15",
-                num: "15",
-                title: "AI Engineering",
-                topics: [
-                    { id: "oai", label: "OpenAI API", url: "https://platform.openai.com/docs" },
-                    { id: "ai-sdk", label: "AI SDK", url: "https://ai-sdk.dev" },
-                    { id: "supabase", label: "Supabase & Vector Databases", url: "https://supabase.com" },
-                    { id: "rag", label: "RAG — Chunking, Embeddings, Retrieval, Context Injection" },
-                    { id: "langchain", label: "LangChain Concepts (Optional)", url: "https://langchain.com" },
-                    { id: "mastra", label: "Mastra Framework", url: "https://mastra.ai" },
-                    { id: "mcp", label: "Model Context Protocol (MCP)", url: "https://modelcontextprotocol.io" },
-                    { id: "mcp-security", label: "MCP Security & Tool Permissions" },
-                    { id: "evals", label: "AI Evaluation (Ragas / DeepEval)", url: "https://deepeval.com" },
-                    { id: "observability", label: "Tracing & Observability", url: "https://docs.ragas.io" },
-                    { id: "hybrid-search", label: "Hybrid Search" },
-                    { id: "rrf", label: "Reciprocal Rank Fusion (RRF)" },
-                    { id: "tool-calling", label: "Tool Calling" },
-                    { id: "agents", label: "Agent Workflows" },
-                    { id: "caching", label: "Caching Basics" },
-                    { id: "queues", label: "Background Jobs & Queues" },
-                    { id: "system-design", label: "System Design Fundamentals" }
-                ]
-            },
-            {
-                id: "p16",
-                num: "16",
-                title: "DSA & Interview Prep",
-                topics: [
-                    { id: "dsa-why", label: "Big-O Notation & Time/Space Complexity" },
-                    { id: "dsa-arrays", label: "Arrays & Strings — Two Pointers, Sliding Window", url: "https://neetcode.io" },
-                    { id: "dsa-hashmaps", label: "Hash Maps & Sets" },
-                    { id: "dsa-stack", label: "Stacks & Queues" },
-                    { id: "dsa-linked", label: "Linked Lists" },
-                    { id: "dsa-trees", label: "Binary Trees & BFS / DFS" },
-                    { id: "dsa-recursion", label: "Recursion & Backtracking" },
-                    { id: "dsa-sorting", label: "Sorting — Merge Sort, Quick Sort" },
-                    { id: "dsa-neetcode", label: "Neetcode 150 — work through at your own pace", url: "https://neetcode.io/practice" },
-                    { id: "dsa-behavioral", label: "Behavioral interviews — STAR method, common questions" },
-                    { id: "dsa-sysdesign", label: "System Design basics — scalability, load balancing, caching" },
-                ]
-            },
-            {
-                id: "p17",
-                num: "17",
-                title: "Portfolio & Job Readiness",
-                topics: [
-                    { id: "portfolio", label: "Personal Portfolio Website — clean, fast, deployed" },
-                    { id: "crud-app", label: "Full Stack CRUD Application with auth + DB" },
-                    { id: "saas-app", label: "Authentication-Based SaaS App (billing optional)" },
-                    { id: "ai-app", label: "AI-Powered Application (RAG or agent-based)" },
-                    { id: "capstone", label: "Capstone Project — your best, most polished work" },
-                    { id: "readme-docs", label: "Polish GitHub READMEs — demo GIFs, setup instructions, stack badges" },
-                    { id: "resume", label: "Resume — one page, results-oriented, tailored per role" },
-                    { id: "linkedin", label: "LinkedIn — headline, about, featured projects, open to work" },
-                    { id: "mock-interviews", label: "Mock technical interviews — practice with peers or Pramp" },
-                    { id: "job-tracker", label: "Build a job tracker — apply consistently, follow up" },
-                    { id: "contrib", label: "Open source contribution — even a small PR counts" },
-                ]
-            }
-        ];
+  <footer>
+    <p>FL033 Japanese Language Review &nbsp;|&nbsp; Built with 🌸</p>
+  </footer>
 
-        const STORAGE_KEY = "kobe-roadmap-v2";
+<script>
+// ============================================================
+// QUIZ DATA
+// ============================================================
+const quizData = [
+  // ==================== EXERCISE 1 ====================
+  {
+    id: 'ex1',
+    title: 'Exercise #1 — Greetings & Expressions',
+    date: 'Aug. 22, 2026',
+    points: 25,
+    type: 'mcq',
+    questions: [
+      { q: 'You are saying goodbye to someone you may not see again for a long time.', opts: ['Sayounara.', 'Jaa, mata.', 'Ogenki desu.', 'Ittekimasu.'], ans: 0 },
+      { q: 'Your family member arrives home and says, "Tadaima." What should you reply?', opts: ['Ittekimasu.', 'Oyasumi nasai.', 'Jaa, mata.', 'Okaeri nasai.'], ans: 3 },
+      { q: 'Before going to bed, what should you say to your family?', opts: ['Hajimemashite.', 'Oyasumi nasai.', 'Tadaima.', 'Sayounara.'], ans: 1 },
+      { q: 'You are leaving the office before your coworkers. What is the appropriate expression?', opts: ['Okaeri nasai.', 'Ohisashiburi.', 'Ogenki desu ka.', 'Osaki ni shitsurei shimasu.'], ans: 3 },
+      { q: 'After finishing work, you thank your coworkers for their hard work.', opts: ['Oyasumi nasai.', 'Itterasshai.', 'Tadaima.', 'Otsukaresama deshita.'], ans: 3 },
+      { q: 'You are in the library and need to ask someone to move so you can pass through. What will you say first?', opts: ['Dou itashimashite.', 'Arigatou gozaimasu.', 'Gomen nasai.', 'Sumimasen.'], ans: 3 },
+      { q: 'You arrive at school at 7:00 in the morning. What should you say to your teacher?', opts: ['Konnichiwa.', 'Konbanwa.', 'Ohayou gozaimasu.', 'Arigatou gozaimasu.'], ans: 2 },
+      { q: 'Your teacher asks if you submitted your homework, and you did. What will you say?', opts: ['Douzo tabete kudasai.', 'Sumimasen.', 'Hai.', 'Iie.'], ans: 2 },
+      { q: 'Your child says, "Ittekimasu." What should you reply?', opts: ['Otsukaresama deshita.', 'Oyasumi nasai.', 'Itterasshai.', 'Ohisashiburi.'], ans: 2 },
+      { q: 'You accidentally step on your friend\'s foot during a game.', opts: ['Oishii desu.', 'Hai.', 'Konnichiwa.', 'Gomen nasai.'], ans: 3 },
+      { q: 'You arrive at school at 7:00 AM and see your teacher. What will you say?', opts: ['Ohayou gozaimasu.', 'Kanpai.', 'Konbanwa.', 'Sumimasen.'], ans: 0 },
+      { q: 'Your teacher asks, "Do you understand the lesson?" You politely answer, "Yes."', opts: ['Sumimasen.', 'Hai.', 'Ee.', 'Iie.'], ans: 1 },
+      { q: 'You unexpectedly meet your childhood friend after several years.', opts: ['Ohisashiburi.', 'Itterasshai.', 'Otsukaresama deshita.', 'Hajimemashite.'], ans: 0 },
+      { q: 'You are leaving your house for school. What should you say?', opts: ['Okaeri nasai.', 'Ogenki desu ka.', 'Ittekimasu.', 'Tadaima.'], ans: 2 },
+      { q: 'Your teacher asks if you understand today\'s lesson. You do understand. What will you say?', opts: ['Arigatou gozaimasu.', 'Hai.', 'Itadakimasu.', 'Sumimasen.'], ans: 1 },
+      { q: 'You meet a friend while walking home at 6:00 PM. What greeting will you use?', opts: ['Ohayou gozaimasu.', 'Konbanwa.', 'Hai.', 'Konnichiwa.'], ans: 1 },
+      { q: 'You are meeting your new classmate for the first time. What should you say first?', opts: ['Hajimemashite.', 'Sayounara.', 'Oyasumi nasai.', 'Tadaima.'], ans: 0 },
+      { q: 'Your friend asks if Japanese is interesting, and you agree. What will you say?', opts: ['Iie.', 'Ee.', 'Dou itashimashite.', 'Sumimasen.'], ans: 1 },
+      { q: 'Your grandmother prepares a delicious dinner. After tasting it, what will you say?', opts: ['Sumimasen.', 'Dou itashimashite.', 'Oishii desu.', 'Konnichiwa.'], ans: 2 },
+      { q: 'You are hosting a party and offering pizza to your guests. What will you say?', opts: ['Gochisousama deshita.', 'Douzo tabete kudasai.', 'Oishii desu.', 'Itadakimasu.'], ans: 1 },
+      { q: 'You stepped on your classmate\'s foot by accident. What will you say?', opts: ['Ohayou.', 'Arigatou gozaimasu.', 'Hai.', 'Gomen nasai.'], ans: 3 },
+      { q: 'Your friend gives you a birthday present. What do you say?', opts: ['Kanpai.', 'Arigatou gozaimasu.', 'Sumimasen.', 'Dou itashimashite.'], ans: 1 },
+      { q: 'The food has just been served, and everyone is about to eat. What should you say?', opts: ['Dou itashimashite.', 'Oishii desu.', 'Gochisousama deshita.', 'Itadakimasu.'], ans: 3 },
+      { q: 'You visit your neighbor at 7:00 PM.', opts: ['Hai.', 'Konbanwa.', 'Konnichiwa.', 'Itadakimasu.'], ans: 1 },
+      { q: 'Your close friend asks if you want to play basketball. You casually answer, "Yes."', opts: ['Ee.', 'Douzo tabete kudasai.', 'Hai.', 'Iie.'], ans: 0 },
+    ]
+  },
 
-        function loadState() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+  // ==================== EXERCISE 2 ====================
+  {
+    id: 'ex2',
+    title: 'Exercise #2 — Numbers (日本語 → Number)',
+    date: 'Aug. 29, 2026',
+    points: 25,
+    type: 'input',
+    questions: [
+      { q: 'sanbyaku kyuujuu san', ans: ['393'] },
+      { q: 'kyuusen gohyaku sanjuu yon', ans: ['9534'] },
+      { q: 'ichi', ans: ['1'] },
+      { q: 'rokujuu ni', ans: ['62'] },
+      { q: 'roppyaku roku', ans: ['606'] },
+      { q: 'yonsen nanahyaku nanajuu ichi', ans: ['4771'] },
+      { q: 'ichi man rokusen yonhyaku yonjuu kyuu', ans: ['16449'] },
+      { q: 'nana man sanzen nihyaku ichi', ans: ['73201'] },
+      { q: 'go', ans: ['5'] },
+      { q: 'nanahyaku hachijuu roku', ans: ['786'] },
+      { q: 'gojuu kyuu', ans: ['59'] },
+      { q: 'rokusen sanbyaku nijuu kyuu', ans: ['6329'] },
+      { q: 'yonhyaku nijuu san', ans: ['423'] },
+      { q: 'nanasen sanbyaku juuyon', ans: ['7314'] },
+      { q: 'sanjuu hachi', ans: ['38'] },
+      // BONUS questions
+      { q: 'hyaku nijuu', ans: ['120'] },
+      { q: 'nihyaku gojuu', ans: ['250'] },
+      { q: 'happyaku', ans: ['800'] },
+      { q: 'nisen sanbyaku', ans: ['2300'] },
+      { q: 'hassen', ans: ['8000'] },
+      { q: 'juu', ans: ['10'] },
+      { q: 'ni', ans: ['2'] },
+      { q: 'kyuu', ans: ['9'] },
+      { q: 'juugo', ans: ['15'] },
+      { q: 'yonjuu nana', ans: ['47'] },
+    ]
+  },
+
+  // ==================== EXERCISE 2B ====================
+  {
+    id: 'ex2b',
+    title: 'Exercise #2B — Numbers (Number → 日本語)',
+    date: 'Aug. 29, 2026',
+    points: 15,
+    type: 'input',
+    questions: [
+      { q: 'Write the Japanese reading for: 3', ans: ['san'] },
+      { q: 'Write the Japanese reading for: 8', ans: ['hachi'] },
+      { q: 'Write the Japanese reading for: 14', ans: ['juuyon', 'juu yon'] },
+      { q: 'Write the Japanese reading for: 47', ans: ['yonjuu nana', 'yonjuunana', 'shi juu nana', 'shijuunana'] },
+      { q: 'Write the Japanese reading for: 62', ans: ['rokujuu ni', 'rokujuuni'] },
+      { q: 'Write the Japanese reading for: 100', ans: ['hyaku'] },
+      { q: 'Write the Japanese reading for: 215', ans: ['nihyaku juugo', 'nihyaku juugo', 'ni hyaku juu go'] },
+      { q: 'Write the Japanese reading for: 500', ans: ['gohyaku'] },
+      { q: 'Write the Japanese reading for: 1000', ans: ['sen'] },
+      { q: 'Write the Japanese reading for: 3600', ans: ['sanzen roppyaku', 'sanzenroppyaku'] },
+      { q: 'Write the Japanese reading for: 10000', ans: ['ichiman', 'ichi man'] },
+      { q: 'Write the Japanese reading for: 423', ans: ['yonhyaku nijuu san', 'yonhyaku nijuusan'] },
+      { q: 'Write the Japanese reading for: 786', ans: ['nanahyaku hachijuu roku', 'nanahyaku hachijuuroku'] },
+      { q: 'Write the Japanese reading for: 59', ans: ['gojuu kyuu', 'gojuukyuu'] },
+      { q: 'Write the Japanese reading for: 38', ans: ['sanjuu hachi', 'sanjuuhachi'] },
+    ]
+  },
+
+  // ==================== EXERCISE 3 ====================
+  {
+    id: 'ex3',
+    title: 'Exercise #3 — Japanese Culture',
+    date: 'Aug. 29, 2026',
+    points: 25,
+    type: 'mcq',
+    questions: [
+      { q: 'When you are in a crowded train, hold your backpack in front of you so you can control it more easily.', opts: ['True', 'False'], ans: 0 },
+      { q: 'In the elevator, the most senior person should be in front of the operation panel and is supposed to take care in pressing the buttons.', opts: ['True', 'False'], ans: 1 },
+      { q: 'You can use the indoor slippers when going to the bathroom or to the veranda.', opts: ['True', 'False'], ans: 1 },
+      { q: 'Pregnant women often wear a maternity badge when they commute by train in Japan.', opts: ['True', 'False'], ans: 0 },
+      { q: 'It is bad manners when you slurp the noodles when eating ramen.', opts: ['True', 'False'], ans: 1 },
+      { q: 'If you are the most senior person, you will take the seat of honor (kamiza).', opts: ['True', 'False'], ans: 0 },
+      { q: '"Osaki ni shitsurei shimasu." is used when leaving the office ahead of everybody is an implied apology.', opts: ['True', 'False'], ans: 0 },
+      { q: 'When you visit a house in Japan, you can take your shoes inside the house.', opts: ['True', 'False'], ans: 1 },
+      { q: 'After eating, we say "Itadakimasu."', opts: ['True', 'False'], ans: 1 },
+      { q: 'When toasting with seniors, bow and clink your glass at a slightly lower angle than theirs.', opts: ['True', 'False'], ans: 0 },
+      { q: 'In traditional Japanese corporate culture working overtime is very common, it\'s also considered bad form to leave while your co-workers are still working. That is why Japanese use an apologetic expression when they leave earlier than other workers.', opts: ['True', 'False'], ans: 0 },
+      { q: 'You can speak casually to your senpai and politely to your kouhai.', opts: ['True', 'False'], ans: 1 },
+      { q: 'The deeper the bow, the more respectful it is.', opts: ['True', 'False'], ans: 0 },
+      { q: 'Some trains have \'women only\' cars during rush hours.', opts: ['True', 'False'], ans: 0 },
+      { q: 'You are supposed to wash your body and shampoo your hair in the washing area. The bathtub is filled with hot water for you to soak and relax.', opts: ['True', 'False'], ans: 0 },
+      { q: 'When you are asked to get inside a friend\'s house, you are usually offered with indoor slippers.', opts: ['True', 'False'], ans: 0 },
+      { q: 'Drinking parties are big part of Japanese company culture.', opts: ['True', 'False'], ans: 0 },
+      { q: 'Senpai are usually supposed to teach or guide the kouhai.', opts: ['True', 'False'], ans: 0 },
+      { q: 'When you are invited to someone\'s house, you might want to bring a small gift usually it would be something to eat such as sweets or fruits.', opts: ['True', 'False'], ans: 0 },
+      { q: 'You may put your mouth on the bowl of rice and shovel the rice into your mouth.', opts: ['True', 'False'], ans: 0 },
+      { q: '"Yosebashi" is a bad chopstick manner which is pulling a plate towards yourself using a chopstick.', opts: ['True', 'False'], ans: 0 },
+      { q: 'In a taxi, the seat of honor is in the passenger seat which is beside the taxi driver.', opts: ['True', 'False'], ans: 1 },
+      { q: 'It is not good manners when you hold the bowl of the rice or miso soup when you eat them.', opts: ['True', 'False'], ans: 1 },
+      { q: 'The traditionally polite way of eating is to keep eating one thing until you finish it.', opts: ['True', 'False'], ans: 1 },
+      { q: '"Tatebashi" is a bad chopsticks manner which is passing food chopstick to chopstick.', opts: ['True', 'False'], ans: 1 },
+    ]
+  },
+
+  // ==================== EXERCISE 4 ====================
+  {
+    id: 'ex4',
+    title: 'Exercise #4 — Vocabulary & Grammar',
+    date: 'Sep. 5, 2026',
+    points: 20,
+    type: 'mcq',
+    questions: [
+      { q: 'girl', opts: ['otoko no hito', 'onna no ko', 'onna no hito', 'otoko no ko'], ans: 1 },
+      { q: 'lawyer', opts: ['bengoshi', 'tokoya', 'enjinia', 'isha'], ans: 0 },
+      { q: 'family', opts: ['kanojo', 'kodomo', 'tomodachi', 'kazoku'], ans: 3 },
+      { q: 'bank employee', opts: ['enjinia', 'ginkouin', 'shain', 'bengoshi'], ans: 1 },
+      { q: 'Ms. Hana was a bank employee. Hana-san wa ginkouin ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 1 },
+      { q: 'we', opts: ['watashitachi', 'anata', 'kare', 'kanojo'], ans: 0 },
+      { q: 'She was not a company employee. Kanojo wa kaishain ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 3 },
+      { q: 'That person was a researcher. Ano kata wa kenkyuusha ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 1 },
+      { q: 'He is a lawyer. Kare wa bengoshi ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 0 },
+      { q: 'foreign student', opts: ['ryuugakusei', 'kyoushi', 'kenkyuusha', 'gakusei'], ans: 0 },
+      { q: 'she', opts: ['kare', 'kanojo', 'watashi', 'anata'], ans: 1 },
+      { q: 'company employee', opts: ['ginkouin', 'kenkyuusha', 'kaishain', 'shain'], ans: 2 },
+      { q: 'That person is not a medical doctor. Ano hito wa isha ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 2 },
+      { q: 'Mr. Kimura was not a teacher. Kimura-san wa sensei ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 3 },
+      { q: 'Mr. Suzuki is not an engineer. Suzuki-san wa enjinia ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 2 },
+      { q: 'She is a teacher. Kanojo wa kyoushi ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 0 },
+      { q: 'dentist', opts: ['tokoya', 'haisha', 'isha', 'bengoshi'], ans: 1 },
+      { q: 'Maria is a student. Maria-chan wa gakusei ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 0 },
+      { q: 'He was not a barber. Kare wa tokoya ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 3 },
+      { q: 'researcher; scholar', opts: ['sensei', 'kenkyuusha', 'ginkouin', 'kaishain'], ans: 1 },
+    ]
+  },
+
+  // ==================== EXERCISE 5 ====================
+  {
+    id: 'ex5',
+    title: 'Exercise #5 — Hiragana Reading',
+    date: 'Sep. 12, 2026',
+    points: 15,
+    type: 'input',
+    questions: [
+      { q: 'いいえ', ans: ['iie'] },
+      { q: 'かお', ans: ['kao'] },
+      { q: 'おおい', ans: ['ooi'] },
+      { q: 'おさけ', ans: ['osake'] },
+      { q: 'きかい', ans: ['kikai'] },
+      { q: 'あかい', ans: ['akai'] },
+      { q: 'かさ', ans: ['kasa'] },
+      { q: 'かく', ans: ['kaku'] },
+      { q: 'いえ', ans: ['ie'] },
+      { q: 'すこし', ans: ['sukoshi'] },
+      { q: 'うえ', ans: ['ue'] },
+      { q: 'しお', ans: ['shio'] },
+      { q: 'あおい', ans: ['aoi'] },
+      { q: 'けさ', ans: ['kesa'] },
+      { q: 'ここ', ans: ['koko'] },
+    ]
+  }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let state = {};
+quizData.forEach(sec => {
+  state[sec.id] = { answers: {}, checked: false, score: 0 };
+});
+let activeTab = quizData[0].id;
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderTabs() {
+  const nav = document.getElementById('navTabs');
+  nav.innerHTML = quizData.map(sec => {
+    const s = state[sec.id];
+    const scoreText = s.checked ? `${s.score}/${sec.questions.length}` : '';
+    return `<button class="nav-tab ${sec.id === activeTab ? 'active' : ''}" onclick="switchTab('${sec.id}')">
+      ${sec.title.split('—')[0].trim()}
+      ${scoreText ? `<span class="tab-score">${scoreText}</span>` : ''}
+    </button>`;
+  }).join('');
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = quizData.map(sec => {
+    const s = state[sec.id];
+    let questionsHTML = '';
+
+    sec.questions.forEach((q, i) => {
+      const num = i + 1;
+      const userAns = s.answers[i];
+      let statusClass = '';
+      if (s.checked) {
+        if (sec.type === 'mcq') {
+          statusClass = userAns === q.ans ? 'answered-correct' : 'answered-incorrect';
+        } else {
+          const isCorrect = q.ans.some(a => a.toLowerCase().trim() === (userAns || '').toLowerCase().trim());
+          statusClass = isCorrect ? 'answered-correct' : 'answered-incorrect';
         }
+      }
 
-        function saveState(state) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      questionsHTML += `<div class="q-card ${statusClass}" style="animation-delay:${Math.min(i * 0.03, 0.3)}s">`;
+      questionsHTML += `<div class="q-text"><span class="q-num">${num}</span><span>${escHtml(q.q)}</span></div>`;
+
+      if (sec.type === 'mcq') {
+        questionsHTML += `<div class="options">`;
+        q.opts.forEach((opt, j) => {
+          let cls = '';
+          if (s.checked) {
+            cls += ' disabled';
+            if (j === q.ans) cls += ' correct-answer';
+            if (userAns === j && j !== q.ans) cls += ' wrong-answer';
+          } else {
+            if (userAns === j) cls += ' selected';
+          }
+          questionsHTML += `<div class="option${cls}" onclick="selectOption('${sec.id}',${i},${j})">
+            <span class="radio"></span>${escHtml(opt)}
+          </div>`;
+        });
+        questionsHTML += `</div>`;
+      } else {
+        const val = userAns || '';
+        const inputCls = s.checked ? (q.ans.some(a => a.toLowerCase().trim() === val.toLowerCase().trim()) ? 'correct' : 'incorrect') : '';
+        const disabled = s.checked ? 'disabled' : '';
+        questionsHTML += `<div class="input-group">
+          <input type="text" class="q-input ${inputCls}" ${disabled} value="${escAttr(val)}" placeholder="Type your answer..." oninput="inputAnswer('${sec.id}',${i},this.value)">
+        </div>`;
+        if (s.checked && !q.ans.some(a => a.toLowerCase().trim() === val.toLowerCase().trim())) {
+          questionsHTML += `<div class="feedback incorrect show">Correct answer: ${escHtml(q.ans[0])}</div>`;
         }
+      }
 
-        let state = loadState();
+      questionsHTML += `</div>`;
+    });
 
-        function getPhaseStatus(phase) {
-            const total = phase.topics.length;
-            const done = phase.topics.filter(t => state[t.id]).length;
-            if (done === 0) return "todo";
-            if (done === total) return "done";
-            return "active";
-        }
+    const resultBanner = s.checked ? getResultBanner(s.score, sec.questions.length) : '';
 
-        function renderAll() {
-            const container = document.getElementById("roadmap");
-            container.innerHTML = "";
+    return `<section class="quiz-section ${sec.id === activeTab ? 'active' : ''}" data-section="${sec.id}">
+      <div class="section-header">
+        <h2>${escHtml(sec.title)}</h2>
+        <div class="meta">${escHtml(sec.date)} &nbsp;•&nbsp; ${sec.questions.length} questions &nbsp;•&nbsp; ${sec.points} points</div>
+      </div>
+      ${questionsHTML}
+      <div class="section-actions">
+        ${!s.checked
+          ? `<button class="btn btn-primary" onclick="checkSection('${sec.id}')">Check Answers</button>`
+          : `<button class="btn btn-outline" onclick="resetSection('${sec.id}')">Try Again</button>`}
+      </div>
+      ${resultBanner}
+    </section>`;
+  }).join('');
+}
 
-            PHASES.forEach(phase => {
-                const status = getPhaseStatus(phase);
-                const doneCnt = phase.topics.filter(t => state[t.id]).length;
-                const total = phase.topics.length;
-                const pct = Math.round((doneCnt / total) * 100);
+function getResultBanner(score, total) {
+  const pct = score / total;
+  let cls, emoji, msg;
+  if (pct === 1) { cls = 'great'; emoji = '🎉'; msg = 'Perfect score! すごい！'; }
+  else if (pct >= 0.8) { cls = 'great'; emoji = '🌟'; msg = `Great job! ${score}/${total} correct!`; }
+  else if (pct >= 0.6) { cls = 'ok'; emoji = '💪'; msg = `Good effort! ${score}/${total} — Keep studying!`; }
+  else { cls = 'bad'; emoji = '📚'; msg = `${score}/${total} — Review and try again! がんばって！`; }
+  return `<div class="result-banner show ${cls}">${emoji} ${msg}</div>`;
+}
 
-                const el = document.createElement("div");
-                el.className = `phase ${status}`;
-                el.dataset.id = phase.id;
+function updateScoreboard() {
+  let totalCorrect = 0, totalQuestions = 0, totalAnswered = 0;
+  quizData.forEach(sec => {
+    const s = state[sec.id];
+    if (s.checked) {
+      totalCorrect += s.score;
+      totalQuestions += sec.questions.length;
+      totalAnswered += sec.questions.length;
+    }
+  });
+  document.getElementById('totalScore').textContent = totalQuestions > 0 ? `${totalCorrect}/${totalQuestions}` : '0';
+  document.getElementById('totalAnswered').textContent = totalAnswered;
+  const pct = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) + '%' : '—';
+  const el = document.getElementById('totalAccuracy');
+  el.textContent = pct;
+  el.classList.toggle('perfect', totalQuestions > 0 && totalCorrect === totalQuestions);
+}
 
-                const badgeClass = status === "done" ? "badge-done" : status === "active" ? "badge-active" : "badge-todo";
-                const badgeLabel = status === "done" ? "Complete" : status === "active" ? "In Progress" : "To Do";
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function switchTab(id) {
+  activeTab = id;
+  document.querySelectorAll('.quiz-section').forEach(s => s.classList.toggle('active', s.dataset.section === id));
+  document.querySelectorAll('.nav-tab').forEach((t, i) => t.classList.toggle('active', quizData[i].id === id));
+}
 
-                el.innerHTML = `
-        <div class="phase-header" onclick="togglePhase('${phase.id}')">
-            <span class="phase-num">${phase.num}</span>
-            <span class="phase-title">${phase.title}</span>
-            <span class="phase-badge ${badgeClass}">${badgeLabel}</span>
-            <span class="chevron">›</span>
-        </div>
-        <div class="topics">
-            <div class="topics-grid">
-            ${phase.topics.map(t => `
-                <label class="topic ${state[t.id] ? 'checked' : ''}" onclick="toggleTopic('${t.id}', event)">
-                <input type="checkbox" ${state[t.id] ? 'checked' : ''} />
-                <span class="topic-label">${t.label}</span>
-                ${t.url ? `<a class="topic-link" href="${t.url}" target="_blank" rel="noopener" onclick="e=>e.stopPropagation()">↗ open</a>` : ''}
-                </label>
-            `).join('')}
-            </div>
-            <div class="phase-bar-wrap">
-            <div class="phase-bar-meta">
-                <span class="phase-bar-label">Phase progress</span>
-                <span class="phase-bar-pct">${doneCnt} / ${total} · ${pct}%</span>
-            </div>
-            <div class="phase-track">
-                <div class="phase-fill" style="width:${pct}%"></div>
-            </div>
-            </div>
-        </div>
-        `;
+function selectOption(secId, qIdx, optIdx) {
+  if (state[secId].checked) return;
+  state[secId].answers[qIdx] = optIdx;
+  renderQuiz();
+}
 
-                container.appendChild(el);
+function inputAnswer(secId, qIdx, val) {
+  if (state[secId].checked) return;
+  state[secId].answers[qIdx] = val;
+}
 
-                // restore open state
-                if (state[`_open_${phase.id}`]) el.classList.add("open");
-            });
+function checkSection(secId) {
+  const sec = quizData.find(s => s.id === secId);
+  const s = state[secId];
+  s.checked = true;
+  s.score = 0;
+  sec.questions.forEach((q, i) => {
+    const userAns = s.answers[i];
+    if (sec.type === 'mcq') {
+      if (userAns === q.ans) s.score++;
+    } else {
+      if (q.ans.some(a => a.toLowerCase().trim() === (userAns || '').toLowerCase().trim())) s.score++;
+    }
+  });
+  renderTabs();
+  renderQuiz();
+  updateScoreboard();
+  // Confetti on perfect
+  if (s.score === sec.questions.length) launchConfetti();
+}
 
-            updateGlobal();
-        }
+function resetSection(secId) {
+  state[secId] = { answers: {}, checked: false, score: 0 };
+  renderTabs();
+  renderQuiz();
+  updateScoreboard();
+}
 
-        function togglePhase(id) {
-            const el = document.querySelector(`[data-id="${id}"]`);
-            const isOpen = el.classList.toggle("open");
-            state[`_open_${id}`] = isOpen;
-            saveState(state);
-        }
+// ============================================================
+// HELPERS
+// ============================================================
+function escHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+function escAttr(str) {
+  return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
 
-        function toggleTopic(id, e) {
-            // prevent label double-firing
-            if (e.target.tagName === "A") return;
-            state[id] = !state[id];
-            saveState(state);
-            renderAll();
+// ============================================================
+// CONFETTI 🎉
+// ============================================================
+function launchConfetti() {
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = [];
+  const colors = ['#C41E3A', '#D4A843', '#2E8B57', '#4A90D9', '#FF69B4', '#FFD700'];
+  for (let i = 0; i < 120; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 4 + 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vy: Math.random() * 3 + 2,
+      vx: Math.random() * 2 - 1,
+      rot: Math.random() * 360,
+      vr: Math.random() * 6 - 3,
+      opacity: 1
+    });
+  }
+  let frame = 0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    pieces.forEach(p => {
+      if (p.opacity <= 0) return;
+      alive = true;
+      p.y += p.vy;
+      p.x += p.vx;
+      p.rot += p.vr;
+      if (frame > 60) p.opacity -= 0.01;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (alive) requestAnimationFrame(animate);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  animate();
+}
 
-            // re-open the phase after re-render
-            const phaseEl = document.querySelector(`[data-id]`);
-        }
-
-        function updateGlobal() {
-            const allTopics = PHASES.flatMap(p => p.topics);
-            const total = allTopics.length;
-            const done = allTopics.filter(t => state[t.id]).length;
-            const pct = total ? Math.round((done / total) * 100) : 0;
-
-            document.getElementById("global-count").textContent = `${done} / ${total} topics`;
-            document.getElementById("global-bar").style.width = pct + "%";
-        }
-
-        function resetAll() {
-            if (!confirm("Reset all progress? This can't be undone.")) return;
-            const openStates = {};
-            PHASES.forEach(p => { if (state[`_open_${p.id}`]) openStates[`_open_${p.id}`] = true; });
-            state = { ...openStates };
-            saveState(state);
-            renderAll();
-        }
-
-        // ── TOOLS REFERENCE ──
-        const TOOL_GROUPS = [
-            {
-                category: "Editor & Terminal",
-                tools: [
-                    { name: "VS Code", desc: "Primary editor. Learn shortcuts, extensions, multi-cursor." },
-                    { name: "Zsh + Oh My Zsh", desc: "Shell setup. Makes the terminal actually pleasant to use." },
-                    { name: "iTerm2 / Windows Terminal", desc: "Better terminal emulator than the default." },
-                ]
-            },
-            {
-                category: "Version Control",
-                tools: [
-                    { name: "Git", desc: "Non-negotiable. Commit early, commit often." },
-                    { name: "GitHub", desc: "Your public portfolio lives here. Keep it active." },
-                    { name: "GitHub Actions", desc: "CI/CD pipelines. Run tests and deploy automatically." },
-                ]
-            },
-            {
-                category: "Frontend",
-                tools: [
-                    { name: "React + Vite", desc: "Go-to for SPAs and quick prototypes." },
-                    { name: "Next.js", desc: "Production full-stack React. App Router is the current standard." },
-                    { name: "Tailwind CSS", desc: "Utility-first CSS. Faster than writing custom stylesheets." },
-                    { name: "shadcn/ui", desc: "Component library built on Tailwind. Used in most modern SaaS." },
-                ]
-            },
-            {
-                category: "Backend & APIs",
-                tools: [
-                    { name: "Node.js + Express", desc: "Baseline backend. Know it even if you use Next.js." },
-                    { name: "Prisma", desc: "ORM for TypeScript. Makes database queries type-safe." },
-                    { name: "Hono", desc: "Lightweight alternative to Express. Growing fast in 2026." },
-                    { name: "Postman / Bruno", desc: "Test your APIs before wiring up a frontend." },
-                ]
-            },
-            {
-                category: "Database",
-                tools: [
-                    { name: "PostgreSQL", desc: "Primary relational DB. Learn it deeply." },
-                    { name: "Supabase", desc: "Postgres with auth, storage, and real-time out of the box." },
-                    { name: "Redis", desc: "Caching and session storage. Good to be aware of." },
-                    { name: "pgvector", desc: "Vector extension for Postgres. Used in AI/RAG apps." },
-                ]
-            },
-            {
-                category: "Testing",
-                tools: [
-                    { name: "Vitest", desc: "Fastest unit test runner for Vite/modern projects." },
-                    { name: "React Testing Library", desc: "Test components the way users interact with them." },
-                    { name: "Playwright", desc: "End-to-end testing. Automates real browser interactions." },
-                    { name: "MSW (Mock Service Worker)", desc: "Mock API calls in tests without a real server." },
-                ]
-            },
-            {
-                category: "DevOps & Infra",
-                tools: [
-                    { name: "Docker", desc: "Containerize everything. Removes 'works on my machine'." },
-                    { name: "Vercel", desc: "Easiest Next.js deployment. Free tier is generous." },
-                    { name: "Railway", desc: "Deploy backends and databases with minimal config." },
-                    { name: "Cloudflare", desc: "DNS, CDN, and edge functions. Learn the basics." },
-                ]
-            },
-            {
-                category: "AI & ML Tooling",
-                tools: [
-                    { name: "OpenAI API", desc: "GPT-4o and embeddings. The baseline every employer expects." },
-                    { name: "Vercel AI SDK", desc: "Streaming AI responses in Next.js. Handles the hard parts." },
-                    { name: "LangChain.js", desc: "Orchestration for complex AI workflows and agents." },
-                    { name: "Pinecone / pgvector", desc: "Vector stores for semantic search and RAG." },
-                    { name: "Cursor / GitHub Copilot", desc: "AI-assisted coding. Learn to use it well, not as a crutch." },
-                ]
-            },
-            {
-                category: "Design & Collaboration",
-                tools: [
-                    { name: "Figma", desc: "Read designs from it. Know how to inspect spacing and tokens." },
-                    { name: "Linear", desc: "Issue tracking used at most startups. Know the workflow." },
-                    { name: "Notion", desc: "Docs and wikis. Common in remote teams." },
-                    { name: "Slack", desc: "Standard async communication at tech companies." },
-                ]
-            },
-        ];
-
-        function renderTools() {
-            const wrap = document.getElementById("tools-section");
-            wrap.innerHTML = TOOL_GROUPS.map(group => `
-        <div class="tool-group">
-            <div class="tool-group-label">${group.category}</div>
-            <div class="tool-list">
-            ${group.tools.map(t => `
-                <div class="tool-item">
-                <span class="tool-name">${t.name}</span>
-                <span class="tool-desc">${t.desc}</span>
-                </div>
-            `).join('')}
-            </div>
-        </div>
-        `).join('');
-        }
-
-        renderAll();
-        renderTools();
-    </script>
+// ============================================================
+// INIT
+// ============================================================
+renderTabs();
+renderQuiz();
+updateScoreboard();
+</script>
 </body>
-
 </html>
