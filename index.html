@@ -1,845 +1,441 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FL033 – Japanese Language Midterm Quiz</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --red: #C41E3A;
-      --red-dark: #9B1B30;
-      --gold: #D4A843;
-      --cream: #FFF8F0;
-      --bg: #FAF6F1;
-      --card: #FFFFFF;
-      --text: #2D2D2D;
-      --text-light: #6B6B6B;
-      --border: #E8E0D8;
-      --correct: #2E8B57;
-      --correct-bg: #E8F5E9;
-      --incorrect: #C62828;
-      --incorrect-bg: #FFEBEE;
-      --shadow: 0 2px 12px rgba(0,0,0,0.08);
-      --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
-      --radius: 12px;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Poppins', 'Noto Sans JP', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    /* === HEADER === */
-    .hero {
-      background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
-      color: white;
-      text-align: center;
-      padding: 3rem 1.5rem 2.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '🌸';
-      position: absolute;
-      font-size: 8rem;
-      opacity: 0.08;
-      top: -1rem;
-      right: -1rem;
-    }
-    .hero::after {
-      content: '日本語';
-      position: absolute;
-      font-size: 6rem;
-      opacity: 0.06;
-      bottom: -1.5rem;
-      left: 1rem;
-      font-family: 'Noto Sans JP', sans-serif;
-    }
-    .hero h1 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-      position: relative;
-    }
-    .hero p {
-      font-size: 1rem;
-      opacity: 0.9;
-      font-weight: 300;
-      position: relative;
-    }
-
-    /* === SCOREBOARD === */
-    .scoreboard {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      max-width: 700px;
-      margin: -1.5rem auto 2rem;
-      padding: 0 1rem;
-      position: relative;
-      z-index: 2;
-    }
-    .score-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1rem 1.5rem;
-      text-align: center;
-      min-width: 130px;
-      flex: 1;
-    }
-    .score-card .label { font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; }
-    .score-card .value { font-size: 1.8rem; font-weight: 700; color: var(--red); }
-    .score-card .value.perfect { color: var(--correct); }
-
-    /* === NAV TABS === */
-    .nav-wrap {
-      max-width: 900px;
-      margin: 0 auto 1.5rem;
-      padding: 0 1rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .nav-tabs {
-      display: flex;
-      gap: 0.5rem;
-      min-width: max-content;
-    }
-    .nav-tab {
-      padding: 0.65rem 1.2rem;
-      border: 2px solid var(--border);
-      border-radius: 999px;
-      background: var(--card);
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-light);
-      transition: all 0.25s;
-      white-space: nowrap;
-      font-family: inherit;
-    }
-    .nav-tab:hover { border-color: var(--red); color: var(--red); }
-    .nav-tab.active {
-      background: var(--red);
-      border-color: var(--red);
-      color: white;
-    }
-    .nav-tab .tab-score {
-      display: inline-block;
-      background: rgba(255,255,255,0.2);
-      border-radius: 999px;
-      padding: 0.1rem 0.5rem;
-      font-size: 0.7rem;
-      margin-left: 0.4rem;
-    }
-    .nav-tab:not(.active) .tab-score {
-      background: var(--cream);
-      color: var(--text-light);
-    }
-
-    /* === QUIZ SECTION === */
-    .quiz-section {
-      display: none;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 1rem 3rem;
-    }
-    .quiz-section.active { display: block; }
-
-    .section-header {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border-left: 4px solid var(--red);
-    }
-    .section-header h2 { font-size: 1.3rem; color: var(--red-dark); margin-bottom: 0.2rem; }
-    .section-header .meta { font-size: 0.85rem; color: var(--text-light); }
-
-    /* === QUESTION CARD === */
-    .q-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      transition: box-shadow 0.25s;
-      border: 2px solid transparent;
-    }
-    .q-card:hover { box-shadow: var(--shadow-hover); }
-    .q-card.answered-correct { border-color: var(--correct); }
-    .q-card.answered-incorrect { border-color: var(--incorrect); }
-
-    .q-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--red);
-      color: white;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-right: 0.7rem;
-      flex-shrink: 0;
-    }
-    .q-card.answered-correct .q-num { background: var(--correct); }
-    .q-card.answered-incorrect .q-num { background: var(--incorrect); }
-
-    .q-text {
-      font-size: 1rem;
-      font-weight: 500;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: flex-start;
-    }
-    .q-text span { flex: 1; }
-
-    /* MCQ Options */
-    .options { display: flex; flex-direction: column; gap: 0.5rem; }
-    .option {
-      display: flex;
-      align-items: center;
-      padding: 0.75rem 1rem;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 0.95rem;
-    }
-    .option:hover { border-color: var(--gold); background: var(--cream); }
-    .option.selected { border-color: var(--red); background: #FFF0F3; }
-    .option.correct-answer { border-color: var(--correct); background: var(--correct-bg); }
-    .option.wrong-answer { border-color: var(--incorrect); background: var(--incorrect-bg); }
-    .option .radio {
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--border);
-      border-radius: 50%;
-      margin-right: 0.75rem;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-    .option.selected .radio { border-color: var(--red); }
-    .option.selected .radio::after {
-      content: '';
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--red);
-    }
-    .option.correct-answer .radio { border-color: var(--correct); }
-    .option.correct-answer .radio::after {
-      content: '✓';
-      font-size: 0.7rem;
-      color: var(--correct);
-      font-weight: 700;
-    }
-    .option.wrong-answer .radio { border-color: var(--incorrect); }
-    .option.wrong-answer .radio::after {
-      content: '✗';
-      font-size: 0.7rem;
-      color: var(--incorrect);
-      font-weight: 700;
-    }
-    .option.disabled { pointer-events: none; }
-
-    /* Text Input */
-    .input-group { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
-    .q-input {
-      padding: 0.65rem 1rem;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 1rem;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s;
-      flex: 1;
-      min-width: 150px;
-      max-width: 300px;
-    }
-    .q-input:focus { border-color: var(--red); }
-    .q-input.correct { border-color: var(--correct); background: var(--correct-bg); }
-    .q-input.incorrect { border-color: var(--incorrect); background: var(--incorrect-bg); }
-    .q-input:disabled { opacity: 0.8; }
-
-    .feedback {
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
-      font-weight: 500;
-      display: none;
-    }
-    .feedback.show { display: block; }
-    .feedback.correct { color: var(--correct); }
-    .feedback.incorrect { color: var(--incorrect); }
-
-    /* === BUTTONS === */
-    .btn {
-      padding: 0.7rem 1.8rem;
-      border: none;
-      border-radius: 999px;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-    .btn-primary {
-      background: var(--red);
-      color: white;
-    }
-    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
-    .btn-outline {
-      background: transparent;
-      color: var(--red);
-      border: 2px solid var(--red);
-    }
-    .btn-outline:hover { background: var(--red); color: white; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-    .section-actions {
-      display: flex;
-      gap: 0.75rem;
-      justify-content: center;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-
-    /* === RESULT BANNER === */
-    .result-banner {
-      display: none;
-      text-align: center;
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      margin-top: 1rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-    .result-banner.show { display: block; }
-    .result-banner.great { background: var(--correct-bg); color: var(--correct); }
-    .result-banner.ok { background: #FFF8E1; color: #F57F17; }
-    .result-banner.bad { background: var(--incorrect-bg); color: var(--incorrect); }
-
-    /* === FOOTER === */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-light);
-      font-size: 0.8rem;
-    }
-    footer a { color: var(--red); text-decoration: none; }
-
-    /* === RESPONSIVE === */
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 1.6rem; }
-      .scoreboard { gap: 0.75rem; }
-      .score-card { min-width: 100px; padding: 0.75rem 1rem; }
-      .score-card .value { font-size: 1.4rem; }
-      .q-card { padding: 1.2rem; }
-      .section-header { padding: 1.2rem; }
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .q-card { animation: fadeIn 0.3s ease-out backwards; }
-    .q-card:nth-child(2) { animation-delay: 0.03s; }
-    .q-card:nth-child(3) { animation-delay: 0.06s; }
-    .q-card:nth-child(4) { animation-delay: 0.09s; }
-    .q-card:nth-child(5) { animation-delay: 0.12s; }
-
-    /* Confetti canvas */
-    #confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BCP & DRP Study Guide</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#1d2433;--muted:#5d677d;--accent:#2563eb;--good:#16a34a;--bad:#dc2626;--line:#e3e7f0}
+@media (prefers-color-scheme:dark){:root{--bg:#10141f;--card:#1a2030;--text:#e8ecf5;--muted:#9aa5bd;--accent:#6ea0ff;--line:#2a3350}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+header{padding:20px 16px 8px;max-width:900px;margin:auto}
+h1{margin:0;font-size:1.5rem}
+header p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
+nav{position:sticky;top:0;background:var(--bg);z-index:5;display:flex;gap:6px;max-width:900px;margin:auto;padding:10px 16px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+nav button{border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;font-size:.9rem}
+nav button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+main{max-width:900px;margin:auto;padding:16px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.card h2{margin:0 0 8px;font-size:1.1rem;color:var(--accent)}
+.card h3{margin:12px 0 4px;font-size:.98rem}
+ul{margin:6px 0;padding-left:20px}
+li{margin:2px 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin:8px 0}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:rgba(37,99,235,.1)}
+.tag{display:inline-block;background:rgba(37,99,235,.12);color:var(--accent);border-radius:6px;padding:0 7px;font-size:.8rem;font-weight:600}
+.tip{border-left:4px solid #f59e0b;background:rgba(245,158,11,.1);padding:8px 12px;border-radius:6px;margin:10px 0;font-size:.92rem}
+.btn{background:var(--accent);color:#fff;border:0;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:.95rem;margin-right:6px}
+.btn.alt{background:transparent;color:var(--text);border:1px solid var(--line)}
+/* flashcards */
+.fc{perspective:900px;height:230px;cursor:pointer;margin:10px 0}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;font-size:1.1rem}
+.face.back{transform:rotateY(180deg);background:rgba(37,99,235,.08)}
+.meta{color:var(--muted);font-size:.85rem;text-align:center}
+/* quiz */
+.q{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;cursor:pointer;font-size:.95rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.right{border-color:var(--good);background:rgba(22,163,74,.14)}
+.opt.wrong{border-color:var(--bad);background:rgba(220,38,38,.12)}
+.why{margin-top:10px;font-size:.92rem;color:var(--muted)}
+.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:8px 0 14px}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.score{font-size:1.6rem;font-weight:700}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:20px}
+</style>
 </head>
 <body>
-  <canvas id="confetti"></canvas>
+<header>
+  <h1>🛡️ Business Continuity & Disaster Recovery Planning</h1>
+  <p>One-day cram guide: notes → flashcards → quiz. Based on your lecture slides.</p>
+</header>
+<nav id="nav">
+  <button data-t="notes" class="on">📘 Notes</button>
+  <button data-t="cards">🗂️ Flashcards</button>
+  <button data-t="quiz">📝 Quiz</button>
+  <button data-t="plan">⏱️ Study Plan</button>
+</nav>
+<main>
 
-  <!-- HERO -->
-  <header class="hero">
-    <h1>🌸 FL033 日本語 Midterm Quiz</h1>
-    <p>Japanese Language — Midterm Exercises Review</p>
-  </header>
-
-  <!-- SCOREBOARD -->
-  <div class="scoreboard">
-    <div class="score-card">
-      <div class="label">Total Score</div>
-      <div class="value" id="totalScore">0</div>
-    </div>
-    <div class="score-card">
-      <div class="label">Answered</div>
-      <div class="value" id="totalAnswered">0</div>
-    </div>
-    <div class="score-card">
-      <div class="label">Accuracy</div>
-      <div class="value" id="totalAccuracy">—</div>
-    </div>
+<!-- NOTES -->
+<section id="notes" class="on">
+  <div class="card"><h2>1. Basics</h2>
+    <p><b>Disaster</b> = any natural or man-made event that disrupts business operations so significantly that a <i>considerable, coordinated effort</i> is needed to recover.</p>
+    <table>
+      <tr><th>Natural</th><th>Man-made</th></tr>
+      <tr><td><b>Geological:</b> earthquake, volcano, tsunami, landslide, sinkhole<br><b>Meteorological:</b> hurricane, tornado, wind/hail/ice/snow/rain storms, lightning<br><b>Other:</b> avalanche, fire, flood, meteors, solar storms<br><b>Health:</b> widespread illness, quarantine, pandemic</td>
+      <td><b>Labor:</b> strikes, walkouts, slow-downs<br><b>Social-political:</b> war, terrorism, sabotage, vandalism, civil unrest, protests, cyber attacks, blockades<br><b>Materials:</b> fires, hazmat spills<br><b>Utilities:</b> power/comm outages, water or fuel shortages, radioactive fallout</td></tr>
+    </table>
+    <h3>How disasters hurt businesses</h3>
+    <ul><li>Direct damage to facilities & equipment</li><li>Transportation damage → delays deliveries, supplies, customers, employees</li><li>Communications outages</li><li>Utilities outages</li></ul>
   </div>
 
-  <!-- NAV TABS -->
-  <div class="nav-wrap">
-    <div class="nav-tabs" id="navTabs"></div>
+  <div class="card"><h2>2. BCP vs DRP</h2>
+    <p>Both support the <b>Availability</b> pillar of <b>C-I-A</b> (Confidentiality, Integrity, Availability).</p>
+    <table>
+      <tr><th></th><th>BCP</th><th>DRP</th></tr>
+      <tr><td><b>Focus</b></td><td>Keep <b>critical business processes</b> going</td><td><b>Assess, salvage, repair, restore</b> damaged facilities/systems</td></tr>
+      <tr><td><b>Uses</b></td><td>Alternate personnel, equipment, facilities</td><td>Often IT systems focused</td></tr>
+      <tr><td><b>Scope</b></td><td>Often includes non-IT aspects</td><td>Recovery of the original site/systems</td></tr>
+    </table>
+    <div class="tip"><b>Prevention</b> here ≠ preventing the disaster. It means preventing <i>surprise & disorganized response</i>, reducing impact (equipment bracing, fire detection/suppression, contingency plans) and avoiding long downtime.</div>
+    <h3>Why needed (Gartner 2001)</h3>
+    <p>Customers expect continued/rapid-resume service · Shareholders expect management control · Employees expect livelihoods protected (suppliers too) · Regulators expect requirements met regardless.</p>
+    <h3>Benefits</h3>
+    <p>Reduced risk · Process improvements · Organizational maturity · Availability & reliability · Marketplace advantage</p>
   </div>
 
-  <!-- QUIZ CONTAINER -->
-  <main id="quizContainer"></main>
+  <div class="card"><h2>3. Standards</h2>
+    <table>
+      <tr><th>Standard</th><th>What it is</th></tr>
+      <tr><td><b>ISO 27001</b></td><td>Info Security Mgmt Systems requirements; Section 14 = business continuity mgmt</td></tr>
+      <tr><td><b>ISO 27002</b></td><td>Code of practice for business continuity mgmt</td></tr>
+      <tr><td><b>NIST 800-34</b></td><td>Contingency Planning Guide for IT Systems; <b>7-step</b> process for BCP/DRP</td></tr>
+      <tr><td><b>NFPA 1600</b></td><td>Disaster/Emergency Mgmt & Business Continuity Programs</td></tr>
+      <tr><td><b>NFPA 1620</b></td><td>Recommended practice for Pre-Incident Planning</td></tr>
+      <tr><td><b>HIPAA</b></td><td>Requires a <b>documented AND tested</b> DR plan (healthcare/pharmacy, e.g., CVS)</td></tr>
+    </table>
+  </div>
 
-  <footer>
-    <p>FL033 Japanese Language Review &nbsp;|&nbsp; Built with 🌸</p>
-  </footer>
+  <div class="card"><h2>4. Running the Project</h2>
+    <p><b>Main phases:</b> Pre-project → BIA → Develop plans → Test plans. Then maintain, test, audit regularly.</p>
+    <h3>Pre-project activities</h3>
+    <ul><li>Obtain <b>executive support</b></li><li>Formally define <b>scope</b></li><li>Choose project team</li><li>Develop project plan / get a project manager</li>
+    <li>Write the <b>project charter</b> = document listing all of these <b>plus budget & milestones</b> (projected costs + measurable goals)</li></ul>
+  </div>
+
+  <div class="card"><h2>5. Business Impact Assessment (BIA)</h2>
+    <ol>
+      <li><b>Survey critical processes</b> (interview a rep per department, find dependencies on systems/people/equipment, collate into a database/spreadsheet)</li>
+      <li><b>Risk & threat analysis</b> – threats, vulnerabilities, risks per process; rank by probability, impact, cost; identify mitigating controls</li>
+      <li><b>Determine MTD</b></li>
+      <li><b>Establish recovery targets</b> (RTO, RPO)</li>
+    </ol>
+    <p><b>Risk</b> = probability of a material deviation from an anticipated outcome (up or down; exists only if there's an objective).</p>
+    <p><b>3 areas to analyze:</b> <span class="tag">Threats</span> (probabilities) · <span class="tag">Assets</span> (physical, financial, lost revenue, recovery costs, fines, goodwill) · <span class="tag">Mitigating factors</span> (UPS, generators, fire control, card readers)</p>
+
+    <h3>The four key terms</h3>
+    <table>
+      <tr><th>Term</th><th>Meaning</th><th>Memory hook</th></tr>
+      <tr><td><b>MTD</b> Maximum Tolerable Downtime</td><td>Longest a process can be down before significant damage / long-term viability threatened</td><td>"Point of no return"</td></tr>
+      <tr><td><b>RTO</b> Recovery Time Objective</td><td>Time from disaster onset to <b>resumption</b> of the process (must be ≤ MTD)</td><td><b>T</b> = <b>T</b>ime to be back up</td></tr>
+      <tr><td><b>RPO</b> Recovery Point Objective</td><td>Max <b>data loss</b>, counting backwards from onset; work that must be redone</td><td><b>P</b> = <b>P</b>oint in time of last good data</td></tr>
+      <tr><td><b>Criticality analysis</b></td><td>Rank processes by MTD, RTO, RPO, cost of downtime, reputation/market share/goodwill</td><td>"Who gets fixed first"</td></tr>
+    </table>
+    <div class="tip">Order: <b>RTO ≤ MTD</b>. Example: MTD 2 days → RTO must be shorter.</div>
+
+    <h3>Other BIA items</h3>
+    <ul><li><b>Statements of impact</b> – e.g., can't process payments, produce invoices, access customer data</li>
+    <li><b>Key metrics</b> – cost to operate, cost of downtime, profit from process</li>
+    <li><b>Current capabilities</b> – documented continuity/recovery, undocumented ones, "what if it happened tomorrow?"</li>
+    <li>Get <b>senior management buy-off</b> on MTD, RTO, RPO</li>
+    <li><b>Improve resilience</b> for the most critical processes: biggest risks, cost of mitigation, combine controls, follow best practice</li></ul>
+
+    <h3>Sample recovery objectives (RTO) and technology</h3>
+    <table>
+      <tr><th>Recovery time</th><th>Technology</th></tr>
+      <tr><td>8–14 days</td><td>New equipment, data recovery from backup</td></tr>
+      <tr><td>4–7 days</td><td>Cold systems, recovery from backup</td></tr>
+      <tr><td>2–3 days</td><td>Warm systems, recovery from backup</td></tr>
+      <tr><td>12–24 hrs</td><td>Warm systems, high-speed backup media</td></tr>
+      <tr><td>6–12 hrs</td><td>Hot systems, high-speed backup media</td></tr>
+      <tr><td>3–6 hrs</td><td>Hot systems, data replication</td></tr>
+      <tr><td>1–3 hrs</td><td>Clustering, data replication</td></tr>
+      <tr><td>&lt; 1 hr</td><td>Clustering, near real-time replication</td></tr>
+    </table>
+    <p class="meta">Shorter target = more expensive tech. (The slide labels this column "RPO" but the values are recovery times.)</p>
+  </div>
+
+  <div class="card"><h2>6. Developing the Plans</h2>
+    <h3>Recovery team selection criteria</h3>
+    <p>Residence location vs. work · Skills & experience · Ability/willingness to respond · Health & family · <b>Identify backups</b> (other members, external resources)</p>
+    <h3>Emergency response</h3>
+    <ul><li><b>Personnel safety</b> (first aid, searching for people) – <b>#1 concern always</b></li><li><b>Evacuation</b> procedures</li><li><b>Asset protection</b> (buildings, vehicles, equipment)</li><li><b>Damage assessment</b> (may need outside structural engineers)</li><li><b>Emergency notification</b> (response team, management, staff)</li></ul>
+    <h3>Damage assessment & salvage</h3>
+    <p>Inside experts + usually outside experts (civil engineers, government building inspectors). Salvage = identify working/salvageable assets, cannibalize for parts.</p>
+    <h3>Notification</h3>
+    <p>Employees, suppliers, customers, regulators, authorities, shareholders, community. Methods: phone call trees, website, signage, media. Identify <b>alternate</b> means.</p>
+    <h3>Personnel safety</h3>
+    <p>Evacuation, accounting for everyone, first aid, emergency supplies (water, food, blankets, shelter). Staff may be stranded for days.</p>
+    <h3>Communications</h3>
+    <ul><li>Avoid common infrastructure (not the same wires as normal comms)</li><li>Diversify mobile providers</li><li>Two-way radios · Satellite phones · <b>Amateur radio</b></li></ul>
+    <h3>Utilities & infrastructure</h3>
+    <p>Electricity (UPS, generator) · Water (no water = no fire suppression → building may close) · Natural gas (heating) · Wastewater (if disabled, building may close) · Steam heat</p>
+    <h3>Logistics & supplies</h3>
+    <p>Food/water, blankets/cots, sanitation, tools, spare parts, waste bins, information, communications, fire protection (extinguishers, sprinklers, smoke/fire alarms)</p>
+    <h3>Business resumption planning</h3>
+    <p>Alternate work locations · Alternate personnel · Communications · Standby assets/equipment · Access to procedures & business records</p>
+    <h3>Restoration & recovery</h3>
+    <p>Repair facilities/equipment · Replacement equipment · Restore utilities · Resume operations in the <b>primary</b> facility</p>
+    <h3>Improving system resilience</h3>
+    <ul><li><b>Off-site media storage</b> → assures data recovery</li><li><b>Server clusters</b> → availability (geographic clusters = members far apart)</li><li><b>Data replication</b> → current data on multiple servers, even remote (application, DBMS, OS, or hardware level)</li></ul>
+    <h3>Training staff</h3>
+    <p>Everyday operations · Recovery procedures · Emergency procedures · Resumption procedures</p>
+  </div>
+
+  <div class="card"><h2>7. Testing – 5 Levels (low → high risk)</h2>
+    <table>
+      <tr><th>#</th><th>Test</th><th>Who</th><th>Key idea</th></tr>
+      <tr><td>1</td><td><b>Document review</b></td><td>Individuals</td><td>Read plans & procedures, give feedback to owners</td></tr>
+      <tr><td>2</td><td><b>Walkthrough</b></td><td>Teams</td><td>Group <b>discussion</b> of plans; brainstorming finds new issues. <b>No fictional emergency</b></td></tr>
+      <tr><td>3</td><td><b>Simulation</b></td><td>Teams</td><td>Walkthrough using a scripted <b>scenario / case study</b>; mental disaster setting</td></tr>
+      <tr><td>4</td><td><b>Parallel test</b></td><td>Teams</td><td>Full/partial workload on recovery systems; <b>production keeps running</b></td></tr>
+      <tr><td>5</td><td><b>Cutover test</b></td><td>Teams</td><td>Production <b>shut down</b>; recovery systems take full load. Risk of interrupting real business, but most confidence</td></tr>
+    </table>
+    <div class="tip"><b>Mnemonic:</b> <b>D</b>on't <b>W</b>orry, <b>S</b>imulate, <b>P</b>repare, <b>C</b>utover (Document, Walkthrough, Simulation, Parallel, Cutover)</div>
+  </div>
+
+  <div class="card"><h2>8. Maintaining Plans</h2>
+    <p>Review & modify when there are changes in: business processes/procedures · IT systems & applications · IT architecture · additions to IT apps · service providers · organizational structure.</p>
+  </div>
+
+  <div class="card"><h2>9. Executing / Activating the DRP</h2>
+    <p><b>Flow:</b> Event occurs → Assess situation → (Not a disaster → stand down) / (Classed as disaster → Contact recovery team → Execute plan → Re-assess → continue recovery or stand down)</p>
+    <table>
+      <tr><th>Level</th><th>Action</th></tr>
+      <tr><td>🟢 <b>Green</b></td><td>No action; advise DRP manager</td></tr>
+      <tr><td>🟠 <b>Amber</b></td><td>Advise DRP manager; implement appropriate aspects of DRP</td></tr>
+      <tr><td>🔴 <b>Red</b></td><td>Advise DRP manager; implement the <b>full</b> DR plan</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- FLASHCARDS -->
+<section id="cards">
+  <div class="meta" id="fcMeta"></div>
+  <div class="fc" id="fc"><div class="fc-in"><div class="face" id="fcF"></div><div class="face back" id="fcB"></div></div></div>
+  <div style="text-align:center">
+    <button class="btn alt" id="fcPrev">← Prev</button>
+    <button class="btn" id="fcFlip">Flip</button>
+    <button class="btn alt" id="fcNext">Next →</button>
+    <button class="btn alt" id="fcShuf">🔀 Shuffle</button>
+  </div>
+  <p class="meta">Tip: press Space to flip, ← → to navigate.</p>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div id="quizStart" class="card">
+    <h2>Practice Quiz</h2>
+    <p>Includes every question from your slides plus extra practice questions. Answers are shuffled each run.</p>
+    <button class="btn" id="qAll">Start full quiz</button>
+    <button class="btn alt" id="qSlides">Slide questions only</button>
+    <button class="btn alt" id="qMiss" style="display:none">Retry missed</button>
+  </div>
+  <div id="quizRun" style="display:none">
+    <div class="meta" id="qProg"></div>
+    <div class="bar"><i id="qBar"></i></div>
+    <div class="card"><div class="q" id="qText"></div><div id="qOpts"></div><div class="why" id="qWhy"></div></div>
+    <button class="btn" id="qNext" style="display:none">Next →</button>
+  </div>
+  <div id="quizEnd" class="card" style="display:none">
+    <div class="score" id="qScore"></div>
+    <p id="qMsg"></p>
+    <button class="btn" id="qAgain">Restart</button>
+    <button class="btn alt" id="qRetry">Retry missed</button>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section id="plan">
+  <div class="card"><h2>Suggested one-day plan</h2>
+    <table>
+      <tr><th>Block</th><th>Do this</th></tr>
+      <tr><td>45 min</td><td>Read <b>Notes</b> sections 1–4 (basics, BCP vs DRP, standards, project)</td></tr>
+      <tr><td>60 min</td><td>Read <b>Notes</b> section 5 (BIA) slowly. This is the most testable part: MTD / RTO / RPO / criticality</td></tr>
+      <tr><td>45 min</td><td>Notes sections 6–9 (plans, testing levels, activation)</td></tr>
+      <tr><td>30 min</td><td><b>Flashcards</b>, go through twice, shuffle the second time</td></tr>
+      <tr><td>30 min</td><td><b>Quiz</b>, then <b>Retry missed</b> until you get 100%</td></tr>
+      <tr><td>15 min</td><td>Re-read the "tip" boxes and the 4 key-term table before sleeping</td></tr>
+    </table>
+    <h3>Most likely exam traps</h3>
+    <ul>
+      <li><b>RTO vs RPO</b>: Time to be back up vs. amount of data you can lose</li>
+      <li><b>MTD</b> is the business limit; RTO is the target and must fit inside it</li>
+      <li><b>BCP</b> = keep running (alternate site/people) · <b>DRP</b> = repair & restore (often IT)</li>
+      <li>Walkthrough has <i>no scenario</i>; Simulation <i>has</i> a scenario</li>
+      <li>Parallel keeps production running; Cutover shuts it down</li>
+      <li><b>Personnel safety</b> is always #1</li>
+      <li><b>HIPAA</b> → healthcare / pharmacy</li>
+      <li><b>Project charter</b> contains budget + measurable milestones</li>
+    </ul>
+  </div>
+</section>
+</main>
+<footer>Made for quick review. Verify against your instructor's materials.</footer>
 
 <script>
-// ============================================================
-// QUIZ DATA
-// ============================================================
-const quizData = [
-  // ==================== EXERCISE 1 ====================
-  {
-    id: 'ex1',
-    title: 'Exercise #1 — Greetings & Expressions',
-    date: 'Aug. 22, 2026',
-    points: 25,
-    type: 'mcq',
-    questions: [
-      { q: 'You are saying goodbye to someone you may not see again for a long time.', opts: ['Sayounara.', 'Jaa, mata.', 'Ogenki desu.', 'Ittekimasu.'], ans: 0 },
-      { q: 'Your family member arrives home and says, "Tadaima." What should you reply?', opts: ['Ittekimasu.', 'Oyasumi nasai.', 'Jaa, mata.', 'Okaeri nasai.'], ans: 3 },
-      { q: 'Before going to bed, what should you say to your family?', opts: ['Hajimemashite.', 'Oyasumi nasai.', 'Tadaima.', 'Sayounara.'], ans: 1 },
-      { q: 'You are leaving the office before your coworkers. What is the appropriate expression?', opts: ['Okaeri nasai.', 'Ohisashiburi.', 'Ogenki desu ka.', 'Osaki ni shitsurei shimasu.'], ans: 3 },
-      { q: 'After finishing work, you thank your coworkers for their hard work.', opts: ['Oyasumi nasai.', 'Itterasshai.', 'Tadaima.', 'Otsukaresama deshita.'], ans: 3 },
-      { q: 'You are in the library and need to ask someone to move so you can pass through. What will you say first?', opts: ['Dou itashimashite.', 'Arigatou gozaimasu.', 'Gomen nasai.', 'Sumimasen.'], ans: 3 },
-      { q: 'You arrive at school at 7:00 in the morning. What should you say to your teacher?', opts: ['Konnichiwa.', 'Konbanwa.', 'Ohayou gozaimasu.', 'Arigatou gozaimasu.'], ans: 2 },
-      { q: 'Your teacher asks if you submitted your homework, and you did. What will you say?', opts: ['Douzo tabete kudasai.', 'Sumimasen.', 'Hai.', 'Iie.'], ans: 2 },
-      { q: 'Your child says, "Ittekimasu." What should you reply?', opts: ['Otsukaresama deshita.', 'Oyasumi nasai.', 'Itterasshai.', 'Ohisashiburi.'], ans: 2 },
-      { q: 'You accidentally step on your friend\'s foot during a game.', opts: ['Oishii desu.', 'Hai.', 'Konnichiwa.', 'Gomen nasai.'], ans: 3 },
-      { q: 'You arrive at school at 7:00 AM and see your teacher. What will you say?', opts: ['Ohayou gozaimasu.', 'Kanpai.', 'Konbanwa.', 'Sumimasen.'], ans: 0 },
-      { q: 'Your teacher asks, "Do you understand the lesson?" You politely answer, "Yes."', opts: ['Sumimasen.', 'Hai.', 'Ee.', 'Iie.'], ans: 1 },
-      { q: 'You unexpectedly meet your childhood friend after several years.', opts: ['Ohisashiburi.', 'Itterasshai.', 'Otsukaresama deshita.', 'Hajimemashite.'], ans: 0 },
-      { q: 'You are leaving your house for school. What should you say?', opts: ['Okaeri nasai.', 'Ogenki desu ka.', 'Ittekimasu.', 'Tadaima.'], ans: 2 },
-      { q: 'Your teacher asks if you understand today\'s lesson. You do understand. What will you say?', opts: ['Arigatou gozaimasu.', 'Hai.', 'Itadakimasu.', 'Sumimasen.'], ans: 1 },
-      { q: 'You meet a friend while walking home at 6:00 PM. What greeting will you use?', opts: ['Ohayou gozaimasu.', 'Konbanwa.', 'Hai.', 'Konnichiwa.'], ans: 1 },
-      { q: 'You are meeting your new classmate for the first time. What should you say first?', opts: ['Hajimemashite.', 'Sayounara.', 'Oyasumi nasai.', 'Tadaima.'], ans: 0 },
-      { q: 'Your friend asks if Japanese is interesting, and you agree. What will you say?', opts: ['Iie.', 'Ee.', 'Dou itashimashite.', 'Sumimasen.'], ans: 1 },
-      { q: 'Your grandmother prepares a delicious dinner. After tasting it, what will you say?', opts: ['Sumimasen.', 'Dou itashimashite.', 'Oishii desu.', 'Konnichiwa.'], ans: 2 },
-      { q: 'You are hosting a party and offering pizza to your guests. What will you say?', opts: ['Gochisousama deshita.', 'Douzo tabete kudasai.', 'Oishii desu.', 'Itadakimasu.'], ans: 1 },
-      { q: 'You stepped on your classmate\'s foot by accident. What will you say?', opts: ['Ohayou.', 'Arigatou gozaimasu.', 'Hai.', 'Gomen nasai.'], ans: 3 },
-      { q: 'Your friend gives you a birthday present. What do you say?', opts: ['Kanpai.', 'Arigatou gozaimasu.', 'Sumimasen.', 'Dou itashimashite.'], ans: 1 },
-      { q: 'The food has just been served, and everyone is about to eat. What should you say?', opts: ['Dou itashimashite.', 'Oishii desu.', 'Gochisousama deshita.', 'Itadakimasu.'], ans: 3 },
-      { q: 'You visit your neighbor at 7:00 PM.', opts: ['Hai.', 'Konbanwa.', 'Konnichiwa.', 'Itadakimasu.'], ans: 1 },
-      { q: 'Your close friend asks if you want to play basketball. You casually answer, "Yes."', opts: ['Ee.', 'Douzo tabete kudasai.', 'Hai.', 'Iie.'], ans: 0 },
-    ]
-  },
-
-  // ==================== EXERCISE 2 ====================
-  {
-    id: 'ex2',
-    title: 'Exercise #2 — Numbers (日本語 → Number)',
-    date: 'Aug. 29, 2026',
-    points: 25,
-    type: 'input',
-    questions: [
-      { q: 'sanbyaku kyuujuu san', ans: ['393'] },
-      { q: 'kyuusen gohyaku sanjuu yon', ans: ['9534'] },
-      { q: 'ichi', ans: ['1'] },
-      { q: 'rokujuu ni', ans: ['62'] },
-      { q: 'roppyaku roku', ans: ['606'] },
-      { q: 'yonsen nanahyaku nanajuu ichi', ans: ['4771'] },
-      { q: 'ichi man rokusen yonhyaku yonjuu kyuu', ans: ['16449'] },
-      { q: 'nana man sanzen nihyaku ichi', ans: ['73201'] },
-      { q: 'go', ans: ['5'] },
-      { q: 'nanahyaku hachijuu roku', ans: ['786'] },
-      { q: 'gojuu kyuu', ans: ['59'] },
-      { q: 'rokusen sanbyaku nijuu kyuu', ans: ['6329'] },
-      { q: 'yonhyaku nijuu san', ans: ['423'] },
-      { q: 'nanasen sanbyaku juuyon', ans: ['7314'] },
-      { q: 'sanjuu hachi', ans: ['38'] },
-      // BONUS questions
-      { q: 'hyaku nijuu', ans: ['120'] },
-      { q: 'nihyaku gojuu', ans: ['250'] },
-      { q: 'happyaku', ans: ['800'] },
-      { q: 'nisen sanbyaku', ans: ['2300'] },
-      { q: 'hassen', ans: ['8000'] },
-      { q: 'juu', ans: ['10'] },
-      { q: 'ni', ans: ['2'] },
-      { q: 'kyuu', ans: ['9'] },
-      { q: 'juugo', ans: ['15'] },
-      { q: 'yonjuu nana', ans: ['47'] },
-    ]
-  },
-
-  // ==================== EXERCISE 2B ====================
-  {
-    id: 'ex2b',
-    title: 'Exercise #2B — Numbers (Number → 日本語)',
-    date: 'Aug. 29, 2026',
-    points: 15,
-    type: 'input',
-    questions: [
-      { q: 'Write the Japanese reading for: 3', ans: ['san'] },
-      { q: 'Write the Japanese reading for: 8', ans: ['hachi'] },
-      { q: 'Write the Japanese reading for: 14', ans: ['juuyon', 'juu yon'] },
-      { q: 'Write the Japanese reading for: 47', ans: ['yonjuu nana', 'yonjuunana', 'shi juu nana', 'shijuunana'] },
-      { q: 'Write the Japanese reading for: 62', ans: ['rokujuu ni', 'rokujuuni'] },
-      { q: 'Write the Japanese reading for: 100', ans: ['hyaku'] },
-      { q: 'Write the Japanese reading for: 215', ans: ['nihyaku juugo', 'nihyaku juugo', 'ni hyaku juu go'] },
-      { q: 'Write the Japanese reading for: 500', ans: ['gohyaku'] },
-      { q: 'Write the Japanese reading for: 1000', ans: ['sen'] },
-      { q: 'Write the Japanese reading for: 3600', ans: ['sanzen roppyaku', 'sanzenroppyaku'] },
-      { q: 'Write the Japanese reading for: 10000', ans: ['ichiman', 'ichi man'] },
-      { q: 'Write the Japanese reading for: 423', ans: ['yonhyaku nijuu san', 'yonhyaku nijuusan'] },
-      { q: 'Write the Japanese reading for: 786', ans: ['nanahyaku hachijuu roku', 'nanahyaku hachijuuroku'] },
-      { q: 'Write the Japanese reading for: 59', ans: ['gojuu kyuu', 'gojuukyuu'] },
-      { q: 'Write the Japanese reading for: 38', ans: ['sanjuu hachi', 'sanjuuhachi'] },
-    ]
-  },
-
-  // ==================== EXERCISE 3 ====================
-  {
-    id: 'ex3',
-    title: 'Exercise #3 — Japanese Culture',
-    date: 'Aug. 29, 2026',
-    points: 25,
-    type: 'mcq',
-    questions: [
-      { q: 'When you are in a crowded train, hold your backpack in front of you so you can control it more easily.', opts: ['True', 'False'], ans: 0 },
-      { q: 'In the elevator, the most senior person should be in front of the operation panel and is supposed to take care in pressing the buttons.', opts: ['True', 'False'], ans: 1 },
-      { q: 'You can use the indoor slippers when going to the bathroom or to the veranda.', opts: ['True', 'False'], ans: 1 },
-      { q: 'Pregnant women often wear a maternity badge when they commute by train in Japan.', opts: ['True', 'False'], ans: 0 },
-      { q: 'It is bad manners when you slurp the noodles when eating ramen.', opts: ['True', 'False'], ans: 1 },
-      { q: 'If you are the most senior person, you will take the seat of honor (kamiza).', opts: ['True', 'False'], ans: 0 },
-      { q: '"Osaki ni shitsurei shimasu." is used when leaving the office ahead of everybody is an implied apology.', opts: ['True', 'False'], ans: 0 },
-      { q: 'When you visit a house in Japan, you can take your shoes inside the house.', opts: ['True', 'False'], ans: 1 },
-      { q: 'After eating, we say "Itadakimasu."', opts: ['True', 'False'], ans: 1 },
-      { q: 'When toasting with seniors, bow and clink your glass at a slightly lower angle than theirs.', opts: ['True', 'False'], ans: 0 },
-      { q: 'In traditional Japanese corporate culture working overtime is very common, it\'s also considered bad form to leave while your co-workers are still working. That is why Japanese use an apologetic expression when they leave earlier than other workers.', opts: ['True', 'False'], ans: 0 },
-      { q: 'You can speak casually to your senpai and politely to your kouhai.', opts: ['True', 'False'], ans: 1 },
-      { q: 'The deeper the bow, the more respectful it is.', opts: ['True', 'False'], ans: 0 },
-      { q: 'Some trains have \'women only\' cars during rush hours.', opts: ['True', 'False'], ans: 0 },
-      { q: 'You are supposed to wash your body and shampoo your hair in the washing area. The bathtub is filled with hot water for you to soak and relax.', opts: ['True', 'False'], ans: 0 },
-      { q: 'When you are asked to get inside a friend\'s house, you are usually offered with indoor slippers.', opts: ['True', 'False'], ans: 0 },
-      { q: 'Drinking parties are big part of Japanese company culture.', opts: ['True', 'False'], ans: 0 },
-      { q: 'Senpai are usually supposed to teach or guide the kouhai.', opts: ['True', 'False'], ans: 0 },
-      { q: 'When you are invited to someone\'s house, you might want to bring a small gift usually it would be something to eat such as sweets or fruits.', opts: ['True', 'False'], ans: 0 },
-      { q: 'You may put your mouth on the bowl of rice and shovel the rice into your mouth.', opts: ['True', 'False'], ans: 0 },
-      { q: '"Yosebashi" is a bad chopstick manner which is pulling a plate towards yourself using a chopstick.', opts: ['True', 'False'], ans: 0 },
-      { q: 'In a taxi, the seat of honor is in the passenger seat which is beside the taxi driver.', opts: ['True', 'False'], ans: 1 },
-      { q: 'It is not good manners when you hold the bowl of the rice or miso soup when you eat them.', opts: ['True', 'False'], ans: 1 },
-      { q: 'The traditionally polite way of eating is to keep eating one thing until you finish it.', opts: ['True', 'False'], ans: 1 },
-      { q: '"Tatebashi" is a bad chopsticks manner which is passing food chopstick to chopstick.', opts: ['True', 'False'], ans: 1 },
-    ]
-  },
-
-  // ==================== EXERCISE 4 ====================
-  {
-    id: 'ex4',
-    title: 'Exercise #4 — Vocabulary & Grammar',
-    date: 'Sep. 5, 2026',
-    points: 20,
-    type: 'mcq',
-    questions: [
-      { q: 'girl', opts: ['otoko no hito', 'onna no ko', 'onna no hito', 'otoko no ko'], ans: 1 },
-      { q: 'lawyer', opts: ['bengoshi', 'tokoya', 'enjinia', 'isha'], ans: 0 },
-      { q: 'family', opts: ['kanojo', 'kodomo', 'tomodachi', 'kazoku'], ans: 3 },
-      { q: 'bank employee', opts: ['enjinia', 'ginkouin', 'shain', 'bengoshi'], ans: 1 },
-      { q: 'Ms. Hana was a bank employee. Hana-san wa ginkouin ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 1 },
-      { q: 'we', opts: ['watashitachi', 'anata', 'kare', 'kanojo'], ans: 0 },
-      { q: 'She was not a company employee. Kanojo wa kaishain ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 3 },
-      { q: 'That person was a researcher. Ano kata wa kenkyuusha ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 1 },
-      { q: 'He is a lawyer. Kare wa bengoshi ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 0 },
-      { q: 'foreign student', opts: ['ryuugakusei', 'kyoushi', 'kenkyuusha', 'gakusei'], ans: 0 },
-      { q: 'she', opts: ['kare', 'kanojo', 'watashi', 'anata'], ans: 1 },
-      { q: 'company employee', opts: ['ginkouin', 'kenkyuusha', 'kaishain', 'shain'], ans: 2 },
-      { q: 'That person is not a medical doctor. Ano hito wa isha ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 2 },
-      { q: 'Mr. Kimura was not a teacher. Kimura-san wa sensei ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 3 },
-      { q: 'Mr. Suzuki is not an engineer. Suzuki-san wa enjinia ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 2 },
-      { q: 'She is a teacher. Kanojo wa kyoushi ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 0 },
-      { q: 'dentist', opts: ['tokoya', 'haisha', 'isha', 'bengoshi'], ans: 1 },
-      { q: 'Maria is a student. Maria-chan wa gakusei ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 0 },
-      { q: 'He was not a barber. Kare wa tokoya ________ .', opts: ['desu', 'deshita', 'ja arimasen', 'ja arimasen deshita'], ans: 3 },
-      { q: 'researcher; scholar', opts: ['sensei', 'kenkyuusha', 'ginkouin', 'kaishain'], ans: 1 },
-    ]
-  },
-
-  // ==================== EXERCISE 5 ====================
-  {
-    id: 'ex5',
-    title: 'Exercise #5 — Hiragana Reading',
-    date: 'Sep. 12, 2026',
-    points: 15,
-    type: 'input',
-    questions: [
-      { q: 'いいえ', ans: ['iie'] },
-      { q: 'かお', ans: ['kao'] },
-      { q: 'おおい', ans: ['ooi'] },
-      { q: 'おさけ', ans: ['osake'] },
-      { q: 'きかい', ans: ['kikai'] },
-      { q: 'あかい', ans: ['akai'] },
-      { q: 'かさ', ans: ['kasa'] },
-      { q: 'かく', ans: ['kaku'] },
-      { q: 'いえ', ans: ['ie'] },
-      { q: 'すこし', ans: ['sukoshi'] },
-      { q: 'うえ', ans: ['ue'] },
-      { q: 'しお', ans: ['shio'] },
-      { q: 'あおい', ans: ['aoi'] },
-      { q: 'けさ', ans: ['kesa'] },
-      { q: 'ここ', ans: ['koko'] },
-    ]
-  }
-];
-
-// ============================================================
-// STATE
-// ============================================================
-let state = {};
-quizData.forEach(sec => {
-  state[sec.id] = { answers: {}, checked: false, score: 0 };
+/* ---------- tabs ---------- */
+const tabs=document.querySelectorAll('nav button');
+tabs.forEach(b=>b.onclick=()=>{
+  tabs.forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.t));
+  window.scrollTo(0,0);
 });
-let activeTab = quizData[0].id;
 
-// ============================================================
-// RENDER
-// ============================================================
-function renderTabs() {
-  const nav = document.getElementById('navTabs');
-  nav.innerHTML = quizData.map(sec => {
-    const s = state[sec.id];
-    const scoreText = s.checked ? `${s.score}/${sec.questions.length}` : '';
-    return `<button class="nav-tab ${sec.id === activeTab ? 'active' : ''}" onclick="switchTab('${sec.id}')">
-      ${sec.title.split('—')[0].trim()}
-      ${scoreText ? `<span class="tab-score">${scoreText}</span>` : ''}
-    </button>`;
-  }).join('');
+/* ---------- flashcards ---------- */
+const CARDS=[
+["What is a disaster (in BCP/DRP terms)?","Any natural or man-made event that disrupts operations so significantly that a considerable, coordinated effort is needed to recover."],
+["Which C-I-A pillar do BCP and DRP directly support?","Availability."],
+["BCP: what is it?","Activities to ensure continuation of critical business processes: alternate personnel, equipment, facilities. Often includes non-IT aspects."],
+["DRP: what is it?","Assessment, salvage, repair, and eventual restoration of damaged facilities and systems. Often IT-focused."],
+["What does 'prevention' mean in BCP/DRP?","Preventing surprise and a disorganized response, and reducing impact; not preventing the disaster itself."],
+["ISO 27001","Requirements for Information Security Management Systems. Section 14 covers business continuity management."],
+["ISO 27002","Code of practice for business continuity management."],
+["NIST 800-34","Contingency Planning Guide for IT Systems. Seven-step process for BCP/DRP projects."],
+["NFPA 1600","Standard on Disaster/Emergency Management and Business Continuity Programs."],
+["NFPA 1620","Recommended practice for Pre-Incident Planning."],
+["HIPAA (relevance)","Requires a documented and tested disaster recovery plan (healthcare, pharmacies)."],
+["Benefits of BCP/DRP planning","Reduced risk, process improvements, improved organizational maturity, improved availability and reliability, marketplace advantage."],
+["Four main phases of a BCP/DRP project","Pre-project activities → Business Impact Assessment → Develop continuity & recovery plans → Test the plans."],
+["Pre-project activities","Obtain executive support, define scope, choose team, develop project plan (get a project manager), write project charter."],
+["Project charter","Document listing the pre-project items plus budget and milestones (projected costs and measurable goals)."],
+["Steps of a BIA","Survey critical processes → risk & threat analysis → determine MTD → establish key recovery targets."],
+["Definition of risk (slides)","The probability of a material deviation from an anticipated outcome (up or down). Risk exists only if there is an objective."],
+["Three areas analyzed in risk analysis","Threats (probabilities), Assets (physical, financial, lost revenue, fines, goodwill), Mitigating factors (UPS, generators, fire control, card readers)."],
+["MTD","Maximum Tolerable Downtime: the longest a process can be inoperative before significant damage or long-term viability is threatened."],
+["RTO","Recovery Time Objective: time from disaster onset to resumption of the business process."],
+["RPO","Recovery Point Objective: maximum period of data loss, counting backward from onset; the work that must be redone."],
+["RTO of 2 hours means…","Systems must be restored within 2 hours after disruption."],
+["RPO of 30 minutes means…","Maximum acceptable data loss is 30 minutes."],
+["Relationship between MTD and RTO","RTO must be shorter than (or equal to) MTD."],
+["Criticality analysis","Ranking processes by MTD, RTO, RPO, cost of downtime and qualitative criteria (reputation, market share, goodwill)."],
+["Statements of impact","For each process, describe the impact on the organization if it is incapacitated (e.g., can't process payments or invoices)."],
+["Technology for RTO < 1 hour","Clustering with near real-time data replication."],
+["Technology for RTO 8–14 days","New equipment and data recovery from backup."],
+["Cold vs warm vs hot systems (by recovery speed)","Cold: 4–7 days · Warm: 2–3 days (12–24h with fast media) · Hot: 6–12h (3–6h with replication)."],
+["Recovery team selection criteria","Residence location, skills & experience, ability/willingness to respond, health & family, plus backups."],
+["Five parts of emergency response","Personnel safety, evacuation, asset protection, damage assessment, emergency notification."],
+["#1 concern in any disaster response","Personnel safety."],
+["Who performs damage assessment?","Inside experts and usually outside experts: civil engineers, government building inspectors."],
+["Salvage","Identify working and salvageable assets; cannibalize for parts or other uses."],
+["Communications best practice in disasters","Avoid common infrastructure; diversify mobile services; consider two-way radios, satellite phones, amateur radio."],
+["Why is water a utility concern?","A building may be closed if no water is available for fire suppression."],
+["Business resumption planning includes","Alternate work locations, alternate personnel, communications, standby assets/equipment, access to procedures and records."],
+["Restoration and recovery includes","Repair facilities/equipment, replacement equipment, restore utilities, resume operations in primary facilities."],
+["Server clusters / geographic clusters","Improve availability. Geographic clusters have members far apart."],
+["Data replication","Maintains current data on multiple servers (even remote) at application, DBMS, OS or hardware level."],
+["Five levels of testing (in order)","Document review → Walkthrough → Simulation → Parallel test → Cutover test."],
+["Document review","Individuals review plans/procedures and give feedback to document owners."],
+["Walkthrough","Teams discuss plans as a group (brainstorming). No specific fictional emergency."],
+["Simulation","Walkthrough using a scripted scenario/case study that puts participants in a mental disaster setting."],
+["Parallel test","Workload applied to recovery systems while production keeps running. Tests actual readiness."],
+["Cutover test","Production shut down; recovery systems take the full workload. Riskiest, gives most confidence."],
+["Events that require plan review","Changes in business processes, IT systems/apps, IT architecture, additions to apps, service providers, organizational structure."],
+["DRP activation flow","Event → Assess → (not a disaster: stand down) / (disaster: contact recovery team → execute plan → re-assess → continue or stand down)."],
+["Green / Amber / Red","Green: no action, advise DRP manager. Amber: advise manager, implement appropriate parts. Red: advise manager, implement full DR plan."]
+];
+let order=CARDS.map((_,i)=>i),ci=0;
+const fc=document.getElementById('fc');
+function showCard(){
+  const [q,a]=CARDS[order[ci]];
+  fc.classList.remove('flip');
+  document.getElementById('fcF').textContent=q;
+  document.getElementById('fcB').textContent=a;
+  document.getElementById('fcMeta').textContent=`Card ${ci+1} of ${CARDS.length}`;
 }
+fc.onclick=()=>fc.classList.toggle('flip');
+document.getElementById('fcFlip').onclick=()=>fc.classList.toggle('flip');
+document.getElementById('fcNext').onclick=()=>{ci=(ci+1)%order.length;showCard()};
+document.getElementById('fcPrev').onclick=()=>{ci=(ci-1+order.length)%order.length;showCard()};
+document.getElementById('fcShuf').onclick=()=>{order=shuffle(order);ci=0;showCard()};
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('cards').classList.contains('on'))return;
+  if(e.code==='Space'){e.preventDefault();fc.classList.toggle('flip')}
+  if(e.key==='ArrowRight')document.getElementById('fcNext').click();
+  if(e.key==='ArrowLeft')document.getElementById('fcPrev').click();
+});
+showCard();
 
-function renderQuiz() {
-  const container = document.getElementById('quizContainer');
-  container.innerHTML = quizData.map(sec => {
-    const s = state[sec.id];
-    let questionsHTML = '';
-
-    sec.questions.forEach((q, i) => {
-      const num = i + 1;
-      const userAns = s.answers[i];
-      let statusClass = '';
-      if (s.checked) {
-        if (sec.type === 'mcq') {
-          statusClass = userAns === q.ans ? 'answered-correct' : 'answered-incorrect';
-        } else {
-          const isCorrect = q.ans.some(a => a.toLowerCase().trim() === (userAns || '').toLowerCase().trim());
-          statusClass = isCorrect ? 'answered-correct' : 'answered-incorrect';
-        }
-      }
-
-      questionsHTML += `<div class="q-card ${statusClass}" style="animation-delay:${Math.min(i * 0.03, 0.3)}s">`;
-      questionsHTML += `<div class="q-text"><span class="q-num">${num}</span><span>${escHtml(q.q)}</span></div>`;
-
-      if (sec.type === 'mcq') {
-        questionsHTML += `<div class="options">`;
-        q.opts.forEach((opt, j) => {
-          let cls = '';
-          if (s.checked) {
-            cls += ' disabled';
-            if (j === q.ans) cls += ' correct-answer';
-            if (userAns === j && j !== q.ans) cls += ' wrong-answer';
-          } else {
-            if (userAns === j) cls += ' selected';
-          }
-          questionsHTML += `<div class="option${cls}" onclick="selectOption('${sec.id}',${i},${j})">
-            <span class="radio"></span>${escHtml(opt)}
-          </div>`;
-        });
-        questionsHTML += `</div>`;
-      } else {
-        const val = userAns || '';
-        const inputCls = s.checked ? (q.ans.some(a => a.toLowerCase().trim() === val.toLowerCase().trim()) ? 'correct' : 'incorrect') : '';
-        const disabled = s.checked ? 'disabled' : '';
-        questionsHTML += `<div class="input-group">
-          <input type="text" class="q-input ${inputCls}" ${disabled} value="${escAttr(val)}" placeholder="Type your answer..." oninput="inputAnswer('${sec.id}',${i},this.value)">
-        </div>`;
-        if (s.checked && !q.ans.some(a => a.toLowerCase().trim() === val.toLowerCase().trim())) {
-          questionsHTML += `<div class="feedback incorrect show">Correct answer: ${escHtml(q.ans[0])}</div>`;
-        }
-      }
-
-      questionsHTML += `</div>`;
-    });
-
-    const resultBanner = s.checked ? getResultBanner(s.score, sec.questions.length) : '';
-
-    return `<section class="quiz-section ${sec.id === activeTab ? 'active' : ''}" data-section="${sec.id}">
-      <div class="section-header">
-        <h2>${escHtml(sec.title)}</h2>
-        <div class="meta">${escHtml(sec.date)} &nbsp;•&nbsp; ${sec.questions.length} questions &nbsp;•&nbsp; ${sec.points} points</div>
-      </div>
-      ${questionsHTML}
-      <div class="section-actions">
-        ${!s.checked
-          ? `<button class="btn btn-primary" onclick="checkSection('${sec.id}')">Check Answers</button>`
-          : `<button class="btn btn-outline" onclick="resetSection('${sec.id}')">Try Again</button>`}
-      </div>
-      ${resultBanner}
-    </section>`;
-  }).join('');
-}
-
-function getResultBanner(score, total) {
-  const pct = score / total;
-  let cls, emoji, msg;
-  if (pct === 1) { cls = 'great'; emoji = '🎉'; msg = 'Perfect score! すごい！'; }
-  else if (pct >= 0.8) { cls = 'great'; emoji = '🌟'; msg = `Great job! ${score}/${total} correct!`; }
-  else if (pct >= 0.6) { cls = 'ok'; emoji = '💪'; msg = `Good effort! ${score}/${total} — Keep studying!`; }
-  else { cls = 'bad'; emoji = '📚'; msg = `${score}/${total} — Review and try again! がんばって！`; }
-  return `<div class="result-banner show ${cls}">${emoji} ${msg}</div>`;
-}
-
-function updateScoreboard() {
-  let totalCorrect = 0, totalQuestions = 0, totalAnswered = 0;
-  quizData.forEach(sec => {
-    const s = state[sec.id];
-    if (s.checked) {
-      totalCorrect += s.score;
-      totalQuestions += sec.questions.length;
-      totalAnswered += sec.questions.length;
-    }
+/* ---------- quiz ---------- */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+// each: [question, [options], correctIndex, explanation, fromSlides]
+const QS=[
+["Which of these is essential to a Business Continuity Plan?",["A fence to deter attackers","A RAID array","Fire drills","Separation of duties","Off-site backups"],4,"Off-site backups ensure data can be recovered and operations continued elsewhere.",1],
+["Which of these is essential to Disaster Recovery Planning?",["Temporary alternate office space","Safety inspection of damaged buildings","Server clustering","Surveillance cameras","Bollards"],1,"DRP covers assessment, salvage, repair and restoration; inspecting damage is the assessment step. (Alternate office space is a BCP item.)",1],
+["Which of these will NOT reduce the impact of a disaster?",["Off-site backups","Sprinkler systems","BCP","DRP","Fire drills"],4,"Backups, sprinklers, and the plans themselves reduce impact. Fire drills are about people's practice and aren't listed among the impact-reducers on the slide. (Likely intended answer; confirm with your instructor if unsure.)",1],
+["CVS is a pharmacy chain. Which standard should they focus on most?",["NFPA 1620","HIPAA","NIST 800-34","ISO 27001","None of the above"],1,"HIPAA requires a documented and tested DR plan for healthcare organizations.",1],
+["Which item contains projected costs and specific measurable goals?",["Executive support","Project scope","Personnel list","Project plan","Project charter"],4,"The project charter lists scope, team, plan, plus budget and milestones.",1],
+["A company has enough stored water to operate for 2 days; after that work ceases. What best describes that information?",["BIA","MTD","BCP","DRP","Criticality analysis"],1,"The max time before the process must stop = Maximum Tolerable Downtime.",1],
+["A web retailer buys an alternate hosting service that promises to bring the site back within one hour of a failure. What does \"one hour\" describe?",["MTD","BCP","DRP","RTO","RPO"],3,"Time from failure to resumption = Recovery Time Objective.",1],
+["A written document explains how to transfer operations to a different location if needed. What is it?",["BIA","BCP","DRP","Criticality analysis","RTO"],1,"Alternate locations/continuing operations = Business Continuity Plan.",1],
+["If an organization has an RTO of 2 hours, what does this mean?",["Data must be backed up every 2 hours","Systems must be restored within 2 hours after disruption","Data loss cannot exceed 2 hours","Disaster detection must occur within 2 hours"],1,"RTO = time to restore. (C describes RPO.)",1],
+["If an organization has an RPO of 30 minutes, what does this mean?",["System recovery must take 30 minutes","Maximum acceptable data loss is 30 minutes","Backup takes 30 minutes","Disaster response begins in 30 minutes"],1,"RPO = maximum tolerable data loss measured backward from the disaster.",1],
+["Which of these is the highest priority in a disaster?",["Personnel safety","Asset protection","Damage assessment","Emergency notification","The answer depends on the situation"],0,"Personnel safety is the number one concern in any disaster response.",1],
+["Which of these is often performed by amateurs during a disaster?",["Damage assessment","Salvage","Communications","Electricity generation","Training staff"],2,"The slide suggests amateur radio as a communications option.",1],
+["Which of these is the most likely to interrupt real business operations?",["Document review","Walkthrough","Simulation","Parallel test","Cutover test"],4,"Cutover shuts production down and moves the full load to recovery systems.",1],
+["Which involves only a group discussion of procedures, without a specific fictional emergency?",["Document review","Walkthrough","Simulation","Parallel test","Cutover test"],1,"Walkthrough = group discussion. Simulation adds a scripted scenario.",1],
+/* extra practice */
+["Which CIA pillar do BCP and DRP primarily support?",["Confidentiality","Integrity","Availability","Authenticity"],2,"They keep systems and processes available during/after a disaster.",0],
+["Which is the correct order of the testing levels (lowest to highest risk)?",["Walkthrough, Document review, Simulation, Parallel, Cutover","Document review, Walkthrough, Simulation, Parallel, Cutover","Document review, Simulation, Walkthrough, Cutover, Parallel","Simulation, Walkthrough, Document review, Parallel, Cutover"],1,"Document review → Walkthrough → Simulation → Parallel → Cutover.",0],
+["In a parallel test, what happens to production systems?",["They are shut down","They continue to operate and support real business","They are replaced permanently","They are disconnected from the network"],1,"Parallel test runs workload on recovery systems while production keeps running.",0],
+["Which relationship must hold between MTD and RTO?",["RTO must be longer than MTD","RTO must be shorter than or equal to MTD","They are unrelated","RTO equals RPO"],1,"If recovery took longer than the maximum tolerable downtime, the business would suffer major damage.",0],
+["Which technology best supports an RTO under 1 hour?",["Cold systems with tape backup","New equipment purchase","Clustering with near real-time data replication","Warm systems"],2,"The fastest recovery tiers need clustering plus near real-time replication.",0],
+["Which NIST document gives a seven-step contingency planning process for IT systems?",["NIST 800-34","ISO 27002","NFPA 1600","NFPA 1620"],0,"NIST 800-34 is the Contingency Planning Guide for IT Systems.",0],
+["Which standard is the recommended practice for pre-incident planning?",["NFPA 1600","NFPA 1620","ISO 27001","HIPAA"],1,"NFPA 1620 = Pre-Incident Planning.",0],
+["Which is a mitigating factor in risk analysis?",["A flood","Lost revenue during an outage","An uninterruptible power supply (UPS)","A strike by workers"],2,"UPS, generators, fire control systems and card readers are mitigating factors. Floods and strikes are threats; lost revenue is an asset-impact figure.",0],
+["Why might a building close during a disaster even if undamaged?",["No water for fire suppression","Too many employees present","Bright lighting","Excess network traffic"],0,"Loss of water (or wastewater function) can force a building closure.",0],
+["During an Amber alert in the DRP activation scheme, what happens?",["No action at all","Advise DRP manager and implement appropriate aspects of the DRP","Implement the full DR plan","Stand down permanently"],1,"Green = no action; Amber = partial; Red = full plan.",0],
+["Recovery team members are selected using which criteria?",["Only seniority","Residence location, skills, willingness to respond, health & family","Only IT department membership","Random assignment"],1,"Also identify backups for each member.",0],
+["Which best describes 'prevention' in BCP/DRP?",["Stopping disasters from occurring","Preventing surprise and disorganized response, and reducing impact","Eliminating all risk","Buying insurance only"],1,"You can't prevent an earthquake; you prevent chaos and extended downtime.",0],
+["Which event should trigger a review of BCP/DRP documents?",["A change in service providers","A new office plant","A holiday","A change in the lunch menu"],0,"Plans must be updated when processes, IT systems, architecture, providers, or org structure change.",0]
+];
+let run=[],qi=0,sc=0,missed=[],answered=false;
+const $=id=>document.getElementById(id);
+function startQuiz(list){
+  run=shuffle(list).map(q=>{
+    const idx=shuffle(q[1].map((_,i)=>i));
+    return {q:q[0],opts:idx.map(i=>q[1][i]),ans:idx.indexOf(q[2]),why:q[3],orig:q};
   });
-  document.getElementById('totalScore').textContent = totalQuestions > 0 ? `${totalCorrect}/${totalQuestions}` : '0';
-  document.getElementById('totalAnswered').textContent = totalAnswered;
-  const pct = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) + '%' : '—';
-  const el = document.getElementById('totalAccuracy');
-  el.textContent = pct;
-  el.classList.toggle('perfect', totalQuestions > 0 && totalCorrect === totalQuestions);
+  qi=0;sc=0;missed=[];
+  $('quizStart').style.display='none';$('quizEnd').style.display='none';$('quizRun').style.display='block';
+  showQ();
 }
-
-// ============================================================
-// INTERACTIONS
-// ============================================================
-function switchTab(id) {
-  activeTab = id;
-  document.querySelectorAll('.quiz-section').forEach(s => s.classList.toggle('active', s.dataset.section === id));
-  document.querySelectorAll('.nav-tab').forEach((t, i) => t.classList.toggle('active', quizData[i].id === id));
-}
-
-function selectOption(secId, qIdx, optIdx) {
-  if (state[secId].checked) return;
-  state[secId].answers[qIdx] = optIdx;
-  renderQuiz();
-}
-
-function inputAnswer(secId, qIdx, val) {
-  if (state[secId].checked) return;
-  state[secId].answers[qIdx] = val;
-}
-
-function checkSection(secId) {
-  const sec = quizData.find(s => s.id === secId);
-  const s = state[secId];
-  s.checked = true;
-  s.score = 0;
-  sec.questions.forEach((q, i) => {
-    const userAns = s.answers[i];
-    if (sec.type === 'mcq') {
-      if (userAns === q.ans) s.score++;
-    } else {
-      if (q.ans.some(a => a.toLowerCase().trim() === (userAns || '').toLowerCase().trim())) s.score++;
-    }
+function showQ(){
+  answered=false;
+  const q=run[qi];
+  $('qProg').textContent=`Question ${qi+1} of ${run.length} · Score ${sc}`;
+  $('qBar').style.width=(qi/run.length*100)+'%';
+  $('qText').textContent=q.q;
+  $('qWhy').textContent='';
+  $('qNext').style.display='none';
+  const o=$('qOpts');o.innerHTML='';
+  q.opts.forEach((t,i)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=String.fromCharCode(65+i)+'. '+t;
+    b.onclick=()=>pick(i);o.appendChild(b);
   });
-  renderTabs();
-  renderQuiz();
-  updateScoreboard();
-  // Confetti on perfect
-  if (s.score === sec.questions.length) launchConfetti();
 }
-
-function resetSection(secId) {
-  state[secId] = { answers: {}, checked: false, score: 0 };
-  renderTabs();
-  renderQuiz();
-  updateScoreboard();
+function pick(i){
+  if(answered)return;answered=true;
+  const q=run[qi],bs=document.querySelectorAll('#qOpts .opt');
+  bs.forEach((b,k)=>{b.disabled=true;if(k===q.ans)b.classList.add('right')});
+  if(i===q.ans)sc++;else{bs[i].classList.add('wrong');missed.push(q.orig)}
+  $('qWhy').textContent=(i===q.ans?'✅ Correct. ':'❌ Not quite. ')+q.why;
+  $('qNext').style.display='inline-block';
+  $('qNext').textContent=qi===run.length-1?'See results':'Next →';
 }
-
-// ============================================================
-// HELPERS
-// ============================================================
-function escHtml(str) {
-  const d = document.createElement('div');
-  d.textContent = str;
-  return d.innerHTML;
-}
-function escAttr(str) {
-  return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-// ============================================================
-// CONFETTI 🎉
-// ============================================================
-function launchConfetti() {
-  const canvas = document.getElementById('confetti');
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const pieces = [];
-  const colors = ['#C41E3A', '#D4A843', '#2E8B57', '#4A90D9', '#FF69B4', '#FFD700'];
-  for (let i = 0; i < 120; i++) {
-    pieces.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height - canvas.height,
-      w: Math.random() * 8 + 4,
-      h: Math.random() * 4 + 2,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      vy: Math.random() * 3 + 2,
-      vx: Math.random() * 2 - 1,
-      rot: Math.random() * 360,
-      vr: Math.random() * 6 - 3,
-      opacity: 1
-    });
-  }
-  let frame = 0;
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let alive = false;
-    pieces.forEach(p => {
-      if (p.opacity <= 0) return;
-      alive = true;
-      p.y += p.vy;
-      p.x += p.vx;
-      p.rot += p.vr;
-      if (frame > 60) p.opacity -= 0.01;
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot * Math.PI / 180);
-      ctx.globalAlpha = Math.max(0, p.opacity);
-      ctx.fillStyle = p.color;
-      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-      ctx.restore();
-    });
-    frame++;
-    if (alive) requestAnimationFrame(animate);
-    else ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-  animate();
-}
-
-// ============================================================
-// INIT
-// ============================================================
-renderTabs();
-renderQuiz();
-updateScoreboard();
+$('qNext').onclick=()=>{
+  qi++;
+  if(qi>=run.length){
+    $('quizRun').style.display='none';$('quizEnd').style.display='block';
+    const p=Math.round(sc/run.length*100);
+    $('qScore').textContent=`${sc} / ${run.length} (${p}%)`;
+    $('qMsg').textContent=p===100?'Perfect. You\'re ready!':p>=80?'Strong. Review the ones you missed.':'Keep going: re-read the Notes for what you missed, then retry.';
+    $('qRetry').style.display=missed.length?'inline-block':'none';
+    $('qMiss').style.display=missed.length?'inline-block':'none';
+    window.lastMissed=missed.slice();
+  } else showQ();
+};
+$('qAll').onclick=()=>startQuiz(QS);
+$('qSlides').onclick=()=>startQuiz(QS.filter(q=>q[4]));
+$('qAgain').onclick=()=>startQuiz(QS);
+$('qRetry').onclick=()=>startQuiz(window.lastMissed);
+$('qMiss').onclick=()=>startQuiz(window.lastMissed);
 </script>
 </body>
 </html>
