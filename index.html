@@ -3,577 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TOPCIT Study Checklist</title>
+<title>TOPCIT Study Planner</title>
 <style>
-  :root{
-    --bg:#f6f8fb;
-    --card:#ffffff;
-    --text:#1f2937;
-    --muted:#6b7280;
-    --primary:#2563eb;
-    --primary-soft:#e8efff;
-    --success:#16a34a;
-    --success-soft:#e7f7ed;
-    --warning:#d97706;
-    --border:#e5e7eb;
-    --radius:14px;
-    --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.06);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    line-height:1.5;
-  }
-  .container{
-    max-width:1080px;
-    margin:0 auto;
-    padding:24px 16px 80px;
-  }
-  header{
-    background:linear-gradient(135deg,#1d4ed8,#2563eb 55%,#0ea5e9);
-    color:#fff;
-    padding:36px 0 30px;
-    border-radius:0 0 24px 24px;
-  }
-  .header-inner{
-    max-width:1080px;
-    margin:0 auto;
-    padding:0 16px;
-  }
-  .eyebrow{
-    text-transform:uppercase;
-    letter-spacing:.14em;
-    font-size:.72rem;
-    opacity:.85;
-    margin:0 0 8px;
-  }
-  h1{
-    margin:0 0 10px;
-    font-size:clamp(1.6rem,4vw,2.4rem);
-    letter-spacing:-.02em;
-  }
-  .subtitle{
-    margin:0;
-    max-width:640px;
-    color:rgba(255,255,255,.9);
-    font-size:.98rem;
-  }
-  .status-panel{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:14px;
-    margin-top:22px;
-  }
-  .status-card{
-    background:rgba(255,255,255,.14);
-    border:1px solid rgba(255,255,255,.22);
-    border-radius:var(--radius);
-    padding:16px;
-  }
-  .status-label{
-    font-size:.76rem;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    opacity:.8;
-  }
-  .status-value{
-    font-size:1.25rem;
-    font-weight:750;
-    margin-top:4px;
-  }
-  .progress-wrap{
-    margin-top:10px;
-    height:10px;
-    background:rgba(255,255,255,.22);
-    border-radius:99px;
-    overflow:hidden;
-  }
-  .progress-bar{
-    height:100%;
-    width:0%;
-    background:#fff;
-    border-radius:99px;
-    transition:width .35s ease;
-  }
-  .toolbar{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    align-items:center;
-    justify-content:space-between;
-    margin:22px 0 18px;
-  }
-  .filters{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-  }
-  .filter-btn{
-    border:1px solid var(--border);
-    background:#fff;
-    color:var(--text);
-    padding:9px 14px;
-    border-radius:99px;
-    font-size:.88rem;
-    font-weight:600;
-    cursor:pointer;
-    transition:.18s ease;
-  }
-  .filter-btn:hover{border-color:#c7d2fe;background:#f8faff}
-  .filter-btn.active{
-    background:var(--primary);
-    border-color:var(--primary);
-    color:#fff;
-  }
-  .reset-btn{
-    border:1px solid #fecaca;
-    background:#fff;
-    color:#b91c1c;
-    padding:9px 14px;
-    border-radius:99px;
-    font-weight:650;
-    cursor:pointer;
-    transition:.18s ease;
-  }
-  .reset-btn:hover{background:#fef2f2}
-  .module{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    margin-bottom:18px;
-    overflow:hidden;
-  }
-  .module-header{
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:14px;
-    padding:18px 18px;
-    border:0;
-    background:#fff;
-    cursor:pointer;
-    text-align:left;
-    font:inherit;
-  }
-  .module-header:hover{background:#fafbff}
-  .module-title{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    min-width:0;
-  }
-  .module-badge{
-    flex:0 0 auto;
-    width:44px;
-    height:44px;
-    display:grid;
-    place-items:center;
-    border-radius:12px;
-    font-weight:800;
-    color:#fff;
-  }
-  .m1{background:#2563eb}
-  .m2{background:#7c3aed}
-  .m3{background:#0891b2}
-  .m4{background:#d97706}
-  .module-name{
-    font-size:1.05rem;
-    font-weight:750;
-  }
-  .module-meta{
-    color:var(--muted);
-    font-size:.82rem;
-  }
-  .module-progress{
-    flex:0 0 190px;
-  }
-  .mini-progress{
-    height:8px;
-    background:#eef2f7;
-    border-radius:99px;
-    overflow:hidden;
-  }
-  .mini-bar{
-    height:100%;
-    width:0%;
-    background:var(--primary);
-    transition:width .3s ease;
-  }
-  .progress-text{
-    display:flex;
-    justify-content:space-between;
-    font-size:.76rem;
-    color:var(--muted);
-    margin-bottom:5px;
-  }
-  .stage-label{
-    font-weight:700;
-    color:var(--text);
-  }
-  .module-body{
-    display:none;
-    border-top:1px solid var(--border);
-    padding:6px 18px 18px;
-  }
-  .module.open .module-body{display:block}
-  .topic{
-    display:flex;
-    gap:12px;
-    align-items:flex-start;
-    padding:13px 10px;
-    border-radius:10px;
-    transition:background .15s ease;
-  }
-  .topic:hover{background:#f8fafc}
-  .topic input{
-    width:20px;
-    height:20px;
-    accent-color:var(--success);
-    cursor:pointer;
-    margin-top:2px;
-    flex:0 0 auto;
-  }
-  .topic-content{
-    min-width:0;
-    flex:1;
-  }
-  .topic-title{
-    font-weight:650;
-    font-size:.97rem;
-  }
-  .topic.done .topic-title{
-    color:var(--muted);
-    text-decoration:line-through;
-  }
-  .topic-resource{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    margin-top:5px;
-    color:var(--primary);
-    font-size:.85rem;
-    font-weight:650;
-    text-decoration:none;
-    word-break:break-word;
-  }
-  .topic-resource:hover{text-decoration:underline}
-  .topic-tag{
-    display:inline-block;
-    margin-top:7px;
-    padding:2px 8px;
-    border-radius:99px;
-    background:var(--primary-soft);
-    color:#1d4ed8;
-    font-size:.72rem;
-    font-weight:700;
-  }
-  .topic.done .topic-tag{
-    background:var(--success-soft);
-    color:#15803d;
-  }
-  .empty{
-    text-align:center;
-    color:var(--muted);
-    background:#fff;
-    border:1px dashed var(--border);
-    border-radius:var(--radius);
-    padding:40px 18px;
-  }
-  .footer-note{
-    margin-top:24px;
-    color:var(--muted);
-    font-size:.84rem;
-    text-align:center;
-  }
-  @media(min-width:760px){
-    .status-panel{grid-template-columns:repeat(3,1fr)}
-    .module-progress{flex:0 0 240px}
-  }
-  @media(max-width:620px){
-    .module-header{flex-direction:column;align-items:stretch}
-    .module-progress{flex:1 1 auto}
-  }
+:root{--bg:#f4f6fa;--surface:#fff;--ink:#172033;--muted:#687386;--line:#e3e8f0;--blue:#315ee8;--blue-soft:#edf2ff;--green:#16834b;--green-soft:#eaf7ef;--shadow:0 8px 28px rgba(25,42,75,.07);--radius:18px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.hero{background:linear-gradient(125deg,#172b61,#315ee8);color:#fff;padding:34px 20px 28px}.hero-inner,.container{max-width:1080px;margin:auto}.eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.75;margin:0 0 7px}.hero h1{font-size:clamp(1.8rem,4vw,2.5rem);letter-spacing:-.04em;margin:0}.hero p{margin:7px 0 0;color:#e1e9ff;max-width:650px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.stat{padding:14px 16px;border:1px solid #ffffff35;background:#ffffff14;border-radius:14px}.stat-label{font-size:.73rem;text-transform:uppercase;letter-spacing:.08em;color:#dbe5ff}.stat-value{font-size:1.45rem;font-weight:750;margin-top:3px}.track{height:7px;background:#ffffff35;border-radius:99px;overflow:hidden;margin-top:9px}.track span{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:width .25s}
+.container{padding:24px 18px 70px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 14px;border-radius:99px;font-weight:650;cursor:pointer}.filter.active{background:var(--blue);border-color:var(--blue);color:#fff}.reset{border:1px solid #f2caca;color:#b42318;background:#fff;padding:9px 13px;border-radius:99px;font-weight:650;cursor:pointer}.reset:hover{background:#fff5f5}
+.module{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin:0 0 15px;overflow:hidden}.module-head{width:100%;display:flex;align-items:center;gap:15px;padding:17px 19px;border:0;background:#fff;text-align:left;cursor:pointer}.module-head:hover{background:#fafbff}.module-icon{width:46px;height:46px;flex:none;display:grid;place-items:center;border-radius:14px;color:#fff;font-weight:800}.m1{background:#315ee8}.m2{background:#7652d5}.m3{background:#07879a}.m4{background:#c47a16}.module-info{flex:1;min-width:0}.module-name{font-weight:760;font-size:1.02rem}.module-meta{font-size:.82rem;color:var(--muted)}.module-progress{width:190px;flex:none}.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:.76rem;margin-bottom:5px}.mini-track{height:7px;background:#edf0f5;border-radius:99px;overflow:hidden}.mini-track span{height:100%;display:block;background:var(--blue);border-radius:99px}.chevron{color:var(--muted);font-size:1.1rem;transition:transform .2s}.module.open .chevron{transform:rotate(180deg)}
+.module-body{display:none;border-top:1px solid var(--line);padding:10px 18px 18px}.module.open .module-body{display:block}.topic{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;padding:14px 10px;border-radius:12px}.topic+.topic{border-top:1px solid #f0f2f6}.topic:hover{background:#fafbfe}.topic input{width:19px;height:19px;margin:3px 0 0;accent-color:var(--green);cursor:pointer}.topic-title{font-weight:700}.topic.done .topic-title{color:#7a8494}.topic-desc{font-size:.88rem;color:var(--muted);margin-top:2px}.resource-list{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.resource{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:#244fc7;background:var(--blue-soft);border:1px solid #dce5ff;padding:6px 10px;border-radius:8px;font-size:.81rem;font-weight:650}.resource:hover{background:#dfe8ff;text-decoration:underline}.topic-state{display:inline-block;margin:8px 0 0;font-size:.72rem;font-weight:700;color:var(--green);background:var(--green-soft);padding:2px 8px;border-radius:99px}.topic:not(.done) .topic-state{display:none}.empty{padding:28px;text-align:center;color:var(--muted)}.foot{color:var(--muted);font-size:.82rem;text-align:center;margin-top:24px}
+@media(max-width:650px){.stats{grid-template-columns:1fr}.module-head{gap:10px;padding:14px}.module-progress{width:100%;max-width:115px}.module-name{font-size:.94rem}.module-meta{font-size:.75rem}.module-icon{width:40px;height:40px}.module-body{padding:8px}.topic{padding:12px 5px}.resource{font-size:.78rem}}
 </style>
 </head>
 <body>
-
-<header>
-  <div class="header-inner">
-    <p class="eyebrow"></p>
-    <h1>Checklist</h1>
-    <p class="subtitle">Track your progress.</p>
-
-    <div class="status-panel">
-      <div class="status-card">
-        <div class="status-label">Current stage</div>
-        <div class="status-value" id="currentStage">Not started</div>
-      </div>
-      <div class="status-card">
-        <div class="status-label">Overall progress</div>
-        <div class="status-value" id="overallPercent">0%</div>
-        <div class="progress-wrap"><div class="progress-bar" id="overallBar"></div></div>
-      </div>
-      <div class="status-card">
-        <div class="status-label">Completed topics</div>
-        <div class="status-value" id="completedCount">0 / 0</div>
-      </div>
-    </div>
-  </div>
-</header>
-
+<header class="hero"><div class="hero-inner">
+<p class="eyebrow">Exam preparation</p><h1>TOPCIT Study Planner</h1><p>Review the four modules, open learning resources, and track completed topics.</p>
+<div class="stats">
+<div class="stat"><div class="stat-label">Current progress</div><div class="stat-value" id="percent">0%</div><div class="track"><span id="overallBar"></span></div></div>
+<div class="stat"><div class="stat-label">Completed topics</div><div class="stat-value" id="count">0 / 0</div></div>
+<div class="stat"><div class="stat-label">Next module</div><div class="stat-value" id="stage" style="font-size:1.05rem">M1 — Software Development</div></div>
+</div></div></header>
 <main class="container">
-  <div class="toolbar">
-    <div class="filters" role="group" aria-label="Filter checklist">
-      <button class="filter-btn active" data-filter="all">All topics</button>
-      <button class="filter-btn" data-filter="todo">To study</button>
-      <button class="filter-btn" data-filter="done">Completed</button>
-    </div>
-    <button class="reset-btn" id="resetProgress">Reset progress</button>
-  </div>
-
-  <div id="checklist"></div>
-
-  <p class="footer-note">
-    Progress is stored locally in your browser. Clearing browser data or using another device will not carry your progress over.
-  </p>
+<div class="toolbar"><div class="filters" role="group" aria-label="Topic filter">
+<button class="filter active" data-filter="all">All topics</button><button class="filter" data-filter="todo">Remaining</button><button class="filter" data-filter="done">Completed</button>
+</div><button class="reset" id="reset">Reset progress</button></div>
+<div id="modules"></div>
+<p class="foot">Progress is saved in this browser on this device.</p>
 </main>
-
 <script>
 const modules = [
-  {
-    id:"m1",
-    code:"M1",
-    name:"Software Development",
-    meta:"21 questions · 365 points",
-    topics:[
-      ["Software Engineering Fundamentals","SDLC, requirements, Agile, Waterfall, iterative and Spiral models","https://www.geeksforgeeks.org/software-engineering/software-development-life-cycle-sdlc/"],
-      ["Algorithm Knowledge","Searching, sorting, Big-O, arrays, stacks, queues, linked lists, trees and graphs","https://visualgo.net/en"],
-      ["AI Knowledge","Machine learning, supervised and unsupervised learning, classification, regression, training and test data","https://developers.google.com/machine-learning/crash-course/exercises"],
-      ["Programming Language Application","Java, Python and C fundamentals; OOP; functions; arrays; strings; debugging","https://java-programming.mooc.fi/"],
-      ["Software Analysis","Functional and non-functional requirements, use cases, feasibility and stakeholder needs","https://www.geeksforgeeks.org/software-engineering/software-requirement-specifications-and-their-role-in-software-development/"],
-      ["Software Design","UML, class diagrams, sequence diagrams, activity diagrams, cohesion and coupling","https://www.uml-diagrams.org/"],
-      ["Software Implementation","Coding, modularity, version control, error handling and code quality","https://docs.github.com/en/get-started/start-your-journey/hello-world"],
-      ["Software Testing","Unit, integration, system and acceptance testing; black-box and white-box testing","https://www.geeksforgeeks.org/software-testing/software-testing-tutorial/"],
-      ["Software Maintenance","Corrective, adaptive, perfective and preventive maintenance","https://www.geeksforgeeks.org/software-engineering/software-maintenance/"],
-      ["Java OOP Review","Classes, objects, encapsulation, inheritance, polymorphism, abstraction, interfaces and static members","https://docs.oracle.com/javase/tutorial/java/concepts/"],
-      ["Java Practice Tasks","Practice OOP through Student, BankAccount, Person, Animal, Shape and Drawable exercises","https://javaarena.com/"],
-      ["Official TOPCIT Practice","Use the official sample questions and IBT practice interface","https://www.topcit.or.kr/board/preview.do"]
-    ]
-  },
-  {
-    id:"m2",
-    code:"M2",
-    name:"Data Management",
-    meta:"19 questions · 265 points",
-    topics:[
-      ["Data and Database Knowledge","DBMS, RDBMS, relational tables, SQL, data types and constraints","https://sqlbolt.com/"],
-      ["Data and Database Design","ER diagrams, entities, attributes, relationships, cardinality and normalization","https://ermap.io/"],
-      ["Data and Database Construction","CREATE, ALTER, INSERT, SELECT, UPDATE, DELETE and constraints","https://www.w3schools.com/sql/"],
-      ["Data and Database Management","Indexes, transactions, ACID, backup, recovery and access control","https://www.postgresql.org/docs/current/tutorial.html"],
-      ["Data Analysis","Mean, median, mode, range, variance, standard deviation and data interpretation","https://www.khanacademy.org/math/statistics-probability"],
-      ["Data-driven AI Application","Data collection, preprocessing, features, labels, training and test datasets","https://developers.google.com/machine-learning/crash-course/exercises"],
-      ["SQL Practice","SELECT, WHERE, ORDER BY, JOIN, GROUP BY, HAVING, primary keys and foreign keys","https://www.w3schools.com/sql/sql_exercises.asp"],
-      ["SQL Concepts Review","Primary key, foreign key, normalization, ACID, joins and indexes","https://www.postgresql.org/docs/current/tutorial.html"],
-      ["Official TOPCIT Practice","Review the official TOPCIT sample questions and IBT tools","https://www.topcit.or.kr/board/preview.do"]
-    ]
-  },
-  {
-    id:"m3",
-    code:"M3",
-    name:"Systems Architecture & Information Security",
-    meta:"18 questions · 235 points",
-    topics:[
-      ["System Architecture","CPU, ALU, control unit, registers, RAM, ROM, cache, storage, buses and architecture models","https://www.geeksforgeeks.org/computer-organization-architecture/computer-organization-and-architecture-tutorials/"],
-      ["Operating Systems","Processes, threads, scheduling, synchronization, deadlocks, memory and virtual memory","https://pages.cs.wisc.edu/~remzi/OSTEP/"],
-      ["Networking","OSI and TCP/IP models, IP addressing, subnetting, DNS, DHCP, routing and network devices","https://www.cisco.com/site/us/en/learn/training-certifications/training/netacad/index.html"],
-      ["Information Security Concepts","CIA triad, threats, vulnerabilities, risk, security controls and access management","https://www.nist.gov/cyberframework"],
-      ["Application Security","SQL injection, XSS, authentication, authorization, input validation and secure sessions","https://portswigger.net/web-security/"],
-      ["Data Security","Encryption, hashing, digital signatures, TLS, backups and data protection","https://www.cloudflare.com/learning/ssl/what-is-encryption/"],
-      ["System Security","Firewalls, IDS/IPS, malware, patching, hardening and security policies","https://www.nist.gov/cyberframework"],
-      ["Networking Quick Reference","Review OSI layers, TCP/UDP, DNS, DHCP, routers, switches and basic subnetting","https://www.geeksforgeeks.org/computer-networks/layers-of-osi-model/"],
-      ["Security Concepts Review","CIA, authentication vs authorization, encryption vs hashing, digital signatures and firewalls","https://portswigger.net/web-security/"],
-      ["Official TOPCIT Practice","Practice the official TOPCIT IBT compiler and diagram tools","https://www.topcit.or.kr/board/preview.do"]
-    ]
-  },
-  {
-    id:"m4",
-    code:"M4",
-    name:"IT Business",
-    meta:"17 questions · 135 points",
-    topics:[
-      ["IT Business Environment, Goals and Strategy","SWOT, PESTLE, SMART objectives, business-IT alignment and strategic planning","https://www.open.edu/openlearn/"],
-      ["IT Business Solutions and Performance","IT governance, business solutions, KPIs, performance and service management","https://www.open.edu/openlearn/"],
-      ["IT Business Trends","Cloud computing, AI, digital transformation, automation and emerging technologies","https://www.open.edu/openlearn/"],
-      ["Intellectual Property Rights","Copyright, patents, trademarks, industrial designs and software licensing","https://www.wipo.int/en/web/wipo-academy/programs/ip-elearning/index"],
-      ["IT Professional Ethics","Privacy, confidentiality, professional responsibility, fairness and responsible technology use","https://www.acm.org/code-of-ethics"],
-      ["Project Management and Communication","Scope, schedule, cost, quality, risk, stakeholders, communication and scope creep","https://www.open.edu/openlearn/"],
-      ["Business Terms Review","SWOT, PESTLE, SMART, KPI, ROI, scope creep, stakeholders and risk management","https://www.open.edu/openlearn/"],
-      ["Official TOPCIT Practice","Review the official TOPCIT sample questions and test format","https://www.topcit.or.kr/board/preview.do"]
-    ]
-  }
+{id:"m1",code:"M1",name:"Software Development",meta:"21 questions · 365 points",topics:[
+["Software Engineering Fundamentals","SDLC, requirements, Agile, Waterfall, iterative and Spiral models",[
+["GeeksforGeeks — SDLC","https://www.geeksforgeeks.org/software-engineering/software-development-life-cycle-sdlc/"]]],
+["Algorithm Knowledge","Searching, sorting, Big-O, arrays, stacks, queues, linked lists, trees and graphs",[
+["VisuAlgo — algorithm visualizations","https://visualgo.net/en"]]],
+["AI Knowledge","Machine learning, supervised and unsupervised learning, classification, regression, training and test data",[
+["Google — ML Crash Course exercises","https://developers.google.com/machine-learning/crash-course/exercises"]]],
+["Programming Language Application","Java, Python and C fundamentals; OOP; functions; arrays; strings; debugging",[
+["Java Arena — Java I and II with browser exercises","https://javaarena.com/"],
+["Python — official tutorial","https://docs.python.org/3/tutorial/"],
+["Learn-C.org — interactive C tutorial","https://www.learn-c.org/"]]],
+["Software Analysis","Functional and non-functional requirements, use cases, feasibility and stakeholder needs",[
+["GeeksforGeeks — Software requirements","https://www.geeksforgeeks.org/software-engineering/software-requirement-specifications-and-their-role-in-software-development/"]]],
+["Software Design","UML, class diagrams, sequence diagrams, activity diagrams, cohesion and coupling",[
+["UML Diagrams — notation and reference","https://www.uml-diagrams.org/"]]],
+["Software Implementation","Coding, modularity, version control, error handling and code quality",[
+["GitHub Docs — Hello World and GitHub flow","https://docs.github.com/en/get-started/using-github/hello-world"]]],
+["Software Testing","Unit, integration, system and acceptance testing; black-box and white-box testing",[
+["GeeksforGeeks — Software testing tutorial","https://www.geeksforgeeks.org/software-testing/software-testing-tutorial/"]]],
+["Software Maintenance","Corrective, adaptive, perfective and preventive maintenance",[
+["GeeksforGeeks — Software maintenance","https://www.geeksforgeeks.org/software-engineering/software-maintenance/"]]],
+["Java OOP Review","Classes, objects, encapsulation, inheritance, polymorphism, abstraction, interfaces and static members",[
+["Oracle — Object-oriented programming concepts","https://docs.oracle.com/javase/tutorial/java/concepts/"],
+["Java Arena — Java Programming II exercises","https://javaarena.com/"]]],
+["Java Practice Tasks","Student, BankAccount, Person, Animal, Shape and Drawable exercises",[
+["Java Arena — run Java code in your browser","https://javaarena.com/"]]],
+["Official TOPCIT Practice","Sample questions and IBT practice interface",[
+["TOPCIT — official practice page","https://www.topcit.or.kr/board/preview.do"]]]
+]},
+{id:"m2",code:"M2",name:"Data Management",meta:"19 questions · 265 points",topics:[
+["Data and Database Knowledge","DBMS, RDBMS, relational tables, SQL, data types and constraints",[
+["SQLBolt — interactive SQL lessons","https://sqlbolt.com/"],
+["W3Schools — SQL tutorial","https://www.w3schools.com/sql/"]]],
+["Data and Database Design","ER diagrams, entities, attributes, relationships, cardinality and normalization",[
+["ERMap Academy — database design course","https://ermap.io/academy?lang=en"],
+["ERMap — online ER diagram editor","https://ermap.io/"]]],
+["Data and Database Construction","CREATE, ALTER, INSERT, SELECT, UPDATE, DELETE and constraints",[
+["W3Schools — SQL tutorial and examples","https://www.w3schools.com/sql/"],
+["W3Schools — SQL exercises","https://www.w3schools.com/sql/sql_exercises.asp"]]],
+["Data and Database Management","Indexes, transactions, ACID, backup, recovery and access control",[
+["PostgreSQL — official tutorial","https://www.postgresql.org/docs/current/tutorial.html"]]],
+["Data Analysis","Mean, median, mode, range, variance, standard deviation and data interpretation",[
+["Khan Academy — Statistics and Probability","https://www.khanacademy.org/math/statistics-probability"]]],
+["Data-driven AI Application","Data collection, preprocessing, features, labels, training and test datasets",[
+["Google — ML Crash Course exercises","https://developers.google.com/machine-learning/crash-course/exercises"]]],
+["SQL Practice","SELECT, WHERE, ORDER BY, JOIN, GROUP BY, HAVING, primary keys and foreign keys",[
+["SQLBolt — interactive exercises","https://sqlbolt.com/"],
+["W3Schools — SQL exercises","https://www.w3schools.com/sql/sql_exercises.asp"]]],
+["SQL Concepts Review","Primary key, foreign key, normalization, ACID, joins and indexes",[
+["PostgreSQL — official tutorial","https://www.postgresql.org/docs/current/tutorial.html"]]],
+["Official TOPCIT Practice","Official sample questions and IBT tools",[
+["TOPCIT — official practice page","https://www.topcit.or.kr/board/preview.do"]]]
+]},
+{id:"m3",code:"M3",name:"Systems Architecture & Information Security",meta:"18 questions · 235 points",topics:[
+["System Architecture","CPU, ALU, control unit, registers, RAM, ROM, cache, storage, buses and architecture models",[
+["GeeksforGeeks — Computer Organization and Architecture","https://www.geeksforgeeks.org/computer-organization-architecture/computer-organization-and-architecture-tutorials/"]]],
+["Operating Systems","Processes, threads, scheduling, synchronization, deadlocks, memory and virtual memory",[
+["OSTEP — free online operating systems textbook","https://pages.cs.wisc.edu/~remzi/OSTEP/"]]],
+["Networking","OSI and TCP/IP models, IP addressing, subnetting, DNS, DHCP, routing and network devices",[
+["Cisco Networking Academy — free courses","https://www.cisco.com/site/us/en/learn/training-certifications/training/netacad/index.html"]]],
+["Information Security Concepts","CIA triad, threats, vulnerabilities, risk, security controls and access management",[
+["NIST — Cybersecurity Framework","https://www.nist.gov/cyberframework"],
+["Cisco — Introduction to Cybersecurity","https://www.cisco.com/site/us/en/learn/training-certifications/training/netacad/index.html"]]],
+["Application Security","SQL injection, XSS, authentication, authorization, input validation and secure sessions",[
+["PortSwigger — Web Security Academy","https://portswigger.net/web-security/"],
+["PortSwigger — interactive security labs","https://portswigger.net/web-security/all-labs"]]],
+["Data Security","Encryption, hashing, digital signatures, TLS, backups and data protection",[
+["Cloudflare — What is encryption?","https://www.cloudflare.com/learning/ssl/what-is-encryption/"]]],
+["System Security","Firewalls, IDS/IPS, malware, patching, hardening and security policies",[
+["NIST — Cybersecurity Framework","https://www.nist.gov/cyberframework"],
+["Cisco Networking Academy — cybersecurity courses","https://www.cisco.com/site/us/en/learn/training-certifications/training/netacad/index.html"]]],
+["Networking Quick Reference","OSI layers, TCP/UDP, DNS, DHCP, routers, switches and basic subnetting",[
+["Cisco Networking Academy — Networking Basics","https://www.cisco.com/site/us/en/learn/training-certifications/training/netacad/index.html"]]],
+["Security Concepts Review","CIA, authentication vs authorization, encryption vs hashing, digital signatures and firewalls",[
+["PortSwigger — Web Security Academy","https://portswigger.net/web-security/"],
+["NIST — Cybersecurity Framework","https://www.nist.gov/cyberframework"]]],
+["Official TOPCIT Practice","Official IBT compiler and diagram tools",[
+["TOPCIT — official practice page","https://www.topcit.or.kr/board/preview.do"]]]
+]},
+{id:"m4",code:"M4",name:"IT Business",meta:"17 questions · 135 points",topics:[
+["IT Business Environment, Goals and Strategy","SWOT, PESTLE, SMART objectives, business-IT alignment and strategic planning",[
+["OpenLearn — free business and management courses","https://www.open.edu/openlearn/"]]],
+["IT Business Solutions and Performance","IT governance, business solutions, KPIs, performance and service management",[
+["OpenLearn — free business and management courses","https://www.open.edu/openlearn/"]]],
+["IT Business Trends","Cloud computing, AI, digital transformation, automation and emerging technologies",[
+["OpenLearn — free technology and business courses","https://www.open.edu/openlearn/"]]],
+["Intellectual Property Rights","Copyright, patents, trademarks, industrial designs and software licensing",[
+["WIPO Academy — IP eLearning","https://www.wipo.int/en/web/wipo-academy/programs/ip-elearning/index"],
+["WIPO — IP learning portal","https://welc.wipo.int/acc/index.jsf?cc=PCT_101&lang=en&page=courseCatalog.xhtml"]]],
+["IT Professional Ethics","Privacy, confidentiality, professional responsibility, fairness and responsible technology use",[
+["ACM — Code of Ethics","https://www.acm.org/code-of-ethics"]]],
+["Project Management and Communication","Scope, schedule, cost, quality, risk, stakeholders, communication and scope creep",[
+["OpenLearn — free project and management courses","https://www.open.edu/openlearn/"]]],
+["Business Terms Review","SWOT, PESTLE, SMART, KPI, ROI, scope creep, stakeholders and risk management",[
+["OpenLearn — free business and management courses","https://www.open.edu/openlearn/"]]],
+["Official TOPCIT Practice","Official sample questions and test format",[
+["TOPCIT — official practice page","https://www.topcit.or.kr/board/preview.do"]]]
+]}
 ];
 
-const STORAGE_KEY = "topcit-study-checklist-v1";
-const checklistEl = document.getElementById("checklist");
-const currentStageEl = document.getElementById("currentStage");
-const overallPercentEl = document.getElementById("overallPercent");
-const overallBarEl = document.getElementById("overallBar");
-const completedCountEl = document.getElementById("completedCount");
-const resetBtn = document.getElementById("resetProgress");
-let activeFilter = "all";
-
-function loadProgress(){
-  try{
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-  }catch{
-    return {};
-  }
-}
-
-function saveProgress(progress){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-}
-
-function topicId(module, index){
-  return `${module.id}-${index}`;
-}
-
-function isModuleComplete(module, progress){
-  return module.topics.every((_, i) => progress[topicId(module, i)]);
-}
-
-function isModuleStarted(module, progress){
-  return module.topics.some((_, i) => progress[topicId(module, i)]);
-}
-
-function getStage(progress){
-  const totalTopics = modules.reduce((sum, m) => sum + m.topics.length, 0);
-  const done = modules.reduce((sum, m) => sum + m.topics.filter((_, i) => progress[topicId(m, i)]).length, 0);
-
-  if(done === 0) return "Not started";
-  if(done === totalTopics) return "Exam ready 🎉";
-
-  const nextModule = modules.find(m => !isModuleComplete(m, progress));
-  if(!nextModule) return "Exam ready 🎉";
-
-  const moduleDone = nextModule.topics.filter((_, i) => progress[topicId(nextModule, i)]).length;
-  const stage = moduleDone === 0 ? "Starting" : "In progress";
-  return `${stage}: ${nextModule.code} — ${nextModule.name}`;
-}
-
+const KEY="topcit-study-checklist-v2";
+let filter="all";
+let openModules=new Set(["m1"]);
+const $=id=>document.getElementById(id);
+function progress(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch{return {}}}
+function save(p){localStorage.setItem(KEY,JSON.stringify(p))}
+function tid(m,i){return `${m.id}-${i}`}
 function render(){
-  const progress = loadProgress();
-  const totalTopics = modules.reduce((sum, m) => sum + m.topics.length, 0);
-  const doneTopics = modules.reduce((sum, m) => sum + m.topics.filter((_, i) => progress[topicId(m, i)]).length, 0);
-  const percent = totalTopics ? Math.round((doneTopics / totalTopics) * 100) : 0;
-
-  currentStageEl.textContent = getStage(progress);
-  overallPercentEl.textContent = `${percent}%`;
-  overallBarEl.style.width = `${percent}%`;
-  completedCountEl.textContent = `${doneTopics} / ${totalTopics}`;
-
-  checklistEl.innerHTML = "";
-
-  modules.forEach(module => {
-    const moduleDone = module.topics.filter((_, i) => progress[topicId(module, i)]).length;
-    const modulePercent = Math.round((moduleDone / module.topics.length) * 100);
-    const stage = isModuleComplete(module, progress)
-      ? "Completed"
-      : isModuleStarted(module, progress)
-        ? "In progress"
-        : "Not started";
-
-    const visibleTopics = module.topics
-      .map((topic, i) => ({topic, index:i, done:!!progress[topicId(module, i)]}))
-      .filter(item =>
-        activeFilter === "all" ||
-        (activeFilter === "done" && item.done) ||
-        (activeFilter === "todo" && !item.done)
-      );
-
-    const card = document.createElement("section");
-    card.className = "module";
-    card.innerHTML = `
-      <button class="module-header" aria-expanded="false">
-        <div class="module-title">
-          <div class="module-badge ${module.id}">${module.code}</div>
-          <div>
-            <div class="module-name">${module.name}</div>
-            <div class="module-meta">${module.meta} · ${stage}</div>
-          </div>
-        </div>
-        <div class="module-progress">
-          <div class="progress-text">
-            <span class="stage-label">${modulePercent}% complete</span>
-            <span>${moduleDone}/${module.topics.length}</span>
-          </div>
-          <div class="mini-progress"><div class="mini-bar" style="width:${modulePercent}%"></div></div>
-        </div>
-      </button>
-      <div class="module-body"></div>
-    `;
-
-    const body = card.querySelector(".module-body");
-
-    if(visibleTopics.length === 0){
-      body.innerHTML = `<div class="empty">No topics match this filter.</div>`;
-    }else{
-      visibleTopics.forEach(item => {
-        const [title, description, url] = item.topic;
-        const row = document.createElement("label");
-        row.className = `topic ${item.done ? "done" : ""}`;
-        row.innerHTML = `
-          <input type="checkbox" ${item.done ? "checked" : ""} aria-label="Mark ${title} as completed">
-          <div class="topic-content">
-            <div class="topic-title">${title}</div>
-            <div class="module-meta">${description}</div>
-            <a class="topic-resource" href="${url}" target="_blank" rel="noopener noreferrer">Open online resource ↗</a>
-            <div><span class="topic-tag">${item.done ? "Completed" : "To study"}</span></div>
-          </div>
-        `;
-
-        row.querySelector("input").addEventListener("change", event => {
-          const latest = loadProgress();
-          latest[topicId(module, item.index)] = event.target.checked;
-          saveProgress(latest);
-          render();
-        });
-
-        body.appendChild(row);
-      });
-    }
-
-    card.querySelector(".module-header").addEventListener("click", () => {
-      const isOpen = card.classList.toggle("open");
-      card.querySelector(".module-header").setAttribute("aria-expanded", isOpen);
-    });
-
-    checklistEl.appendChild(card);
+ const p=progress(), total=modules.reduce((n,m)=>n+m.topics.length,0);
+ const done=modules.reduce((n,m)=>n+m.topics.filter((_,i)=>p[tid(m,i)]).length,0);
+ const pct=total?Math.round(done/total*100):0;
+ $("percent").textContent=pct+"%";$("overallBar").style.width=pct+"%";$("count").textContent=`${done} / ${total}`;
+ const next=modules.find(m=>!m.topics.every((_,i)=>p[tid(m,i)]));
+ $("stage").textContent=next?`${next.code} — ${next.name}`:"All modules completed";
+ const root=$("modules");root.innerHTML="";
+ modules.forEach(m=>{
+  const md=m.topics.filter((_,i)=>p[tid(m,i)]).length, mp=Math.round(md/m.topics.length*100);
+  const visible=m.topics.map((t,i)=>({t,i,done:!!p[tid(m,i)]})).filter(x=>filter==="all"||(filter==="done"&&x.done)||(filter==="todo"&&!x.done));
+  const section=document.createElement("section");section.className="module"+(openModules.has(m.id)?" open":"");
+  const head=document.createElement("button");head.className="module-head";head.type="button";head.setAttribute("aria-expanded",openModules.has(m.id));
+  head.innerHTML=`<span class="module-icon ${m.id}">${m.code}</span><span class="module-info"><span class="module-name">${m.name}</span><br><span class="module-meta">${m.meta} · ${md===m.topics.length?"Completed":md?"In progress":"Not started"}</span></span><span class="module-progress"><span class="progress-label"><span>${mp}% complete</span><span>${md}/${m.topics.length}</span></span><span class="mini-track"><span style="width:${mp}%"></span></span></span><span class="chevron" aria-hidden="true">⌄</span>`;
+  head.addEventListener("click",()=>{if(openModules.has(m.id))openModules.delete(m.id);else openModules.add(m.id);render()});
+  const body=document.createElement("div");body.className="module-body";
+  if(!visible.length){body.innerHTML='<div class="empty">No topics match this filter.</div>'}
+  visible.forEach(({t,i,done})=>{
+   const [title,desc,resources]=t,row=document.createElement("div");row.className="topic"+(done?" done":"");
+   const check=document.createElement("input");check.type="checkbox";check.checked=done;check.setAttribute("aria-label",`Mark ${title} complete`);
+   check.addEventListener("change",()=>{const latest=progress();latest[tid(m,i)]=check.checked;save(latest);render()});
+   const content=document.createElement("div");
+   const name=document.createElement("div");name.className="topic-title";name.textContent=title;
+   const description=document.createElement("div");description.className="topic-desc";description.textContent=desc;
+   const links=document.createElement("div");links.className="resource-list";
+   resources.forEach(([label,url])=>{const a=document.createElement("a");a.className="resource";a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.textContent=label+" ↗";links.appendChild(a)});
+   const state=document.createElement("span");state.className="topic-state";state.textContent="Completed";
+   content.append(name,description,links,state);row.append(check,content);body.appendChild(row);
   });
+  section.append(head,body);root.appendChild(section);
+ });
 }
-
-document.querySelectorAll(".filter-btn").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-    button.classList.add("active");
-    activeFilter = button.dataset.filter;
-    render();
-  });
-});
-
-resetBtn.addEventListener("click", () => {
-  const confirmed = confirm("Reset all completed topics? This cannot be undone.");
-  if(confirmed){
-    localStorage.removeItem(STORAGE_KEY);
-    render();
-  }
-});
-
+document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.filter;render()}));
+$("reset").addEventListener("click",()=>{if(confirm("Reset all completed topics?")){localStorage.removeItem(KEY);render()}});
 render();
 </script>
 </body>
