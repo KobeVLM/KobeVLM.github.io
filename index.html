@@ -1,441 +1,580 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BCP & DRP Study Guide</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOPCIT Study Checklist</title>
 <style>
-:root{--bg:#f6f7fb;--card:#fff;--text:#1d2433;--muted:#5d677d;--accent:#2563eb;--good:#16a34a;--bad:#dc2626;--line:#e3e7f0}
-@media (prefers-color-scheme:dark){:root{--bg:#10141f;--card:#1a2030;--text:#e8ecf5;--muted:#9aa5bd;--accent:#6ea0ff;--line:#2a3350}}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
-header{padding:20px 16px 8px;max-width:900px;margin:auto}
-h1{margin:0;font-size:1.5rem}
-header p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
-nav{position:sticky;top:0;background:var(--bg);z-index:5;display:flex;gap:6px;max-width:900px;margin:auto;padding:10px 16px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
-nav button{border:1px solid var(--line);background:var(--card);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;font-size:.9rem}
-nav button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-main{max-width:900px;margin:auto;padding:16px}
-section{display:none}section.on{display:block}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
-.card h2{margin:0 0 8px;font-size:1.1rem;color:var(--accent)}
-.card h3{margin:12px 0 4px;font-size:.98rem}
-ul{margin:6px 0;padding-left:20px}
-li{margin:2px 0}
-table{width:100%;border-collapse:collapse;font-size:.9rem;margin:8px 0}
-th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
-th{background:rgba(37,99,235,.1)}
-.tag{display:inline-block;background:rgba(37,99,235,.12);color:var(--accent);border-radius:6px;padding:0 7px;font-size:.8rem;font-weight:600}
-.tip{border-left:4px solid #f59e0b;background:rgba(245,158,11,.1);padding:8px 12px;border-radius:6px;margin:10px 0;font-size:.92rem}
-.btn{background:var(--accent);color:#fff;border:0;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:.95rem;margin-right:6px}
-.btn.alt{background:transparent;color:var(--text);border:1px solid var(--line)}
-/* flashcards */
-.fc{perspective:900px;height:230px;cursor:pointer;margin:10px 0}
-.fc-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
-.fc.flip .fc-in{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;font-size:1.1rem}
-.face.back{transform:rotateY(180deg);background:rgba(37,99,235,.08)}
-.meta{color:var(--muted);font-size:.85rem;text-align:center}
-/* quiz */
-.q{font-weight:600;margin-bottom:10px}
-.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;cursor:pointer;font-size:.95rem}
-.opt:hover:not(:disabled){border-color:var(--accent)}
-.opt.right{border-color:var(--good);background:rgba(22,163,74,.14)}
-.opt.wrong{border-color:var(--bad);background:rgba(220,38,38,.12)}
-.why{margin-top:10px;font-size:.92rem;color:var(--muted)}
-.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:8px 0 14px}
-.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
-.score{font-size:1.6rem;font-weight:700}
-footer{text-align:center;color:var(--muted);font-size:.8rem;padding:20px}
+  :root{
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --primary:#2563eb;
+    --primary-soft:#e8efff;
+    --success:#16a34a;
+    --success-soft:#e7f7ed;
+    --warning:#d97706;
+    --border:#e5e7eb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+  }
+  .container{
+    max-width:1080px;
+    margin:0 auto;
+    padding:24px 16px 80px;
+  }
+  header{
+    background:linear-gradient(135deg,#1d4ed8,#2563eb 55%,#0ea5e9);
+    color:#fff;
+    padding:36px 0 30px;
+    border-radius:0 0 24px 24px;
+  }
+  .header-inner{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 16px;
+  }
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:.72rem;
+    opacity:.85;
+    margin:0 0 8px;
+  }
+  h1{
+    margin:0 0 10px;
+    font-size:clamp(1.6rem,4vw,2.4rem);
+    letter-spacing:-.02em;
+  }
+  .subtitle{
+    margin:0;
+    max-width:640px;
+    color:rgba(255,255,255,.9);
+    font-size:.98rem;
+  }
+  .status-panel{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    margin-top:22px;
+  }
+  .status-card{
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:var(--radius);
+    padding:16px;
+  }
+  .status-label{
+    font-size:.76rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    opacity:.8;
+  }
+  .status-value{
+    font-size:1.25rem;
+    font-weight:750;
+    margin-top:4px;
+  }
+  .progress-wrap{
+    margin-top:10px;
+    height:10px;
+    background:rgba(255,255,255,.22);
+    border-radius:99px;
+    overflow:hidden;
+  }
+  .progress-bar{
+    height:100%;
+    width:0%;
+    background:#fff;
+    border-radius:99px;
+    transition:width .35s ease;
+  }
+  .toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    justify-content:space-between;
+    margin:22px 0 18px;
+  }
+  .filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .filter-btn{
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--text);
+    padding:9px 14px;
+    border-radius:99px;
+    font-size:.88rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.18s ease;
+  }
+  .filter-btn:hover{border-color:#c7d2fe;background:#f8faff}
+  .filter-btn.active{
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#fff;
+  }
+  .reset-btn{
+    border:1px solid #fecaca;
+    background:#fff;
+    color:#b91c1c;
+    padding:9px 14px;
+    border-radius:99px;
+    font-weight:650;
+    cursor:pointer;
+    transition:.18s ease;
+  }
+  .reset-btn:hover{background:#fef2f2}
+  .module{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:18px;
+    overflow:hidden;
+  }
+  .module-header{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:18px 18px;
+    border:0;
+    background:#fff;
+    cursor:pointer;
+    text-align:left;
+    font:inherit;
+  }
+  .module-header:hover{background:#fafbff}
+  .module-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+  }
+  .module-badge{
+    flex:0 0 auto;
+    width:44px;
+    height:44px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    font-weight:800;
+    color:#fff;
+  }
+  .m1{background:#2563eb}
+  .m2{background:#7c3aed}
+  .m3{background:#0891b2}
+  .m4{background:#d97706}
+  .module-name{
+    font-size:1.05rem;
+    font-weight:750;
+  }
+  .module-meta{
+    color:var(--muted);
+    font-size:.82rem;
+  }
+  .module-progress{
+    flex:0 0 190px;
+  }
+  .mini-progress{
+    height:8px;
+    background:#eef2f7;
+    border-radius:99px;
+    overflow:hidden;
+  }
+  .mini-bar{
+    height:100%;
+    width:0%;
+    background:var(--primary);
+    transition:width .3s ease;
+  }
+  .progress-text{
+    display:flex;
+    justify-content:space-between;
+    font-size:.76rem;
+    color:var(--muted);
+    margin-bottom:5px;
+  }
+  .stage-label{
+    font-weight:700;
+    color:var(--text);
+  }
+  .module-body{
+    display:none;
+    border-top:1px solid var(--border);
+    padding:6px 18px 18px;
+  }
+  .module.open .module-body{display:block}
+  .topic{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    padding:13px 10px;
+    border-radius:10px;
+    transition:background .15s ease;
+  }
+  .topic:hover{background:#f8fafc}
+  .topic input{
+    width:20px;
+    height:20px;
+    accent-color:var(--success);
+    cursor:pointer;
+    margin-top:2px;
+    flex:0 0 auto;
+  }
+  .topic-content{
+    min-width:0;
+    flex:1;
+  }
+  .topic-title{
+    font-weight:650;
+    font-size:.97rem;
+  }
+  .topic.done .topic-title{
+    color:var(--muted);
+    text-decoration:line-through;
+  }
+  .topic-resource{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:5px;
+    color:var(--primary);
+    font-size:.85rem;
+    font-weight:650;
+    text-decoration:none;
+    word-break:break-word;
+  }
+  .topic-resource:hover{text-decoration:underline}
+  .topic-tag{
+    display:inline-block;
+    margin-top:7px;
+    padding:2px 8px;
+    border-radius:99px;
+    background:var(--primary-soft);
+    color:#1d4ed8;
+    font-size:.72rem;
+    font-weight:700;
+  }
+  .topic.done .topic-tag{
+    background:var(--success-soft);
+    color:#15803d;
+  }
+  .empty{
+    text-align:center;
+    color:var(--muted);
+    background:#fff;
+    border:1px dashed var(--border);
+    border-radius:var(--radius);
+    padding:40px 18px;
+  }
+  .footer-note{
+    margin-top:24px;
+    color:var(--muted);
+    font-size:.84rem;
+    text-align:center;
+  }
+  @media(min-width:760px){
+    .status-panel{grid-template-columns:repeat(3,1fr)}
+    .module-progress{flex:0 0 240px}
+  }
+  @media(max-width:620px){
+    .module-header{flex-direction:column;align-items:stretch}
+    .module-progress{flex:1 1 auto}
+  }
 </style>
 </head>
 <body>
+
 <header>
-  <h1>🛡️ Business Continuity & Disaster Recovery Planning</h1>
-  <p>One-day cram guide: notes → flashcards → quiz. Based on your lecture slides.</p>
+  <div class="header-inner">
+    <p class="eyebrow">Interactive study tracker</p>
+    <h1>TOPCIT Study Checklist</h1>
+    <p class="subtitle">Track your progress across Software Development, Data Management, Systems Architecture &amp; Information Security, and IT Business. Your progress is saved automatically in this browser.</p>
+
+    <div class="status-panel">
+      <div class="status-card">
+        <div class="status-label">Current stage</div>
+        <div class="status-value" id="currentStage">Not started</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">Overall progress</div>
+        <div class="status-value" id="overallPercent">0%</div>
+        <div class="progress-wrap"><div class="progress-bar" id="overallBar"></div></div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">Completed topics</div>
+        <div class="status-value" id="completedCount">0 / 0</div>
+      </div>
+    </div>
+  </div>
 </header>
-<nav id="nav">
-  <button data-t="notes" class="on">📘 Notes</button>
-  <button data-t="cards">🗂️ Flashcards</button>
-  <button data-t="quiz">📝 Quiz</button>
-  <button data-t="plan">⏱️ Study Plan</button>
-</nav>
-<main>
 
-<!-- NOTES -->
-<section id="notes" class="on">
-  <div class="card"><h2>1. Basics</h2>
-    <p><b>Disaster</b> = any natural or man-made event that disrupts business operations so significantly that a <i>considerable, coordinated effort</i> is needed to recover.</p>
-    <table>
-      <tr><th>Natural</th><th>Man-made</th></tr>
-      <tr><td><b>Geological:</b> earthquake, volcano, tsunami, landslide, sinkhole<br><b>Meteorological:</b> hurricane, tornado, wind/hail/ice/snow/rain storms, lightning<br><b>Other:</b> avalanche, fire, flood, meteors, solar storms<br><b>Health:</b> widespread illness, quarantine, pandemic</td>
-      <td><b>Labor:</b> strikes, walkouts, slow-downs<br><b>Social-political:</b> war, terrorism, sabotage, vandalism, civil unrest, protests, cyber attacks, blockades<br><b>Materials:</b> fires, hazmat spills<br><b>Utilities:</b> power/comm outages, water or fuel shortages, radioactive fallout</td></tr>
-    </table>
-    <h3>How disasters hurt businesses</h3>
-    <ul><li>Direct damage to facilities & equipment</li><li>Transportation damage → delays deliveries, supplies, customers, employees</li><li>Communications outages</li><li>Utilities outages</li></ul>
+<main class="container">
+  <div class="toolbar">
+    <div class="filters" role="group" aria-label="Filter checklist">
+      <button class="filter-btn active" data-filter="all">All topics</button>
+      <button class="filter-btn" data-filter="todo">To study</button>
+      <button class="filter-btn" data-filter="done">Completed</button>
+    </div>
+    <button class="reset-btn" id="resetProgress">Reset progress</button>
   </div>
 
-  <div class="card"><h2>2. BCP vs DRP</h2>
-    <p>Both support the <b>Availability</b> pillar of <b>C-I-A</b> (Confidentiality, Integrity, Availability).</p>
-    <table>
-      <tr><th></th><th>BCP</th><th>DRP</th></tr>
-      <tr><td><b>Focus</b></td><td>Keep <b>critical business processes</b> going</td><td><b>Assess, salvage, repair, restore</b> damaged facilities/systems</td></tr>
-      <tr><td><b>Uses</b></td><td>Alternate personnel, equipment, facilities</td><td>Often IT systems focused</td></tr>
-      <tr><td><b>Scope</b></td><td>Often includes non-IT aspects</td><td>Recovery of the original site/systems</td></tr>
-    </table>
-    <div class="tip"><b>Prevention</b> here ≠ preventing the disaster. It means preventing <i>surprise & disorganized response</i>, reducing impact (equipment bracing, fire detection/suppression, contingency plans) and avoiding long downtime.</div>
-    <h3>Why needed (Gartner 2001)</h3>
-    <p>Customers expect continued/rapid-resume service · Shareholders expect management control · Employees expect livelihoods protected (suppliers too) · Regulators expect requirements met regardless.</p>
-    <h3>Benefits</h3>
-    <p>Reduced risk · Process improvements · Organizational maturity · Availability & reliability · Marketplace advantage</p>
-  </div>
+  <div id="checklist"></div>
 
-  <div class="card"><h2>3. Standards</h2>
-    <table>
-      <tr><th>Standard</th><th>What it is</th></tr>
-      <tr><td><b>ISO 27001</b></td><td>Info Security Mgmt Systems requirements; Section 14 = business continuity mgmt</td></tr>
-      <tr><td><b>ISO 27002</b></td><td>Code of practice for business continuity mgmt</td></tr>
-      <tr><td><b>NIST 800-34</b></td><td>Contingency Planning Guide for IT Systems; <b>7-step</b> process for BCP/DRP</td></tr>
-      <tr><td><b>NFPA 1600</b></td><td>Disaster/Emergency Mgmt & Business Continuity Programs</td></tr>
-      <tr><td><b>NFPA 1620</b></td><td>Recommended practice for Pre-Incident Planning</td></tr>
-      <tr><td><b>HIPAA</b></td><td>Requires a <b>documented AND tested</b> DR plan (healthcare/pharmacy, e.g., CVS)</td></tr>
-    </table>
-  </div>
-
-  <div class="card"><h2>4. Running the Project</h2>
-    <p><b>Main phases:</b> Pre-project → BIA → Develop plans → Test plans. Then maintain, test, audit regularly.</p>
-    <h3>Pre-project activities</h3>
-    <ul><li>Obtain <b>executive support</b></li><li>Formally define <b>scope</b></li><li>Choose project team</li><li>Develop project plan / get a project manager</li>
-    <li>Write the <b>project charter</b> = document listing all of these <b>plus budget & milestones</b> (projected costs + measurable goals)</li></ul>
-  </div>
-
-  <div class="card"><h2>5. Business Impact Assessment (BIA)</h2>
-    <ol>
-      <li><b>Survey critical processes</b> (interview a rep per department, find dependencies on systems/people/equipment, collate into a database/spreadsheet)</li>
-      <li><b>Risk & threat analysis</b> – threats, vulnerabilities, risks per process; rank by probability, impact, cost; identify mitigating controls</li>
-      <li><b>Determine MTD</b></li>
-      <li><b>Establish recovery targets</b> (RTO, RPO)</li>
-    </ol>
-    <p><b>Risk</b> = probability of a material deviation from an anticipated outcome (up or down; exists only if there's an objective).</p>
-    <p><b>3 areas to analyze:</b> <span class="tag">Threats</span> (probabilities) · <span class="tag">Assets</span> (physical, financial, lost revenue, recovery costs, fines, goodwill) · <span class="tag">Mitigating factors</span> (UPS, generators, fire control, card readers)</p>
-
-    <h3>The four key terms</h3>
-    <table>
-      <tr><th>Term</th><th>Meaning</th><th>Memory hook</th></tr>
-      <tr><td><b>MTD</b> Maximum Tolerable Downtime</td><td>Longest a process can be down before significant damage / long-term viability threatened</td><td>"Point of no return"</td></tr>
-      <tr><td><b>RTO</b> Recovery Time Objective</td><td>Time from disaster onset to <b>resumption</b> of the process (must be ≤ MTD)</td><td><b>T</b> = <b>T</b>ime to be back up</td></tr>
-      <tr><td><b>RPO</b> Recovery Point Objective</td><td>Max <b>data loss</b>, counting backwards from onset; work that must be redone</td><td><b>P</b> = <b>P</b>oint in time of last good data</td></tr>
-      <tr><td><b>Criticality analysis</b></td><td>Rank processes by MTD, RTO, RPO, cost of downtime, reputation/market share/goodwill</td><td>"Who gets fixed first"</td></tr>
-    </table>
-    <div class="tip">Order: <b>RTO ≤ MTD</b>. Example: MTD 2 days → RTO must be shorter.</div>
-
-    <h3>Other BIA items</h3>
-    <ul><li><b>Statements of impact</b> – e.g., can't process payments, produce invoices, access customer data</li>
-    <li><b>Key metrics</b> – cost to operate, cost of downtime, profit from process</li>
-    <li><b>Current capabilities</b> – documented continuity/recovery, undocumented ones, "what if it happened tomorrow?"</li>
-    <li>Get <b>senior management buy-off</b> on MTD, RTO, RPO</li>
-    <li><b>Improve resilience</b> for the most critical processes: biggest risks, cost of mitigation, combine controls, follow best practice</li></ul>
-
-    <h3>Sample recovery objectives (RTO) and technology</h3>
-    <table>
-      <tr><th>Recovery time</th><th>Technology</th></tr>
-      <tr><td>8–14 days</td><td>New equipment, data recovery from backup</td></tr>
-      <tr><td>4–7 days</td><td>Cold systems, recovery from backup</td></tr>
-      <tr><td>2–3 days</td><td>Warm systems, recovery from backup</td></tr>
-      <tr><td>12–24 hrs</td><td>Warm systems, high-speed backup media</td></tr>
-      <tr><td>6–12 hrs</td><td>Hot systems, high-speed backup media</td></tr>
-      <tr><td>3–6 hrs</td><td>Hot systems, data replication</td></tr>
-      <tr><td>1–3 hrs</td><td>Clustering, data replication</td></tr>
-      <tr><td>&lt; 1 hr</td><td>Clustering, near real-time replication</td></tr>
-    </table>
-    <p class="meta">Shorter target = more expensive tech. (The slide labels this column "RPO" but the values are recovery times.)</p>
-  </div>
-
-  <div class="card"><h2>6. Developing the Plans</h2>
-    <h3>Recovery team selection criteria</h3>
-    <p>Residence location vs. work · Skills & experience · Ability/willingness to respond · Health & family · <b>Identify backups</b> (other members, external resources)</p>
-    <h3>Emergency response</h3>
-    <ul><li><b>Personnel safety</b> (first aid, searching for people) – <b>#1 concern always</b></li><li><b>Evacuation</b> procedures</li><li><b>Asset protection</b> (buildings, vehicles, equipment)</li><li><b>Damage assessment</b> (may need outside structural engineers)</li><li><b>Emergency notification</b> (response team, management, staff)</li></ul>
-    <h3>Damage assessment & salvage</h3>
-    <p>Inside experts + usually outside experts (civil engineers, government building inspectors). Salvage = identify working/salvageable assets, cannibalize for parts.</p>
-    <h3>Notification</h3>
-    <p>Employees, suppliers, customers, regulators, authorities, shareholders, community. Methods: phone call trees, website, signage, media. Identify <b>alternate</b> means.</p>
-    <h3>Personnel safety</h3>
-    <p>Evacuation, accounting for everyone, first aid, emergency supplies (water, food, blankets, shelter). Staff may be stranded for days.</p>
-    <h3>Communications</h3>
-    <ul><li>Avoid common infrastructure (not the same wires as normal comms)</li><li>Diversify mobile providers</li><li>Two-way radios · Satellite phones · <b>Amateur radio</b></li></ul>
-    <h3>Utilities & infrastructure</h3>
-    <p>Electricity (UPS, generator) · Water (no water = no fire suppression → building may close) · Natural gas (heating) · Wastewater (if disabled, building may close) · Steam heat</p>
-    <h3>Logistics & supplies</h3>
-    <p>Food/water, blankets/cots, sanitation, tools, spare parts, waste bins, information, communications, fire protection (extinguishers, sprinklers, smoke/fire alarms)</p>
-    <h3>Business resumption planning</h3>
-    <p>Alternate work locations · Alternate personnel · Communications · Standby assets/equipment · Access to procedures & business records</p>
-    <h3>Restoration & recovery</h3>
-    <p>Repair facilities/equipment · Replacement equipment · Restore utilities · Resume operations in the <b>primary</b> facility</p>
-    <h3>Improving system resilience</h3>
-    <ul><li><b>Off-site media storage</b> → assures data recovery</li><li><b>Server clusters</b> → availability (geographic clusters = members far apart)</li><li><b>Data replication</b> → current data on multiple servers, even remote (application, DBMS, OS, or hardware level)</li></ul>
-    <h3>Training staff</h3>
-    <p>Everyday operations · Recovery procedures · Emergency procedures · Resumption procedures</p>
-  </div>
-
-  <div class="card"><h2>7. Testing – 5 Levels (low → high risk)</h2>
-    <table>
-      <tr><th>#</th><th>Test</th><th>Who</th><th>Key idea</th></tr>
-      <tr><td>1</td><td><b>Document review</b></td><td>Individuals</td><td>Read plans & procedures, give feedback to owners</td></tr>
-      <tr><td>2</td><td><b>Walkthrough</b></td><td>Teams</td><td>Group <b>discussion</b> of plans; brainstorming finds new issues. <b>No fictional emergency</b></td></tr>
-      <tr><td>3</td><td><b>Simulation</b></td><td>Teams</td><td>Walkthrough using a scripted <b>scenario / case study</b>; mental disaster setting</td></tr>
-      <tr><td>4</td><td><b>Parallel test</b></td><td>Teams</td><td>Full/partial workload on recovery systems; <b>production keeps running</b></td></tr>
-      <tr><td>5</td><td><b>Cutover test</b></td><td>Teams</td><td>Production <b>shut down</b>; recovery systems take full load. Risk of interrupting real business, but most confidence</td></tr>
-    </table>
-    <div class="tip"><b>Mnemonic:</b> <b>D</b>on't <b>W</b>orry, <b>S</b>imulate, <b>P</b>repare, <b>C</b>utover (Document, Walkthrough, Simulation, Parallel, Cutover)</div>
-  </div>
-
-  <div class="card"><h2>8. Maintaining Plans</h2>
-    <p>Review & modify when there are changes in: business processes/procedures · IT systems & applications · IT architecture · additions to IT apps · service providers · organizational structure.</p>
-  </div>
-
-  <div class="card"><h2>9. Executing / Activating the DRP</h2>
-    <p><b>Flow:</b> Event occurs → Assess situation → (Not a disaster → stand down) / (Classed as disaster → Contact recovery team → Execute plan → Re-assess → continue recovery or stand down)</p>
-    <table>
-      <tr><th>Level</th><th>Action</th></tr>
-      <tr><td>🟢 <b>Green</b></td><td>No action; advise DRP manager</td></tr>
-      <tr><td>🟠 <b>Amber</b></td><td>Advise DRP manager; implement appropriate aspects of DRP</td></tr>
-      <tr><td>🔴 <b>Red</b></td><td>Advise DRP manager; implement the <b>full</b> DR plan</td></tr>
-    </table>
-  </div>
-</section>
-
-<!-- FLASHCARDS -->
-<section id="cards">
-  <div class="meta" id="fcMeta"></div>
-  <div class="fc" id="fc"><div class="fc-in"><div class="face" id="fcF"></div><div class="face back" id="fcB"></div></div></div>
-  <div style="text-align:center">
-    <button class="btn alt" id="fcPrev">← Prev</button>
-    <button class="btn" id="fcFlip">Flip</button>
-    <button class="btn alt" id="fcNext">Next →</button>
-    <button class="btn alt" id="fcShuf">🔀 Shuffle</button>
-  </div>
-  <p class="meta">Tip: press Space to flip, ← → to navigate.</p>
-</section>
-
-<!-- QUIZ -->
-<section id="quiz">
-  <div id="quizStart" class="card">
-    <h2>Practice Quiz</h2>
-    <p>Includes every question from your slides plus extra practice questions. Answers are shuffled each run.</p>
-    <button class="btn" id="qAll">Start full quiz</button>
-    <button class="btn alt" id="qSlides">Slide questions only</button>
-    <button class="btn alt" id="qMiss" style="display:none">Retry missed</button>
-  </div>
-  <div id="quizRun" style="display:none">
-    <div class="meta" id="qProg"></div>
-    <div class="bar"><i id="qBar"></i></div>
-    <div class="card"><div class="q" id="qText"></div><div id="qOpts"></div><div class="why" id="qWhy"></div></div>
-    <button class="btn" id="qNext" style="display:none">Next →</button>
-  </div>
-  <div id="quizEnd" class="card" style="display:none">
-    <div class="score" id="qScore"></div>
-    <p id="qMsg"></p>
-    <button class="btn" id="qAgain">Restart</button>
-    <button class="btn alt" id="qRetry">Retry missed</button>
-  </div>
-</section>
-
-<!-- PLAN -->
-<section id="plan">
-  <div class="card"><h2>Suggested one-day plan</h2>
-    <table>
-      <tr><th>Block</th><th>Do this</th></tr>
-      <tr><td>45 min</td><td>Read <b>Notes</b> sections 1–4 (basics, BCP vs DRP, standards, project)</td></tr>
-      <tr><td>60 min</td><td>Read <b>Notes</b> section 5 (BIA) slowly. This is the most testable part: MTD / RTO / RPO / criticality</td></tr>
-      <tr><td>45 min</td><td>Notes sections 6–9 (plans, testing levels, activation)</td></tr>
-      <tr><td>30 min</td><td><b>Flashcards</b>, go through twice, shuffle the second time</td></tr>
-      <tr><td>30 min</td><td><b>Quiz</b>, then <b>Retry missed</b> until you get 100%</td></tr>
-      <tr><td>15 min</td><td>Re-read the "tip" boxes and the 4 key-term table before sleeping</td></tr>
-    </table>
-    <h3>Most likely exam traps</h3>
-    <ul>
-      <li><b>RTO vs RPO</b>: Time to be back up vs. amount of data you can lose</li>
-      <li><b>MTD</b> is the business limit; RTO is the target and must fit inside it</li>
-      <li><b>BCP</b> = keep running (alternate site/people) · <b>DRP</b> = repair & restore (often IT)</li>
-      <li>Walkthrough has <i>no scenario</i>; Simulation <i>has</i> a scenario</li>
-      <li>Parallel keeps production running; Cutover shuts it down</li>
-      <li><b>Personnel safety</b> is always #1</li>
-      <li><b>HIPAA</b> → healthcare / pharmacy</li>
-      <li><b>Project charter</b> contains budget + measurable milestones</li>
-    </ul>
-  </div>
-</section>
+  <p class="footer-note">
+    Progress is stored locally in your browser. Clearing browser data or using another device will not carry your progress over.
+  </p>
 </main>
-<footer>Made for quick review. Verify against your instructor's materials.</footer>
 
 <script>
-/* ---------- tabs ---------- */
-const tabs=document.querySelectorAll('nav button');
-tabs.forEach(b=>b.onclick=()=>{
-  tabs.forEach(x=>x.classList.toggle('on',x===b));
-  document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.t));
-  window.scrollTo(0,0);
+const modules = [
+  {
+    id:"m1",
+    code:"M1",
+    name:"Software Development",
+    meta:"21 questions · 365 points",
+    topics:[
+      ["Software Engineering Fundamentals","SDLC, requirements, Agile, Waterfall, iterative and Spiral models","https://www.geeksforgeeks.org/software-engineering/software-development-life-cycle-sdlc/"],
+      ["Algorithm Knowledge","Searching, sorting, Big-O, arrays, stacks, queues, linked lists, trees and graphs","https://visualgo.net/en"],
+      ["AI Knowledge","Machine learning, supervised and unsupervised learning, classification, regression, training and test data","https://developers.google.com/machine-learning/crash-course/exercises"],
+      ["Programming Language Application","Java, Python and C fundamentals; OOP; functions; arrays; strings; debugging","https://java-programming.mooc.fi/"],
+      ["Software Analysis","Functional and non-functional requirements, use cases, feasibility and stakeholder needs","https://www.geeksforgeeks.org/software-engineering/software-requirement-specifications-and-their-role-in-software-development/"],
+      ["Software Design","UML, class diagrams, sequence diagrams, activity diagrams, cohesion and coupling","https://www.uml-diagrams.org/"],
+      ["Software Implementation","Coding, modularity, version control, error handling and code quality","https://docs.github.com/en/get-started/start-your-journey/hello-world"],
+      ["Software Testing","Unit, integration, system and acceptance testing; black-box and white-box testing","https://www.geeksforgeeks.org/software-testing/software-testing-tutorial/"],
+      ["Software Maintenance","Corrective, adaptive, perfective and preventive maintenance","https://www.geeksforgeeks.org/software-engineering/software-maintenance/"],
+      ["Java OOP Review","Classes, objects, encapsulation, inheritance, polymorphism, abstraction, interfaces and static members","https://docs.oracle.com/javase/tutorial/java/concepts/"],
+      ["Java Practice Tasks","Practice OOP through Student, BankAccount, Person, Animal, Shape and Drawable exercises","https://javaarena.com/"],
+      ["Official TOPCIT Practice","Use the official sample questions and IBT practice interface","https://www.topcit.or.kr/board/preview.do"]
+    ]
+  },
+  {
+    id:"m2",
+    code:"M2",
+    name:"Data Management",
+    meta:"19 questions · 265 points",
+    topics:[
+      ["Data and Database Knowledge","DBMS, RDBMS, relational tables, SQL, data types and constraints","https://sqlbolt.com/"],
+      ["Data and Database Design","ER diagrams, entities, attributes, relationships, cardinality and normalization","https://ermap.io/"],
+      ["Data and Database Construction","CREATE, ALTER, INSERT, SELECT, UPDATE, DELETE and constraints","https://www.w3schools.com/sql/"],
+      ["Data and Database Management","Indexes, transactions, ACID, backup, recovery and access control","https://www.postgresql.org/docs/current/tutorial.html"],
+      ["Data Analysis","Mean, median, mode, range, variance, standard deviation and data interpretation","https://www.khanacademy.org/math/statistics-probability"],
+      ["Data-driven AI Application","Data collection, preprocessing, features, labels, training and test datasets","https://developers.google.com/machine-learning/crash-course/exercises"],
+      ["SQL Practice","SELECT, WHERE, ORDER BY, JOIN, GROUP BY, HAVING, primary keys and foreign keys","https://www.w3schools.com/sql/sql_exercises.asp"],
+      ["SQL Concepts Review","Primary key, foreign key, normalization, ACID, joins and indexes","https://www.postgresql.org/docs/current/tutorial.html"],
+      ["Official TOPCIT Practice","Review the official TOPCIT sample questions and IBT tools","https://www.topcit.or.kr/board/preview.do"]
+    ]
+  },
+  {
+    id:"m3",
+    code:"M3",
+    name:"Systems Architecture & Information Security",
+    meta:"18 questions · 235 points",
+    topics:[
+      ["System Architecture","CPU, ALU, control unit, registers, RAM, ROM, cache, storage, buses and architecture models","https://www.geeksforgeeks.org/computer-organization-architecture/computer-organization-and-architecture-tutorials/"],
+      ["Operating Systems","Processes, threads, scheduling, synchronization, deadlocks, memory and virtual memory","https://pages.cs.wisc.edu/~remzi/OSTEP/"],
+      ["Networking","OSI and TCP/IP models, IP addressing, subnetting, DNS, DHCP, routing and network devices","https://www.cisco.com/site/us/en/learn/training-certifications/training/netacad/index.html"],
+      ["Information Security Concepts","CIA triad, threats, vulnerabilities, risk, security controls and access management","https://www.nist.gov/cyberframework"],
+      ["Application Security","SQL injection, XSS, authentication, authorization, input validation and secure sessions","https://portswigger.net/web-security/"],
+      ["Data Security","Encryption, hashing, digital signatures, TLS, backups and data protection","https://www.cloudflare.com/learning/ssl/what-is-encryption/"],
+      ["System Security","Firewalls, IDS/IPS, malware, patching, hardening and security policies","https://www.nist.gov/cyberframework"],
+      ["Networking Quick Reference","Review OSI layers, TCP/UDP, DNS, DHCP, routers, switches and basic subnetting","https://www.geeksforgeeks.org/computer-networks/layers-of-osi-model/"],
+      ["Security Concepts Review","CIA, authentication vs authorization, encryption vs hashing, digital signatures and firewalls","https://portswigger.net/web-security/"],
+      ["Official TOPCIT Practice","Practice the official TOPCIT IBT compiler and diagram tools","https://www.topcit.or.kr/board/preview.do"]
+    ]
+  },
+  {
+    id:"m4",
+    code:"M4",
+    name:"IT Business",
+    meta:"17 questions · 135 points",
+    topics:[
+      ["IT Business Environment, Goals and Strategy","SWOT, PESTLE, SMART objectives, business-IT alignment and strategic planning","https://www.open.edu/openlearn/"],
+      ["IT Business Solutions and Performance","IT governance, business solutions, KPIs, performance and service management","https://www.open.edu/openlearn/"],
+      ["IT Business Trends","Cloud computing, AI, digital transformation, automation and emerging technologies","https://www.open.edu/openlearn/"],
+      ["Intellectual Property Rights","Copyright, patents, trademarks, industrial designs and software licensing","https://www.wipo.int/en/web/wipo-academy/programs/ip-elearning/index"],
+      ["IT Professional Ethics","Privacy, confidentiality, professional responsibility, fairness and responsible technology use","https://www.acm.org/code-of-ethics"],
+      ["Project Management and Communication","Scope, schedule, cost, quality, risk, stakeholders, communication and scope creep","https://www.open.edu/openlearn/"],
+      ["Business Terms Review","SWOT, PESTLE, SMART, KPI, ROI, scope creep, stakeholders and risk management","https://www.open.edu/openlearn/"],
+      ["Official TOPCIT Practice","Review the official TOPCIT sample questions and test format","https://www.topcit.or.kr/board/preview.do"]
+    ]
+  }
+];
+
+const STORAGE_KEY = "topcit-study-checklist-v1";
+const checklistEl = document.getElementById("checklist");
+const currentStageEl = document.getElementById("currentStage");
+const overallPercentEl = document.getElementById("overallPercent");
+const overallBarEl = document.getElementById("overallBar");
+const completedCountEl = document.getElementById("completedCount");
+const resetBtn = document.getElementById("resetProgress");
+let activeFilter = "all";
+
+function loadProgress(){
+  try{
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  }catch{
+    return {};
+  }
+}
+
+function saveProgress(progress){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+}
+
+function topicId(module, index){
+  return `${module.id}-${index}`;
+}
+
+function isModuleComplete(module, progress){
+  return module.topics.every((_, i) => progress[topicId(module, i)]);
+}
+
+function isModuleStarted(module, progress){
+  return module.topics.some((_, i) => progress[topicId(module, i)]);
+}
+
+function getStage(progress){
+  const totalTopics = modules.reduce((sum, m) => sum + m.topics.length, 0);
+  const done = modules.reduce((sum, m) => sum + m.topics.filter((_, i) => progress[topicId(m, i)]).length, 0);
+
+  if(done === 0) return "Not started";
+  if(done === totalTopics) return "Exam ready 🎉";
+
+  const nextModule = modules.find(m => !isModuleComplete(m, progress));
+  if(!nextModule) return "Exam ready 🎉";
+
+  const moduleDone = nextModule.topics.filter((_, i) => progress[topicId(nextModule, i)]).length;
+  const stage = moduleDone === 0 ? "Starting" : "In progress";
+  return `${stage}: ${nextModule.code} — ${nextModule.name}`;
+}
+
+function render(){
+  const progress = loadProgress();
+  const totalTopics = modules.reduce((sum, m) => sum + m.topics.length, 0);
+  const doneTopics = modules.reduce((sum, m) => sum + m.topics.filter((_, i) => progress[topicId(m, i)]).length, 0);
+  const percent = totalTopics ? Math.round((doneTopics / totalTopics) * 100) : 0;
+
+  currentStageEl.textContent = getStage(progress);
+  overallPercentEl.textContent = `${percent}%`;
+  overallBarEl.style.width = `${percent}%`;
+  completedCountEl.textContent = `${doneTopics} / ${totalTopics}`;
+
+  checklistEl.innerHTML = "";
+
+  modules.forEach(module => {
+    const moduleDone = module.topics.filter((_, i) => progress[topicId(module, i)]).length;
+    const modulePercent = Math.round((moduleDone / module.topics.length) * 100);
+    const stage = isModuleComplete(module, progress)
+      ? "Completed"
+      : isModuleStarted(module, progress)
+        ? "In progress"
+        : "Not started";
+
+    const visibleTopics = module.topics
+      .map((topic, i) => ({topic, index:i, done:!!progress[topicId(module, i)]}))
+      .filter(item =>
+        activeFilter === "all" ||
+        (activeFilter === "done" && item.done) ||
+        (activeFilter === "todo" && !item.done)
+      );
+
+    const card = document.createElement("section");
+    card.className = "module";
+    card.innerHTML = `
+      <button class="module-header" aria-expanded="false">
+        <div class="module-title">
+          <div class="module-badge ${module.id}">${module.code}</div>
+          <div>
+            <div class="module-name">${module.name}</div>
+            <div class="module-meta">${module.meta} · ${stage}</div>
+          </div>
+        </div>
+        <div class="module-progress">
+          <div class="progress-text">
+            <span class="stage-label">${modulePercent}% complete</span>
+            <span>${moduleDone}/${module.topics.length}</span>
+          </div>
+          <div class="mini-progress"><div class="mini-bar" style="width:${modulePercent}%"></div></div>
+        </div>
+      </button>
+      <div class="module-body"></div>
+    `;
+
+    const body = card.querySelector(".module-body");
+
+    if(visibleTopics.length === 0){
+      body.innerHTML = `<div class="empty">No topics match this filter.</div>`;
+    }else{
+      visibleTopics.forEach(item => {
+        const [title, description, url] = item.topic;
+        const row = document.createElement("label");
+        row.className = `topic ${item.done ? "done" : ""}`;
+        row.innerHTML = `
+          <input type="checkbox" ${item.done ? "checked" : ""} aria-label="Mark ${title} as completed">
+          <div class="topic-content">
+            <div class="topic-title">${title}</div>
+            <div class="module-meta">${description}</div>
+            <a class="topic-resource" href="${url}" target="_blank" rel="noopener noreferrer">Open online resource ↗</a>
+            <div><span class="topic-tag">${item.done ? "Completed" : "To study"}</span></div>
+          </div>
+        `;
+
+        row.querySelector("input").addEventListener("change", event => {
+          const latest = loadProgress();
+          latest[topicId(module, item.index)] = event.target.checked;
+          saveProgress(latest);
+          render();
+        });
+
+        body.appendChild(row);
+      });
+    }
+
+    card.querySelector(".module-header").addEventListener("click", () => {
+      const isOpen = card.classList.toggle("open");
+      card.querySelector(".module-header").setAttribute("aria-expanded", isOpen);
+    });
+
+    checklistEl.appendChild(card);
+  });
+}
+
+document.querySelectorAll(".filter-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    button.classList.add("active");
+    activeFilter = button.dataset.filter;
+    render();
+  });
 });
 
-/* ---------- flashcards ---------- */
-const CARDS=[
-["What is a disaster (in BCP/DRP terms)?","Any natural or man-made event that disrupts operations so significantly that a considerable, coordinated effort is needed to recover."],
-["Which C-I-A pillar do BCP and DRP directly support?","Availability."],
-["BCP: what is it?","Activities to ensure continuation of critical business processes: alternate personnel, equipment, facilities. Often includes non-IT aspects."],
-["DRP: what is it?","Assessment, salvage, repair, and eventual restoration of damaged facilities and systems. Often IT-focused."],
-["What does 'prevention' mean in BCP/DRP?","Preventing surprise and a disorganized response, and reducing impact; not preventing the disaster itself."],
-["ISO 27001","Requirements for Information Security Management Systems. Section 14 covers business continuity management."],
-["ISO 27002","Code of practice for business continuity management."],
-["NIST 800-34","Contingency Planning Guide for IT Systems. Seven-step process for BCP/DRP projects."],
-["NFPA 1600","Standard on Disaster/Emergency Management and Business Continuity Programs."],
-["NFPA 1620","Recommended practice for Pre-Incident Planning."],
-["HIPAA (relevance)","Requires a documented and tested disaster recovery plan (healthcare, pharmacies)."],
-["Benefits of BCP/DRP planning","Reduced risk, process improvements, improved organizational maturity, improved availability and reliability, marketplace advantage."],
-["Four main phases of a BCP/DRP project","Pre-project activities → Business Impact Assessment → Develop continuity & recovery plans → Test the plans."],
-["Pre-project activities","Obtain executive support, define scope, choose team, develop project plan (get a project manager), write project charter."],
-["Project charter","Document listing the pre-project items plus budget and milestones (projected costs and measurable goals)."],
-["Steps of a BIA","Survey critical processes → risk & threat analysis → determine MTD → establish key recovery targets."],
-["Definition of risk (slides)","The probability of a material deviation from an anticipated outcome (up or down). Risk exists only if there is an objective."],
-["Three areas analyzed in risk analysis","Threats (probabilities), Assets (physical, financial, lost revenue, fines, goodwill), Mitigating factors (UPS, generators, fire control, card readers)."],
-["MTD","Maximum Tolerable Downtime: the longest a process can be inoperative before significant damage or long-term viability is threatened."],
-["RTO","Recovery Time Objective: time from disaster onset to resumption of the business process."],
-["RPO","Recovery Point Objective: maximum period of data loss, counting backward from onset; the work that must be redone."],
-["RTO of 2 hours means…","Systems must be restored within 2 hours after disruption."],
-["RPO of 30 minutes means…","Maximum acceptable data loss is 30 minutes."],
-["Relationship between MTD and RTO","RTO must be shorter than (or equal to) MTD."],
-["Criticality analysis","Ranking processes by MTD, RTO, RPO, cost of downtime and qualitative criteria (reputation, market share, goodwill)."],
-["Statements of impact","For each process, describe the impact on the organization if it is incapacitated (e.g., can't process payments or invoices)."],
-["Technology for RTO < 1 hour","Clustering with near real-time data replication."],
-["Technology for RTO 8–14 days","New equipment and data recovery from backup."],
-["Cold vs warm vs hot systems (by recovery speed)","Cold: 4–7 days · Warm: 2–3 days (12–24h with fast media) · Hot: 6–12h (3–6h with replication)."],
-["Recovery team selection criteria","Residence location, skills & experience, ability/willingness to respond, health & family, plus backups."],
-["Five parts of emergency response","Personnel safety, evacuation, asset protection, damage assessment, emergency notification."],
-["#1 concern in any disaster response","Personnel safety."],
-["Who performs damage assessment?","Inside experts and usually outside experts: civil engineers, government building inspectors."],
-["Salvage","Identify working and salvageable assets; cannibalize for parts or other uses."],
-["Communications best practice in disasters","Avoid common infrastructure; diversify mobile services; consider two-way radios, satellite phones, amateur radio."],
-["Why is water a utility concern?","A building may be closed if no water is available for fire suppression."],
-["Business resumption planning includes","Alternate work locations, alternate personnel, communications, standby assets/equipment, access to procedures and records."],
-["Restoration and recovery includes","Repair facilities/equipment, replacement equipment, restore utilities, resume operations in primary facilities."],
-["Server clusters / geographic clusters","Improve availability. Geographic clusters have members far apart."],
-["Data replication","Maintains current data on multiple servers (even remote) at application, DBMS, OS or hardware level."],
-["Five levels of testing (in order)","Document review → Walkthrough → Simulation → Parallel test → Cutover test."],
-["Document review","Individuals review plans/procedures and give feedback to document owners."],
-["Walkthrough","Teams discuss plans as a group (brainstorming). No specific fictional emergency."],
-["Simulation","Walkthrough using a scripted scenario/case study that puts participants in a mental disaster setting."],
-["Parallel test","Workload applied to recovery systems while production keeps running. Tests actual readiness."],
-["Cutover test","Production shut down; recovery systems take the full workload. Riskiest, gives most confidence."],
-["Events that require plan review","Changes in business processes, IT systems/apps, IT architecture, additions to apps, service providers, organizational structure."],
-["DRP activation flow","Event → Assess → (not a disaster: stand down) / (disaster: contact recovery team → execute plan → re-assess → continue or stand down)."],
-["Green / Amber / Red","Green: no action, advise DRP manager. Amber: advise manager, implement appropriate parts. Red: advise manager, implement full DR plan."]
-];
-let order=CARDS.map((_,i)=>i),ci=0;
-const fc=document.getElementById('fc');
-function showCard(){
-  const [q,a]=CARDS[order[ci]];
-  fc.classList.remove('flip');
-  document.getElementById('fcF').textContent=q;
-  document.getElementById('fcB').textContent=a;
-  document.getElementById('fcMeta').textContent=`Card ${ci+1} of ${CARDS.length}`;
-}
-fc.onclick=()=>fc.classList.toggle('flip');
-document.getElementById('fcFlip').onclick=()=>fc.classList.toggle('flip');
-document.getElementById('fcNext').onclick=()=>{ci=(ci+1)%order.length;showCard()};
-document.getElementById('fcPrev').onclick=()=>{ci=(ci-1+order.length)%order.length;showCard()};
-document.getElementById('fcShuf').onclick=()=>{order=shuffle(order);ci=0;showCard()};
-document.addEventListener('keydown',e=>{
-  if(!document.getElementById('cards').classList.contains('on'))return;
-  if(e.code==='Space'){e.preventDefault();fc.classList.toggle('flip')}
-  if(e.key==='ArrowRight')document.getElementById('fcNext').click();
-  if(e.key==='ArrowLeft')document.getElementById('fcPrev').click();
+resetBtn.addEventListener("click", () => {
+  const confirmed = confirm("Reset all completed topics? This cannot be undone.");
+  if(confirmed){
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+  }
 });
-showCard();
 
-/* ---------- quiz ---------- */
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-// each: [question, [options], correctIndex, explanation, fromSlides]
-const QS=[
-["Which of these is essential to a Business Continuity Plan?",["A fence to deter attackers","A RAID array","Fire drills","Separation of duties","Off-site backups"],4,"Off-site backups ensure data can be recovered and operations continued elsewhere.",1],
-["Which of these is essential to Disaster Recovery Planning?",["Temporary alternate office space","Safety inspection of damaged buildings","Server clustering","Surveillance cameras","Bollards"],1,"DRP covers assessment, salvage, repair and restoration; inspecting damage is the assessment step. (Alternate office space is a BCP item.)",1],
-["Which of these will NOT reduce the impact of a disaster?",["Off-site backups","Sprinkler systems","BCP","DRP","Fire drills"],4,"Backups, sprinklers, and the plans themselves reduce impact. Fire drills are about people's practice and aren't listed among the impact-reducers on the slide. (Likely intended answer; confirm with your instructor if unsure.)",1],
-["CVS is a pharmacy chain. Which standard should they focus on most?",["NFPA 1620","HIPAA","NIST 800-34","ISO 27001","None of the above"],1,"HIPAA requires a documented and tested DR plan for healthcare organizations.",1],
-["Which item contains projected costs and specific measurable goals?",["Executive support","Project scope","Personnel list","Project plan","Project charter"],4,"The project charter lists scope, team, plan, plus budget and milestones.",1],
-["A company has enough stored water to operate for 2 days; after that work ceases. What best describes that information?",["BIA","MTD","BCP","DRP","Criticality analysis"],1,"The max time before the process must stop = Maximum Tolerable Downtime.",1],
-["A web retailer buys an alternate hosting service that promises to bring the site back within one hour of a failure. What does \"one hour\" describe?",["MTD","BCP","DRP","RTO","RPO"],3,"Time from failure to resumption = Recovery Time Objective.",1],
-["A written document explains how to transfer operations to a different location if needed. What is it?",["BIA","BCP","DRP","Criticality analysis","RTO"],1,"Alternate locations/continuing operations = Business Continuity Plan.",1],
-["If an organization has an RTO of 2 hours, what does this mean?",["Data must be backed up every 2 hours","Systems must be restored within 2 hours after disruption","Data loss cannot exceed 2 hours","Disaster detection must occur within 2 hours"],1,"RTO = time to restore. (C describes RPO.)",1],
-["If an organization has an RPO of 30 minutes, what does this mean?",["System recovery must take 30 minutes","Maximum acceptable data loss is 30 minutes","Backup takes 30 minutes","Disaster response begins in 30 minutes"],1,"RPO = maximum tolerable data loss measured backward from the disaster.",1],
-["Which of these is the highest priority in a disaster?",["Personnel safety","Asset protection","Damage assessment","Emergency notification","The answer depends on the situation"],0,"Personnel safety is the number one concern in any disaster response.",1],
-["Which of these is often performed by amateurs during a disaster?",["Damage assessment","Salvage","Communications","Electricity generation","Training staff"],2,"The slide suggests amateur radio as a communications option.",1],
-["Which of these is the most likely to interrupt real business operations?",["Document review","Walkthrough","Simulation","Parallel test","Cutover test"],4,"Cutover shuts production down and moves the full load to recovery systems.",1],
-["Which involves only a group discussion of procedures, without a specific fictional emergency?",["Document review","Walkthrough","Simulation","Parallel test","Cutover test"],1,"Walkthrough = group discussion. Simulation adds a scripted scenario.",1],
-/* extra practice */
-["Which CIA pillar do BCP and DRP primarily support?",["Confidentiality","Integrity","Availability","Authenticity"],2,"They keep systems and processes available during/after a disaster.",0],
-["Which is the correct order of the testing levels (lowest to highest risk)?",["Walkthrough, Document review, Simulation, Parallel, Cutover","Document review, Walkthrough, Simulation, Parallel, Cutover","Document review, Simulation, Walkthrough, Cutover, Parallel","Simulation, Walkthrough, Document review, Parallel, Cutover"],1,"Document review → Walkthrough → Simulation → Parallel → Cutover.",0],
-["In a parallel test, what happens to production systems?",["They are shut down","They continue to operate and support real business","They are replaced permanently","They are disconnected from the network"],1,"Parallel test runs workload on recovery systems while production keeps running.",0],
-["Which relationship must hold between MTD and RTO?",["RTO must be longer than MTD","RTO must be shorter than or equal to MTD","They are unrelated","RTO equals RPO"],1,"If recovery took longer than the maximum tolerable downtime, the business would suffer major damage.",0],
-["Which technology best supports an RTO under 1 hour?",["Cold systems with tape backup","New equipment purchase","Clustering with near real-time data replication","Warm systems"],2,"The fastest recovery tiers need clustering plus near real-time replication.",0],
-["Which NIST document gives a seven-step contingency planning process for IT systems?",["NIST 800-34","ISO 27002","NFPA 1600","NFPA 1620"],0,"NIST 800-34 is the Contingency Planning Guide for IT Systems.",0],
-["Which standard is the recommended practice for pre-incident planning?",["NFPA 1600","NFPA 1620","ISO 27001","HIPAA"],1,"NFPA 1620 = Pre-Incident Planning.",0],
-["Which is a mitigating factor in risk analysis?",["A flood","Lost revenue during an outage","An uninterruptible power supply (UPS)","A strike by workers"],2,"UPS, generators, fire control systems and card readers are mitigating factors. Floods and strikes are threats; lost revenue is an asset-impact figure.",0],
-["Why might a building close during a disaster even if undamaged?",["No water for fire suppression","Too many employees present","Bright lighting","Excess network traffic"],0,"Loss of water (or wastewater function) can force a building closure.",0],
-["During an Amber alert in the DRP activation scheme, what happens?",["No action at all","Advise DRP manager and implement appropriate aspects of the DRP","Implement the full DR plan","Stand down permanently"],1,"Green = no action; Amber = partial; Red = full plan.",0],
-["Recovery team members are selected using which criteria?",["Only seniority","Residence location, skills, willingness to respond, health & family","Only IT department membership","Random assignment"],1,"Also identify backups for each member.",0],
-["Which best describes 'prevention' in BCP/DRP?",["Stopping disasters from occurring","Preventing surprise and disorganized response, and reducing impact","Eliminating all risk","Buying insurance only"],1,"You can't prevent an earthquake; you prevent chaos and extended downtime.",0],
-["Which event should trigger a review of BCP/DRP documents?",["A change in service providers","A new office plant","A holiday","A change in the lunch menu"],0,"Plans must be updated when processes, IT systems, architecture, providers, or org structure change.",0]
-];
-let run=[],qi=0,sc=0,missed=[],answered=false;
-const $=id=>document.getElementById(id);
-function startQuiz(list){
-  run=shuffle(list).map(q=>{
-    const idx=shuffle(q[1].map((_,i)=>i));
-    return {q:q[0],opts:idx.map(i=>q[1][i]),ans:idx.indexOf(q[2]),why:q[3],orig:q};
-  });
-  qi=0;sc=0;missed=[];
-  $('quizStart').style.display='none';$('quizEnd').style.display='none';$('quizRun').style.display='block';
-  showQ();
-}
-function showQ(){
-  answered=false;
-  const q=run[qi];
-  $('qProg').textContent=`Question ${qi+1} of ${run.length} · Score ${sc}`;
-  $('qBar').style.width=(qi/run.length*100)+'%';
-  $('qText').textContent=q.q;
-  $('qWhy').textContent='';
-  $('qNext').style.display='none';
-  const o=$('qOpts');o.innerHTML='';
-  q.opts.forEach((t,i)=>{
-    const b=document.createElement('button');b.className='opt';b.textContent=String.fromCharCode(65+i)+'. '+t;
-    b.onclick=()=>pick(i);o.appendChild(b);
-  });
-}
-function pick(i){
-  if(answered)return;answered=true;
-  const q=run[qi],bs=document.querySelectorAll('#qOpts .opt');
-  bs.forEach((b,k)=>{b.disabled=true;if(k===q.ans)b.classList.add('right')});
-  if(i===q.ans)sc++;else{bs[i].classList.add('wrong');missed.push(q.orig)}
-  $('qWhy').textContent=(i===q.ans?'✅ Correct. ':'❌ Not quite. ')+q.why;
-  $('qNext').style.display='inline-block';
-  $('qNext').textContent=qi===run.length-1?'See results':'Next →';
-}
-$('qNext').onclick=()=>{
-  qi++;
-  if(qi>=run.length){
-    $('quizRun').style.display='none';$('quizEnd').style.display='block';
-    const p=Math.round(sc/run.length*100);
-    $('qScore').textContent=`${sc} / ${run.length} (${p}%)`;
-    $('qMsg').textContent=p===100?'Perfect. You\'re ready!':p>=80?'Strong. Review the ones you missed.':'Keep going: re-read the Notes for what you missed, then retry.';
-    $('qRetry').style.display=missed.length?'inline-block':'none';
-    $('qMiss').style.display=missed.length?'inline-block':'none';
-    window.lastMissed=missed.slice();
-  } else showQ();
-};
-$('qAll').onclick=()=>startQuiz(QS);
-$('qSlides').onclick=()=>startQuiz(QS.filter(q=>q[4]));
-$('qAgain').onclick=()=>startQuiz(QS);
-$('qRetry').onclick=()=>startQuiz(window.lastMissed);
-$('qMiss').onclick=()=>startQuiz(window.lastMissed);
+render();
 </script>
 </body>
 </html>
